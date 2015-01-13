@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- Get environment vars -->
+    <arg name="ROBOT_REAL" default="$(optenv ROBOT_REAL false)" />
+
+    <!-- load robot -->
+    <param name="/amigo/robot_description" textfile="$(find amigo_description)/urdf/amigo.urdf" />
+
+    <!-- load robot joint group info -->
+    <rosparam file="$(find amigo_description)/custom/joint_groups.yaml" command="load" />
+
+    <!-- Load robot specific skill parameters -->
+    <rosparam file="$(find amigo_description)/custom/skills.yaml" command="load" ns="/amigo/skills"/>
+
+    <group ns="amigo">
+
+        <group if="$(arg ROBOT_REAL)">
+
+            <!-- Robot state publisher -->
+            <include file="$(find robot_launch_files)/launch/essentials/robot_state_publisher.launch" />
+
+            <!-- RGB lights manager -->
+            <!-- TODO -->
+
+        </group>
+
+        <group unless="$(arg ROBOT_REAL)">
+
+            <arg name="teleport" default="false"/>
+            <arg name="kinect_raytracing" default="true"/>
+
+            <!-- SIMULATION -->
+            <include file="$(find amigo_launch_files)/launch/simulator/$(optenv SIMULATOR).launch">
+                <arg name="gui" value="$(arg gui)"/>
+                <arg name="env" value="$(arg env)"/>
+                <arg name="teleport" value="$(arg teleport)"/>
+                <arg name="kinect_raytracing" value="$(arg kinect_raytracing)"/>
+            </include>
+
+        </group>
+
+        <!-- DIAGNOSTICS -->
+        <!-- TODO -->
+
+        <!-- TF Server: advertises services for looking up transformations -->
+        <!-- TODO -->
+
+        <!-- Phone UI -->
+        <!-- TODO -->
+
+    </group>
+
+ </launch>
