@@ -15,13 +15,6 @@
         <!-- Robot state publisher -->
         <include file="$(find robot_launch_files)/launch/essentials/robot_state_publisher.launch" />
 
-        <group if="$(optenv ROBOT_REAL false)">
-
-            <!-- RGB lights manager -->
-            <!-- TODO -->
-
-        </group>
-
         <group unless="$(optenv ROBOT_REAL false)">
 
             <!-- Simulator -->
@@ -30,7 +23,7 @@
         </group>
 
         <!-- DIAGNOSTICS -->
-        <!-- TODO -->
+        <include file="$(find robot_launch_files)/launch/diagnostics/diagnostics.launch" />
 
         <!-- TF Server: advertises services for looking up transformations -->
         <!-- TODO -->

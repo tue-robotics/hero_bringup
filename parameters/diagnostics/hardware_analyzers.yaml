@@ -1,0 +1,7 @@
+analyzers:
+  node_alive:
+    type: diagnostic_aggregator/GenericAnalyzer
+    path: Node_alive
+    timeout: -1
+    startswith: node_alive
+    remove_prefix: node_alive

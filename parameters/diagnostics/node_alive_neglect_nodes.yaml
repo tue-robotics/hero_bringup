@@ -1,0 +1,1 @@
+node_alive/neglect_nodes: ['*rviz*','*dashboard*','amigo_etherCAT_hardware']

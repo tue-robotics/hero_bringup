@@ -1,0 +1,6 @@
+<group if="$(optenv ROBOT_REAL false)">
+
+            <!-- RGB lights manager -->
+            <!-- TODO -->
+
+        </group>
