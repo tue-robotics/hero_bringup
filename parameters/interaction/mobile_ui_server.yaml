@@ -1,0 +1,4 @@
+port: 8000
+index_names:
+  - amigo.html
+  - index.html
