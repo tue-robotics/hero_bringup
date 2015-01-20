@@ -1,0 +1,7 @@
+manager: manager
+rgb: rgb 
+ir: ir
+depth: depth                
+depth_registered: depth_registered
+projector: projector
+respawn: false

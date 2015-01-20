@@ -11,12 +11,6 @@
         <!-- Robot state publisher -->
         <include file="$(find robot_launch_files)/launch/essentials/robot_state_publisher.launch" />
 
-        <!-- DIAGNOSTICS -->
-        <include file="$(find robot_launch_files)/launch/diagnostics/diagnostics.launch" />
-
-        <!-- TF Server: advertises services for looking up transformations -->
-        <include file="$(find robot_launch_files)/launch/essentials/tf_server.launch" />
-
         <!-- Phone UI -->
         <include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch" />
 
@@ -29,5 +23,11 @@
         </group>
 
     </group>
+
+    <!-- TF Server: advertises services for looking up transformations -->
+    <include file="$(find robot_launch_files)/launch/essentials/tf_server.launch" />
+
+    <!-- DIAGNOSTICS -->
+    <include file="$(find robot_launch_files)/launch/diagnostics/diagnostics.launch" />
 
  </launch>
