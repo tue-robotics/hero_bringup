@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<param name="/use_ed" value="true"/>
+
+	<arg name="env" default="$(optenv ROBOT_ENV robotics_testlab_B)" />
+	<arg name="ROBOT_REAL" default="$(optenv ROBOT_REAL false)" />
+
+    <group if="$(arg ROBOT_REAL)">
+        <!-- REAL ROBOT -->
+
+        <!-- Start all sensors -->
+        <include file="$(find amigo_launch_files)/launch/sensors/sensors.launch" />
+    </group>
+
+
+    <!-- Localization -->
+    <include file="$(find amigo_launch_files)/launch/middleware/localization.launch" />
+
+    <!-- Navigation -->
+    <!--    <include file="$(find amigo_launch_files)/launch/navigation/cb_base_navigation.launch"/>-->
+
+    <!-- Head movement -->
+    <include file="$(find amigo_launch_files)/launch/manipulation/head_ref.launch" />
+    <node name="head_ref_ed_client" pkg="head_ref_ed_client" type="head_ref_ed_client" output="screen" />
+
+    <!-- Manipulation -->
+    <include file="$(find amigo_launch_files)/launch/manipulation/manipulation.launch" />
+
+    <!-- RGBD (Kinect) server -->
+    <include file="$(find amigo_launch_files)/launch/sensors/top_kinect_rgbd.launch" />
+
+    <!-- World Model -->
+	<node name="ed_server" pkg="ed" type="ed_server" args="$(find ed)/config/$(optenv ED_CONFIG amigo).yaml" output="screen" />
+
+	<!-- Reasoner -->
+	<param name="/reasoner/world_model_type" value="ed"/>
+    <include file="$(find tue_reasoner_core)/launch/start.launch" />
+
+	<!-- Start text to speech -->
+    <include file="$(find amigo_launch_files)/launch/interaction/text_to_speech.launch" />
+
+    <!-- Start speech recognition -->
+    <group if="$(arg ROBOT_REAL)">
+        <include file="$(find amigo_launch_files)/launch/interaction/df_speech_recognition.launch" />
+    </group>
+    <group unless="$(arg ROBOT_REAL)">
+        <include file="$(find amigo_launch_files)/launch/interaction/df_speech_recognition_dummy.launch" />
+    </group>
+
+    <!-- Action server -->
+    <node name="action_server" pkg="action_server" type="action_server_main" output="screen" />
+    <node name="action_server_py" pkg="action_server" type="main.py" args="amigo" output="screen" />
+
+</launch>

@@ -1,6 +1,40 @@
-<group if="$(optenv ROBOT_REAL false)">
+<?xml version="1.0"?>
+<launch>
 
-            <!-- RGB lights manager -->
-            <!-- TODO -->
+    <group ns="amigo">
 
-        </group>
+        <!-- OROCOS HARDWARE -->
+        <include file="$(find rtt_ros)/launch/deployer.launch">
+            <arg name="DEPLOYER_ARGS" value="gnulinux
+                HARDWARE
+                -s $(env ROBOT_PARAMETER_PATH)/hardware/soem.ops
+                -s $(env ROBOT_PARAMETER_PATH)/hardware/base_controller_pos.ops
+                -s $(env ROBOT_PARAMETER_PATH)/hardware/spindle_controller.ops
+                -s $(env ROBOT_PARAMETER_PATH)/hardware/left_arm_controller.ops
+                -s $(env ROBOT_PARAMETER_PATH)/hardware/head_controller.ops
+                -s $(env ROBOT_PARAMETER_PATH)/hardware/rgb_lights.ops
+            "/>
+            <arg name="NAME" value ="hardware"/>
+            <arg name="LOG_LEVEL" value="Warning"/>
+            <arg name="DEBUG" value="false"/>
+        </include>
+
+        <!-- MANAGERS -->
+        <include file="$(find robot_launch_files)/launch/hardware/managers/emergency_button_manager.launch" />
+        <include file="$(find robot_launch_files)/launch/hardware/managers/rgb_lights_manager.launch" />
+        <include file="$(find robot_launch_files)/launch/hardware/managers/battery_manager.launch" />
+
+        <!-- SENSORS -->
+        <include file="$(find robot_launch_files)/launch/hardware/sensors/kinect.launch">
+            <arg name="name" value="top_kinect"/>
+        </include>
+        <include file="$(find robot_launch_files)/launch/hardware/sensors/laser.launch">
+            <arg name="name" value="base_laser"/>
+        </include>
+        <include file="$(find robot_launch_files)/launch/hardware/sensors/laser.launch" />
+            <arg name="name" value="torso_laser"/>
+        </include>
+
+    </group>
+
+</launch>

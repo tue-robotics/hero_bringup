@@ -1,35 +1,32 @@
 <?xml version="1.0"?>
 <launch>
 
-    <!-- PARAMETERS: load robot -->
-    <param name="/amigo/robot_description" textfile="$(find amigo_description)/urdf/amigo.urdf" />
-
-    <!-- PARAMETERS: load robot joint group info -->
-    <rosparam file="$(find amigo_description)/custom/joint_groups.yaml" command="load" />
-
-    <!-- PARAMETERS: Load robot specific skill parameters -->
-    <rosparam file="$(find amigo_description)/custom/skills.yaml" command="load" ns="/amigo/skills"/>
-
     <group ns="amigo">
+
+        <!-- PARAMETERS: desciption, joint groups and specific skills -->
+        <param name="robot_description" textfile="$(find amigo_description)/urdf/amigo.urdf" />
+        <rosparam file="$(find amigo_description)/custom/joint_groups.yaml" command="load" />
+        <rosparam file="$(find amigo_description)/custom/skills.yaml" command="load" />
 
         <!-- Robot state publisher -->
         <include file="$(find robot_launch_files)/launch/essentials/robot_state_publisher.launch" />
 
+        <!-- DIAGNOSTICS -->
+        <include file="$(find robot_launch_files)/launch/diagnostics/diagnostics.launch" />
+
+        <!-- TF Server: advertises services for looking up transformations -->
+        <include file="$(find robot_launch_files)/launch/essentials/tf_server.launch" />
+
+        <!-- Phone UI -->
+        <include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch" />
+
+        <!-- Launch simulator if we are not on a real robot -->
         <group unless="$(optenv ROBOT_REAL false)">
 
             <!-- Simulator -->
             <include file="$(find robot_launch_files)/launch/simulator/simulator.launch" />
 
         </group>
-
-        <!-- DIAGNOSTICS -->
-        <include file="$(find robot_launch_files)/launch/diagnostics/diagnostics.launch" />
-
-        <!-- TF Server: advertises services for looking up transformations -->
-        <!-- TODO -->
-
-        <!-- Phone UI -->
-        <!-- TODO -->
 
     </group>
 
