@@ -1,0 +1,20 @@
+side: right
+
+# IK solver parameters
+ik_max_iterations: 500
+
+# Chain information
+root_link: base_link
+tip_link: grippoint_right
+#robot_description: textfile="$(find sergio_description)/urdf/sergio.urdf
+use_constrained_solver: true
+
+# Pre-grasping parameters
+max_yaw_delta: 2.0
+yaw_sampling_step: 0.05        # [rad]
+spindle_sampling_step: 0.05    # [m]
+pre_grasp_delta: 0.20
+pre_grasp_inbetween_sampling_steps: 20
+
+# TF parameters
+tf_prefix: sergio

@@ -1,0 +1,44 @@
+odom_frame_id: /sergio/odom
+base_frame_id: /sergio/base_link
+
+gui_publish_rate: 10.0
+
+laser_max_beams: 30
+
+min_particles: 500
+max_particles: 1000
+
+kld_err: 0.01
+kld_z: 0.99
+
+odom_model_type: omni
+odom_alpha1: 23.5    # 0.2
+odom_alpha2: 25.5    # 0.2
+odom_alpha3: 10.5    # 0.8
+odom_alpha4: 10.5    # 0.2
+odom_alpha5: 10.5    # 0.1
+
+laser_model_type: likelihood_field
+laser_z_hit: 0.5
+laser_z_short: 0.05
+laser_z_max: 0.05
+laser_z_rand: 0.5
+laser_sigma_hit: 0.2
+laser_lambda_short: 0.1
+laser_lambda_short: 0.1
+laser_likelihood_max_dist: 10.0
+
+update_min_d: 0.025
+update_min_a: 0.025
+
+resample_interval: 1
+transform_tolerance: 0.1
+recovery_alpha_slow: 0.2
+recovery_alpha_fast: 0.2
+
+initial_cov_xx: 0.001
+initial_cov_yy: 0.001
+initial_cov_aa: 0.001
+
+use_map_topic: true
+first_map_only: false

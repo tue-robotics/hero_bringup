@@ -1,0 +1,95 @@
+tf_prefix: sergio
+
+joint_names:
+  - ankle_joint
+  - knee_joint
+  - hip_joint
+  - shoulder_yaw_joint_right
+  - shoulder_pitch_joint_right
+  - shoulder_roll_joint_right
+  - elbow_pitch_joint_right
+  - elbow_roll_joint_right
+  - wrist_pitch_joint_right
+  - wrist_yaw_joint_right
+constraints:
+   goal_time: 20.0
+   ankle_joint:
+        intermediate_goal: 0.02
+        trajectory: 1.059
+        final_goal: 0.01
+        min_pos: 0.0
+        max_pos: 1.059
+        max_vel: 0.265
+        max_acc: 0.53
+   knee_joint:
+        intermediate_goal: 0.02
+        trajectory: 2.158
+        final_goal: 0.01
+        min_pos: 0.0
+        max_pos: 2.158
+        max_vel: 0.539
+        max_acc: 1.08
+   hip_joint:
+        intermediate_goal: 0.02
+        trajectory: 3.21
+        final_goal: 0.01
+        min_pos: 0.85
+        max_pos: 2.36
+        max_vel: 0.375
+        max_acc: 0.75
+   shoulder_yaw_joint_right:
+        intermediate_goal: 0.02
+        trajectory: 10.0
+        final_goal: 0.02
+        min_pos: -1.57
+        max_pos: 0.0
+        max_vel: 0.4
+        max_acc: 0.2
+   shoulder_pitch_joint_right:
+        intermediate_goal: 0.02
+        trajectory: 10.0
+        final_goal: 0.02
+        min_pos: -1.57
+        max_pos: 1.57
+        max_vel: 0.4
+        max_acc: 0.2
+   shoulder_roll_joint_right:
+        intermediate_goal: 0.02
+        trajectory: 10.0
+        final_goal: 0.02
+        min_pos: -1.57
+        max_pos: 1.57
+        max_vel: 0.6
+        max_acc: 0.3
+   elbow_pitch_joint_right:
+        intermediate_goal: 0.02
+        trajectory: 10.0
+        final_goal: 0.02
+        min_pos: 0.0
+        max_pos: 2.23
+        max_vel: 0.8
+        max_acc: 0.5
+   elbow_roll_joint_right:
+        intermediate_goal: 0.02
+        trajectory: 10.0
+        final_goal: 0.02
+        min_pos: -1.83
+        max_pos: 1.83
+        max_vel: 0.8
+        max_acc: 0.5
+   wrist_pitch_joint_right:
+        intermediate_goal: 0.02
+        trajectory: 10.0
+        final_goal: 0.02
+        min_pos: -0.95
+        max_pos: 0.95
+        max_vel: 1.0
+        max_acc: 0.5
+   wrist_yaw_joint_right:
+        intermediate_goal: 0.02
+        trajectory: 10.0
+        final_goal: 0.02
+        min_pos: -0.61
+        max_pos: 0.61
+        max_vel: 1.0
+        max_acc: 0.5
