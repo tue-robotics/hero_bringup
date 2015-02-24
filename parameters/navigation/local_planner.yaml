@@ -1,0 +1,96 @@
+local_planner : dwa_local_planner/DWAPlannerROS
+controller_frequency: 10.0
+robot_base_frame: /amigo/base_link
+global_frame: /map
+
+# Specific local planner parameters
+DWAPlannerROS:
+
+    #### base_local_planner::LocalPlannerLimits ###
+
+    # velocities
+    max_trans_vel: 0.7
+    min_trans_vel: 0.0
+
+    max_vel_x: 0.7
+    min_vel_x: -0.1
+   
+    max_vel_y: 0.2
+    min_vel_y: -0.2
+    
+    max_rot_vel: 1.0
+    min_rot_vel: 0.1
+
+    # accelerations
+    acc_limit_trans: 0.35
+    deacc_limit_trans: 0.5
+
+    acc_lim_x: 0.35
+    acc_lim_y: 0.35
+
+    acc_lim_th: 0.5
+
+    # Goal
+    xy_goal_tolerance: 0.1
+    yaw_goal_tolerance: 0.1
+
+    # When stopped?
+    trans_stopped_vel: 0.1
+    rot_stopped_vel: 0.1
+
+    # Prune the plan?
+    prune_plan: true
+
+    ### DWA SPECIFIC PARAMETERS ###
+
+    # Forward simulation parameters
+    sim_time: 2.5
+    sim_period: 0.1 # 10 hz
+
+    sim_granularity: 0.1
+    angular_sim_granularity: 0.1
+
+    vx_samples: 4
+    vy_samples: 10
+    vth_samples: 10
+
+    use_dwa: true
+
+    # Switching behavior
+    switch_goal_distance: 0.3
+    switch_plan_distance: 0.5
+    switch_yaw_error: 1.6
+
+    # Cost functions    
+    align_align_scale: 1.0
+    align_plan_scale: 1.0
+    align_goal_scale: 0.0
+
+    default_align_scale: 1.0
+    default_plan_scale: 0.0
+    default_goal_scale: 1.0
+
+    arrive_align_scale: 1.0
+    arrive_plan_scale: 0.0
+    arrive_goal_scale: 1.0
+
+    align_cmd_px:  0.0
+    align_cmd_nx:  0.0
+    align_cmd_py:  0.0
+    align_cmd_ny:  0.0
+    align_cmd_pth: 0.0
+    align_cmd_nth: 0.0
+    
+    default_cmd_px:  0.0
+    default_cmd_nx:  0.0
+    default_cmd_py:  0.0
+    default_cmd_ny:  0.0
+    default_cmd_pth: 0.0
+    default_cmd_nth: 0.0
+    
+    arrive_cmd_px:  0.0
+    arrive_cmd_nx:  0.0
+    arrive_cmd_py:  0.0
+    arrive_cmd_ny:  0.0
+    arrive_cmd_pth: 0.0
+    arrive_cmd_nth: 0.0
