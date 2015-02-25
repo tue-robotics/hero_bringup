@@ -4,13 +4,6 @@
 
     <group ns="amigo">
 
-        <!-- LOCALIZATION -->
-        <include file="$(find robot_launch_files)/launch/localization/localization.launch">
-            <arg name="type" value="amcl"/>
-            <arg name="laser" value="base_laser"/>
-            <arg name="machine" value="amigo3"/>
-        </include>
-
         <!-- MANIPULATION -->        
         <include file="$(find robot_launch_files)/launch/manipulation/torso.launch">
             <arg name="machine" value="amigo1"/>
@@ -51,7 +44,7 @@
     <!-- Action server -->
     <include file="$(find robot_launch_files)/launch/interaction/action_server.launch">
         <arg name="machine" value="amigo1"/>
-        <arg name="robots" value="amigo1" />
+        <arg name="robot" value="amigo" />
     </include> 
 
 </launch>
