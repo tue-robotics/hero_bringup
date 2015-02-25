@@ -1,4 +1,4 @@
-frame_id: /amigo/top_kinect/openni_rgbd_optical_frame
+frame_id: /amigo/top_kinect/openni_rgb_optical_frame
 fx: 538.6725257330964
 fy: 502.5794530135827
 
