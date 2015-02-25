@@ -18,6 +18,10 @@
             <arg name="name" value="right_arm"/>
             <arg name="machine" value="amigo1"/>
         </include>
+
+        <include file="$(find robot_launch_files)/launch/manipulation/head.launch">
+            <arg name="machine" value="amigo1"/>
+        </include>
         
         <!-- NAVIGATION -->
         <include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
