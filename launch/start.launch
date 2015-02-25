@@ -26,15 +26,15 @@
 
         </group>
 
+        <!-- DIAGNOSTICS -->
+        <include file="$(find robot_launch_files)/launch/diagnostics/diagnostics.launch" >
+            <arg name="machine" value="amigo1" />
+        </include>
+
     </group>
 
     <!-- TF Server: advertises services for looking up transformations -->
     <include file="$(find robot_launch_files)/launch/essentials/tf_server.launch" >  
-        <arg name="machine" value="amigo1" />
-    </include>
-
-    <!-- DIAGNOSTICS -->
-    <include file="$(find robot_launch_files)/launch/diagnostics/diagnostics.launch" >
         <arg name="machine" value="amigo1" />
     </include>
 
