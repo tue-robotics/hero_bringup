@@ -1,6 +1,8 @@
 <launch>
-  <machine name="amigo3" address="amigo3" default="never" user="amigo" env-loader="/home/amigo/.ros-bash-and-run.sh">
-    <!--env name="JAVA_HOME" value="/usr/lib/jvm/java-6-openjdk" / -->
-  </machine>
+	<group if="$(optenv ROBOT_REAL false)">
+		<machine name="amigo3" address="amigo3" default="never" user="amigo" env-loader="/home/amigo/.ros-bash-and-run.sh"/>
+	</group>
+	<group unless="$(optenv ROBOT_REAL false)">
+		<machine name="amigo3" address="localhost"/>
+	</group>
 </launch>
-
