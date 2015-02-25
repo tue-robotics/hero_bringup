@@ -1,0 +1,9 @@
+states:
+    pan:  [ 1.0, -1.0, -1.0, 1.0 ]
+    tilt: [ 0.4, 0.4, -0.0, -0.0 ]
+
+duration: 5.0
+priority: 10
+
+pan_vel: 0.2
+tilt_vel: 0.2
