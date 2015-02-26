@@ -24,7 +24,7 @@
 			<!-- Simulator -->
 			<include file="$(find robot_launch_files)/launch/simulator/simulator.launch" />
 
-			<node name="rgbd_encoder" pkg="rgbd" type="rgbd_server" output="screen" launch-prefix="$(arg launch-prefix)">
+			<node name="rgbd_encoder" pkg="rgbd" type="rgbd_server" output="screen">
 				<remap from="cam_info" to="/amigo/top_kinect/rgb/camera_info"/>
 				<remap from="rgb_image" to="/amigo/top_kinect/rgb/image_color"/>
 				<remap from="depth_image" to="/amigo/top_kinect/depth_registered/hw_registered/image_rect_raw"/>
