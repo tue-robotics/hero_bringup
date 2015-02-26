@@ -21,14 +21,23 @@
         <!-- Launch simulator if we are not on a real robot -->
         <group unless="$(optenv ROBOT_REAL false)">
 
-            <!-- Simulator -->
-            <include file="$(find robot_launch_files)/launch/simulator/simulator.launch" />
+			<!-- Simulator -->
+			<include file="$(find robot_launch_files)/launch/simulator/simulator.launch" />
 
-        </group>
+			<node name="rgbd_encoder" pkg="rgbd" type="rgbd_server" output="screen" launch-prefix="$(arg launch-prefix)">
+				<remap from="cam_info" to="/amigo/top_kinect/rgb/camera_info"/>
+				<remap from="rgb_image" to="/amigo/top_kinect/rgb/image_color"/>
+				<remap from="depth_image" to="/amigo/top_kinect/depth_registered/hw_registered/image_rect_raw"/>
+				<remap from="output" to="/amigo/top_kinect/rgbd"/>
+				<param name="depth_storage" value="lossless"/>
+				<param name="rgb_storage" value="lossless"/>
+			</node>
 
-        <!-- DIAGNOSTICS -->
-        <include file="$(find robot_launch_files)/launch/diagnostics/diagnostics.launch" >
-            <arg name="machine" value="amigo1" />
+		</group>
+
+		<!-- DIAGNOSTICS -->
+		<include file="$(find robot_launch_files)/launch/diagnostics/diagnostics.launch" >
+			<arg name="machine" value="amigo1" />
         </include>
 
     </group>
