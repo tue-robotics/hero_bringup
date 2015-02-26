@@ -1,9 +1,5 @@
-tf_prefix: sergio
-
 joint_names:
-  - ankle_joint
-  - knee_joint
-  - hip_joint
+  - torso_joint
   - shoulder_yaw_joint_right
   - shoulder_pitch_joint_right
   - shoulder_roll_joint_right
@@ -13,30 +9,14 @@ joint_names:
   - wrist_yaw_joint_right
 constraints:
    goal_time: 20.0
-   ankle_joint:
+   torso_joint:
         intermediate_goal: 0.02
-        trajectory: 1.059
+        trajectory: 0.4
         final_goal: 0.01
         min_pos: 0.0
-        max_pos: 1.059
-        max_vel: 0.265
-        max_acc: 0.53
-   knee_joint:
-        intermediate_goal: 0.02
-        trajectory: 2.158
-        final_goal: 0.01
-        min_pos: 0.0
-        max_pos: 2.158
-        max_vel: 0.539
-        max_acc: 1.08
-   hip_joint:
-        intermediate_goal: 0.02
-        trajectory: 3.21
-        final_goal: 0.01
-        min_pos: 0.85
-        max_pos: 2.36
-        max_vel: 0.375
-        max_acc: 0.75
+        max_pos: 0.41
+        max_vel: 0.2
+        max_acc: 0.2
    shoulder_yaw_joint_right:
         intermediate_goal: 0.02
         trajectory: 10.0
