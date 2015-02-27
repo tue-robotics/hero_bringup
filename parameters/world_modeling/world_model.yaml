@@ -114,15 +114,12 @@ plugins:
   lib: libed_gui_server_plugin.so
   parameters:
       robot_name: amigo
-- name: obstacle_grid_publisher
-  lib: libed_occupancy_grid_publisher_plugin.so
+- name: navigation
+  lib: libed_navigation_plugin.so
   parameters:
-      frequency: 10
-      resolution: 0.05
-      topic: /amigo/ed_map
-      frame_id: /map
-      sim_time: 1.0
-      object_persistence_time: 10
+      occupancy_grid_publisher:
+          resolution: 0.05
+          frame_id: /map
 - name: tf_publisher
   lib: libed_tf_publisher_plugin.so
   parameters:

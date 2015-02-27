@@ -22,7 +22,7 @@ plugins:
 
 # Ed World model layer
 ed_occupancy_grid:
-    map_topic: /amigo/ed_map
+    map_topic: /amigo/ed/navigation/map
     track_unknown_space: false
 
 recent_obstacles:
