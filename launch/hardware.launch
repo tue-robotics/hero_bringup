@@ -11,6 +11,7 @@
                 -s $(env ROBOT_PARAMETER_PATH)/hardware/actuators/base_controller_pos.ops
                 -s $(env ROBOT_PARAMETER_PATH)/hardware/actuators/spindle_controller.ops
                 -s $(env ROBOT_PARAMETER_PATH)/hardware/actuators/left_arm_controller.ops
+                -s $(env ROBOT_PARAMETER_PATH)/hardware/actuators/right_arm_controller.ops
                 -s $(env ROBOT_PARAMETER_PATH)/hardware/actuators/head_controller.ops
                 -s $(env ROBOT_PARAMETER_PATH)/hardware/actuators/rgb_lights.ops
             "/>
