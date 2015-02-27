@@ -7,7 +7,7 @@ ik_max_iterations: 500
 root_link: base_link
 tip_link: grippoint_left
 robot_description: /amigo/robot_description
-use_constrained_solver: true
+use_constrained_solver: false
 
 # Pre-grasping parameters
 max_yaw_delta: 2.0
