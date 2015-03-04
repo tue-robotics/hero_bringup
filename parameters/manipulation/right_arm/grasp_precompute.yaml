@@ -5,7 +5,7 @@ ik_max_iterations: 500
 
 # Chain information
 root_link: base_link
-tip_link: grippoint_left
+tip_link: grippoint_right
 robot_description: /amigo/robot_description
 use_constrained_solver: false
 
