@@ -132,6 +132,14 @@ plugins:
             tolerance: 0.035
             min_cluster_size: 20
             visualize: 0
+#- name: laser_integration
+#  lib: libed_laser_plugin.so
+#  parameters:
+#      laser_topic: /amigo/base_laser/scan
+#- name: laser_integration
+#  lib: libed_laser_plugin.so
+#  parameters:
+#      laser_topic: /amigo/torso_laser/scan
 - name: localization
   lib: libed_localization_plugin.so
   parameters:
