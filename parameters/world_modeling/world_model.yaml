@@ -67,6 +67,16 @@ perception:
         left_eye_horiz_offset: 0.25       # offset of the left eye from the left of the image
         max_faces_learn: 10               # number of samples to be learned for each new face
 
+    - lib: liblaser_human_chest_classifier.so
+      parameters:
+        people_detector_threshold: 0.05
+        max_point_distance: 10.0
+        hypotheses_filename: /training_files/hypo_with_arms_full.dat
+        num_hypotheses: 100
+        list_size: 500
+        min_segment_size: 0.2
+        min_n_points: 5
+
     - lib: libtype_aggregator.so
       parameters:
         classification_threshold: 0.5     # final classification threshold
