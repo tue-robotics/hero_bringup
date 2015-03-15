@@ -13,15 +13,21 @@ ros.import("amigo_hardware")
 
 #### DECLARATION OF PARAMETERS ####
 var double TS 					= 0.001
-var string LEFT_ARM_SHOULDER 	= "Soem.Slave_1011"
-var string LEFT_ARM_UPPERARM 	= "Soem.Slave_1012"
-var string LEFT_ARM_LOWERARM 	= "Soem.Slave_1013"
+var string LEFT_ARM_SHOULDER 	= "Soem.Slave_1012"
+var string LEFT_ARM_UPPERARM 	= "Soem.Slave_1013"
+var string LEFT_ARM_LOWERARM 	= "Soem.Slave_1014"
+var string RIGHT_ARM_SHOULDER 	= "Soem.Slave_1018"
+var string RIGHT_ARM_UPPERARM 	= "Soem.Slave_1019"
+var string RIGHT_ARM_LOWERARM 	= "Soem.Slave_101a"
 		
 #### MAKING PARAMETERS GLOBAL #### to do find a way to add a doubles/ints globally
 loadService("HARDWARE","os")
 os.setenv("LEFT_ARM_SHOULDER",LEFT_ARM_SHOULDER)
 os.setenv("LEFT_ARM_UPPERARM",LEFT_ARM_UPPERARM)
 os.setenv("LEFT_ARM_LOWERARM",LEFT_ARM_LOWERARM)
+os.setenv("RIGHT_ARM_SHOULDER",RIGHT_ARM_SHOULDER)
+os.setenv("RIGHT_ARM_UPPERARM",RIGHT_ARM_UPPERARM)
+os.setenv("RIGHT_ARM_LOWERARM",RIGHT_ARM_LOWERARM)
 
 #### LOAD SUPERVISOR ###
 loadComponent("Supervisor","SUPERVISORY::Supervisor")
@@ -66,6 +72,20 @@ BASESPINDLE_AnalogOuts.output_positions 			= array (1.0, 1.0, 1.0, 1.0, 1.0, 0.0
 BASESPINDLE_AnalogOuts.configure
 connect ("BASESPINDLE_AnalogOuts.out1","Soem.Slave_100d.values", ConnPolicy() );
 
+##### LOAD COMPONENT TO ENABLE ANALOG OUTS PERA ###
+loadComponent("RPERA_AnalogOuts","SOEM::AnalogOutsGeneric")
+addPeer("Supervisor","RPERA_AnalogOuts")
+setActivity("RPERA_AnalogOuts",0.0,HighestPriority,ORO_SCHED_RT)
+RPERA_AnalogOuts.numberofinports    				= 1
+RPERA_AnalogOuts.numberofoutports    				= 3
+RPERA_AnalogOuts.input_sizes 						= array (8.0)
+RPERA_AnalogOuts.output_sizes 						= array (3.0, 3.0, 3.0)
+RPERA_AnalogOuts.output_positions 					= array (1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
+RPERA_AnalogOuts.configure
+connect ("RPERA_AnalogOuts.out1",RIGHT_ARM_SHOULDER+".pwmDutyMotors", ConnPolicy() );
+connect ("RPERA_AnalogOuts.out2",RIGHT_ARM_UPPERARM+".pwmDutyMotors", ConnPolicy() );
+connect ("RPERA_AnalogOuts.out3",RIGHT_ARM_LOWERARM+".pwmDutyMotors", ConnPolicy() );
+
 #### LOAD COMPONENT TO ENABLE ANALOG OUTS PERA ###
 loadComponent("LPERA_AnalogOuts","SOEM::AnalogOutsGeneric")
 addPeer("Supervisor","LPERA_AnalogOuts")
@@ -91,6 +111,22 @@ BATTERY_AnalogIns.from_which_entry                                      = array 
 BATTERY_AnalogIns.configure
 connect ("Soem.Slave_100e.values","BATTERY_AnalogIns.beckhoffmsg_in_1", ConnPolicy() );
 stream("BATTERY_AnalogIns.rosmsg_out_1", ros.topic("/amigo/battery_value"))
+
+##### LOAD COMPONENT TO ENABLE ANALOG INS PERA ###
+loadComponent("RPERA_AnalogIns","SOEM::AnalogInsGeneric")
+addPeer("Supervisor","RPERA_AnalogIns")
+setActivity("RPERA_AnalogIns",TS,HighestPriority,ORO_SCHED_RT)
+RPERA_AnalogIns.inport_dimensions                                       = array (3.0, 3.0, 3.0, 3.0, 3.0, 3.0)
+RPERA_AnalogIns.outport_dimensions                                      = array (8.0, 8.0)
+RPERA_AnalogIns.from_which_inport                                       = array (1.0, 1.0, 2.0, 2.0, 2.0, 3.0, 3.0, 3.0, 4.0, 4.0, 5.0, 5.0, 5.0, 6.0, 6.0, 6.0)
+RPERA_AnalogIns.from_which_entry                                        = array (1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0, 1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0)
+RPERA_AnalogIns.configure
+connect (RIGHT_ARM_SHOULDER+".forceSensors","RPERA_AnalogIns.beckhoffmsg_in_1", ConnPolicy() )
+connect (RIGHT_ARM_UPPERARM+".forceSensors","RPERA_AnalogIns.beckhoffmsg_in_2", ConnPolicy() )
+connect (RIGHT_ARM_LOWERARM+".forceSensors","RPERA_AnalogIns.beckhoffmsg_in_3", ConnPolicy() )
+connect (RIGHT_ARM_SHOULDER+".positionSensors","RPERA_AnalogIns.beckhoffmsg_in_4", ConnPolicy() )
+connect (RIGHT_ARM_UPPERARM+".positionSensors","RPERA_AnalogIns.beckhoffmsg_in_5", ConnPolicy() )
+connect (RIGHT_ARM_LOWERARM+".positionSensors","RPERA_AnalogIns.beckhoffmsg_in_6", ConnPolicy() )
 
 #### LOAD COMPONENT TO ENABLE ANALOG INS PERA ###
 loadComponent("LPERA_AnalogIns","SOEM::AnalogInsGeneric")
@@ -158,11 +194,13 @@ connect ("EnableAmps.out", "DigitalOuts.in2", ConnPolicy() ); # tue-logo
 #### START COMPONENTS ####
 Supervisor.AddAllwaysOnPeer ("JointStateAggregator")
 Supervisor.AddAllwaysOnPeer ("BASESPINDLE_AnalogOuts")
+Supervisor.AddAllwaysOnPeer ("RPERA_AnalogOuts")
 Supervisor.AddAllwaysOnPeer ("LPERA_AnalogOuts")
 Supervisor.AddAllwaysOnPeer ("DigitalOuts")
 Supervisor.AddAllwaysOnPeer ("DigitalOuts2")
 Supervisor.AddAllwaysOnPeer ("Soem")
 Supervisor.AddAllwaysOnPeer ("BATTERY_AnalogIns")
+Supervisor.AddAllwaysOnPeer ("RPERA_AnalogIns")
 Supervisor.AddAllwaysOnPeer ("LPERA_AnalogIns")
 Supervisor.AddAllwaysOnPeer ("DigitalIns")
 Supervisor.AddAllwaysOnPeer ("DigitalIns2")
