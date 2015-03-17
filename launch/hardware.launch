@@ -44,9 +44,10 @@
             <arg name="name" value="base_laser"/>
             <arg name="machine" value="amigo1"/>
         </include>
-        <!--include file="$(find robot_launch_files)/launch/hardware/sensors/laser.launch">
+        <include file="$(find robot_launch_files)/launch/hardware/sensors/laser.launch">
             <arg name="name" value="torso_laser"/>
-        </include-->
+            <arg name="machine" value="amigo2"/>
+        </include>
 
     </group>
 
