@@ -36,7 +36,7 @@ SPINDLE_ReadEncoders.configure
 # Publish JointState Component
 loadComponent("SPINDLE_WriteJointStates","ROS::DoublesToJointState")
 addPeer("Supervisor","SPINDLE_WriteJointStates")
-setActivity("SPINDLE_WriteJointStates",0.05,LowestPriority,ORO_SCHED_OTHER)
+setActivity("SPINDLE_WriteJointStates",0.005,LowestPriority,ORO_SCHED_OTHER)
 SPINDLE_WriteJointStates.JointNames 		= JOINT_NAMES
 SPINDLE_WriteJointStates.configure
 
