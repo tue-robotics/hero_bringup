@@ -82,9 +82,9 @@ DWAPlannerROS:
     align_cmd_nth: 0.0
     
     default_cmd_px:  0.0
-    default_cmd_nx:  0.0
-    default_cmd_py:  0.0
-    default_cmd_ny:  0.0
+    default_cmd_nx:  100.0
+    default_cmd_py:  10.0
+    default_cmd_ny:  10.0
     default_cmd_pth: 0.0
     default_cmd_nth: 0.0
     
