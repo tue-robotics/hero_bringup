@@ -13,8 +13,8 @@ var string LEFT_ARM_UPPERARM 	= os.getenv("LEFT_ARM_UPPERARM")
 var string LEFT_ARM_LOWERARM 	= os.getenv("LEFT_ARM_LOWERARM")
 var strings JOINT_NAMES 		= strings( "shoulder_yaw_joint_left", "shoulder_pitch_joint_left", "shoulder_roll_joint_left", "elbow_pitch_joint_left", "elbow_roll_joint_left", "wrist_pitch_joint_left", "wrist_yaw_joint_left" )
 var strings DUMMY_JOINT_NAMES 	= strings( "finger1_joint_left", "finger1_tip_joint_left", "finger2_joint_left", "finger2_tip_joint_left" )
-var array UPPERJOINTLIMIT 		= array (	0.0,		1.57,		1.57, 		2.23,  		1.83, 		0.95,  		0.61,  		4.0		)
-var array LOWERJOINTLIMIT 		= array (	-1.57,		-1.57,		-1.57,  	0.0, 		-1.83,		-0.95, 		-0.61, 		-4.0	)
+var array UPPERJOINTLIMIT 		= array (	0.0,		1.57,		1.57, 		2.23,  		1.83, 		0.95,  		0.61,  		7.5		)
+var array LOWERJOINTLIMIT 		= array (	-1.57,		-1.57,		-1.57,  	0.0, 		-1.83,		-0.95, 		-0.61, 		-1.0	)
 var array HOMINGSTROKE 			= array (	0.0,		0.0,		-1.57,  	0.0, 		-1.83,		-0.95, 		-0.75, 		0.0		)
 var array MAXERRORS 			= array (	0.09,     	0.09,   	0.09,     	0.09, 	   	0.09,    	0.09, 	   	0.09, 		2.0		)
 var array ABSPOS				= array	(	0.638,		2.11,		0.0,		0.0,		0.0,		0.0,		0.0,		0.0		)
@@ -94,8 +94,8 @@ LPERA_ReadEncoders.configure
 loadComponent("LPERA_GripperControl","ARM::GripperControl")
 addPeer("Supervisor","LPERA_GripperControl")
 setActivity("LPERA_GripperControl",TS,HighestPriority,ORO_SCHED_RT)
-LPERA_GripperControl.threshold_closed 		= 25.0
-LPERA_GripperControl.max_pos 				= 5.3
+LPERA_GripperControl.threshold_closed 		= 24.0
+LPERA_GripperControl.max_pos 				= 7.0
 LPERA_GripperControl.gripper_gain 			= 0.1
 LPERA_GripperControl.configure
 
