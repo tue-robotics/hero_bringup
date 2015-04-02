@@ -17,7 +17,7 @@ var array UPPERJOINTLIMIT 		= array (	0.0,		1.57,		1.57, 		2.23,  		1.83, 		0.95
 var array LOWERJOINTLIMIT 		= array (	-1.57,		-1.57,		-1.57,  	0.0, 		-1.83,		-0.95, 		-0.61, 		-1.0	)
 var array HOMINGSTROKE 			= array (	0.0,		0.0,		-1.57,  	0.0, 		-1.83,		-0.95, 		-0.75, 		0.0		)
 var array MAXERRORS 			= array (	0.09,     	0.09,   	0.09,     	0.09, 	   	0.09,    	0.09, 	   	0.09, 		2.0		)
-var array ABSPOS				= array	(	1.07,		1.72,		0.0,		0.0,		0.0,		0.0,		0.0,		0.0		)
+var array ABSPOS				= array	(	1.11,		1.72,		0.0,		0.0,		0.0,		0.0,		0.0,		0.0		)
 var array MINPOS 				= array (	-1.57,		-1.57,		-1.57,  	0.0, 		-1.83,		-0.95, 		-0.61	)
 var array MAXPOS 				= array (	0.0,		1.57,		1.57, 		2.23,  		1.83, 		0.95,  		0.61	)
 var array MAXVEL 				= array (	0.4, 		0.4, 		0.6, 		0.8, 		0.8, 		1.0, 		1.0		)
@@ -266,8 +266,8 @@ connect ("RPERA_Safety.error",						"RPERA_Diagnostics.bool1", 					ConnPolicy()
 
 #### CONNECT ROS STREAMS ####
 stream ("RPERA_WriteClippedJointAngles.out", 		ros.topic("/amigo/right_arm/measurements"))
-stream ("RPERA_GripperControl.gripper_measurement", ros.topic("/amigo/right_gripper/measurements"))
-stream ("RPERA_GripperControl.gripper_command", 	ros.topic("/amigo/right_gripper/references"))
+stream ("RPERA_GripperControl.gripper_measurement", ros.topic("/amigo/right_arm/gripper/measurements"))
+stream ("RPERA_GripperControl.gripper_command", 	ros.topic("/amigo/right_arm/gripper/references"))
 stream ("RPERA_Diagnostics.diagnostics", 			ros.topic("/amigo/diagnostics"));
 
 #### START COMPONENTS ####
