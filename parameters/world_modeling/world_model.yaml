@@ -119,10 +119,10 @@ plugins:
             small_size_treshold: 0.5    # objects smaller than this (height+witdth in meters) are considered small
             medium_size_treshold: 0.7   # objects between this and the small size (height+witdth in meters) are considered medium
 
-      - lib: libed_odu_finder.so
-        parameters:
-            database_path: /database    # location of database (ed_object_models/configs/odu_finder + <this path>)
-            debug_mode: 0               # activate debug mode for extra output
+#      - lib: libed_odu_finder.so
+#        parameters:
+#            database_path: /database    # location of database (ed_object_models/configs/odu_finder + <this path>)
+#            debug_mode: 0               # activate debug mode for extra output
 
       - lib: libcolor_matcher.so
         parameters:
