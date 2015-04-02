@@ -108,6 +108,7 @@ plugins:
 
 - name: perception
   lib: libed_perception_plugin.so
+  frequency: 2
   parameters:
     fit_shapes: 1
     model_list: all_models.yml
@@ -182,7 +183,7 @@ plugins:
           min_segment_size: 0.2
           min_n_points: 5
 
-      - lib: libtype_aggregator.so
-        parameters:
-          classification_threshold: 0.5     # final classification threshold
+#      - lib: libtype_aggregator.so
+#        parameters:
+#          classification_threshold: 0.5     # final classification threshold
           
