@@ -1,7 +1,7 @@
 states:
     x:    [ 1.26, 1.5, 1.26, 2.52, 3.0, 2.52 ] # Three points at radius 1.5, three at radius 3, angles -1, 0 and 1
     y:    [ 0.81, 0.0,-0.81,-1.6 , 0.0, 1.6  ]
-    z:    [ 0.0 , 0.0, 0.0 , 1.5 , 1.5, 1.5  ] # Three points at height 0.0, three at 1.5
+    z:    [ 0.5 , 0.5, 0.5 , 1.5 , 1.5, 1.5  ] # Three points at height 0.0, three at 1.5
 
 duration: 1.5
 priority: 10
