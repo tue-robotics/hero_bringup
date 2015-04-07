@@ -60,6 +60,8 @@ setActivity("TrajectoryActionlib",TS,HighestPriority, ORO_SCHED_RT)
 loadService("TrajectoryActionlib","actionlib")
 TrajectoryActionlib.actionlib.connect("/amigo/body/joint_trajectory_action");
 TrajectoryActionlib.actionlib.connect("/amigo/left_arm/joint_trajectory_action");
+TrajectoryActionlib.actionlib.connect("/amigo/right_arm/joint_trajectory_action");
+TrajectoryActionlib.actionlib.connect("/amigo/torso_arm/joint_trajectory_action");
 TrajectoryActionlib.configure
 
 ### LOAD SOEM COMPONENT FOR ETHERCAT COMMUNICATION ###
