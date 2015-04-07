@@ -45,18 +45,18 @@ var bool HOMEABLE 				= true
 var bool HOMINGOBLIGATORY		= false
 var bool RESETTABLE				= true
 
-### Configuring Supervisor, JointStateAggregator and GlobalReferenceGenerator
+### Configuring Supervisor, JointStateAggregator and TrajectoryActionlib
 Supervisor.AddBodyPart( BODYNUMBER, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RESETTABLE)
 JointStateAggregator.addJointNames(JOINT_NAMES)
 JointStateAggregator.addJointNames(DUMMY_JOINT_NAMES)
 JointStateAggregator.addAggregationPort(BODYPARTNAME)
-GlobalReferenceGenerator.AddBodyPart (BODYNUMBER, JOINT_NAMES)
-GlobalReferenceGenerator.minPos4			= MINPOS
-GlobalReferenceGenerator.maxPos4			= MAXPOS
-GlobalReferenceGenerator.maxVel4			= MAXVEL
-GlobalReferenceGenerator.maxAcc4			= MAXACC
-GlobalReferenceGenerator.interpolatorDt4 	= TS
-GlobalReferenceGenerator.interpolatorEps4	= 1.0
+TrajectoryActionlib.AddBodyPart (BODYNUMBER, JOINT_NAMES)
+TrajectoryActionlib.minPos4			= MINPOS
+TrajectoryActionlib.maxPos4			= MAXPOS
+TrajectoryActionlib.maxVel4			= MAXVEL
+TrajectoryActionlib.maxAcc4			= MAXACC
+TrajectoryActionlib.interpolatorDt4 	= TS
+TrajectoryActionlib.interpolatorEps4	= 1.0
 
 #### HIGH PRIORITY COMPONENTS ####
 
@@ -172,8 +172,9 @@ RPERA_SensorTorques.configure
 loadComponent("RPERA_Homing","SUPERVISORY::Homing")
 connectPeers("Supervisor","RPERA_Homing")
 addPeer("RPERA_Homing","RPERA_ReadEncoders")
-addPeer("RPERA_Homing","GlobalReferenceGenerator")
+addPeer("RPERA_Homing","TrajectoryActionlib")
 addPeer("RPERA_Homing","RPERA_Safety")
+addPeer("RPERA_Homing","RPERA_GripperControl")
 setActivity("RPERA_Homing",TS,HighestPriority,ORO_SCHED_RT)
 RPERA_Homing.vector_size 					= N
 RPERA_Homing.number_of_outports 			= 2
@@ -227,8 +228,8 @@ connect ("RPERA_JointToMotorSpace.out",				"RPERA_AnalogOuts.in1", 					ConnPoli
 connect ("RPERA_AnalogIns.stdvect_out_1",			"RPERA_SensorTorques.voltage_in", 			ConnPolicy() ); # TorqueSensor
 
 ## References ##
-connect ("RPERA_ReadEncoders.out",					"GlobalReferenceGenerator.current_pos4",	ConnPolicy() ); # Ref Pos
-connect ("GlobalReferenceGenerator.pos_out4",		"RPERA_Controller.ref_in1", 				ConnPolicy() ); # Ref Pos
+connect ("RPERA_ReadEncoders.out",					"TrajectoryActionlib.current_pos4",	ConnPolicy() ); # Ref Pos
+connect ("TrajectoryActionlib.pos_out4",		"RPERA_Controller.ref_in1", 				ConnPolicy() ); # Ref Pos
 
 ## Gripper control ##
 connect ("RPERA_SensorTorques.measured_torques_out","RPERA_GripperControl.torque_in", 			ConnPolicy() ); # Torqin
@@ -259,7 +260,7 @@ connect ("RPERA_Homing.posout1",					"RPERA_Controller.ref_in1", 				ConnPolicy(
 connect ("RPERA_Homing.posout2",					"RPERA_Controller.ref_in2", 				ConnPolicy() ); # Ref Pos
 
 ## Diagnostics ##
-connect ("GlobalReferenceGenerator.pos_out4", 		"RPERA_Diagnostics.vec1", 					ConnPolicy() ); # Reference
+connect ("TrajectoryActionlib.pos_out4", 		"RPERA_Diagnostics.vec1", 					ConnPolicy() ); # Reference
 connect ("RPERA_Controller.jointErrors",			"RPERA_Diagnostics.vec2", 					ConnPolicy() ); # JointErrors
 connect ("RPERA_Controller.out", 					"RPERA_Diagnostics.vec3", 					ConnPolicy() ); # ControlEffort
 connect ("RPERA_Safety.error",						"RPERA_Diagnostics.bool1", 					ConnPolicy() ); # Enable
