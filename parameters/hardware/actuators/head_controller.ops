@@ -25,6 +25,8 @@ var string BODYPARTNAME 			= "head"
 var bool HOMEABLE 					= false
 var bool HOMINGOBLIGATORY			= false
 var bool RESETTABLE					= false
+var string ROBOT 			= os.getenv("ROBOT")
+
 ### AddBodyPart ###
 Supervisor.AddBodyPart( BODYNUMBER, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RESETTABLE)
 
@@ -55,9 +57,9 @@ connect ("HEAD_PanTiltController.errortosupervisor",	"Supervisor.head_error", 		
 connect ("HEAD_Enabler.out",							"HEAD_PanTiltController.enabler", 		ConnPolicy() ); # Enable
 
 #### CONNECT ROS STREAMS ####
-stream( "HEAD_PanTiltController.goalPos", 				ros.topic("/amigo/neck/references"))
-stream( "HEAD_PanTiltController.currentPos", 			ros.topic("/amigo/neck/measurements"))
-stream( "HEAD_PanTiltController.currentPos", 			ros.topic("/amigo/joint_states"))
+stream( "HEAD_PanTiltController.goalPos", 				ros.topic(ROBOT+"/neck/references"))
+stream( "HEAD_PanTiltController.currentPos", 			ros.topic(ROBOT+"/neck/measurements"))
+stream( "HEAD_PanTiltController.currentPos", 			ros.topic(ROBOT+"/joint_states"))
 
 #### START COMPONENTS ####
 Supervisor.AddAllwaysOnPeer ("HEAD_PanTiltController")

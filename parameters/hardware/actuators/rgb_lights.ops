@@ -9,6 +9,7 @@
 
 #### DECLARATION OF PARAMETERS ####
 var double Ts = 0.001
+var string ROBOT 			= os.getenv("ROBOT")
 
 #### RGB CONTROLLER ####
 loadComponent("RGB_light_controller", "LIGHTING::rgb_controller")
@@ -22,7 +23,7 @@ connect ("RGB_light_controller.green", 	"DigitalOuts.in7", 	ConnPolicy() );	#Gre
 connect ("RGB_light_controller.blue", 	"DigitalOuts.in8", 	ConnPolicy() );	#Blue
 
 #### CONNECT ROS STREAMS ####
-stream("RGB_light_controller.rgbtopic", ros.topic("/amigo/rgb_lights_controller/reference"));
+stream("RGB_light_controller.rgbtopic", ros.topic(ROBOT+"/rgb_lights_controller/reference"));
 
 #### START COMPONENTS ####
 Supervisor.AddAllwaysOnPeer ("RGB_light_controller")
