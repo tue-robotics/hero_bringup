@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <group ns="amigo">
+       
+        <!-- gmapping -->
+        <include file="$(find robot_launch_files)/launch/gmapping/gmapping.launch">
+            <arg name="machine" value="amigo1"/>
+	    <arg name="sensor" value="base_laser"/>
+        </include> 
+
+    </group>
+
+</launch>

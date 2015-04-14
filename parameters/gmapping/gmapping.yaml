@@ -1,0 +1,19 @@
+odom_frame: "/amigo/odom"
+base_frame: "/amigo/base_link"
+delta: 0.025
+
+# Initial map size
+xmin: -1
+ymin: -3
+xmax: 5
+ymax: 3
+
+# The maximum usable range of the laser
+maxUrange: 8
+
+# Number of beams to skip in each scan (default 0) -->
+lskip: 0
+
+# Process a scan each time the robot translates/rotates this far (default 1.0, 0.5)
+linearUpdate: 1.0
+angularUpdate: 0.5
