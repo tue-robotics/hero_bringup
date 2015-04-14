@@ -60,7 +60,7 @@ loadService("TrajectoryActionlib","actionlib")
 TrajectoryActionlib.actionlib.connect(ROBOT+"/body/joint_trajectory_action");
 TrajectoryActionlib.actionlib.connect(ROBOT+"/left_arm/joint_trajectory_action");
 TrajectoryActionlib.actionlib.connect(ROBOT+"/right_arm/joint_trajectory_action");
-TrajectoryActionlib.actionlib.connect(ROBOT+"/torso_arm/joint_trajectory_action");
+TrajectoryActionlib.actionlib.connect(ROBOT+"/torso_server");
 TrajectoryActionlib.configure
 
 ### LOAD SOEM COMPONENT FOR ETHERCAT COMMUNICATION ###
