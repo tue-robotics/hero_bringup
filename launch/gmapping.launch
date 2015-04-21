@@ -5,7 +5,7 @@
     <group ns="amigo">
        
         <!-- gmapping -->
-        <include file="$(find robot_launch_files)/launch/gmapping/gmapping.launch">
+        <include file="$(find robot_launch_files)/launch/localization/gmapping.launch">
             <arg name="machine" value="amigo1"/>
 	    <arg name="sensor" value="base_laser"/>
         </include> 
