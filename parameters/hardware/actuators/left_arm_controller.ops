@@ -44,7 +44,6 @@ var string BODYPARTNAME 		= "left_arm"
 var bool HOMEABLE 				= true
 var bool HOMINGOBLIGATORY		= false
 var bool RESETTABLE				= true
-var string ROBOT 			= os.getenv("ROBOT")
 
 ### Configuring Supervisor, JointStateAggregator and TrajectoryActionlib
 Supervisor.AddBodyPart( BODYNUMBER, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RESETTABLE)
@@ -52,12 +51,12 @@ JointStateAggregator.addJointNames(JOINT_NAMES)
 JointStateAggregator.addJointNames(DUMMY_JOINT_NAMES)
 JointStateAggregator.addAggregationPort(BODYPARTNAME)
 TrajectoryActionlib.AddBodyPart (BODYNUMBER, JOINT_NAMES)
-TrajectoryActionlib.minPos3					= MINPOS
-TrajectoryActionlib.maxPos3					= MAXPOS
-TrajectoryActionlib.maxVel3					= MAXVEL
-TrajectoryActionlib.maxAcc3					= MAXACC
-TrajectoryActionlib.interpolatorDt3 		= TS
-TrajectoryActionlib.interpolatorEps3		= 1.0
+TrajectoryActionlib.minPos3			= MINPOS
+TrajectoryActionlib.maxPos3			= MAXPOS
+TrajectoryActionlib.maxVel3			= MAXVEL
+TrajectoryActionlib.maxAcc3			= MAXACC
+TrajectoryActionlib.interpolatorDt3 	= TS
+TrajectoryActionlib.interpolatorEps3	= 1.0
 
 #### HIGH PRIORITY COMPONENTS ####
 
@@ -267,10 +266,10 @@ connect ("LPERA_Controller.out", 					"LPERA_Diagnostics.vec3", 					ConnPolicy(
 connect ("LPERA_Safety.error",						"LPERA_Diagnostics.bool1", 					ConnPolicy() ); # Enable
 
 #### CONNECT ROS STREAMS ####
-stream ("LPERA_WriteClippedJointAngles.out", 		ros.topic(ROBOT+"/left_arm/measurements"))
-stream ("LPERA_GripperControl.gripper_measurement", ros.topic(ROBOT+"/left_arm/gripper/measurements"))
-stream ("LPERA_GripperControl.gripper_command", 	ros.topic(ROBOT+"/left_arm/gripper/references"))
-stream ("LPERA_Diagnostics.diagnostics", 			ros.topic(ROBOT+"/diagnostics"));
+stream ("LPERA_WriteClippedJointAngles.out", 		ros.topic("/amigo/left_arm/measurements"))
+stream ("LPERA_GripperControl.gripper_measurement", ros.topic("/amigo/left_arm/gripper/measurements"))
+stream ("LPERA_GripperControl.gripper_command", 	ros.topic("/amigo/left_arm/gripper/references"))
+stream ("LPERA_Diagnostics.diagnostics", 			ros.topic("/amigo/diagnostics"));
 
 #### START COMPONENTS ####
 Supervisor.AddAllwaysOnPeer(	"LPERA_ReadEncoders")

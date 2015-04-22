@@ -21,7 +21,7 @@ var double SI2V 			= TORQUE2CURRENT * CURRENT2VOLT * GEARRATIO
 var array MAX_ERRORS 		= array ( 2.2, 2.2, 2.2, 2.2 )
 var array MAX_VELOCITIES	= array (1.8, 1.0, 3.1415)
 var int N					= 4
-var string ROBOT 			= os.getenv("ROBOT")
+var string ROBOT 			= "/amigo"
 var int BODYNUMBER 			= 1
 var string BODYPARTNAME 	= "base"
 var bool HOMEABLE 			= false
@@ -53,8 +53,8 @@ BASE_MotorToJointSpace.function3 = array ( 0.25*WHEELRAD/DIS2CENT,   0.25*WHEELR
 loadComponent("BASE_OdometryPublisher","ROS::PublishOdometry")
 addPeer("Supervisor","BASE_OdometryPublisher")
 setActivity("BASE_OdometryPublisher",0.05,LowestPriority,ORO_SCHED_OTHER)
-BASE_OdometryPublisher.base_link_frame = ROBOT+"/base_link"
-BASE_OdometryPublisher.odom_frame = ROBOT+"/odom"
+BASE_OdometryPublisher.base_link_frame = "/amigo/base_link"
+BASE_OdometryPublisher.odom_frame = "/amigo/odom"
 BASE_OdometryPublisher.configure
 
 ### READ REFERENCE VELOCITIES ###
