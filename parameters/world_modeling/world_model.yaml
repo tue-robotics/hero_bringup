@@ -30,8 +30,9 @@ plugins:
 - name: kinect_integration
   lib: libed_kinect2_plugin.so
   parameters:
+      debug: 0
       topic: /amigo/top_kinect/rgbd
-      max_correspondence_distance: 0.2
+      max_correspondence_distance: 0.1
       max_range: 3.0
 #- name: kinect_integration
 #  lib: libed_kinect_plugin.so
@@ -109,6 +110,7 @@ plugins:
 - name: perception
   lib: libed_perception_plugin.so
   frequency: 2
+  enabled: 1
   parameters:
     fit_shapes: 1
     model_list: all_models.yml
