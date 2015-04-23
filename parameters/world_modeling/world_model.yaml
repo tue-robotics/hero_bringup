@@ -110,11 +110,11 @@ plugins:
 
 - name: perception
   lib: libed_perception_plugin.so
-  frequency: 2
+  frequency: 5
   enabled: 1
   parameters:
     fit_shapes: 1
-    model_list: all_models.yml
+    model_list: test_rgo2015.yml
     modules:
       - lib: libsize_matcher.so
         parameters:
@@ -127,8 +127,9 @@ plugins:
 
       - lib: libed_odu_finder.so
         parameters:
-            database_path: /database    # location of database (ed_object_models/configs/odu_finder + <this path>)
-            debug_mode: 0               # activate debug mode for extra output
+            database_path: /rgo2015/database    # location of database (ed_object_models/configs/odu_finder + <this path>)
+            debug_folder: /tmp/odu_finder/
+            debug_mode: 1               # activate debug mode for extra output
             type_unknown_score: 0.05    # default score for an unknown entity
 
       - lib: libcolor_matcher.so
