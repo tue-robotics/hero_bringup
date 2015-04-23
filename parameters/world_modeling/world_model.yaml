@@ -114,7 +114,7 @@ plugins:
   enabled: 1
   parameters:
     fit_shapes: 1
-    model_list: test_rgo2015.yml
+    model_list: rgo_2015.yml
     modules:
       - lib: libsize_matcher.so
         parameters:
