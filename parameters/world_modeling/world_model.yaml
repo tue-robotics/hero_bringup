@@ -22,6 +22,7 @@ plugins:
           frame_id: /map
           min_z: 0.05
           max_z: 1.8
+          default_offset: 0.7
 - name: tf_publisher
   lib: libed_tf_publisher_plugin.so
   parameters:
