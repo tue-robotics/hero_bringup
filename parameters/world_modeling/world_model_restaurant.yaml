@@ -1,0 +1,35 @@
+world_name: empty
+
+# -----------------------------------------------------------------------------------------------------------------------------
+
+plugins:
+- name: robot_plugin
+  lib: libed_robot_plugin.so
+  parameters:
+      robot_name: amigo
+      urdf_rosparam: /amigo/robot_description
+      joint_topics:
+        - topic: /amigo/joint_states
+- name: gui_server
+  lib: libed_gui_server_plugin.so
+  parameters:
+      robot_name: amigo
+- name: navigation
+  lib: libed_navigation_plugin.so
+  parameters:
+      occupancy_grid_publisher:
+          resolution: 0.05
+          frame_id: /map
+          min_z: 0.05
+          max_z: 1.8
+          default_offset: 0.7
+- name: tf_publisher
+  lib: libed_tf_publisher_plugin.so
+  parameters:
+      root_frame_id: /map
+      exclude: amigo
+- name: laser_integration
+  lib: libed_laser_plugin.so
+  enabled: 1
+  parameters:
+      laser_topic: /amigo/torso_laser/scan
