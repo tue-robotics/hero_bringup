@@ -173,7 +173,7 @@ plugins:
       - lib: libface_recognition_ed.so
         parameters:
             debug_mode: 0                     # activate debug mode for extra output
-            save_learned_faces: 1             # automatically save faces learned (boolean)
+            save_learned_faces: 0             # automatically save faces learned (boolean)
             saved_faces_dir: /faces_learned/  # location of saved faces (<HOME FODLER> + <this path>)
             use_Eigen: 0                      # enable Eingen Faces recognition (boolean)
             use_Fisher: 1                     # enable Fisher Faces recognition (boolean)
