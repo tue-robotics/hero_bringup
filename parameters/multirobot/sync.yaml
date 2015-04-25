@@ -4,3 +4,46 @@ sync_hosts: ['amigo1','sergio1']
 #sync_services: ['/amigo/ed/simple_query','/sergio/ed/simple_query']
 sync_nodes: ['/amigo/ed','/sergio/ed','/final_exec_amigo','/final_exec_sergio']
 
+ignore_topics:
+    - /tf
+    - /tf_static
+    - /amigo/ed/face_recognition/learn_face/feedback
+    - /amigo/ed/face_recognition/learn_face/result
+    - /amigo/ed/kinect/viz/model_normals
+    - /amigo/ed/profile/ed
+    - /amigo/ed/localization/particles
+    - /amigo/ed/kinect/viz/depth_render
+    - /amigo/ed/navigation/map
+    - /amigo/ed/gui/entities
+    - /amigo/ed/face_recognition/learn_face/status
+    - /rosout
+    - /rosout_agg
+    - /amigo/ed/kinect/viz/clusters
+    - /amigo/ed/kinect/viz/sensor_normals
+    - /amigo/ed/stats
+    - /amigo/ed/kinect/viz/update_request
+    - /amigo/base_laser/scan
+    - /amigo/top_kinect/rgbd
+    - /amigo/ed/face_recognition/learn_face/cancel
+    - /amigo/joint_states
+    - /amigo/initialpose
+    - /amigo/ed/face_recognition/learn_face/goal
+    - /sergio/ed/face_recognition/learn_face/feedback
+    - /sergio/ed/face_recognition/learn_face/result
+    - /sergio/ed/kinect/viz/model_normals
+    - /sergio/ed/profile/ed
+    - /sergio/ed/localization/particles
+    - /sergio/ed/kinect/viz/depth_render
+    - /sergio/ed/navigation/map
+    - /sergio/ed/gui/entities
+    - /sergio/ed/face_recognition/learn_face/status
+    - /sergio/ed/kinect/viz/clusters
+    - /sergio/ed/kinect/viz/sensor_normals
+    - /sergio/ed/stats
+    - /sergio/ed/kinect/viz/update_request
+    - /sergio/base_laser/scan
+    - /sergio/top_kinect/rgbd
+    - /sergio/ed/face_recognition/learn_face/cancel
+    - /sergio/joint_states
+    - /sergio/initialpose
+    - /sergio/ed/face_recognition/learn_face/goal
