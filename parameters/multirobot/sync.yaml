@@ -1,0 +1,2 @@
+sync_hosts: ['sergio1','athome10']
+sync_services: ['/amigo/get_alive_nodes']
