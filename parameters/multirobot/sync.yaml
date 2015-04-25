@@ -1,3 +1,6 @@
-sync_hosts: ['sergio1']
-sync_topics: ['/amigo/diagnostics']
-sync_nodes: ['/amigo/node_alive_server']
+sync_hosts: ['amigo1','sergio1']
+
+#sync_topics: ['/amigo/trigger','/sergio/trigger']
+#sync_services: ['/amigo/ed/simple_query','/sergio/ed/simple_query']
+sync_nodes: ['/amigo/ed','/sergio/ed','/final_exec_amigo','/final_exec_sergio']
+
