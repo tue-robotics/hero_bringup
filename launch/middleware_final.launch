@@ -4,7 +4,7 @@
 
     <group ns="sergio">
 
-        <node name="ed" package="challenge_final" type="client.py">
+        <node name="ed" pkg="challenge_final" type="client.py">
             <param name="ip" value="192.168.2.71" />
             <param name="port" value="4000" />
         </node>
