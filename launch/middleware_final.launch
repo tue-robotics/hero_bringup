@@ -2,7 +2,17 @@
 
 <launch>
 
+    <group ns="sergio">
+
+        <node name="ed" package="challenge_final" type="client.py">
+            <param name="ip" value="192.168.2.71" />
+            <param name="port" value="4000" />
+        </node>
+        
+    </group>
+
     <group ns="amigo">
+
 
         <!-- MANIPULATION -->        
         <include file="$(find robot_launch_files)/launch/manipulation/torso.launch">
