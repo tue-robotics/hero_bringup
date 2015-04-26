@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <group ns="amigo">
+        <!-- MULTIROBOT MULTIMASTER -->        
+        <include file="$(find robot_launch_files)/launch/multirobot/multimaster.launch">
+            <arg name="machine" value="amigo1"/>
+        </include>
+
+    </group>
+
+</launch>

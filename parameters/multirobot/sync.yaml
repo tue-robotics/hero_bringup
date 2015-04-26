@@ -1,7 +1,7 @@
-sync_hosts: ['amigo1','sergio1']
+sync_hosts: ['192.168.2.91','192.168.2.71']
 
-#sync_topics: ['/amigo/trigger','/sergio/trigger']
-#sync_services: ['/amigo/ed/simple_query','/sergio/ed/simple_query']
+sync_topics: []
+sync_services: []
 sync_nodes: ['/amigo/ed','/sergio/ed','/final_exec_amigo','/final_exec_sergio']
 
 ignore_topics:
@@ -47,3 +47,122 @@ ignore_topics:
     - /sergio/joint_states
     - /sergio/initialpose
     - /sergio/ed/face_recognition/learn_face/goal
+    - /amigo/trigger 
+    - /sergio/left_arm/grasp_target 
+    - /sergio/initialpose 
+    - /sergio/left_arm/joint_trajectory_action/cancel 
+    - /sergio/right_arm/gripper/action/cancel 
+    - /sergio/local_planner/action_server/cancel 
+    - /sergio/local_planner/action_server/goal 
+    - /sergio/left_arm/grasp_precompute/goal 
+    - /sergio/right_arm/grasp_precompute/cancel 
+    - /sergio/head_ref/action_server/goal 
+    - /sergio/torso_server/cancel 
+    - /sergio/base/references 
+    - /sergio/left_arm/gripper/action/cancel 
+    - /sergio/rgb_lights_manager/user_set_rgb_lights 
+    - /rosout 
+    - /sergio/head_ref/action_server/cancel 
+    - /server_name/smach/container_structure 
+    - /sergio/left_arm/grasp_precompute/cancel 
+    - /sergio/left_arm/joint_trajectory_action/goal 
+    - /server_name/smach/container_status 
+    - /target_location 
+    - /sergio/torso_server/goal 
+    - /sergio/left_arm/gripper/action/goal 
+    - /sergio/right_arm/grasp_target 
+    - /sergio/right_arm/joint_trajectory_action/goal 
+    - /sergio/right_arm/joint_trajectory_action/cancel 
+    - /sergio/right_arm/gripper/action/goal 
+    - /sergio/left_arm/gripper/action/feedback 
+    - /sergio/right_arm/grasp_precompute/result 
+    - /sergio/left_arm/joint_trajectory_action/result 
+    - /sergio/head_ref/action_server/feedback 
+    - /sergio/sergio/torso/measurements 
+    - /sergio/left_arm/grasp_precompute/feedback 
+    - /sergio/right_arm/gripper/action/feedback 
+    - /sergio/right_arm/joint_trajectory_action/feedback 
+    - /sergio/left_arm/gripper/action/result 
+    - /sergio/base/measurements 
+    - /sergio/local_planner/action_server/status 
+    - /amigo/hardware_status 
+    - /sergio/right_arm/grasp_precompute/status 
+    - /sergio/left_arm/grasp_precompute/result 
+    - /sergio/right_arm/gripper/action/status 
+    - /sergio/head_ref/action_server/status 
+    - /sergio/left_arm/joint_trajectory_action/status 
+    - /sergio/right_arm/joint_trajectory_action/status 
+    - /sergio/right_arm/grasp_precompute/feedback 
+    - /sergio/local_planner/action_server/feedback 
+    - /sergio/left_arm/gripper/action/status 
+    - /server_name/smach/container_init 
+    - /sergio/right_arm/gripper/action/result 
+    - /sergio/torso_server/result 
+    - /sergio/left_arm/joint_trajectory_action/feedback 
+    - /sergio/head_ref/action_server/result 
+    - /sergio/right_arm/joint_trajectory_action/result 
+    - /sergio/torso_server/feedback 
+    - /sergio/torso_server/status 
+    - /sergio/left_arm/grasp_precompute/status 
+    - /sergio/local_planner/action_server/result 
+    - /amigo/emergency_switch 
+    - /amigo/trigger 
+    - /amigo/left_arm/grasp_target 
+    - /amigo/initialpose 
+    - /amigo/left_arm/joint_trajectory_action/cancel 
+    - /amigo/right_arm/gripper/action/cancel 
+    - /amigo/local_planner/action_server/cancel 
+    - /amigo/local_planner/action_server/goal 
+    - /amigo/left_arm/grasp_precompute/goal 
+    - /amigo/right_arm/grasp_precompute/cancel 
+    - /amigo/head_ref/action_server/goal 
+    - /amigo/torso_server/cancel 
+    - /amigo/base/references 
+    - /amigo/left_arm/gripper/action/cancel 
+    - /amigo/rgb_lights_manager/user_set_rgb_lights 
+    - /rosout 
+    - /amigo/head_ref/action_server/cancel 
+    - /server_name/smach/container_structure 
+    - /amigo/left_arm/grasp_precompute/cancel 
+    - /amigo/left_arm/joint_trajectory_action/goal 
+    - /server_name/smach/container_status 
+    - /target_location 
+    - /amigo/torso_server/goal 
+    - /amigo/left_arm/gripper/action/goal 
+    - /amigo/right_arm/grasp_target 
+    - /amigo/right_arm/joint_trajectory_action/goal 
+    - /amigo/right_arm/joint_trajectory_action/cancel 
+    - /amigo/right_arm/gripper/action/goal 
+    - /amigo/left_arm/gripper/action/feedback 
+    - /amigo/right_arm/grasp_precompute/result 
+    - /amigo/left_arm/joint_trajectory_action/result 
+    - /amigo/head_ref/action_server/feedback 
+    - /amigo/sergio/torso/measurements 
+    - /amigo/left_arm/grasp_precompute/feedback 
+    - /amigo/right_arm/gripper/action/feedback 
+    - /amigo/right_arm/joint_trajectory_action/feedback 
+    - /amigo/left_arm/gripper/action/result 
+    - /amigo/base/measurements 
+    - /amigo/local_planner/action_server/status 
+    - /amigo/hardware_status 
+    - /amigo/right_arm/grasp_precompute/status 
+    - /amigo/left_arm/grasp_precompute/result 
+    - /amigo/right_arm/gripper/action/status 
+    - /amigo/head_ref/action_server/status 
+    - /amigo/left_arm/joint_trajectory_action/status 
+    - /amigo/right_arm/joint_trajectory_action/status 
+    - /amigo/right_arm/grasp_precompute/feedback 
+    - /amigo/local_planner/action_server/feedback 
+    - /amigo/left_arm/gripper/action/status 
+    - /server_name/smach/container_init 
+    - /amigo/right_arm/gripper/action/result 
+    - /amigo/torso_server/result 
+    - /amigo/left_arm/joint_trajectory_action/feedback 
+    - /amigo/head_ref/action_server/result 
+    - /amigo/right_arm/joint_trajectory_action/result 
+    - /amigo/torso_server/feedback 
+    - /amigo/torso_server/status 
+    - /amigo/left_arm/grasp_precompute/status 
+    - /amigo/local_planner/action_server/result 
+    - /amigo/emergency_switch 
+    
