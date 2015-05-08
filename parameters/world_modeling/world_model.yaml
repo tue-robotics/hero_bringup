@@ -114,6 +114,7 @@ plugins:
   enabled: 1
   parameters:
     fit_shapes: 1
+    live_viewer: 1
     model_list: rgo_2015.yml
     type_persistence: 0.5 # Between 0 and 1, 0 being no persistence, 1 being full persistence
     modules:
