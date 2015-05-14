@@ -18,10 +18,6 @@ var array LOWERJOINTLIMIT 		= array (	-1.57,		-1.57,		-1.57,  	0.0, 		-1.83,		-0
 var array HOMINGSTROKE 			= array (	0.0,		0.0,		-1.57,  	0.0, 		-1.83,		-0.95, 		-0.75, 		0.0		)
 var array MAXERRORS 			= array (	0.09,     	0.09,   	0.09,     	0.09, 	   	0.09,    	0.09, 	   	0.09, 		2.0		)
 var array ABSPOS				= array	(	1.11,		1.72,		0.0,		0.0,		0.0,		0.0,		0.0,		0.0		)
-var array MINPOS 				= array (	-1.57,		-1.57,		-1.57,  	0.0, 		-1.83,		-0.95, 		-0.61	)
-var array MAXPOS 				= array (	0.0,		1.57,		1.57, 		2.23,  		1.83, 		0.95,  		0.61	)
-var array MAXVEL 				= array (	0.4, 		0.4, 		0.6, 		0.8, 		0.8, 		1.0, 		1.0		)
-var array MAXACC				= array (	0.2, 		0.2, 		0.3, 		0.5,	 	0.5, 		0.5,		0.5		)
 var double TWOPI 				= 2.0*3.141592
 var double GEARRATIO_SM			= 1.0/550.0
 var double GEARRATIO_S3		    = 1.0/371.25
@@ -51,10 +47,6 @@ JointStateAggregator.addJointNames(JOINT_NAMES)
 JointStateAggregator.addJointNames(DUMMY_JOINT_NAMES)
 JointStateAggregator.addAggregationPort(BODYPARTNAME)
 TrajectoryActionlib.AddBodyPart (BODYNUMBER, JOINT_NAMES)
-TrajectoryActionlib.minPos4			= MINPOS
-TrajectoryActionlib.maxPos4			= MAXPOS
-TrajectoryActionlib.maxVel4			= MAXVEL
-TrajectoryActionlib.maxAcc4			= MAXACC
 TrajectoryActionlib.interpolatorDt4 	= TS
 TrajectoryActionlib.interpolatorEps4	= 1.0
 
