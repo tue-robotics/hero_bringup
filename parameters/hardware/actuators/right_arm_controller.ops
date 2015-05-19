@@ -198,6 +198,12 @@ RPERA_Homing.interpolatorDt 				= TS
 RPERA_Homing.interpolatorEps				= 1.0
 RPERA_Homing.configure
 
+### HANDOVER DETECTOR ###
+loadComponent("RPERA_HandoverDetector","ARM::HandoverDetector")
+addPeer("Supervisor","RPERA_HandoverDetector")
+setActivity("RPERA_HandoverDetector",1.0,HighestPriority/2,ORO_SCHED_RT)
+RPERA_HandoverDetector.configure
+
 #### Diagnostics ###
 loadComponent("RPERA_Diagnostics","ROS::RosDiagnostics")
 addPeer("Supervisor","RPERA_Diagnostics")
@@ -271,6 +277,9 @@ stream ("RPERA_GripperControl.gripper_measurement", ros.topic("/amigo/right_arm/
 stream ("RPERA_GripperControl.gripper_command", 	ros.topic("/amigo/right_arm/gripper/references"))
 stream ("RPERA_Diagnostics.diagnostics", 			ros.topic("/amigo/diagnostics"));
 
+stream ("RPERA_HandoverDetector.toggle", 			ros.topic("/amigo/handoverdetector/toggle"));
+stream ("RPERA_HandoverDetector.result", 			ros.topic("/amigo/handoverdetector/result"));
+
 #### START COMPONENTS ####
 Supervisor.AddAllwaysOnPeer(	"RPERA_ReadEncoders")
 Supervisor.AddAllwaysOnPeer(	"RPERA_Diagnostics")
@@ -283,6 +292,9 @@ Supervisor.AddAllwaysOnPeer(	"RPERA_Controller")
 Supervisor.AddHomingOnlyPeer(	"RPERA_Homing", 			BODYNUMBER)
 
 Supervisor.AddOpOnlyPeer(		"RPERA_GripperControl",		BODYNUMBER)
+Supervisor.AddOpOnlyPeer(		"RPERA_HandoverDetector",	BODYNUMBER)
 
 Supervisor.AddEnabledPeer(		"RPERA_SensorTorques", 		BODYNUMBER)
 Supervisor.AddEnabledPeer(		"RPERA_Safety", 			BODYNUMBER)
+
+#Supervisor.AddAllwaysOnPeer(	"RPERA_Tracing")
