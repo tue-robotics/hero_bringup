@@ -171,8 +171,6 @@ Supervisor.AddAllwaysOnPeer (	"SPINDLE_ReadEncoders")
 Supervisor.AddAllwaysOnPeer (	"SPINDLE_WriteJointStates")
 Supervisor.AddAllwaysOnPeer (	"SPINDLE_Diagnostics")
 Supervisor.AddAllwaysOnPeer (	"SPINDLE_Controller")
-#Supervisor.AddAllwaysOnPeer (	"Tracing")
-
 
 Supervisor.AddHomingOnlyPeer (	"SPINDLE_Homing", 				BODYNUMBER )
 
