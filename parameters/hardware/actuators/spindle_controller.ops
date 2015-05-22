@@ -27,10 +27,6 @@ Supervisor.AddBodyPart( BODYNUMBER, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RE
 JointStateAggregator.addJointNames(JOINT_NAMES)
 JointStateAggregator.addAggregationPort("torso")
 TrajectoryActionlib.AddBodyPart (BODYNUMBER, JOINT_NAMES)
-TrajectoryActionlib.minPos2			= LOWERJOINTLIMIT
-TrajectoryActionlib.maxPos2			= UPPERJOINTLIMIT
-TrajectoryActionlib.maxVel2			= MAXVEL
-TrajectoryActionlib.maxAcc2			= MAXACC
 TrajectoryActionlib.interpolatorDt2 	= TS
 TrajectoryActionlib.interpolatorEps2	= 1.0
 

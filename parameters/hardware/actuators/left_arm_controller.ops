@@ -51,10 +51,6 @@ JointStateAggregator.addJointNames(JOINT_NAMES)
 JointStateAggregator.addJointNames(DUMMY_JOINT_NAMES)
 JointStateAggregator.addAggregationPort(BODYPARTNAME)
 TrajectoryActionlib.AddBodyPart (BODYNUMBER, JOINT_NAMES)
-TrajectoryActionlib.minPos3			= MINPOS
-TrajectoryActionlib.maxPos3			= MAXPOS
-TrajectoryActionlib.maxVel3			= MAXVEL
-TrajectoryActionlib.maxAcc3			= MAXACC
 TrajectoryActionlib.interpolatorDt3 	= TS
 TrajectoryActionlib.interpolatorEps3	= 1.0
 
