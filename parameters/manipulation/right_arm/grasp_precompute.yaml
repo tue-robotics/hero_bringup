@@ -4,8 +4,8 @@ side: right
 ik_max_iterations: 500
 
 # Chain information
-root_link: base_link
-tip_link: grippoint_right
+root_link: amigo/base_link
+tip_link: amigo/grippoint_right
 robot_description: /amigo/robot_description
 use_constrained_solver: false
 
