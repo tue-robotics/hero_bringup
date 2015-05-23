@@ -1,2 +1,2 @@
 publish_frequency: 50.0
-tf_prefix: /amigo
+#tf_prefix: /amigo
