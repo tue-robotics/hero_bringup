@@ -181,7 +181,7 @@ LPERA_Homing.prefix 						= "LPERA"
 LPERA_Homing.homing_type					= ints 		(3, 	3,	 	2, 		2,	 	2, 		2,	 	2, 		4 	)
 LPERA_Homing.require_homing					= ints 		(1, 	1,	 	1, 		1,	 	1, 		1,	 	1, 		1	)
 LPERA_Homing.homing_direction				= ints 		(1,		1,		-1,	 	-1, 	-1,	 	-1, 	-1,	 	-1 	)
-LPERA_Homing.homing_velocity				= array 	(0.05,	0.05,	0.25,	0.25,	0.25,	0.2,	0.2,	0.4 )
+LPERA_Homing.homing_velocity				= array 	(0.05,	0.05,	0.25,	0.25,	0.25,	0.2,	0.2,	1.0 )
 LPERA_Homing.homing_acceleration			= array 	(0.2, 	0.2, 	0.3, 	0.5,	0.5, 	0.5,	0.5,	0.5	)
 LPERA_Homing.homing_stroke					= HOMINGSTROKE
 LPERA_Homing.reset_stroke					= array 	(0.0,	0.0,	0.0,	0.0,	0.0,	0.0,	0.0, 	0.0 )
@@ -193,6 +193,13 @@ LPERA_Homing.homing_order					= ints 		(8,		6, 		7, 		5, 		4, 		3, 		2, 		1 	)
 LPERA_Homing.interpolatorDt 				= TS
 LPERA_Homing.interpolatorEps				= 1.0
 LPERA_Homing.configure
+
+### HANDOVER DETECTOR ###
+loadComponent("LPERA_HandoverDetector","ARM::HandoverDetector")
+addPeer("Supervisor","LPERA_HandoverDetector")
+setActivity("LPERA_HandoverDetector",0.01,HighestPriority/2,ORO_SCHED_RT)
+LPERA_HandoverDetector.threshold 			= 0.2
+LPERA_HandoverDetector.configure
 
 #### Diagnostics ###
 loadComponent("LPERA_Diagnostics","ROS::RosDiagnostics")
@@ -267,6 +274,13 @@ stream ("LPERA_GripperControl.gripper_measurement", ros.topic("/amigo/left_arm/g
 stream ("LPERA_GripperControl.gripper_command", 	ros.topic("/amigo/left_arm/gripper/references"))
 stream ("LPERA_Diagnostics.diagnostics", 			ros.topic("/amigo/diagnostics"));
 
+### Handover Detector
+connect ("LPERA_SensorTorques.measured_torques_out","LPERA_HandoverDetector.torques", 			ConnPolicy() );
+connect ("LPERA_HandoverDetector.gripper", 			"LPERA_GripperControl.gripper_command", 	ConnPolicy() );
+stream ("LPERA_HandoverDetector.toggle_human2robot",ros.topic("/amigo/handoverdetector_left/toggle_human2robot"));
+stream ("LPERA_HandoverDetector.toggle_robot2human",ros.topic("/amigo/handoverdetector_left/toggle_robot2human"));
+stream ("LPERA_HandoverDetector.result", 			ros.topic("/amigo/handoverdetector_left/result"));
+
 #### START COMPONENTS ####
 Supervisor.AddAllwaysOnPeer(	"LPERA_ReadEncoders")
 Supervisor.AddAllwaysOnPeer(	"LPERA_Diagnostics")
@@ -279,6 +293,7 @@ Supervisor.AddAllwaysOnPeer(	"LPERA_Controller")
 Supervisor.AddHomingOnlyPeer(	"LPERA_Homing", 			BODYNUMBER)
 
 Supervisor.AddOpOnlyPeer(		"LPERA_GripperControl",		BODYNUMBER)
+Supervisor.AddOpOnlyPeer(		"LPERA_HandoverDetector",	BODYNUMBER)
 
 Supervisor.AddEnabledPeer(		"LPERA_SensorTorques", 		BODYNUMBER)
 Supervisor.AddEnabledPeer(		"LPERA_Safety", 			BODYNUMBER)
