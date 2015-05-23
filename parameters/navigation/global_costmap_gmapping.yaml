@@ -16,6 +16,7 @@ always_send_full_costmap: true
 plugins: 
     # Obstacles
     - {name: gmapping_occupancy_grid,                 type: "costmap_2d::StaticLayer"}
+    - {name: recent_obstacles,                  type: "costmap_2d::ObstacleLayer"}
     - {name: robot_footprint,                   type: "costmap_2d::FootprintLayer"}
     - {name: configuration_space,               type: "costmap_2d::InflationLayer"}
 
@@ -23,6 +24,13 @@ plugins:
 gmapping_occupancy_grid:
     map_topic: /amigo/gmapping/map
     track_unknown_space: false
+
+recent_obstacles:
+    occupied_to_default_time: 1.0
+    observation_sources: base_laser torso_laser top_kinect
+    base_laser:  {data_type: LaserScan, sensor_frame: /amigo/base_laser, topic: /amigo/base_laser/scan, observation_persistence: 0.0, inf_is_valid: true, obstacle_range: 20.0, marking: true, clearing: false, ray_trace_range: 20.0}
+    torso_laser:  {data_type: LaserScan, sensor_frame: /amigo/torso_laser, topic: /amigo/torso_laser/scan, observation_persistence: 0.0, inf_is_valid: true, obstacle_range: 20.0, marking: true, clearing: false, ray_trace_range: 20.0}
+    top_kinect: {data_type: PointCloud2, sensor_frame: /amigo/top_kinect/openni_depth_optical_frame, topic: /amigo/top_kinect/depth/points, observation_persistence: 0.0, expected_update_rate: 1.0, min_obstacle_height: 0.3, max_obstacle_height: 1.7, obstacle_range: 4.0}
 
 # Workspace to configuration space 
 configuration_space:
