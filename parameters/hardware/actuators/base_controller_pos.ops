@@ -108,6 +108,7 @@ BASE_Controller.configure
 loadComponent("BASE_Safety","SUPERVISORY::Safety")
 addPeer("Supervisor","BASE_Safety")
 setActivity("BASE_Safety",0.0,HighestPriority,ORO_SCHED_RT)
+BASE_Safety.prefix 						= "BASE"
 BASE_Safety.NJ							= N
 BASE_Safety.NM							= N
 BASE_Safety.maxJointErrors				= MAX_ERRORS

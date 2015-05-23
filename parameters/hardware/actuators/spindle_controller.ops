@@ -79,6 +79,9 @@ SPINDLE_FFW.configure
 loadComponent("SPINDLE_Safety","SUPERVISORY::Safety")
 addPeer("Supervisor","SPINDLE_Safety")
 setActivity("SPINDLE_Safety",0.0,HighestPriority,ORO_SCHED_RT)
+addPeer("SPINDLE_Safety","TrajectoryActionlib")
+SPINDLE_Safety.prefix 						= "SPINDLE"
+SPINDLE_Safety.partNr 						= BODYNUMBER
 SPINDLE_Safety.NJ							= N
 SPINDLE_Safety.NM							= N
 SPINDLE_Safety.maxJointErrors				= MAXERR

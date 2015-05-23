@@ -130,7 +130,10 @@ LPERA_Controller.configure
 ### Safety ###
 loadComponent("LPERA_Safety","SUPERVISORY::Safety")
 addPeer("Supervisor","LPERA_Safety")
+addPeer("LPERA_Safety","TrajectoryActionlib")
 setActivity("LPERA_Safety",0.0,HighestPriority,ORO_SCHED_RT)
+LPERA_Safety.prefix 						= "LPERA"
+LPERA_Safety.partNr 						= BODYNUMBER
 LPERA_Safety.NJ								= N
 LPERA_Safety.NM								= N
 LPERA_Safety.maxJointErrors					= MAXERRORS
