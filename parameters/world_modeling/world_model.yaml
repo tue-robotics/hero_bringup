@@ -47,6 +47,7 @@ plugins:
 - name: entity_clearer
   lib: libed_clearer_plugin.so
   parameters:
+      enabled: 1
       entity_timeout: 1.0
 - name: localization
   lib: libed_localization_plugin.so
@@ -89,7 +90,7 @@ plugins:
   parameters:
     fit_shapes: 1
     live_viewer: 0
-    model_list: rgo_2015.yml
+    model_list: robotic_testlabs_may_2015.yml
     type_persistence: 0.5 # Between 0 and 1, 0 being no persistence, 1 being full persistence
     modules:
       - lib: libsize_matcher.so
@@ -103,7 +104,7 @@ plugins:
 
       - lib: libed_odu_finder.so
         parameters:
-            database_path: /rgo2015/database    # location of database (ed_object_models/configs/odu_finder + <this path>)
+            database_path: /robotic_testlabs_may_2015/database    # location of database (ed_object_models/configs/odu_finder + <this path>)
             debug_folder: /tmp/odu_finder/
             debug_mode: 0               # activate debug mode for extra output
             type_unknown_score: 0.05    # default score for an unknown entity
