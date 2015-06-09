@@ -96,10 +96,10 @@ plugins:
       - lib: libsize_matcher.so
         parameters:
             size_diff_threshold: 0.1    # size similarity threshold between learned models and the detected object
-            small_size_treshold: 0.5    # objects smaller than this (height+witdth in meters) are considered small
-            medium_size_treshold: 0.7   # objects between this and the small size (height+witdth in meters) are considered medium
+            small_size_treshold: 0.01   # objects smaller than this are considered small (square meters)
+            medium_size_treshold: 0.05  # objects between this and the small size are considered medium sized (square meters)
             type_positive_score: 0.7    # score given to an entity classified as human
-            type_negative_score: 0.01    # score given to an entity classified as not-human
+            type_negative_score: 0.01   # score given to an entity classified as not-human
             type_unknown_score: 0.05    # default score for an unknown entity
 
       - lib: libed_odu_finder.so
