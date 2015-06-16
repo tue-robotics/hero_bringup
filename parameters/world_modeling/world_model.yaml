@@ -91,7 +91,7 @@ plugins:
     fit_shapes: 1
     live_viewer: 0
     model_list: robotic_testlabs_may_2015.yml
-    type_persistence: 0.5 # Between 0 and 1, 0 being no persistence, 1 being full persistence
+    type_persistence: 0.3 # Between 0 and 1, 0 being no persistence, 1 being full persistence
     modules:
       - lib: libsize_matcher.so
         parameters:
@@ -119,7 +119,7 @@ plugins:
       - lib: libhuman_contour_matcher.so
         parameters:
             debug_mode: 0             # activate debug mode for extra output
-            max_template_err: 15      # maximum error for an object to be considered human (0 is perfect match)            
+            max_template_err: 20      # maximum error for an object to be considered human (0 is perfect match)            
             max_match_iterations: 30  # maximum number of iterations for the template matching
             dt_line_width: 1          # line width used to generate the Distance Transform map
             dt_border_size: 20        # border size used to generate the Distance Transform map
@@ -129,7 +129,7 @@ plugins:
             head_template_left_path: /head_templates/left_close.png                 # template for left head template matching
             head_template_right_path: /head_templates/right_close.png               # template for right head template matching
             type_positive_score: 0.9            # score given to an entity classified as human
-            type_negative_score: 0.01            # score given to an entity classified as not-human
+            type_negative_score: 0.2            # score given to an entity classified as not-human
             type_unknown_score: 0.2             # default score for an unknown entity
 
       - lib: libface_detector.so
