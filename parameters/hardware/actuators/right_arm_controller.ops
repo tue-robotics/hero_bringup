@@ -39,18 +39,18 @@ var double ENC2SI_EM			= TWOPI*GEARRATIO_EM/ENCODERCOUNTS_EM
 var double ENC2SI_WM			= TWOPI*GEARRATIO_WM/ENCODERCOUNTS_WM
 var double ENC2SI_HM 			= TWOPI*GEARRATIO_HM/ENCODERCOUNTS_HM
 var int N						= 8
-var int BODYNUMBER 				= 4
+var int BODYPARTNR 				= 4
 var string BODYPARTNAME 		= "right_arm"
 var bool HOMEABLE 				= true
 var bool HOMINGOBLIGATORY		= false
 var bool RESETTABLE				= true
 
 ### Configuring Supervisor, JointStateAggregator and TrajectoryActionlib
-Supervisor.AddBodyPart( BODYNUMBER, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RESETTABLE)
+Supervisor.AddBodyPart( BODYPARTNR, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RESETTABLE)
 JointStateAggregator.addJointNames(JOINT_NAMES)
 JointStateAggregator.addJointNames(DUMMY_JOINT_NAMES)
 JointStateAggregator.addAggregationPort(BODYPARTNAME)
-TrajectoryActionlib.AddBodyPart (BODYNUMBER, JOINT_NAMES)
+TrajectoryActionlib.AddBodyPart (BODYPARTNR, JOINT_NAMES)
 TrajectoryActionlib.interpolatorDt4 	= TS
 TrajectoryActionlib.interpolatorEps4	= 1.0
 
@@ -133,9 +133,9 @@ addPeer("Supervisor","RPERA_Safety")
 addPeer("RPERA_Safety","TrajectoryActionlib")
 setActivity("RPERA_Safety",0.0,HighestPriority,ORO_SCHED_RT)
 RPERA_Safety.prefix 						= "RPERA"
-RPERA_Safety.partNr 						= BODYNUMBER
-RPERA_Safety.NJ								= N
-RPERA_Safety.NM								= N
+RPERA_Safety.partNr 						= BODYPARTNR
+RPERA_Safety.Nj								= N
+RPERA_Safety.Nm								= N
 RPERA_Safety.maxJointErrors					= MAXERRORS
 RPERA_Safety.motorSaturations				= array (1000.0, 	1000.0,	 	400.0, 	   	500.0,  	500.0, 	   	500.0, 		500.0, 		900.0)
 RPERA_Safety.maxConSatTime					= 5.0
@@ -179,7 +179,7 @@ RPERA_Homing.vector_size 					= N
 RPERA_Homing.number_of_outports 			= 2
 RPERA_Homing.outport_sizes					= ints (7 , 1)
 RPERA_Homing.bodypart 						= BODYPARTNAME
-RPERA_Homing.partNr 						= BODYNUMBER
+RPERA_Homing.partNr 						= BODYPARTNR
 RPERA_Homing.prefix 						= "RPERA"
 RPERA_Homing.homing_type					= ints 		(3, 	3,	 	2, 		2,	 	2, 		2,	 	2, 		4 	)
 RPERA_Homing.require_homing					= ints 		(1, 	1,	 	1, 		1,	 	1, 		1,	 	1, 		1	)
@@ -293,12 +293,10 @@ Supervisor.AddAllwaysOnPeer(	"RPERA_MotorToJointSpace")
 Supervisor.AddAllwaysOnPeer(	"RPERA_JointToMotorSpace")
 Supervisor.AddAllwaysOnPeer(	"RPERA_Controller")
 
-Supervisor.AddHomingOnlyPeer(	"RPERA_Homing", 			BODYNUMBER)
+Supervisor.AddHomingOnlyPeer(	"RPERA_Homing", 			BODYPARTNR)
 
-Supervisor.AddOpOnlyPeer(		"RPERA_GripperControl",		BODYNUMBER)
-Supervisor.AddOpOnlyPeer(		"RPERA_HandoverDetector",	BODYNUMBER)
+Supervisor.AddOpOnlyPeer(		"RPERA_GripperControl",		BODYPARTNR)
+Supervisor.AddOpOnlyPeer(		"RPERA_HandoverDetector",	BODYPARTNR)
 
-Supervisor.AddEnabledPeer(		"RPERA_SensorTorques", 		BODYNUMBER)
-Supervisor.AddEnabledPeer(		"RPERA_Safety", 			BODYNUMBER)
-
-#Supervisor.AddAllwaysOnPeer(	"RPERA_Tracing")
+Supervisor.AddEnabledPeer(		"RPERA_SensorTorques", 		BODYPARTNR)
+Supervisor.AddEnabledPeer(		"RPERA_Safety", 			BODYPARTNR)

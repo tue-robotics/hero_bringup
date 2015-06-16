@@ -20,13 +20,13 @@ var int TILT_MIN 					= -97	; # -0.5 *RAD_TO_STEP
 var int TILT_MAX 					= 171	; #  0.88*RAD_TO_STEP
 var int PAN_SPEED 					= 50
 var int TILT_SPEED 	 				= 25
-var int BODYNUMBER 					= 5
+var int BODYPARTNR 					= 5
 var string BODYPARTNAME 			= "head"
 var bool HOMEABLE 					= false
 var bool HOMINGOBLIGATORY			= false
 var bool RESETTABLE					= false
 ### AddBodyPart ###
-Supervisor.AddBodyPart( BODYNUMBER, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RESETTABLE)
+Supervisor.AddBodyPart( BODYPARTNR, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RESETTABLE)
 
 ## Pan-tilt controller
 loadComponent("HEAD_PanTiltController", "DYNAMIXEL::DynamixelController")
@@ -61,4 +61,4 @@ stream( "HEAD_PanTiltController.currentPos", 			ros.topic("/amigo/joint_states")
 
 #### START COMPONENTS ####
 Supervisor.AddAllwaysOnPeer ("HEAD_PanTiltController")
-Supervisor.AddEnabledPeer ("HEAD_Enabler",BODYNUMBER)
+Supervisor.AddEnabledPeer ("HEAD_Enabler", BODYPARTNR)

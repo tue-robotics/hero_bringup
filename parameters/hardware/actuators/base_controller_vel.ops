@@ -7,7 +7,6 @@
 #                                                                      #
 ########################################################################
 
-
 #### DECLARATION OF PARAMETERS ####
 var double Ts 					= 0.001
 var double WHEELRAD 			= 0.075*0.9825; # Corrected for effective wheel radius
@@ -29,103 +28,101 @@ var array MAX_OUTPUT 			= array(9.9, 9.9, 9.9, 9.9)
 var double MAX_SATURATION_TIME	= 0.1
 var int N						= 4
 var string ROBOT 				= "/amigo"
-var int BODYNUMBER 				= 1
+var int BODYPARTNR 					= 1
 var string BODYPARTNAME 		= "base"
 var bool HOMEABLE 				= false
 var bool HOMINGOBLIGATORY		= false
 var bool RESETTABLE				= true
  
-
-
 ### AddBodyPart ###
-Supervisor.AddBodyPart( BODYNUMBER, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RESETTABLE)
+Supervisor.AddBodyPart( BODYPARTNR, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RESETTABLE)
 
 ### READ WHEEL ENCODERS ###
 loadComponent("BASE_ReadEncoders","SOEM::ReadEncoders")
 addPeer("Supervisor","BASE_ReadEncoders")
 setActivity("BASE_ReadEncoders",Ts,HighestPriority,ORO_SCHED_RT)
-BASE_ReadEncoders.encoderbits = 65536
-BASE_ReadEncoders.enc2SI = array (ENC2SI, ENC2SI, ENC2SI, ENC2SI)
+BASE_ReadEncoders.encoderbits 			= 65536
+BASE_ReadEncoders.enc2SI 				= array (ENC2SI, ENC2SI, ENC2SI, ENC2SI)
 BASE_ReadEncoders.configure
 
 ### CONTROLLER COMPONENT ###
 loadComponent("BASE_Controller","FILTERS::Controller")
 addPeer("Supervisor","BASE_Controller")
 setActivity("BASE_Controller",0.0,HighestPriority,ORO_SCHED_RT)
-BASE_Controller.vector_size 				= N;
-BASE_Controller.sampling_time 				= Ts;
-BASE_Controller.controllers 				= strings ("WeakIntegrator","LowPass");
-BASE_Controller.number_of_refports			= 1
-BASE_Controller.refinport_sizes				= ints (N)
-BASE_Controller.number_of_ffwports			= 0
-BASE_Controller.gains 						= array (0.25, 	0.25, 	0.25, 	0.25);
-BASE_Controller.zero_freq_WeakIntegrator 	= array (20.0, 	20.0, 	20.0, 	20.0);
-BASE_Controller.pole_freq_LowPass 			= array (500.0, 500.0, 	500.0, 	500.0);
-BASE_Controller.pole_damp_LowPass 			= array (0.7, 	0.7, 	0.7, 	0.7);
+BASE_Controller.vector_size 			= N;
+BASE_Controller.sampling_time 			= Ts;
+BASE_Controller.controllers 			= strings ("WeakIntegrator","LowPass");
+BASE_Controller.number_of_refports		= 1
+BASE_Controller.refinport_sizes			= ints (N)
+BASE_Controller.number_of_ffwports		= 0
+BASE_Controller.gains 					= array (0.25, 	0.25, 	0.25, 	0.25);
+BASE_Controller.zero_freq_WeakIntegrator= array (20.0, 	20.0, 	20.0, 	20.0);
+BASE_Controller.pole_freq_LowPass 		= array (500.0, 500.0, 	500.0, 	500.0);
+BASE_Controller.pole_damp_LowPass 		= array (0.7, 	0.7, 	0.7, 	0.7);
 BASE_Controller.configure
 	
 ### SI2VOLT ###
 loadComponent("BASE_SI2Volt","MATH::Gain")
 addPeer("Supervisor","BASE_SI2Volt")
 setActivity("BASE_SI2Volt",0.0,HighestPriority,ORO_SCHED_RT)
-BASE_SI2Volt.vectorsize = N;
-BASE_SI2Volt.gain = array (SI2V, SI2V, SI2V, SI2V)
+BASE_SI2Volt.vectorsize 				= N;
+BASE_SI2Volt.gain 						= array (SI2V, SI2V, SI2V, SI2V)
 BASE_SI2Volt.configure
 
 ### ERROR FILTER (used to filter out missed encoder counts) ###
 loadComponent("BASE_ErrorFilter","FILTERS::SecondOrderLowPasses")
 addPeer("Supervisor","BASE_ErrorFilter")
 setActivity("BASE_ErrorFilter",0.0,HighestPriority,ORO_SCHED_RT)
-BASE_ErrorFilter.vector_size	= 4
-BASE_ErrorFilter.sampling_time	= Ts
-BASE_ErrorFilter.pole_frequency	= array(100.0, 	100.0, 	100.0, 	100.0);
-BASE_ErrorFilter.pole_damping	= array(0.7, 	0.7, 	0.7, 	0.7);
+BASE_ErrorFilter.vector_size			= 4
+BASE_ErrorFilter.sampling_time			= Ts
+BASE_ErrorFilter.pole_frequency			= array(100.0, 	100.0, 	100.0, 	100.0);
+BASE_ErrorFilter.pole_damping			= array(0.7, 	0.7, 	0.7, 	0.7);
 BASE_ErrorFilter.configure
 
 ### Safety ###
 loadComponent("BASE_Safety","SUPERVISORY::Safety")
 addPeer("Supervisor","BASE_Safety")
 setActivity("BASE_Safety",0.0,HighestPriority,ORO_SCHED_RT)
-BASE_Safety.prefix 				= "BASE"
-BASE_Safety.NJ					= N
-BASE_Safety.NM					= N
-BASE_Safety.maxJointErrors		= MAX_ERRORS
-BASE_Safety.motorSaturations	= MAX_OUTPUT
-BASE_Safety.maxConSatTime		= MAX_SATURATION_TIME
+BASE_Safety.prefix 						= "BASE"
+BASE_Safety.Nj							= N
+BASE_Safety.Nm							= N
+BASE_Safety.maxJointErrors				= MAX_ERRORS
+BASE_Safety.motorSaturations			= MAX_OUTPUT
+BASE_Safety.maxConSatTime				= MAX_SATURATION_TIME
 BASE_Safety.configure
 
 ### READ REFERENCE VELOCITIES ###
 loadComponent("BASE_ReadReferences","ROS::ReadTwistMsg")
 addPeer("Supervisor","BASE_ReadReferences")
 setActivity("BASE_ReadReferences",Ts,LowestPriority,ORO_SCHED_OTHER)
-BASE_ReadReferences.max_start_vel 	= MAX_START_VEL
-BASE_ReadReferences.max_acc 		= MAX_ACC
-BASE_ReadReferences.max_interval 	= MAX_INTERVAL
-BASE_ReadReferences.max_vel 		= MAX_VELOCITIES
+BASE_ReadReferences.max_start_vel 		= MAX_START_VEL
+BASE_ReadReferences.max_acc 			= MAX_ACC
+BASE_ReadReferences.max_interval 		= MAX_INTERVAL
+BASE_ReadReferences.max_vel 			= MAX_VELOCITIES
 BASE_ReadReferences.configure
 
 ### DECOUPLE REFERENCE ###
 loadComponent("BASE_JointToMotorSpace","MATH::MatrixTransform")
 addPeer("Supervisor","BASE_JointToMotorSpace")
 setActivity("BASE_JointToMotorSpace",Ts,LowestPriority,ORO_SCHED_OTHER)
-BASE_JointToMotorSpace.Nrows 		= 4
-BASE_JointToMotorSpace.Ncolumns 	= 3
+BASE_JointToMotorSpace.Nrows 			= 4
+BASE_JointToMotorSpace.Ncolumns 		= 3
 BASE_JointToMotorSpace.configure
-BASE_JointToMotorSpace.function1 = array ( -HALFSQRT2/WHEELRAD,  HALFSQRT2/WHEELRAD,  DIS2CENT/WHEELRAD )
-BASE_JointToMotorSpace.function2 = array ( -HALFSQRT2/WHEELRAD, -HALFSQRT2/WHEELRAD,  DIS2CENT/WHEELRAD )
-BASE_JointToMotorSpace.function3 = array (  HALFSQRT2/WHEELRAD, -HALFSQRT2/WHEELRAD,  DIS2CENT/WHEELRAD )
-BASE_JointToMotorSpace.function4 = array (  HALFSQRT2/WHEELRAD,  HALFSQRT2/WHEELRAD,  DIS2CENT/WHEELRAD )
+BASE_JointToMotorSpace.function1 		= array ( -HALFSQRT2/WHEELRAD,  HALFSQRT2/WHEELRAD,  DIS2CENT/WHEELRAD )
+BASE_JointToMotorSpace.function2 		= array ( -HALFSQRT2/WHEELRAD, -HALFSQRT2/WHEELRAD,  DIS2CENT/WHEELRAD )
+BASE_JointToMotorSpace.function3 		= array (  HALFSQRT2/WHEELRAD, -HALFSQRT2/WHEELRAD,  DIS2CENT/WHEELRAD )
+BASE_JointToMotorSpace.function4 		= array (  HALFSQRT2/WHEELRAD,  HALFSQRT2/WHEELRAD,  DIS2CENT/WHEELRAD )
 
 ### DECOUPLE POSITION ###
 loadComponent("BASE_MotorToJointSpace","MATH::MatrixTransform")
 addPeer("Supervisor","BASE_MotorToJointSpace")
 setActivity("BASE_MotorToJointSpace",0.0,HighestPriority,ORO_SCHED_RT)
-BASE_MotorToJointSpace.Nrows 		= 3
-BASE_MotorToJointSpace.Ncolumns 	= 4
+BASE_MotorToJointSpace.Nrows 			= 3
+BASE_MotorToJointSpace.Ncolumns 		= 4
 BASE_MotorToJointSpace.configure
-BASE_MotorToJointSpace.function1 = array (-0.25*WHEELRAD/HALFSQRT2, -0.25*WHEELRAD/HALFSQRT2,  0.25*WHEELRAD/HALFSQRT2,  0.25*WHEELRAD/HALFSQRT2)
-BASE_MotorToJointSpace.function2 = array ( 0.25*WHEELRAD/HALFSQRT2, -0.25*WHEELRAD/HALFSQRT2, -0.25*WHEELRAD/HALFSQRT2,  0.25*WHEELRAD/HALFSQRT2)
-BASE_MotorToJointSpace.function3 = array ( 0.25*WHEELRAD/DIS2CENT,   0.25*WHEELRAD/DIS2CENT,   0.25*WHEELRAD/DIS2CENT,   0.25*WHEELRAD/DIS2CENT)
+BASE_MotorToJointSpace.function1 		= array (-0.25*WHEELRAD/HALFSQRT2, -0.25*WHEELRAD/HALFSQRT2,  0.25*WHEELRAD/HALFSQRT2,  0.25*WHEELRAD/HALFSQRT2)
+BASE_MotorToJointSpace.function2 		= array ( 0.25*WHEELRAD/HALFSQRT2, -0.25*WHEELRAD/HALFSQRT2, -0.25*WHEELRAD/HALFSQRT2,  0.25*WHEELRAD/HALFSQRT2)
+BASE_MotorToJointSpace.function3 		= array ( 0.25*WHEELRAD/DIS2CENT,   0.25*WHEELRAD/DIS2CENT,   0.25*WHEELRAD/DIS2CENT,   0.25*WHEELRAD/DIS2CENT)
 
 #### LOAD COMPONENT TO PUBLISH ODOMETRY ###
 loadComponent("BASE_OdometryPublisher","ROS::PublishOdometry")
@@ -183,27 +180,18 @@ connect ("BASE_Controller.jointErrors", 		"BASE_Diagnostics.vec2", 		ConnPolicy(
 connect ("BASE_SI2Volt.out", 					"BASE_Diagnostics.vec3", 		ConnPolicy() )
 stream ("BASE_Diagnostics.diagnostics", 		ros.topic(ROBOT+"/base_diagnostics"));
 
-
-
 #### START COMPONENTS ####
 # Control loop
 Supervisor.AddAllwaysOnPeer ("BASE_ReadEncoders")
-Supervisor.AddEnabledPeer	("BASE_Controller", 		BODYNUMBER)
+Supervisor.AddEnabledPeer	("BASE_Controller", 		BODYPARTNR)
 Supervisor.AddAllwaysOnPeer ("BASE_SI2Volt")
 # Reference
-Supervisor.AddEnabledPeer  	("BASE_ReadReferences",		BODYNUMBER )
-Supervisor.AddEnabledPeer  	("BASE_JointToMotorSpace",	BODYNUMBER )
+Supervisor.AddEnabledPeer  	("BASE_ReadReferences",		BODYPARTNR )
+Supervisor.AddEnabledPeer  	("BASE_JointToMotorSpace",	BODYPARTNR )
 # Safety
-Supervisor.AddEnabledPeer  	("BASE_ErrorFilter", 		BODYNUMBER)
-Supervisor.AddEnabledPeer  	("BASE_Safety", 			BODYNUMBER)
+Supervisor.AddEnabledPeer  	("BASE_ErrorFilter", 		BODYPARTNR)
+Supervisor.AddEnabledPeer  	("BASE_Safety", 			BODYPARTNR)
 # Diagnostics
 Supervisor.AddAllwaysOnPeer ("BASE_MotorToJointSpace")
 Supervisor.AddAllwaysOnPeer ("BASE_OdometryPublisher")
 Supervisor.AddAllwaysOnPeer ("BASE_Diagnostics")
-
-
-
-
-
-
-

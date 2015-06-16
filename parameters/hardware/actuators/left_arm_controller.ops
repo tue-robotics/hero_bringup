@@ -39,20 +39,20 @@ var double ENC2SI_EM			= TWOPI*GEARRATIO_EM/ENCODERCOUNTS_EM
 var double ENC2SI_WM			= TWOPI*GEARRATIO_WM/ENCODERCOUNTS_WM
 var double ENC2SI_HM 			= TWOPI*GEARRATIO_HM/ENCODERCOUNTS_HM
 var int N						= 8
-var int BODYNUMBER 				= 3
+var int BODYPARTNR 				= 3
 var string BODYPARTNAME 		= "left_arm"
 var bool HOMEABLE 				= true
 var bool HOMINGOBLIGATORY		= false
 var bool RESETTABLE				= true
 
 ### Configuring Supervisor, JointStateAggregator and TrajectoryActionlib
-Supervisor.AddBodyPart( BODYNUMBER, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RESETTABLE)
+Supervisor.AddBodyPart( BODYPARTNR, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RESETTABLE)
 JointStateAggregator.addJointNames(JOINT_NAMES)
 JointStateAggregator.addJointNames(DUMMY_JOINT_NAMES)
 JointStateAggregator.addAggregationPort(BODYPARTNAME)
-TrajectoryActionlib.AddBodyPart (BODYNUMBER, JOINT_NAMES)
-TrajectoryActionlib.interpolatorDt3 	= TS
-TrajectoryActionlib.interpolatorEps3	= 1.0
+TrajectoryActionlib.AddBodyPart (BODYPARTNR, JOINT_NAMES)
+TrajectoryActionlib.interpolatorDt3 		= TS
+TrajectoryActionlib.interpolatorEps3		= 1.0
 
 #### HIGH PRIORITY COMPONENTS ####
 
@@ -133,9 +133,9 @@ addPeer("Supervisor","LPERA_Safety")
 addPeer("LPERA_Safety","TrajectoryActionlib")
 setActivity("LPERA_Safety",0.0,HighestPriority,ORO_SCHED_RT)
 LPERA_Safety.prefix 						= "LPERA"
-LPERA_Safety.partNr 						= BODYNUMBER
-LPERA_Safety.NJ								= N
-LPERA_Safety.NM								= N
+LPERA_Safety.partNr 						= BODYPARTNR
+LPERA_Safety.Nj								= N
+LPERA_Safety.Nm								= N
 LPERA_Safety.maxJointErrors					= MAXERRORS
 LPERA_Safety.motorSaturations				= array (1000.0, 	1000.0,	 	400.0, 	   	500.0,  	500.0, 	   	500.0, 		500.0, 		900.0)
 LPERA_Safety.maxConSatTime					= 5.0
@@ -179,7 +179,7 @@ LPERA_Homing.vector_size 					= N
 LPERA_Homing.number_of_outports 			= 2
 LPERA_Homing.outport_sizes					= ints (7 , 1)
 LPERA_Homing.bodypart 						= BODYPARTNAME
-LPERA_Homing.partNr 						= BODYNUMBER
+LPERA_Homing.partNr 						= BODYPARTNR
 LPERA_Homing.prefix 						= "LPERA"
 LPERA_Homing.homing_type					= ints 		(3, 	3,	 	2, 		2,	 	2, 		2,	 	2, 		4 	)
 LPERA_Homing.require_homing					= ints 		(1, 	1,	 	1, 		1,	 	1, 		1,	 	1, 		1	)
@@ -234,7 +234,7 @@ connect ("LPERA_JointToMotorSpace.out",				"LPERA_AnalogOuts.in1", 					ConnPoli
 connect ("LPERA_AnalogIns.stdvect_out_1",			"LPERA_SensorTorques.voltage_in", 			ConnPolicy() ); # TorqueSensor
 
 ## References ##
-connect ("LPERA_ReadEncoders.out",					"TrajectoryActionlib.current_pos3",	ConnPolicy() ); # Ref Pos
+connect ("LPERA_ReadEncoders.out",					"TrajectoryActionlib.current_pos3",			ConnPolicy() ); # Ref Pos
 connect ("TrajectoryActionlib.pos_out3",			"LPERA_Controller.ref_in1", 				ConnPolicy() ); # Ref Pos
 
 ## Gripper control ##
@@ -293,10 +293,10 @@ Supervisor.AddAllwaysOnPeer(	"LPERA_MotorToJointSpace")
 Supervisor.AddAllwaysOnPeer(	"LPERA_JointToMotorSpace")
 Supervisor.AddAllwaysOnPeer(	"LPERA_Controller")
 
-Supervisor.AddHomingOnlyPeer(	"LPERA_Homing", 			BODYNUMBER)
+Supervisor.AddHomingOnlyPeer(	"LPERA_Homing", 			BODYPARTNR)
 
-Supervisor.AddOpOnlyPeer(		"LPERA_GripperControl",		BODYNUMBER)
-Supervisor.AddOpOnlyPeer(		"LPERA_HandoverDetector",	BODYNUMBER)
+Supervisor.AddOpOnlyPeer(		"LPERA_GripperControl",		BODYPARTNR)
+Supervisor.AddOpOnlyPeer(		"LPERA_HandoverDetector",	BODYPARTNR)
 
-Supervisor.AddEnabledPeer(		"LPERA_SensorTorques", 		BODYNUMBER)
-Supervisor.AddEnabledPeer(		"LPERA_Safety", 			BODYNUMBER)
+Supervisor.AddEnabledPeer(		"LPERA_SensorTorques", 		BODYPARTNR)
+Supervisor.AddEnabledPeer(		"LPERA_Safety", 			BODYPARTNR)
