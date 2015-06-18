@@ -89,6 +89,7 @@ plugins:
   frequency: 5
   enabled: 1
   parameters:
+    continuous: 1     # If set to 0, will not constantly try to recognize things (but wait for service call instead)
     fit_shapes: 1
     live_viewer: 0
     model_list: robotic_testlabs_may_2015.yml
