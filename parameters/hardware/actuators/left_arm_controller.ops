@@ -17,7 +17,11 @@ var array UPPERJOINTLIMIT 		= array (	0.0,		1.57,		1.57, 		2.23,  		1.83, 		0.95
 var array LOWERJOINTLIMIT 		= array (	-1.57,		-1.57,		-1.57,  	0.0, 		-1.83,		-0.95, 		-0.61, 		-1.0	)
 var array HOMINGSTROKE 			= array (	0.0,		0.0,		-1.57,  	0.0, 		-1.83,		-0.95, 		-0.75, 		0.0		)
 var array MAXERRORS 			= array (	0.09,     	0.09,   	0.09,     	0.09, 	   	0.09,    	0.09, 	   	0.09, 		2.0		)
-var array ABSPOS				= array	(	0.638,		2.11,		0.0,		0.0,		0.0,		0.0,		0.0,		0.0		)
+var array ABSPOS				= array	(	0.631,		2.11,		0.0,		0.0,		0.0,		0.0,		0.0,		0.0		)
+var array MINPOS 				= array (	-1.57,		-1.57,		-1.57,  	0.0, 		-1.83,		-0.95, 		-0.61	)
+var array MAXPOS 				= array (	0.0,		1.57,		1.57, 		2.23,  		1.83, 		0.95,  		0.61	)
+var array MAXVEL 				= array (	0.4, 		0.4, 		0.6, 		0.8, 		0.8, 		1.0, 		1.0		)
+var array MAXACC				= array (	0.2, 		0.2, 		0.3, 		0.5,	 	0.5, 		0.5,		0.5		)
 var double TWOPI 				= 2.0*3.141592
 var double GEARRATIO_SM			= 1.0/550.0
 var double GEARRATIO_S3		    = 1.0/371.25
@@ -35,20 +39,20 @@ var double ENC2SI_EM			= TWOPI*GEARRATIO_EM/ENCODERCOUNTS_EM
 var double ENC2SI_WM			= TWOPI*GEARRATIO_WM/ENCODERCOUNTS_WM
 var double ENC2SI_HM 			= TWOPI*GEARRATIO_HM/ENCODERCOUNTS_HM
 var int N						= 8
-var int BODYNUMBER 				= 3
+var int BODYPARTNR 				= 3
 var string BODYPARTNAME 		= "left_arm"
 var bool HOMEABLE 				= true
 var bool HOMINGOBLIGATORY		= false
 var bool RESETTABLE				= true
 
 ### Configuring Supervisor, JointStateAggregator and TrajectoryActionlib
-Supervisor.AddBodyPart( BODYNUMBER, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RESETTABLE)
+Supervisor.AddBodyPart( BODYPARTNR, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RESETTABLE)
 JointStateAggregator.addJointNames(JOINT_NAMES)
 JointStateAggregator.addJointNames(DUMMY_JOINT_NAMES)
 JointStateAggregator.addAggregationPort(BODYPARTNAME)
-TrajectoryActionlib.AddBodyPart (BODYNUMBER, JOINT_NAMES)
-TrajectoryActionlib.interpolatorDt3 	= TS
-TrajectoryActionlib.interpolatorEps3	= 1.0
+TrajectoryActionlib.AddBodyPart (BODYPARTNR, JOINT_NAMES)
+TrajectoryActionlib.interpolatorDt3 		= TS
+TrajectoryActionlib.interpolatorEps3		= 1.0
 
 #### HIGH PRIORITY COMPONENTS ####
 
@@ -126,9 +130,12 @@ LPERA_Controller.configure
 ### Safety ###
 loadComponent("LPERA_Safety","SUPERVISORY::Safety")
 addPeer("Supervisor","LPERA_Safety")
+addPeer("LPERA_Safety","TrajectoryActionlib")
 setActivity("LPERA_Safety",0.0,HighestPriority,ORO_SCHED_RT)
-LPERA_Safety.NJ								= N
-LPERA_Safety.NM								= N
+LPERA_Safety.prefix 						= "LPERA"
+LPERA_Safety.partNr 						= BODYPARTNR
+LPERA_Safety.Nj								= N
+LPERA_Safety.Nm								= N
 LPERA_Safety.maxJointErrors					= MAXERRORS
 LPERA_Safety.motorSaturations				= array (1000.0, 	1000.0,	 	400.0, 	   	500.0,  	500.0, 	   	500.0, 		500.0, 		900.0)
 LPERA_Safety.maxConSatTime					= 5.0
@@ -172,12 +179,12 @@ LPERA_Homing.vector_size 					= N
 LPERA_Homing.number_of_outports 			= 2
 LPERA_Homing.outport_sizes					= ints (7 , 1)
 LPERA_Homing.bodypart 						= BODYPARTNAME
-LPERA_Homing.partNr 						= BODYNUMBER
+LPERA_Homing.partNr 						= BODYPARTNR
 LPERA_Homing.prefix 						= "LPERA"
 LPERA_Homing.homing_type					= ints 		(3, 	3,	 	2, 		2,	 	2, 		2,	 	2, 		4 	)
 LPERA_Homing.require_homing					= ints 		(1, 	1,	 	1, 		1,	 	1, 		1,	 	1, 		1	)
 LPERA_Homing.homing_direction				= ints 		(1,		1,		-1,	 	-1, 	-1,	 	-1, 	-1,	 	-1 	)
-LPERA_Homing.homing_velocity				= array 	(0.05,	0.05,	0.25,	0.25,	0.25,	0.2,	0.2,	0.4 )
+LPERA_Homing.homing_velocity				= array 	(0.05,	0.05,	0.25,	0.25,	0.25,	0.2,	0.2,	1.0 )
 LPERA_Homing.homing_acceleration			= array 	(0.2, 	0.2, 	0.3, 	0.5,	0.5, 	0.5,	0.5,	0.5	)
 LPERA_Homing.homing_stroke					= HOMINGSTROKE
 LPERA_Homing.reset_stroke					= array 	(0.0,	0.0,	0.0,	0.0,	0.0,	0.0,	0.0, 	0.0 )
@@ -189,6 +196,13 @@ LPERA_Homing.homing_order					= ints 		(8,		6, 		7, 		5, 		4, 		3, 		2, 		1 	)
 LPERA_Homing.interpolatorDt 				= TS
 LPERA_Homing.interpolatorEps				= 1.0
 LPERA_Homing.configure
+
+### HANDOVER DETECTOR ###
+loadComponent("LPERA_HandoverDetector","ARM::HandoverDetector")
+addPeer("Supervisor","LPERA_HandoverDetector")
+setActivity("LPERA_HandoverDetector",0.01,HighestPriority/2,ORO_SCHED_RT)
+LPERA_HandoverDetector.threshold 			= 0.2
+LPERA_HandoverDetector.configure
 
 #### Diagnostics ###
 loadComponent("LPERA_Diagnostics","ROS::RosDiagnostics")
@@ -220,7 +234,7 @@ connect ("LPERA_JointToMotorSpace.out",				"LPERA_AnalogOuts.in1", 					ConnPoli
 connect ("LPERA_AnalogIns.stdvect_out_1",			"LPERA_SensorTorques.voltage_in", 			ConnPolicy() ); # TorqueSensor
 
 ## References ##
-connect ("LPERA_ReadEncoders.out",					"TrajectoryActionlib.current_pos3",	ConnPolicy() ); # Ref Pos
+connect ("LPERA_JointToMotorSpace.out",				"TrajectoryActionlib.current_pos3",			ConnPolicy() ); # Ref Pos
 connect ("TrajectoryActionlib.pos_out3",			"LPERA_Controller.ref_in1", 				ConnPolicy() ); # Ref Pos
 
 ## Gripper control ##
@@ -263,6 +277,13 @@ stream ("LPERA_GripperControl.gripper_measurement", ros.topic("/amigo/left_arm/g
 stream ("LPERA_GripperControl.gripper_command", 	ros.topic("/amigo/left_arm/gripper/references"))
 stream ("LPERA_Diagnostics.diagnostics", 			ros.topic("/amigo/diagnostics"));
 
+### Handover Detector
+connect ("LPERA_SensorTorques.measured_torques_out","LPERA_HandoverDetector.torques", 			ConnPolicy() );
+connect ("LPERA_HandoverDetector.gripper", 			"LPERA_GripperControl.gripper_command", 	ConnPolicy() );
+stream ("LPERA_HandoverDetector.toggle_human2robot",ros.topic("/amigo/handoverdetector_left/toggle_human2robot"));
+stream ("LPERA_HandoverDetector.toggle_robot2human",ros.topic("/amigo/handoverdetector_left/toggle_robot2human"));
+stream ("LPERA_HandoverDetector.result", 			ros.topic("/amigo/handoverdetector_left/result"));
+
 #### START COMPONENTS ####
 Supervisor.AddAllwaysOnPeer(	"LPERA_ReadEncoders")
 Supervisor.AddAllwaysOnPeer(	"LPERA_Diagnostics")
@@ -272,9 +293,10 @@ Supervisor.AddAllwaysOnPeer(	"LPERA_MotorToJointSpace")
 Supervisor.AddAllwaysOnPeer(	"LPERA_JointToMotorSpace")
 Supervisor.AddAllwaysOnPeer(	"LPERA_Controller")
 
-Supervisor.AddHomingOnlyPeer(	"LPERA_Homing", 			BODYNUMBER)
+Supervisor.AddHomingOnlyPeer(	"LPERA_Homing", 			BODYPARTNR)
 
-Supervisor.AddOpOnlyPeer(		"LPERA_GripperControl",		BODYNUMBER)
+Supervisor.AddOpOnlyPeer(		"LPERA_GripperControl",		BODYPARTNR)
+Supervisor.AddOpOnlyPeer(		"LPERA_HandoverDetector",	BODYPARTNR)
 
-Supervisor.AddEnabledPeer(		"LPERA_SensorTorques", 		BODYNUMBER)
-Supervisor.AddEnabledPeer(		"LPERA_Safety", 			BODYNUMBER)
+Supervisor.AddEnabledPeer(		"LPERA_SensorTorques", 		BODYPARTNR)
+Supervisor.AddEnabledPeer(		"LPERA_Safety", 			BODYPARTNR)

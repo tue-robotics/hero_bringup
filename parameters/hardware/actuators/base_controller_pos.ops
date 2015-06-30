@@ -22,13 +22,13 @@ var array MAX_ERRORS 		= array ( 2.2, 2.2, 2.2, 2.2 )
 var array MAX_VELOCITIES	= array (1.8, 1.0, 3.1415)
 var int N					= 4
 var string ROBOT 			= "/amigo"
-var int BODYNUMBER 			= 1
+var int BODYPARTNR 			= 1
 var string BODYPARTNAME 	= "base"
 var bool HOMEABLE 			= false
 var bool HOMINGOBLIGATORY	= false
 var bool RESETTABLE			= true
 ### AddBodyPart ###
-Supervisor.AddBodyPart( BODYNUMBER, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RESETTABLE)
+Supervisor.AddBodyPart( BODYPARTNR, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RESETTABLE)
 
 ### READ WHEEL ENCODERS ###
 loadComponent("BASE_ReadEncoders","SOEM::ReadEncoders")
@@ -108,8 +108,10 @@ BASE_Controller.configure
 loadComponent("BASE_Safety","SUPERVISORY::Safety")
 addPeer("Supervisor","BASE_Safety")
 setActivity("BASE_Safety",0.0,HighestPriority,ORO_SCHED_RT)
-BASE_Safety.NJ							= N
-BASE_Safety.NM							= N
+BASE_Safety.prefix 						= "BASE"
+BASE_Safety.partNr						= BODYPARTNR
+BASE_Safety.Nj							= N
+BASE_Safety.Nm							= N
 BASE_Safety.maxJointErrors				= MAX_ERRORS
 BASE_Safety.motorSaturations			= array (9.9, 9.9, 9.9, 9.9)
 BASE_Safety.maxConSatTime				= 0.1
@@ -181,8 +183,8 @@ Supervisor.AddAllwaysOnPeer ("BASE_OdometryPublisher")
 Supervisor.AddAllwaysOnPeer ("BASE_Diagnostics")
 Supervisor.AddAllwaysOnPeer ("BASE_SI2Volt")
 
-Supervisor.AddEnabledPeer ("BASE_Controller", BODYNUMBER)
-Supervisor.AddEnabledPeer ("BASE_ReadReferences",BODYNUMBER )
-Supervisor.AddEnabledPeer ("BASE_JointToMotorSpace",BODYNUMBER )
-Supervisor.AddEnabledPeer ("BASE_VelocityToPosition",BODYNUMBER )
-Supervisor.AddEnabledPeer ("BASE_Safety", BODYNUMBER)
+Supervisor.AddEnabledPeer ("BASE_Controller", BODYPARTNR)
+Supervisor.AddEnabledPeer ("BASE_ReadReferences",BODYPARTNR )
+Supervisor.AddEnabledPeer ("BASE_JointToMotorSpace",BODYPARTNR )
+Supervisor.AddEnabledPeer ("BASE_VelocityToPosition",BODYPARTNR )
+Supervisor.AddEnabledPeer ("BASE_Safety", BODYPARTNR)

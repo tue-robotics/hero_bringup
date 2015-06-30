@@ -8,7 +8,7 @@
             <arg name="DEPLOYER_ARGS" value="gnulinux
                 HARDWARE
                 -s $(env ROBOT_PARAMETER_PATH)/hardware/actuators/soem.ops
-                -s $(env ROBOT_PARAMETER_PATH)/hardware/actuators/base_controller_vel.ops
+                -s $(env ROBOT_PARAMETER_PATH)/hardware/actuators/base_controller_pos.ops
                 -s $(env ROBOT_PARAMETER_PATH)/hardware/actuators/spindle_controller.ops
                 -s $(env ROBOT_PARAMETER_PATH)/hardware/actuators/left_arm_controller.ops
                 -s $(env ROBOT_PARAMETER_PATH)/hardware/actuators/right_arm_controller.ops
@@ -22,23 +22,24 @@
         </include>
 
         <!-- MANAGERS -->
-        <include file="$(find robot_launch_files)/launch/hardware/managers/emergency_button_manager.launch">
-            <arg name="machine" value="amigo1"/>
-	</include>
+		<include file="$(find robot_launch_files)/launch/hardware/managers/emergency_button_manager.launch">
+			<arg name="machine" value="amigo1"/>
+		</include>
 
-        <include file="$(find robot_launch_files)/launch/hardware/managers/rgb_lights_manager.launch" >
-            <arg name="machine" value="amigo1"/>
-	</include>
+		<include file="$(find robot_launch_files)/launch/hardware/managers/rgb_lights_manager.launch" >
+			<arg name="machine" value="amigo1"/>
+		</include>
 
-        <include file="$(find robot_launch_files)/launch/hardware/managers/battery_manager.launch" >
-            <arg name="machine" value="amigo1"/>
-	</include>
+		<include file="$(find robot_launch_files)/launch/hardware/managers/battery_manager.launch" >
+			<arg name="machine" value="amigo1"/>
+		</include>
 
 
         <!-- SENSORS -->
         <include file="$(find robot_launch_files)/launch/hardware/sensors/kinect.launch">
             <arg name="name" value="top_kinect"/>
             <arg name="machine" value="amigo1"/>
+            <arg name="gdb" value="true"/>
         </include>
         <include file="$(find robot_launch_files)/launch/hardware/sensors/laser.launch">
             <arg name="name" value="base_laser"/>

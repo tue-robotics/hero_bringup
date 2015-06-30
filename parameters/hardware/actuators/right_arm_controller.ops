@@ -35,18 +35,18 @@ var double ENC2SI_EM			= TWOPI*GEARRATIO_EM/ENCODERCOUNTS_EM
 var double ENC2SI_WM			= TWOPI*GEARRATIO_WM/ENCODERCOUNTS_WM
 var double ENC2SI_HM 			= TWOPI*GEARRATIO_HM/ENCODERCOUNTS_HM
 var int N						= 8
-var int BODYNUMBER 				= 4
+var int BODYPARTNR 				= 4
 var string BODYPARTNAME 		= "right_arm"
 var bool HOMEABLE 				= true
 var bool HOMINGOBLIGATORY		= false
 var bool RESETTABLE				= true
 
 ### Configuring Supervisor, JointStateAggregator and TrajectoryActionlib
-Supervisor.AddBodyPart( BODYNUMBER, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RESETTABLE)
+Supervisor.AddBodyPart( BODYPARTNR, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RESETTABLE)
 JointStateAggregator.addJointNames(JOINT_NAMES)
 JointStateAggregator.addJointNames(DUMMY_JOINT_NAMES)
 JointStateAggregator.addAggregationPort(BODYPARTNAME)
-TrajectoryActionlib.AddBodyPart (BODYNUMBER, JOINT_NAMES)
+TrajectoryActionlib.AddBodyPart (BODYPARTNR, JOINT_NAMES)
 TrajectoryActionlib.interpolatorDt4 	= TS
 TrajectoryActionlib.interpolatorEps4	= 1.0
 
@@ -126,9 +126,12 @@ RPERA_Controller.configure
 ### Safety ###
 loadComponent("RPERA_Safety","SUPERVISORY::Safety")
 addPeer("Supervisor","RPERA_Safety")
+addPeer("RPERA_Safety","TrajectoryActionlib")
 setActivity("RPERA_Safety",0.0,HighestPriority,ORO_SCHED_RT)
-RPERA_Safety.NJ								= N
-RPERA_Safety.NM								= N
+RPERA_Safety.prefix 						= "RPERA"
+RPERA_Safety.partNr 						= BODYPARTNR
+RPERA_Safety.Nj								= N
+RPERA_Safety.Nm								= N
 RPERA_Safety.maxJointErrors					= MAXERRORS
 RPERA_Safety.motorSaturations				= array (1000.0, 	1000.0,	 	400.0, 	   	500.0,  	500.0, 	   	500.0, 		500.0, 		900.0)
 RPERA_Safety.maxConSatTime					= 5.0
@@ -157,7 +160,7 @@ setActivity("RPERA_SensorTorques",TS,HighestPriority/2,ORO_SCHED_RT)
 RPERA_SensorTorques.vector_size				= N
 RPERA_SensorTorques.c1 						= array (42.0,		4250.0,		94.0,		20.0,		825.0,		1.0,		1.0,		32.3375		)
 RPERA_SensorTorques.c2 						= array (-0.8,		12.0,	     1.0,		-2.2,		1.0,		1.0,		1.0,		0.2			)
-RPERA_SensorTorques.c3 						= array (-35.63,	-294.40,	-30.56,		-30.9,		-168.32,	1.0, 		1.0,		-22.66		)
+RPERA_SensorTorques.c3 						= array (1500.0,	 	-294.40,	-30.56,		-30.9,		-168.32,	1.0, 		1.0,		-22.66		)
 RPERA_SensorTorques.configure
 
 ### PERA Homing ###							## Note that all properties follow the [q1,q2,q3....q8] structure and not the structure provided by homing_order
@@ -172,12 +175,12 @@ RPERA_Homing.vector_size 					= N
 RPERA_Homing.number_of_outports 			= 2
 RPERA_Homing.outport_sizes					= ints (7 , 1)
 RPERA_Homing.bodypart 						= BODYPARTNAME
-RPERA_Homing.partNr 						= BODYNUMBER
+RPERA_Homing.partNr 						= BODYPARTNR
 RPERA_Homing.prefix 						= "RPERA"
 RPERA_Homing.homing_type					= ints 		(3, 	3,	 	2, 		2,	 	2, 		2,	 	2, 		4 	)
 RPERA_Homing.require_homing					= ints 		(1, 	1,	 	1, 		1,	 	1, 		1,	 	1, 		1	)
 RPERA_Homing.homing_direction				= ints 		(1,		-1,		-1,	 	-1, 	-1,	 	-1, 	-1,	 	-1 	)
-RPERA_Homing.homing_velocity				= array 	(0.05,	0.05,	0.25,	0.25,	0.25,	0.2,	0.2,	0.4 )
+RPERA_Homing.homing_velocity				= array 	(0.05,	0.05,	0.25,	0.25,	0.25,	0.2,	0.2,	1.0 )
 RPERA_Homing.homing_acceleration			= array 	(0.2, 	0.2, 	0.3, 	0.5,	0.5, 	0.5,	0.5,	0.5	)
 RPERA_Homing.homing_stroke					= HOMINGSTROKE
 RPERA_Homing.reset_stroke					= array 	(0.0,	0.0,	0.0,	0.0,	0.0,	0.0,	0.0, 	0.0 )
@@ -193,7 +196,8 @@ RPERA_Homing.configure
 ### HANDOVER DETECTOR ###
 loadComponent("RPERA_HandoverDetector","ARM::HandoverDetector")
 addPeer("Supervisor","RPERA_HandoverDetector")
-setActivity("RPERA_HandoverDetector",1.0,HighestPriority/2,ORO_SCHED_RT)
+setActivity("RPERA_HandoverDetector",0.01,HighestPriority/2,ORO_SCHED_RT)
+RPERA_HandoverDetector.threshold 			= 0.4
 RPERA_HandoverDetector.configure
 
 #### Diagnostics ###
@@ -226,8 +230,8 @@ connect ("RPERA_JointToMotorSpace.out",				"RPERA_AnalogOuts.in1", 					ConnPoli
 connect ("RPERA_AnalogIns.stdvect_out_1",			"RPERA_SensorTorques.voltage_in", 			ConnPolicy() ); # TorqueSensor
 
 ## References ##
-connect ("RPERA_ReadEncoders.out",					"TrajectoryActionlib.current_pos4",	ConnPolicy() ); # Ref Pos
-connect ("TrajectoryActionlib.pos_out4",		"RPERA_Controller.ref_in1", 				ConnPolicy() ); # Ref Pos
+connect ("RPERA_MotorToJointSpace.out",				"TrajectoryActionlib.current_pos4",			ConnPolicy() ); # Ref Pos
+connect ("TrajectoryActionlib.pos_out4",			"RPERA_Controller.ref_in1", 				ConnPolicy() ); # Ref Pos
 
 ## Gripper control ##
 connect ("RPERA_SensorTorques.measured_torques_out","RPERA_GripperControl.torque_in", 			ConnPolicy() ); # Torqin
@@ -258,7 +262,7 @@ connect ("RPERA_Homing.posout1",					"RPERA_Controller.ref_in1", 				ConnPolicy(
 connect ("RPERA_Homing.posout2",					"RPERA_Controller.ref_in2", 				ConnPolicy() ); # Ref Pos
 
 ## Diagnostics ##
-connect ("TrajectoryActionlib.pos_out4", 		"RPERA_Diagnostics.vec1", 					ConnPolicy() ); # Reference
+connect ("TrajectoryActionlib.pos_out4", 			"RPERA_Diagnostics.vec1", 					ConnPolicy() ); # Reference
 connect ("RPERA_Controller.jointErrors",			"RPERA_Diagnostics.vec2", 					ConnPolicy() ); # JointErrors
 connect ("RPERA_Controller.out", 					"RPERA_Diagnostics.vec3", 					ConnPolicy() ); # ControlEffort
 connect ("RPERA_Safety.error",						"RPERA_Diagnostics.bool1", 					ConnPolicy() ); # Enable
@@ -269,8 +273,12 @@ stream ("RPERA_GripperControl.gripper_measurement", ros.topic("/amigo/right_arm/
 stream ("RPERA_GripperControl.gripper_command", 	ros.topic("/amigo/right_arm/gripper/references"))
 stream ("RPERA_Diagnostics.diagnostics", 			ros.topic("/amigo/diagnostics"));
 
-stream ("RPERA_HandoverDetector.toggle", 			ros.topic("/amigo/handoverdetector/toggle"));
-stream ("RPERA_HandoverDetector.result", 			ros.topic("/amigo/handoverdetector/result"));
+### Handover Detector
+connect ("RPERA_SensorTorques.measured_torques_out","RPERA_HandoverDetector.torques", 			ConnPolicy() );
+connect ("RPERA_HandoverDetector.gripper", 			"RPERA_GripperControl.gripper_command", 	ConnPolicy() );
+stream ("RPERA_HandoverDetector.toggle_human2robot",ros.topic("/amigo/handoverdetector_right/toggle_human2robot"));
+stream ("RPERA_HandoverDetector.toggle_robot2human",ros.topic("/amigo/handoverdetector_right/toggle_robot2human"));
+stream ("RPERA_HandoverDetector.result", 			ros.topic("/amigo/handoverdetector_right/result"));
 
 #### START COMPONENTS ####
 Supervisor.AddAllwaysOnPeer(	"RPERA_ReadEncoders")
@@ -281,12 +289,10 @@ Supervisor.AddAllwaysOnPeer(	"RPERA_MotorToJointSpace")
 Supervisor.AddAllwaysOnPeer(	"RPERA_JointToMotorSpace")
 Supervisor.AddAllwaysOnPeer(	"RPERA_Controller")
 
-Supervisor.AddHomingOnlyPeer(	"RPERA_Homing", 			BODYNUMBER)
+Supervisor.AddHomingOnlyPeer(	"RPERA_Homing", 			BODYPARTNR)
 
-Supervisor.AddOpOnlyPeer(		"RPERA_GripperControl",		BODYNUMBER)
-Supervisor.AddOpOnlyPeer(		"RPERA_HandoverDetector",	BODYNUMBER)
+Supervisor.AddOpOnlyPeer(		"RPERA_GripperControl",		BODYPARTNR)
+Supervisor.AddOpOnlyPeer(		"RPERA_HandoverDetector",	BODYPARTNR)
 
-Supervisor.AddEnabledPeer(		"RPERA_SensorTorques", 		BODYNUMBER)
-Supervisor.AddEnabledPeer(		"RPERA_Safety", 			BODYNUMBER)
-
-#Supervisor.AddAllwaysOnPeer(	"RPERA_Tracing")
+Supervisor.AddEnabledPeer(		"RPERA_SensorTorques", 		BODYPARTNR)
+Supervisor.AddEnabledPeer(		"RPERA_Safety", 			BODYPARTNR)
