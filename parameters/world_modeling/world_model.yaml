@@ -46,11 +46,6 @@ plugins:
   lib: libed_laser_plugin.so
   parameters:
       laser_topic: /amigo/torso_laser/scan
-- name: entity_clearer
-  lib: libed_clearer_plugin.so
-  enabled: 0
-  parameters:
-      entity_timeout: 1.0
 - name: localization
   lib: libed_localization_plugin.so
   enabled: 1
