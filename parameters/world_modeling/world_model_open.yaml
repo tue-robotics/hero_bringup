@@ -90,6 +90,7 @@ plugins:
     live_viewer: 0
     model_list: robotic_testlabs_may_2015.yml
     type_persistence: 0.3 # Between 0 and 1, 0 being no persistence, 1 being full persistence
+    unknown_probability_prior: 0.5
     modules:
       - lib: libsize_matcher.so
         parameters:
@@ -181,6 +182,7 @@ plugins:
   lib: libed_fitter_plugin.so
   parameters:
       topic: /amigo/top_kinect/rgbd
+      min_poi_distance: 1.0
       models:
         - name: robotics_testlab_B.hallway_cabinet
         - name: table_120x80x76
