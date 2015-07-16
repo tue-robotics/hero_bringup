@@ -90,6 +90,7 @@ plugins:
     live_viewer: 0
     model_list: robotic_testlabs_may_2015.yml
     type_persistence: 0.3 # Between 0 and 1, 0 being no persistence, 1 being full persistence
+    unknown_probability_prior: 0.5
     modules:
       - lib: libsize_matcher.so
         parameters:
@@ -127,8 +128,8 @@ plugins:
             head_template_left_path: /head_templates/left_close.png                 # template for left head template matching
             head_template_right_path: /head_templates/right_close.png               # template for right head template matching
             type_positive_score: 0.9            # score given to an entity classified as human
-            type_negative_score: 0.2            # score given to an entity classified as not-human
-            type_unknown_score: 0.2             # default score for an unknown entity
+            type_negative_score: 0.15           # score given to an entity classified as not-human
+            type_unknown_score: 0.3             # default score for an unknown entity
 
       - lib: libface_detector.so
         parameters:
