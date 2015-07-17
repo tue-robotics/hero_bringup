@@ -38,6 +38,11 @@ plugins:
       max_correspondence_distance: 0.1
       max_range: 3.0
       downsample_factor: 2
+#- name: entity_clearer
+#  lib: libed_clearer_plugin.so
+#  enabled: 1
+#  parameters:
+#      entity_timeout: 1.0
 #- name: laser_integration
 #  lib: libed_laser_plugin.so
 #  parameters:
