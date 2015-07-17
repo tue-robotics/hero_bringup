@@ -157,7 +157,7 @@ plugins:
             enable_learning_service: 1        # enable learning service (boolean). Topic '/face_recognition/learn <PERSON_NAME>'
             eigen_treshold: 3000              # Eingen Faces error threshold (less is better)
             fisher_treshold: 800              # Fisher Faces error threshold (less is better)
-            lbph_treshold: 45                 # LBPH Faces error threshold (less is better) 
+            lbph_treshold: 50                 # LBPH Faces error threshold (less is better) 
             recognition_treshold: 0.95        # final recognition threshold (less is better)
             face_target_size: 150             # size of faces used in the recognition process (square, in pixels) 
             left_eye_vert_offset: 0.35        # offset of the left eye from the top of the image
