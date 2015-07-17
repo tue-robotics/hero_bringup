@@ -93,7 +93,7 @@ plugins:
     continuous: 0     # If set to 0, will not constantly try to recognize things (but wait for service call instead)
     fit_shapes: 1
     live_viewer: 0
-    model_list: robotic_testlabs_may_2015.yml
+    model_list: rwc2015.yml
     type_persistence: 0.3 # Between 0 and 1, 0 being no persistence, 1 being full persistence
     unknown_probability_prior: 0.5
     modules:
@@ -108,7 +108,7 @@ plugins:
 
       - lib: libed_odu_finder.so
         parameters:
-            database_path: /robotic_testlabs_may_2015/database    # location of database (ed_object_models/configs/odu_finder + <this path>)
+            database_path: /rwc2015/database    # location of database (ed_object_models/configs/odu_finder + <this path>)
             debug_folder: /tmp/odu_finder/
             debug_mode: 0               # activate debug mode for extra output
             type_unknown_score: 0.05    # default score for an unknown entity
