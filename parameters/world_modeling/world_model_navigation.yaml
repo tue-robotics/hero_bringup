@@ -10,6 +10,10 @@ plugins:
       urdf_rosparam: /amigo/robot_description
       joint_topics:
         - topic: /amigo/joint_states
+- name: gui_server
+  lib: libed_gui_server_plugin.so
+  parameters:
+      robot_name: amigo
 - name: navigation
   lib: libed_navigation_plugin.so
   parameters:
