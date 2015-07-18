@@ -184,8 +184,6 @@ plugins:
       topic: /amigo/top_kinect/rgbd
       min_poi_distance: 1.0
       models:
-        - name: robotics_testlab_B.hallway_cabinet
         - name: table_120x80x76
+          image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/example.jpg
         - name: robotics_testlab_B.bed
-        - name: robotics_testlab_B.black_cabinet
-        - name: robotics_testlab_B.pico_case
