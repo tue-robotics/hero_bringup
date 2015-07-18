@@ -178,7 +178,3 @@ plugins:
       #     list_size: 500
       #     min_segment_size: 0.2
       #     min_n_points: 5
-
-#      - lib: libtype_aggregator.so
-#        parameters:
-#          classification_threshold: 0.5     # final classification threshold
