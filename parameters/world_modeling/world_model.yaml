@@ -107,7 +107,7 @@ plugins:
             database_path: /rwc2015/database    # location of database (ed_object_models/configs/odu_finder + <this path>)
             debug_folder: /tmp/odu_finder/
             debug_mode: 0               # activate debug mode for extra output
-            type_unknown_score: 0.05    # default score for an unknown entity
+            score_factor: 0.1           # ODU finder results are multiplied by this to get the probability (lower means less confidence in ODU finder)
 
       - lib: libcolor_matcher.so
         parameters:
