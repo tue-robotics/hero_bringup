@@ -43,10 +43,6 @@ plugins:
 #  enabled: 1
 #  parameters:
 #      entity_timeout: 1.0
-#- name: laser_integration
-#  lib: libed_laser_plugin.so
-#  parameters:
-#      laser_topic: /amigo/base_laser/scan
 - name: laser_integration
   lib: libed_laser_plugin.so
   parameters:
