@@ -17,7 +17,7 @@ var array UPPERJOINTLIMIT 		= array (	0.0,		1.57,		1.57, 		2.23,  		1.83, 		0.95
 var array LOWERJOINTLIMIT 		= array (	-1.57,		-1.57,		-1.57,  	0.0, 		-1.83,		-0.95, 		-0.61, 		-1.0	)
 var array HOMINGSTROKE 			= array (	0.0,		0.0,		-1.57,  	0.0, 		-1.83,		-0.95, 		-0.75, 		0.0		)
 var array MAXERRORS 			= array (	0.09,     	0.09,   	0.09,     	0.09, 	   	0.09,    	0.09, 	   	0.09, 		2.0		)
-var array ABSPOS				= array	(	0.631,		2.11,		0.0,		0.0,		0.0,		0.0,		0.0,		0.0		)
+var array ABSPOS				= array	(	0.64,		2.085,		0.0,		0.0,		0.0,		0.0,		0.0,		0.0		)
 var array MINPOS 				= array (	-1.57,		-1.57,		-1.57,  	0.0, 		-1.83,		-0.95, 		-0.61	)
 var array MAXPOS 				= array (	0.0,		1.57,		1.57, 		2.23,  		1.83, 		0.95,  		0.61	)
 var array MAXVEL 				= array (	0.4, 		0.4, 		0.6, 		0.8, 		0.8, 		1.0, 		1.0		)
@@ -201,7 +201,7 @@ LPERA_Homing.configure
 loadComponent("LPERA_HandoverDetector","ARM::HandoverDetector")
 addPeer("Supervisor","LPERA_HandoverDetector")
 setActivity("LPERA_HandoverDetector",0.01,HighestPriority/2,ORO_SCHED_RT)
-LPERA_HandoverDetector.threshold 			= 0.2
+LPERA_HandoverDetector.threshold 			= 0.1
 LPERA_HandoverDetector.configure
 
 #### Diagnostics ###
