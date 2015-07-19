@@ -184,6 +184,19 @@ plugins:
       topic: /amigo/top_kinect/rgbd
       min_poi_distance: 1.0
       models:
-        - name: table_120x80x76
+        - name: rwc2015/bed
+        - name: rwc2015/bedstand
+        - name: rwc2015/couch
+        - name: rwc2015/couch_table
+        - name: rwc2015/cupboard
+        - name: rwc2015/fridge
+        - name: rwc2015/kitchen_counter
+        - name: rwc2015/kitchentable
+        - name: rwc2015/large_table
+          image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/example.jpg        
+        - name: rwc2015/small_table
           image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/example.jpg
-        - name: robotics_testlab_B.bed
+        - name: rwc2015/table
+          image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/example.jpg
+        - name: rwc2015/thrashbin
+
