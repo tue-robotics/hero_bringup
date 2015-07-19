@@ -23,7 +23,7 @@ plugins:
           min_z: 0.05
           max_z: 1.8
           default_offset: 0.7
-          unknown_obstacle_inflation: 0.15
+          unknown_obstacle_inflation: 0.05
 - name: tf_publisher
   lib: libed_tf_publisher_plugin.so
   parameters:
