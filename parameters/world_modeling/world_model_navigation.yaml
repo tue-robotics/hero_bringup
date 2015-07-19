@@ -20,7 +20,7 @@ plugins:
       occupancy_grid_publisher:
           resolution: 0.05
           frame_id: /map
-          min_z: 0.05
+          min_z: 0.025
           max_z: 1.8
           default_offset: 0.7
           unknown_obstacle_inflation: 0.05
