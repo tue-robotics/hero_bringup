@@ -201,7 +201,7 @@ RPERA_Homing.configure
 loadComponent("RPERA_HandoverDetector","ARM::HandoverDetector")
 addPeer("Supervisor","RPERA_HandoverDetector")
 setActivity("RPERA_HandoverDetector",0.01,HighestPriority/2,ORO_SCHED_RT)
-RPERA_HandoverDetector.threshold 			= 0.1
+RPERA_HandoverDetector.threshold 			= 0.01
 RPERA_HandoverDetector.configure
 
 #### Diagnostics ###
