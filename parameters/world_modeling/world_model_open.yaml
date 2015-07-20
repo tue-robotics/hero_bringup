@@ -187,7 +187,9 @@ plugins:
         - name: rwc2015/bed
           image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/bed.jpg    
         - name: rwc2015/bedstand          
+          image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/bedstand.jpg    
         - name: rwc2015/cabinet/cabinet_frame
+          image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/cabinet.jpg
         - name: rwc2015/couch
           image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/couch.jpg          
         - name: rwc2015/couch_table
@@ -196,12 +198,12 @@ plugins:
           image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/cupboard.jpg          
         - name: rwc2015/fridge
           image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/fridge.jpg          
-        - name: rwc2015/kitchen_counter
-        - name: rwc2015/kitchentable
         - name: rwc2015/large_table
+          image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/large_table.jpg     
         - name: rwc2015/small_table
           image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/small_table.jpg        
         - name: rwc2015/table
           image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/table.jpg
         - name: rwc2015/thrashbin
+          image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/trashbin.jpg
 
