@@ -34,6 +34,15 @@ plugins:
       max_correspondence_distance: 0.1
       max_range: 3.0
       downsample_factor: 2
+- name: navigation
+  lib: libed_navigation_plugin.so
+  parameters:
+      occupancy_grid_publisher:
+          resolution: 0.05
+          frame_id: /map
+          min_z: 0.025
+          max_z: 1.8
+          default_offset: 0.7
 - name: localization
   lib: libed_localization_plugin.so
   enabled: 1
