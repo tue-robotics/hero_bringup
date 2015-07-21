@@ -4,19 +4,19 @@
 
     <group ns="sergio">
 
-        <node name="ed" pkg="challenge_final" type="client.py">
-            <param name="ip" value="192.168.2.71" />
-            <param name="port" value="4000" />
-        </node>
+<!--        <node name="ed" pkg="challenge_final" type="client.py">-->
+<!--            <param name="ip" value="192.168.2.71" />-->
+<!--            <param name="port" value="4000" />-->
+<!--        </node>-->
         
     </group>
 
     <group ns="amigo">
 
-        <node name="trigger_client" pkg="challenge_final" type="trigger_client.py">
-            <param name="ip" value="192.168.2.71" />
-            <param name="port" value="4001" />
-        </node>
+<!--        <node name="trigger_client" pkg="challenge_final" type="trigger_client.py">-->
+<!--            <param name="ip" value="192.168.2.71" />-->
+<!--            <param name="port" value="4001" />-->
+<!--        </node>-->
 
         <!-- MANIPULATION -->        
         <include file="$(find robot_launch_files)/launch/manipulation/torso.launch">
