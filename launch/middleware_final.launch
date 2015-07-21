@@ -62,12 +62,6 @@
             <arg name="machine" value="amigo3"/>
         </include> 
 
-        <!-- Action server -->
-        <include file="$(find robot_launch_files)/launch/interaction/action_server.launch">
-            <arg name="machine" value="amigo1"/>
-            <arg name="robot" value="amigo" />
-        </include> 
-
     </group>
 
 </launch>
