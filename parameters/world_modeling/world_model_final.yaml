@@ -3,6 +3,11 @@ world_name: empty
 # -----------------------------------------------------------------------------------------------------------------------------
 
 plugins:
+- name: sync_plugin
+  lib: libed_sync_plugin.so
+  frequency: 1
+  parameters:
+      server: /sergio/ed/query
 - name: robot_plugin
   lib: libed_robot_plugin.so
   parameters:
