@@ -57,6 +57,10 @@
             <arg name="machine" value="amigo3"/>
         </include> 
 
+        <!-- PRESENTATION TIMER SERVER -->
+        <node name="presentation_timer" pkg="challenge_final" type="time.py">
+        </node>
+
     </group>
 
 </launch>
