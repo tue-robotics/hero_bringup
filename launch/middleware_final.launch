@@ -4,10 +4,12 @@
 
     <group ns="sergio">
 
-        <node name="ed" pkg="challenge_final" type="client.py">
-            <param name="ip" value="192.168.2.71" />
-            <param name="port" value="4000" />
-        </node>
+        <!-- ED SYNC CLIENT -->        
+        <include file="$(find robot_launch_files)/launch/multirobot/sync_client.launch">
+            <arg name="machine" value="amigo1"/>
+            <arg name="ip" value="192.168.2.71" />
+            <arg name="port" value="4000" />
+        </include>
         
     </group>
 
