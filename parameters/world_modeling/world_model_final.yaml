@@ -74,3 +74,7 @@ plugins:
           alpha3: 0.5    # trans -> trans
           alpha4: 0.5    # rot -> rot
           alpha5: 0.5    # trans -> strafe
+- name: laser_integration
+  lib: libed_laser_plugin.so
+  parameters:
+      laser_topic: /amigo/torso_laser/scan
