@@ -1,0 +1,69 @@
+world_name: empty
+
+# -----------------------------------------------------------------------------------------------------------------------------
+
+plugins:
+- name: robot_plugin
+  lib: libed_robot_plugin.so
+  parameters:
+      robot_name: amigo
+      urdf_rosparam: /amigo/robot_description
+      joint_topics:
+        - topic: /amigo/joint_states
+- name: gui_server
+  lib: libed_gui_server_plugin.so
+  parameters:
+      robot_name: amigo
+- name: tf_publisher
+  lib: libed_tf_publisher_plugin.so
+  parameters:
+      root_frame_id: /map
+      exclude: amigo
+- name: kinect_integration
+  lib: libed_kinect2_plugin.so
+  enabled: 1
+  parameters:
+      debug: 0
+      continuous: 0
+      topic: /amigo/top_kinect/rgbd
+      max_correspondence_distance: 0.1
+      max_range: 3.0
+      downsample_factor: 2
+
+- name: object_fitter
+  lib: libed_fitter_plugin.so
+  parameters:
+      topic: /amigo/top_kinect/rgbd
+      min_poi_distance: 1.0
+      map_topic_in: /bla
+      map_topic_out: /new_map
+      models:
+        - name: rwc2015/bar
+          image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/bar.jpg  
+        - name: rwc2015/bed
+          image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/bed.jpg    
+        - name: rwc2015/bedside_table          
+          image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/bedside_table.jpg    
+        - name: rwc2015/bookcase/bookcase_frame
+          image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/bookcase.jpg
+        - name: rwc2015/couchtable
+          image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/couchtable.jpg          
+        - name: rwc2015/cupboard
+          image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/cupboard.jpg         
+        - name: rwc2015/desk
+          image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/desk.jpg
+        - name: rwc2015/dinnertable
+          image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/dinnertable.jpg       
+        - name: rwc2015/fridge
+          image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/fridge.jpg
+        - name: rwc2015/hallwaytable
+          image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/hallwaytable.jpg
+        - name: rwc2015/kitchencounter
+          image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/kitchencounter.jpg  
+        - name: rwc2015/kitchentable
+          image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/kitchentable.jpg           
+        - name: rwc2015/sofa
+          image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/sofa.jpg          
+        - name: rwc2015/trashbin
+          image: $(env TUE_ENV_DIR)/system/src/challenge_open/images/trashbin.jpg
+

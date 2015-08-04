@@ -23,6 +23,7 @@ plugins:
           min_z: 0.025
           max_z: 1.8
           default_offset: 0.7
+          unknown_obstacle_inflation: 0.05
 - name: tf_publisher
   lib: libed_tf_publisher_plugin.so
   parameters:
@@ -33,7 +34,7 @@ plugins:
   enabled: 1
   parameters:
       debug: 0
-      continuous: 0
+      continuous: 1
       topic: /amigo/top_kinect/rgbd
       max_correspondence_distance: 0.1
       max_range: 3.0
@@ -43,10 +44,14 @@ plugins:
   enabled: 1
   parameters:
       entity_timeout: 1.0
-- name: laser_integration
+- name: laser_integration_torso
   lib: libed_laser_plugin.so
   parameters:
       laser_topic: /amigo/torso_laser/scan
+- name: laser_integration_base
+  lib: libed_laser_plugin.so
+  parameters:
+      laser_topic: /amigo/base_laser/scan
 - name: localization
   lib: libed_localization_plugin.so
   enabled: 1
@@ -78,24 +83,3 @@ plugins:
           alpha3: 0.5    # trans -> trans
           alpha4: 0.5    # rot -> rot
           alpha5: 0.5    # trans -> strafe
-
-# -----------------------------------------------------------------------------------------------------------------------------
-
-- name: perception
-  lib: libed_perception_plugin.so
-  frequency: 5
-  enabled: 1
-  parameters:
-    continuous: 0     # If set to 0, will not constantly try to recognize things (but wait for service call instead)
-    fit_shapes: 1
-    live_viewer: 0
-    model_list: rwc2015.yml
-    type_persistence: 0.3 # Between 0 and 1, 0 being no persistence, 1 being full persistence
-    unknown_probability_prior: 0.5
-    modules:
-      - lib: libcolor_matcher.so
-        parameters:
-            debug_mode: 0                     # activate debug mode for extra output
-            debug_folder: /tmp/color_matcher/ # folder for debug output images
-            color_table: color_names.txt     # location of database (ed_object_models/configs/color_matcher + <this path>)
-            type_unknown_score: 0.05           # default score for an unknown entity
