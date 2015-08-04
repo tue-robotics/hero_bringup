@@ -4,7 +4,7 @@
 
     <group ns="amigo">
 
-        <!-- MANIPULATION -->        
+        <!-- MANIPULATION -->    <!--   MOVED TO MANIPULATION.LAUNCH !!!
         <include file="$(find robot_launch_files)/launch/manipulation/moveit.launch">
             <arg name="machine" value="amigo1"/>
         </include>
@@ -18,7 +18,7 @@
         </include>
         <include file="$(find robot_launch_files)/launch/manipulation/head.launch">
             <arg name="machine" value="amigo1"/>
-        </include>
+        </include> -->
         
         <!-- NAVIGATION -->
         <include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
