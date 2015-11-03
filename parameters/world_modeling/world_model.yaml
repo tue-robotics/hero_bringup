@@ -3,6 +3,7 @@ world_name: $(env ROBOT_ENV)
 # -----------------------------------------------------------------------------------------------------------------------------
 
 plugins:
+
 - name: robot_plugin
   lib: libed_robot_plugin.so
   parameters:
@@ -10,10 +11,12 @@ plugins:
       urdf_rosparam: /amigo/robot_description
       joint_topics:
         - topic: /amigo/joint_states
+
 - name: gui_server
   lib: libed_gui_server_plugin.so
   parameters:
       robot_name: amigo
+
 - name: navigation
   lib: libed_navigation_plugin.so
   parameters:
@@ -28,25 +31,33 @@ plugins:
               num_samples: 320
               slope_threshold: 1
               slope_window_size: 30
+
 - name: tf_publisher
   lib: libed_tf_publisher_plugin.so
   parameters:
       root_frame_id: /map
       exclude: amigo
+
 - name: kinect_integration
   lib: libed_kinect_plugin.so
   enabled: 1
   parameters:
       topic: /amigo/top_kinect/rgbd
+
 - name: entity_clearer
   lib: libed_clearer_plugin.so
   enabled: 1
   parameters:
       entity_timeout: 1.0
+
 - name: laser_integration
   lib: libed_laser_plugin.so
   parameters:
       laser_topic: /amigo/torso_laser/scan
+
+- name: perception
+  lib: libed_perception_plugin.so
+
 - name: localization
   lib: libed_localization_plugin.so
   enabled: 1
@@ -78,24 +89,3 @@ plugins:
           alpha3: 0.5    # trans -> trans
           alpha4: 0.5    # rot -> rot
           alpha5: 0.5    # trans -> strafe
-
-# -----------------------------------------------------------------------------------------------------------------------------
-
-- name: perception
-  lib: libed_perception_plugin.so
-  frequency: 5
-  enabled: 1
-  parameters:
-    continuous: 0     # If set to 0, will not constantly try to recognize things (but wait for service call instead)
-    fit_shapes: 1
-    live_viewer: 0
-    model_list: rwc2015.yml
-    type_persistence: 0.3 # Between 0 and 1, 0 being no persistence, 1 being full persistence
-    unknown_probability_prior: 0.5
-    modules:
-      - lib: libcolor_matcher.so
-        parameters:
-            debug_mode: 0                     # activate debug mode for extra output
-            debug_folder: /tmp/color_matcher/ # folder for debug output images
-            color_table: color_names.txt     # location of database (ed_object_models/configs/color_matcher + <this path>)
-            type_unknown_score: 0.05           # default score for an unknown entity
