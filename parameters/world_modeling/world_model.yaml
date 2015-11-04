@@ -62,6 +62,7 @@ plugins:
   lib: libed_localization_plugin.so
   enabled: 1
   parameters:
+      robot_name: amigo
       initial_pose_topic: /amigo/initialpose
       num_particles: 500
       initial_pose:
