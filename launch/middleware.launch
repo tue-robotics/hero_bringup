@@ -44,7 +44,8 @@
 
         <!-- TEXT TO SPEECH -->
         <include file="$(find robot_launch_files)/launch/interaction/text_to_speech.launch">
-            <arg name="machine" value="amigo3"/>
+            <arg name="machine-tts" value="amigo3"/>
+            <arg name="machine-play" value="amigo3"/>
         </include> 
 
         <!-- Action server -->
