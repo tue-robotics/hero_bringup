@@ -54,6 +54,12 @@ plugins:
   lib: libed_laser_plugin.so
   parameters:
       laser_topic: /amigo/torso_laser/scan
+      min_segment_size_pixels: 10
+      world_association_distance: 0.4
+      segment_depth_threshold: 0.2
+      min_cluster_size: 0.2
+      max_cluster_size: 1.0
+      max_gap_size: 10
 
 - name: perception
   lib: libed_perception_plugin.so
