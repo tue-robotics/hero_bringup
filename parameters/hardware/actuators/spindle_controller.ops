@@ -99,6 +99,7 @@ SPINDLE_Homing.outport_sizes				= ints (1)
 SPINDLE_Homing.bodypart 					= BODYPARTNAME
 SPINDLE_Homing.prefix 						= "SPINDLE"
 SPINDLE_Homing.partNr 						= BODYPARTNR
+SPINDLE_Homing.jointnames					= JOINT_NAMES
 SPINDLE_Homing.homing_type					= ints (1)
 SPINDLE_Homing.require_homing				= ints (1)
 SPINDLE_Homing.homing_order					= ints (1)

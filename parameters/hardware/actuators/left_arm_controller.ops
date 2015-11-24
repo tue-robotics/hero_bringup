@@ -180,6 +180,7 @@ LPERA_Homing.number_of_outports 			= 2
 LPERA_Homing.outport_sizes					= ints (7 , 1)
 LPERA_Homing.bodypart 						= BODYPARTNAME
 LPERA_Homing.partNr 						= BODYPARTNR
+LPERA_Homing.jointnames						= JOINT_NAMES
 LPERA_Homing.prefix 						= "LPERA"
 LPERA_Homing.homing_type					= ints 		(3, 	3,	 	2, 		2,	 	2, 		2,	 	2, 		4 	)
 LPERA_Homing.require_homing					= ints 		(1, 	1,	 	1, 		1,	 	1, 		1,	 	1, 		1	)

@@ -176,6 +176,7 @@ RPERA_Homing.number_of_outports 			= 2
 RPERA_Homing.outport_sizes					= ints (7 , 1)
 RPERA_Homing.bodypart 						= BODYPARTNAME
 RPERA_Homing.partNr 						= BODYPARTNR
+RPERA_Homing.jointnames						= JOINT_NAMES
 RPERA_Homing.prefix 						= "RPERA"
 RPERA_Homing.homing_type					= ints 		(3, 	3,	 	2, 		2,	 	2, 		2,	 	2, 		4 	)
 RPERA_Homing.require_homing					= ints 		(1, 	1,	 	1, 		1,	 	1, 		1,	 	1, 		1	)
