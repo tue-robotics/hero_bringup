@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <group ns="amigo">
+
+        <!-- MANIPULATION -->       
+        <include file="$(find robot_launch_files)/launch/manipulation/moveit.launch">
+            <arg name="machine" value="amigo1"/>
+        </include>
+        <include file="$(find robot_launch_files)/launch/manipulation/arm.launch">
+            <arg name="name" value="left_arm"/>
+            <arg name="machine" value="amigo1"/>
+        </include>
+        <include file="$(find robot_launch_files)/launch/manipulation/arm.launch">
+            <arg name="name" value="right_arm"/>
+            <arg name="machine" value="amigo1"/>
+        </include>
+        <include file="$(find robot_launch_files)/launch/manipulation/head.launch">
+            <arg name="machine" value="amigo1"/>
+        </include>
+
+    </group>
+
+</launch>
