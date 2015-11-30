@@ -52,6 +52,7 @@ plugins:
 
 - name: laser_integration
   lib: libed_laser_plugin.so
+  frequency: 40
   parameters:
       laser_topic: /amigo/torso_laser/scan
       min_segment_size_pixels: 10
@@ -66,6 +67,7 @@ plugins:
 
 - name: localization
   lib: libed_localization_plugin.so
+  frequency: 40
   enabled: 1
   parameters:
       robot_name: amigo
@@ -74,7 +76,7 @@ plugins:
       initial_pose:
           x: 0.586 #$(env ROBOT_INIT_X)
           y: 4.259 #$(env ROBOT_INIT_Y)
-          rz: 0 #$(env ROBOT_INIT_PHI)    
+          rz: 0 #$(env ROBOT_INIT_PHI)
       laser_model:
           topic: /amigo/base_laser/scan
           num_beams: 100
