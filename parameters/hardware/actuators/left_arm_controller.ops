@@ -54,12 +54,12 @@ var bool RESETTABLE				= true
 
 ### Configuring Supervisor, JointStateAggregator and TrajectoryActionlib
 Supervisor.AddBodyPart( BODYPARTNR, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RESETTABLE)
-JointStateAggregator.addJointNames(JOINT_NAMES)
-JointStateAggregator.addJointNames(DUMMY_JOINT_NAMES)
-JointStateAggregator.addAggregationPort(BODYPARTNAME)
-TrajectoryActionlib.AddBodyPart (BODYPARTNR, JOINT_NAMES)
-TrajectoryActionlib.interpolatorDt3 		= TS
-TrajectoryActionlib.interpolatorEps3		= 1.0
+#JointStateAggregator.addJointNames(JOINT_NAMES)
+#JointStateAggregator.addJointNames(DUMMY_JOINT_NAMES)
+#JointStateAggregator.addAggregationPort(BODYPARTNAME)
+#TrajectoryActionlib.AddBodyPart (BODYPARTNR, JOINT_NAMES)
+#TrajectoryActionlib.interpolatorDt3 		= TS
+#TrajectoryActionlib.interpolatorEps3		= 1.0
 
 #### HIGH PRIORITY COMPONENTS ####
 
@@ -225,6 +225,38 @@ LPERA_SensorTorques.configure
 # LPERA_Diagnostics.vecname3 					= "Reference Path Planning"
 # LPERA_Diagnostics.boolname1 				= "Error"
 
+# ---------------------------------------------------------------------------
+# Reference Generator
+
+loadComponent("refgen","tue::control::rtt::ReferenceGeneratorComponent")
+refgen.configuration_rospkg = "amigo_bringup"
+refgen.configuration_path = "parameters/hardware/actuators/amigo.yaml"
+refgen.sampling_time = TS
+refgen.configure
+
+setActivity("refgen", TS, HighestPriority, ORO_SCHED_RT)
+loadService("refgen", "actionlib")
+
+refgen.actionlib.connect("/amigo/body/joint_trajectory_action");
+
+# ---------------------------------------------------------------------------
+# Controllers
+
+loadComponent("controllers","tue::control::rtt::ControllerManagerComponent")
+controllers.configuration_rospkg = "amigo_bringup"
+controllers.configuration_path = "parameters/hardware/actuators/amigo.yaml"
+controllers.sampling_time = TS
+controllers.configure
+
+setActivity("controllers", TS, HighestPriority, ORO_SCHED_RT)
+
+connect("controllers.reset_pos", "refgen.reset_pos", ConnPolicy())
+connect("refgen.ref_pos", "controllers.ref_pos", ConnPolicy())
+connect("refgen.ref_vel", "controllers.ref_vel", ConnPolicy())
+connect("refgen.ref_acc", "controllers.ref_acc", ConnPolicy())
+
+# ---------------------------------------------------------------------------
+
 #### CONNECT COMPONENTS ####
 ## Control loop	## 
 connect (LEFT_ARM_SHOULDER+".encoder1",				"LPERA_ReadEncoders.enc1_in", 				ConnPolicy() ); # Enc 1
@@ -236,9 +268,12 @@ connect (LEFT_ARM_LOWERARM+".encoder1",				"LPERA_ReadEncoders.enc6_in", 				Con
 connect (LEFT_ARM_LOWERARM+".encoder2",				"LPERA_ReadEncoders.enc7_in", 				ConnPolicy() ); # Enc 7
 connect (LEFT_ARM_LOWERARM+".encoder3",				"LPERA_ReadEncoders.enc8_in", 				ConnPolicy() ); # Enc 8
 connect ("LPERA_ReadEncoders.out",					"LPERA_MotorToJointSpace.in", 				ConnPolicy() ); # Position MS
-# connect ("LPERA_MotorToJointSpace.out",				"LPERA_Controller.pos_in", 					ConnPolicy() ); # Position JS
-# connect ("LPERA_Controller.out",					"LPERA_JointToMotorSpace.in", 				ConnPolicy() ); # ControlEffort JS
-connect ("LPERA_JointToMotorSpace.out",				"LPERA_AnalogOuts.in1", 					ConnPolicy() ); # ControlEffort MS
+
+connect ("LPERA_MotorToJointSpace.out",				"controllers.lpera_pos_in", 					ConnPolicy() ); # Position JS
+# connect ("controllers.lpera_out",					"LPERA_JointToMotorSpace.in", 				ConnPolicy() ); # ControlEffort JS
+
+# connect ("LPERA_JointToMotorSpace.out",				"LPERA_AnalogOuts.in1", 					ConnPolicy() ); # ControlEffort MS
+
 connect ("LPERA_AnalogIns.stdvect_out_1",			"LPERA_SensorTorques.voltage_in", 			ConnPolicy() ); # TorqueSensor
 
 ## References ##
@@ -246,9 +281,9 @@ connect ("LPERA_AnalogIns.stdvect_out_1",			"LPERA_SensorTorques.voltage_in", 		
 # connect ("TrajectoryActionlib.pos_out3",			"LPERA_Controller.ref_in1", 				ConnPolicy() ); # Ref Pos
 
 ## Gripper control ##
-connect ("LPERA_SensorTorques.measured_torques_out","LPERA_GripperControl.torque_in", 			ConnPolicy() ); # Torqin
-connect ("LPERA_MotorToJointSpace.out", 			"LPERA_GripperControl.position_in", 		ConnPolicy() ); # Posin
-connect ("LPERA_GripperControl.posout", 			"LPERA_Controller.ref_in2", 				ConnPolicy() ); # Posin
+# connect ("LPERA_SensorTorques.measured_torques_out","LPERA_GripperControl.torque_in", 			ConnPolicy() ); # Torqin
+# connect ("LPERA_MotorToJointSpace.out", 			"LPERA_GripperControl.position_in", 		ConnPolicy() ); # Posin
+# connect ("LPERA_GripperControl.posout", 			"LPERA_Controller.ref_in2", 				ConnPolicy() ); # Posin
 
 ## Ros communication ##
 # connect ("LPERA_MotorToJointSpace.out",				"LPERA_JointOutputLimiter.in", 				ConnPolicy() ); # Positions JS
@@ -292,38 +327,6 @@ connect ("LPERA_GripperControl.posout", 			"LPERA_Controller.ref_in2", 				ConnP
 # stream ("LPERA_HandoverDetector.toggle_robot2human",ros.topic("/amigo/handoverdetector_left/toggle_robot2human"));
 # stream ("LPERA_HandoverDetector.result", 			ros.topic("/amigo/handoverdetector_left/result"));
 
-# ---------------------------------------------------------------------------
-# Reference Generator
-
-loadComponent("refgen","tue::control::rtt::ReferenceGeneratorComponent")
-refgen.configuration_rospkg = "amigo_bringup"
-refgen.configuration_path = "parameters/hardware/actuators/amigo.yaml"
-refgen.sampling_time = TS
-refgen.configure
-
-setActivity("refgen", TS, HighestPriority, ORO_SCHED_RT)
-loadService("refgen", "actionlib")
-
-refgen.actionlib.connect("/amigo/body/joint_trajectory_action");
-
-# ---------------------------------------------------------------------------
-# Controllers
-
-loadComponent("controllers","tue::control::rtt::ControllerManagerComponent")
-refgen.configuration_rospkg = "amigo_bringup"
-refgen.configuration_path = "parameters/hardware/actuators/amigo.yaml"
-controllers.sampling_time = TS
-controllers.configure
-
-setActivity("controllers", TS, HighestPriority, ORO_SCHED_RT)
-
-connect("controllers.reset_pos", "refgen.reset_pos", ConnPolicy())
-connect("refgen.ref_pos", "controllers.ref_pos", ConnPolicy())
-connect("refgen.ref_vel", "controllers.ref_vel", ConnPolicy())
-connect("refgen.ref_acc", "controllers.ref_acc", ConnPolicy())
-
-# ---------------------------------------------------------------------------
-
 #### START COMPONENTS ####
 Supervisor.AddAllwaysOnPeer(	"LPERA_ReadEncoders")
 # Supervisor.AddAllwaysOnPeer(	"LPERA_Diagnostics")
@@ -340,3 +343,6 @@ Supervisor.AddOpOnlyPeer(		"LPERA_GripperControl",		BODYPARTNR)
 
 Supervisor.AddEnabledPeer(		"LPERA_SensorTorques", 		BODYPARTNR)
 # Supervisor.AddEnabledPeer(		"LPERA_Safety", 			BODYPARTNR)
+
+controllers.start
+refgen.start

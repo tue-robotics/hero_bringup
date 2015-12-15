@@ -11,10 +11,10 @@ controllers:
 
 - name: shoulder_pitch_joint_left   # q2
   input:
-    port: LPERA_MotorToJointSpace.out
+    port: lpera_pos_in
     index: 1
   output:
-    port: LPERA_JointToMotorSpace.in
+    port: lpera_out
     index: 1
   type: generic
   gain: 20000
