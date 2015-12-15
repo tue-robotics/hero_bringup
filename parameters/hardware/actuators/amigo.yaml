@@ -1,0 +1,35 @@
+reference_generator:
+  urdf_file: $(rospkg amigo_description)/urdf/amigo.urdf
+
+# ----------------------------------------------------------------------------------------------------
+
+controllers:
+
+# ----------------------------------------------------------------------------------------------------
+#                                           LEFT ARM (LPERA)
+# ----------------------------------------------------------------------------------------------------
+
+- name: shoulder_pitch_joint_left   # q2
+  input:
+    port: LPERA_MotorToJointSpace.out
+    index: 1
+  output:
+    port: LPERA_JointToMotorSpace.in
+    index: 1
+  type: generic
+  gain: 20000
+  filters:
+    weak_integrator:
+      fz: 0.0065
+    lead_lag:
+      fz: 25
+      fp: 80
+    second_order_low_pass:
+      fp: 125
+      dp: 0.7
+  safety:
+    max_error: 0.09
+    output_saturation: 1000
+  homing:
+    velocity: 0.05
+    acceleration: 0.2
