@@ -1,0 +1,33 @@
+import("rtt_ros")
+ros.import("tue_control_rtt")
+
+var double TS = 0.001
+
+# ---------------------------------------------------------------------------
+# Torso spindle
+
+loadComponent("torso", "tue::control::rtt::SimPlant")
+torso.masses    = array(-0.5)
+torso.dampings  = array(-50.0)
+torso.positions = array(0.1)
+torso.sampling_time = TS
+torso.configure
+
+setActivity("torso", 0.001, HighestPriority, ORO_SCHED_RT)
+
+# ---------------------------------------------------------------------------
+# LPERA (left arm)
+
+loadComponent("lpera", "tue::control::rtt::SimPlant")
+lpera.masses    = array(1.0,    1.0,    1.0,    1.0,    1.0,    1.0,    1.0)
+lpera.dampings  = array(1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0, 1000.0)
+lpera.positions = array(0.1,    0.1,    0.1,    0.1,    0.1,    0.1,    0.1)
+lpera.sampling_time = TS
+lpera.configure
+
+setActivity("lpera", 0.001, HighestPriority, ORO_SCHED_RT)
+
+# ---------------------------------------------------------------------------
+
+torso.start
+lpera.start
