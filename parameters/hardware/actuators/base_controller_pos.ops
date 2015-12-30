@@ -16,6 +16,7 @@ var double CURRENT2VOLT 	= 1.0/1.0
 var double GEARRATIO 		= 8.0/343.0
 var double TWOPI 			= 2.0*3.141592
 var double ENCODERCOUNTS 	= 500.0*4.0
+var double ENCODERBITS		= 65536.0
 var double ENC2SI 			= TWOPI*GEARRATIO/ENCODERCOUNTS
 var double SI2V 			= TORQUE2CURRENT * CURRENT2VOLT * GEARRATIO
 var array MAX_ERRORS 		= array ( 2.2, 2.2, 2.2, 2.2 )
@@ -27,16 +28,13 @@ var string BODYPARTNAME 	= "base"
 var bool HOMEABLE 			= false
 var bool HOMINGOBLIGATORY	= false
 var bool RESETTABLE			= true
+
 ### AddBodyPart ###
 Supervisor.AddBodyPart( BODYPARTNR, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RESETTABLE)
-
-### READ WHEEL ENCODERS ###
-loadComponent("BASE_ReadEncoders","SOEM::ReadEncoders")
-addPeer("Supervisor","BASE_ReadEncoders")
-setActivity("BASE_ReadEncoders",Ts,HighestPriority,ORO_SCHED_RT)
-BASE_ReadEncoders.encoderbits = 65536
-BASE_ReadEncoders.enc2SI = array (ENC2SI, ENC2SI, ENC2SI, ENC2SI)
-BASE_ReadEncoders.configure
+EtherCATread.AddEncoderIns(BODYPARTNAME,array(1.0, 1.0, 1.0, 1.0), array(4.0),array(1.0, 2.0, 3.0, 4.0),array(1.0, 1.0, 1.0, 1.0))
+EtherCATread.AddEnc2Si_E(BODYPARTNAME, 1, array(ENCODERBITS, ENCODERBITS, ENCODERBITS, ENCODERBITS), array(ENC2SI, ENC2SI, ENC2SI, ENC2SI))
+EtherCATwrite.AddAnalogOuts(BODYPARTNAME, array(4.0, 1.0), array(8.0),array(1.0, 1.0, 1.0, 1.0, 2.0, 0.0, 0.0, 0.0),array(1.0, 2.0, 3.0, 4.0, 1.0, 0.0, 0.0, 0.0))
+EtherCATwrite.AddMultiply_A(BODYPARTNAME, 1, array (SI2V, SI2V, SI2V, SI2V))
 
 ### DECOUPLE POSITION ###
 loadComponent("BASE_MotorToJointSpace","MATH::MatrixTransform")
@@ -61,7 +59,7 @@ BASE_OdometryPublisher.configure
 loadComponent("BASE_ReadReferences","ROS::ReadTwistMsg")
 addPeer("Supervisor","BASE_ReadReferences")
 setActivity("BASE_ReadReferences",Ts,HighestPriority,ORO_SCHED_RT)
-BASE_ReadReferences.max_start_vel = 0.7
+BASE_ReadReferences.max_start_vel = 1.0
 BASE_ReadReferences.max_vel = MAX_VELOCITIES
 BASE_ReadReferences.max_acc = array (0.7, 0.7, 2.0)
 BASE_ReadReferences.max_interval = 1.0
@@ -117,56 +115,55 @@ BASE_Safety.motorSaturations			= array (9.9, 9.9, 9.9, 9.9)
 BASE_Safety.maxConSatTime				= 0.1
 BASE_Safety.configure
 
-### SI2VOLT ###
-loadComponent("BASE_SI2Volt","MATH::Gain")
-addPeer("Supervisor","BASE_SI2Volt")
-setActivity("BASE_SI2Volt",0.0,HighestPriority,ORO_SCHED_RT)
-BASE_SI2Volt.vectorsize = N;
-BASE_SI2Volt.gain = array (SI2V, SI2V, SI2V, SI2V)
-BASE_SI2Volt.configure
-
 #### LOAD COMPONENT TO PUBLISH DIAGNOSTICS ###
 loadComponent("BASE_Diagnostics","ROS::RosDiagnostics")
 addPeer("Supervisor","BASE_Diagnostics")
 setActivity("BASE_Diagnostics",1.0,LowestPriority,ORO_SCHED_OTHER)
 BASE_Diagnostics.statusname = BODYPARTNAME+"_Controller"
-BASE_Diagnostics.NumberOfVectorPorts = 3
+BASE_Diagnostics.NumberOfVectorPorts = 2
 BASE_Diagnostics.NumberOfBoolPorts = 1
 BASE_Diagnostics.configure
 BASE_Diagnostics.vecname1 = "Reference"
 BASE_Diagnostics.vecname2 = "Error"
-BASE_Diagnostics.vecname3 = "Voltage"
 BASE_Diagnostics.boolname1 = "Amplifiers"
 
 #### SET UP JOINTSTATE AGGREGATOR ####
 # To Do JointState message base
 
+
+loadComponent("SG","SIGNALGENERATOR::SignalGenerator")
+setActivity("SG",0.001,HighestPriority,ORO_SCHED_RT)
+SG.configure
+SG.start
+SG.AddDigitalSignal(1, array (0.0), false);
+
+
 #### CONNECT COMPONENTS ####
-connect ("Soem.Slave_1002.Slave_1002_value",		"BASE_ReadEncoders.enc1_in", 		ConnPolicy() ); # Enc 1
-connect ("Soem.Slave_1003.Slave_1003_value",		"BASE_ReadEncoders.enc2_in", 		ConnPolicy() ); # Enc 2
-connect ("Soem.Slave_1004.Slave_1004_value",		"BASE_ReadEncoders.enc3_in", 		ConnPolicy() ); # Enc 3
-connect ("Soem.Slave_1005.Slave_1005_value",		"BASE_ReadEncoders.enc4_in", 		ConnPolicy() ); # Enc 4
-connect ("BASE_ReadEncoders.out",					"BASE_MotorToJointSpace.in", 		ConnPolicy() ); # Positions MS
+connect ("Soem.Slave_1002.Slave_1002_value",		"EtherCATread.base_Ein1", 			ConnPolicy() ); # Enc 1
+connect ("Soem.Slave_1003.Slave_1003_value",		"EtherCATread.base_Ein2", 			ConnPolicy() ); # Enc 1
+connect ("Soem.Slave_1004.Slave_1004_value",		"EtherCATread.base_Ein3", 			ConnPolicy() ); # Enc 1
+connect ("Soem.Slave_1005.Slave_1005_value",		"EtherCATread.base_Ein4", 			ConnPolicy() ); # Enc 1
+
+connect ("EtherCATread.base_Eout1",					"BASE_MotorToJointSpace.in", 		ConnPolicy() ); # Positions MS
 connect ("BASE_MotorToJointSpace.out", 				"BASE_OdometryPublisher.pos", 		ConnPolicy() ); # Positions JS
 connect ("BASE_VelocityToPosition.out",				"BASE_Controller.ref_in1", 			ConnPolicy() ); # Positions
-connect ("BASE_ReadEncoders.out",					"BASE_Controller.pos_in", 			ConnPolicy() ); # Positions MS
-connect ("BASE_Controller.out",						"BASE_SI2Volt.in", 					ConnPolicy() ); # ControlEffort [SI]
-connect ("BASE_SI2Volt.out", 						"BASESPINDLE_AnalogOuts.in1", 		ConnPolicy() ); # ControlEffort [V]
+connect ("EtherCATread.base_Eout1",					"BASE_Controller.pos_in", 			ConnPolicy() ); # Positions MS
+connect ("BASE_Controller.out", 					"EtherCATwrite.base_Ain1", 			ConnPolicy() ); # ControlEffort [V]
+connect ("EtherCATwrite.base_Aout1",				"Soem.Slave_100d.values", 			ConnPolicy() );
 connect ("BASE_ReadReferences.out",					"BASE_JointToMotorSpace.in", 		ConnPolicy() ); # Reference JS
 connect ("BASE_JointToMotorSpace.out",				"BASE_VelocityToPosition.in", 		ConnPolicy() ); # Reference MS
-connect ("BASE_ReadEncoders.out",					"BASE_VelocityToPosition.initial", 	ConnPolicy() ); # Initial position
+connect ("EtherCATread.base_Eout1",					"BASE_VelocityToPosition.initial", 	ConnPolicy() ); # Initial position
 
 ## Safety
 connect ("BASE_Controller.jointErrors",				"BASE_Safety.jointErrors", 			ConnPolicy() ); # Jointerrors
 connect ("BASE_Controller.out",						"BASE_Safety.controlEffort", 		ConnPolicy() ); # ControlEffort
 connect ("BASE_Safety.enable",						"BASE_Controller.enable", 			ConnPolicy() ); # Enable
 connect ("BASE_Safety.error",						"Supervisor.base_error", 			ConnPolicy() ); # Base_error
-connect ("BASE_Safety.enable", 						"DigitalOuts2.in2", 				ConnPolicy() ); # Enable (amplifiers)
+connect ("BASE_Safety.enable", 						"EtherCATwrite.generic_Din2", 		ConnPolicy() ); # Enable (amplifiers)
 
 ## Diagnostics ##
 connect ("BASE_ReadReferences.out", 				"BASE_Diagnostics.vec1", 			ConnPolicy() ); # References
 connect ("BASE_Controller.jointErrors", 			"BASE_Diagnostics.vec2", 			ConnPolicy() ); # JointErrors
-connect ("BASE_SI2Volt.out", 						"BASE_Diagnostics.vec3", 			ConnPolicy() ); # Voltage
 connect ("BASE_Safety.enable", 						"BASE_Diagnostics.bool1", 			ConnPolicy() ); # Enable
 
 #### CONNECT ROS STREAMS ####
@@ -176,12 +173,13 @@ stream ("BASE_ReadReferences.cmd_vel", 				ros.topic(ROBOT+"/base/references"));
 stream ("BASE_Diagnostics.diagnostics", 			ros.topic(ROBOT+"/diagnostics"));
 stream ("BASE_Diagnostics.diagnostics", 			ros.topic(ROBOT+"/base_diagnostics"));
 
+# Reset Encoder
+EtherCATread.ResetEncoders(BODYPARTNR, 1, array(0.0, 0.0, 0.0, 0.0)); # to do can we automate this? (question is where)
+
 #### START COMPONENTS ####
-Supervisor.AddAllwaysOnPeer ("BASE_ReadEncoders")
 Supervisor.AddAllwaysOnPeer ("BASE_MotorToJointSpace")
 Supervisor.AddAllwaysOnPeer ("BASE_OdometryPublisher")
 Supervisor.AddAllwaysOnPeer ("BASE_Diagnostics")
-Supervisor.AddAllwaysOnPeer ("BASE_SI2Volt")
 
 Supervisor.AddEnabledPeer ("BASE_Controller", BODYPARTNR)
 Supervisor.AddEnabledPeer ("BASE_ReadReferences",BODYPARTNR )
