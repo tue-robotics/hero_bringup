@@ -53,6 +53,7 @@ JointStateAggregator.addAggregationPort(BODYPARTNAME)
 TrajectoryActionlib.AddBodyPart (BODYPARTNR, JOINT_NAMES)
 TrajectoryActionlib.interpolatorDt3 		= TS
 TrajectoryActionlib.interpolatorEps3		= 1.0
+EtherCATwrite.AddAnalogOuts(BODYPARTNAME, array(8.0), array(3.0, 3.0, 3.0),array(1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0),array(1.0, 2.0, 0.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0))
 
 #### HIGH PRIORITY COMPONENTS ####
 
@@ -231,7 +232,10 @@ connect (LEFT_ARM_LOWERARM+".encoder3",				"LPERA_ReadEncoders.enc8_in", 				Con
 connect ("LPERA_ReadEncoders.out",					"LPERA_MotorToJointSpace.in", 				ConnPolicy() ); # Position MS
 connect ("LPERA_MotorToJointSpace.out",				"LPERA_Controller.pos_in", 					ConnPolicy() ); # Position JS
 connect ("LPERA_Controller.out",					"LPERA_JointToMotorSpace.in", 				ConnPolicy() ); # ControlEffort JS
-connect ("LPERA_JointToMotorSpace.out",				"LPERA_AnalogOuts.in1", 					ConnPolicy() ); # ControlEffort MS
+connect ("LPERA_JointToMotorSpace.out",				"EtherCATwrite.left_arm_Ain1", 				ConnPolicy() ); # ControlEffort MS
+connect ("EtherCATwrite.left_arm_Aout1",			LEFT_ARM_SHOULDER+".pwmDutyMotors", 		ConnPolicy() );
+connect ("EtherCATwrite.left_arm_Aout2",			LEFT_ARM_UPPERARM+".pwmDutyMotors", 		ConnPolicy() );
+connect ("EtherCATwrite.left_arm_Aout3",			LEFT_ARM_LOWERARM+".pwmDutyMotors", 		ConnPolicy() );
 connect ("LPERA_AnalogIns.stdvect_out_1",			"LPERA_SensorTorques.voltage_in", 			ConnPolicy() ); # TorqueSensor
 
 ## References ##

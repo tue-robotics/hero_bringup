@@ -36,15 +36,6 @@ EtherCATread.AddMsgOut_D(BODYPARTNAME,2)
 stream("EtherCATread.spindle_DoutMsg1", ros.topic("/amigo/spindle_homeswitch") )
 stream("EtherCATread.spindle_DoutMsg2", ros.topic("/amigo/spindle_endstop") )
 
-### Loading Components ###
-#Reading Encoders
-loadComponent("SPINDLE_ReadEncoders","SOEM::ReadEncoders")
-addPeer("Supervisor","SPINDLE_ReadEncoders")
-setActivity("SPINDLE_ReadEncoders",TS,HighestPriority,ORO_SCHED_RT)
-SPINDLE_ReadEncoders.encoderbits 			= 65536
-SPINDLE_ReadEncoders.enc2SI 				= array (ENC2SI)
-SPINDLE_ReadEncoders.configure
-
 # Publish JointState Component
 loadComponent("SPINDLE_WriteJointStates","ROS::DoublesToJointState")
 addPeer("Supervisor","SPINDLE_WriteJointStates")
@@ -99,7 +90,6 @@ SPINDLE_Safety.configure
 #Loading Homing component
 loadComponent("SPINDLE_Homing","SUPERVISORY::Homing")
 connectPeers("Supervisor","SPINDLE_Homing")	
-addPeer("SPINDLE_Homing","SPINDLE_ReadEncoders")
 addPeer("SPINDLE_Homing","SPINDLE_Safety")
 addPeer("SPINDLE_Homing","TrajectoryActionlib")
 addPeer("SPINDLE_Homing","EtherCATread")
@@ -140,28 +130,23 @@ SPINDLE_Diagnostics.boolname1 				= "Safe"
 
 #### CONNECT COMPONENTS ####
 ## Control loop	## 
-connect ("Soem.Slave_1006.Slave_1006_value",		"SPINDLE_ReadEncoders.enc1_in", 			ConnPolicy() ); # Encoder
-
 connect ("Soem.Slave_1006.Slave_1006_value",		"EtherCATread.spindle_Ein1", 				ConnPolicy() ); # Enc 1
-
-connect ("SPINDLE_ReadEncoders.out",				"SPINDLE_Controller.pos_in", 				ConnPolicy() ); # Position
+connect ("EtherCATread.spindle_Eout1",				"SPINDLE_Controller.pos_in", 				ConnPolicy() ); # Position
 connect ("SPINDLE_FFW.FFW_out",						"SPINDLE_Controller.ffw_in1", 				ConnPolicy() ); # FFW
-#connect ("SPINDLE_Controller.out",					"BASESPINDLE_AnalogOuts.in2", 				ConnPolicy() ); # Total Control Effort
 connect ("SPINDLE_Controller.out", 					"EtherCATwrite.base_Ain2", 					ConnPolicy() ); # ControlEffort [V]
 
-
 ## References ##
-connect ("SPINDLE_ReadEncoders.out",				"TrajectoryActionlib.current_pos2",			ConnPolicy() ); # Ref Pos
+connect ("EtherCATread.spindle_Eout1",				"TrajectoryActionlib.current_pos2",			ConnPolicy() ); # Ref Pos
 connect ("TrajectoryActionlib.pos_out2",			"SPINDLE_Controller.ref_in1", 				ConnPolicy() ); # Ref Pos
 connect ("TrajectoryActionlib.vel_out2",			"SPINDLE_FFW.ref_vel", 						ConnPolicy() ); # Ref Vel
 connect ("TrajectoryActionlib.acc_out2",			"SPINDLE_FFW.ref_acc", 						ConnPolicy() ); # Ref Acc
 
 ## Ros communication ##
-connect( "SPINDLE_ReadEncoders.out", 				"SPINDLE_WriteJointStates.pos_in", 			ConnPolicy() ); # Position
+connect( "EtherCATread.spindle_Eout1", 				"SPINDLE_WriteJointStates.pos_in", 			ConnPolicy() ); # Position
 connect ("SPINDLE_WriteJointStates.out", 			"JointStateAggregator.torso", 				ConnPolicy() ); # JointState 
 
 ## Homing ##
-connect ("SPINDLE_ReadEncoders.out",				"SPINDLE_Homing.position", 					ConnPolicy() ); # Position
+connect ("EtherCATread.spindle_Eout1",				"SPINDLE_Homing.position", 					ConnPolicy() ); # Position
 connect ("EtherCATread.spindle_DoutMsg1",			"SPINDLE_Homing.homeswitch", 				ConnPolicy() ); # homeswitch
 connect ("SPINDLE_Homing.homing_finished",			"Supervisor.spindle_homingfinished", 		ConnPolicy() ); # Homing_finished
 connect ("SPINDLE_Homing.posout1",					"SPINDLE_Controller.ref_in1", 				ConnPolicy() ); # Ref Pos
@@ -190,7 +175,6 @@ stream("SPINDLE_WriteJointStates.out", 				ros.topic("/amigo/torso/measurements"
 EtherCATread.ResetEncoders(BODYPARTNR, 1, array(0.0));
 
 #### START COMPONENTS ####
-Supervisor.AddAllwaysOnPeer (	"SPINDLE_ReadEncoders")
 Supervisor.AddAllwaysOnPeer (	"SPINDLE_WriteJointStates")
 Supervisor.AddAllwaysOnPeer (	"SPINDLE_Diagnostics")
 Supervisor.AddAllwaysOnPeer (	"SPINDLE_Controller")

@@ -85,34 +85,6 @@ EtherCATwrite.configure
 setActivity("EtherCATwrite",TS,HighestPriority,ORO_SCHED_RT)
 EtherCATwrite.bodypart_names = DEFAULT_PART_NAMES
 
-##### LOAD COMPONENT TO ENABLE ANALOG OUTS PERA ###
-loadComponent("RPERA_AnalogOuts","SOEM::AnalogOutsGeneric")
-addPeer("Supervisor","RPERA_AnalogOuts")
-setActivity("RPERA_AnalogOuts",0.0,HighestPriority,ORO_SCHED_RT)
-RPERA_AnalogOuts.numberofinports    				= 1
-RPERA_AnalogOuts.numberofoutports    				= 3
-RPERA_AnalogOuts.input_sizes 						= array (8.0)
-RPERA_AnalogOuts.output_sizes 						= array (3.0, 3.0, 3.0)
-RPERA_AnalogOuts.output_positions 					= array (1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
-RPERA_AnalogOuts.configure
-connect ("RPERA_AnalogOuts.out1",RIGHT_ARM_SHOULDER+".pwmDutyMotors", ConnPolicy() );
-connect ("RPERA_AnalogOuts.out2",RIGHT_ARM_UPPERARM+".pwmDutyMotors", ConnPolicy() );
-connect ("RPERA_AnalogOuts.out3",RIGHT_ARM_LOWERARM+".pwmDutyMotors", ConnPolicy() );
-
-#### LOAD COMPONENT TO ENABLE ANALOG OUTS PERA ###
-loadComponent("LPERA_AnalogOuts","SOEM::AnalogOutsGeneric")
-addPeer("Supervisor","LPERA_AnalogOuts")
-setActivity("LPERA_AnalogOuts",0.0,HighestPriority,ORO_SCHED_RT)
-LPERA_AnalogOuts.numberofinports    				= 1
-LPERA_AnalogOuts.numberofoutports    				= 3
-LPERA_AnalogOuts.input_sizes 						= array (8.0)
-LPERA_AnalogOuts.output_sizes 						= array (3.0, 3.0, 3.0)
-LPERA_AnalogOuts.output_positions 					= array (1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)
-LPERA_AnalogOuts.configure
-connect ("LPERA_AnalogOuts.out1",LEFT_ARM_SHOULDER+".pwmDutyMotors", ConnPolicy() );
-connect ("LPERA_AnalogOuts.out2",LEFT_ARM_UPPERARM+".pwmDutyMotors", ConnPolicy() );
-connect ("LPERA_AnalogOuts.out3",LEFT_ARM_LOWERARM+".pwmDutyMotors", ConnPolicy() );
-
 ##### LOAD COMPONENT TO ENABLE ANALOG INS PERA ###
 loadComponent("RPERA_AnalogIns","SOEM::AnalogInsGeneric")
 addPeer("Supervisor","RPERA_AnalogIns")
@@ -148,8 +120,6 @@ connect (LEFT_ARM_LOWERARM+".positionSensors","LPERA_AnalogIns.beckhoffmsg_in_6"
 #### START COMPONENTS ####
 Supervisor.AddAllwaysOnPeer ("JointStateAggregator")
 Supervisor.AddAllwaysOnPeer ("TrajectoryActionlib")
-Supervisor.AddAllwaysOnPeer ("RPERA_AnalogOuts")
-Supervisor.AddAllwaysOnPeer ("LPERA_AnalogOuts")
 Supervisor.AddAllwaysOnPeer ("EtherCATread")
 Supervisor.AddAllwaysOnPeer ("Soem")
 Supervisor.AddAllwaysOnPeer ("EtherCATwrite")
