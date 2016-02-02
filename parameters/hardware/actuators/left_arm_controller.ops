@@ -29,7 +29,7 @@ var double ENCODERCOUNTS_SM		= 256.0*4.0
 var double ENCODERCOUNTS_S3	    = 256.0*4.0
 var double ENCODERCOUNTS_EM		= 500.0*4.0 
 var double ENCODERCOUNTS_WM		= 128.0*4.0
-var double ENCODERCOUNTS_HM		= 8.0*128.0*4.0 ;# (TO DO: should be 16*4, remove this factor 8)
+var double ENCODERCOUNTS_HM		= 8.0*128.0*4.0
 var double ENC2SI_SM			= TWOPI*GEARRATIO_SM/ENCODERCOUNTS_SM
 var double ENC2SI_S3			= TWOPI*GEARRATIO_S3/ENCODERCOUNTS_S3
 var double ENC2SI_EM			= TWOPI*GEARRATIO_EM/ENCODERCOUNTS_EM
@@ -53,6 +53,7 @@ TrajectoryActionlib.interpolatorEps3		= 1.0
 EtherCATwrite.AddAnalogOuts(BODYPARTNAME, array(8.0), array(3.0, 3.0, 3.0),array(1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0),array(1.0, 2.0, 0.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0))
 EtherCATread.AddEncoderIns(BODYPARTNAME,array(1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0), array(8.0),array(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0),array(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0))
 EtherCATread.AddEnc2Si_E(BODYPARTNAME, 1, array(ENCODERBITS, ENCODERBITS, ENCODERBITS, ENCODERBITS, ENCODERBITS, ENCODERBITS, ENCODERBITS, ENCODERBITS), array(ENC2SI_SM, ENC2SI_SM, ENC2SI_S3, ENC2SI_EM, ENC2SI_EM, ENC2SI_WM, ENC2SI_WM, ENC2SI_HM ))
+EtherCATread.AddAnalogIns(BODYPARTNAME, array(3.0, 3.0, 3.0, 3.0, 3.0, 3.0), array(8.0, 8.0), array(1.0, 1.0, 2.0, 2.0, 2.0, 3.0, 3.0, 3.0, 4.0, 4.0, 5.0, 5.0, 5.0, 6.0, 6.0, 6.0), array(1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0, 1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0))
 
 #### HIGH PRIORITY COMPONENTS ####
 
@@ -221,6 +222,13 @@ connect (SL_ID_LUPPERARM+".encoder3",				"EtherCATread.left_arm_Ein5", 				ConnP
 connect (SL_ID_LLOWERARM+".encoder1",				"EtherCATread.left_arm_Ein6", 				ConnPolicy() ); # Enc 6
 connect (SL_ID_LLOWERARM+".encoder2",				"EtherCATread.left_arm_Ein7", 				ConnPolicy() ); # Enc 7
 connect (SL_ID_LLOWERARM+".encoder3",				"EtherCATread.left_arm_Ein8", 				ConnPolicy() ); # Enc 8
+connect (SL_ID_LSHOULDER+".forceSensors",			"EtherCATread.left_arm_Ain1", 				ConnPolicy() )
+connect (SL_ID_LUPPERARM+".forceSensors",			"EtherCATread.left_arm_Ain2", 				ConnPolicy() )
+connect (SL_ID_LLOWERARM+".forceSensors",			"EtherCATread.left_arm_Ain3", 				ConnPolicy() )
+connect (SL_ID_LSHOULDER+".positionSensors",		"EtherCATread.left_arm_Ain4", 				ConnPolicy() )
+connect (SL_ID_LUPPERARM+".positionSensors",		"EtherCATread.left_arm_Ain5", 				ConnPolicy() )
+connect (SL_ID_LLOWERARM+".positionSensors",		"EtherCATread.left_arm_Ain6", 				ConnPolicy() )
+
 connect ("EtherCATread.left_arm_Eout1",				"LPERA_MotorToJointSpace.in", 				ConnPolicy() ); # Position MS
 connect ("LPERA_MotorToJointSpace.out",				"LPERA_Controller.pos_in", 					ConnPolicy() ); # Position JS
 connect ("LPERA_Controller.out",					"LPERA_JointToMotorSpace.in", 				ConnPolicy() ); # ControlEffort JS
@@ -228,7 +236,7 @@ connect ("LPERA_JointToMotorSpace.out",				"EtherCATwrite.left_arm_Ain1", 				Co
 connect ("EtherCATwrite.left_arm_Aout1",			SL_ID_LSHOULDER+".pwmDutyMotors", 			ConnPolicy() );
 connect ("EtherCATwrite.left_arm_Aout2",			SL_ID_LUPPERARM+".pwmDutyMotors", 			ConnPolicy() );
 connect ("EtherCATwrite.left_arm_Aout3",			SL_ID_LLOWERARM+".pwmDutyMotors", 			ConnPolicy() );
-connect ("LPERA_AnalogIns.stdvect_out_1",			"LPERA_SensorTorques.voltage_in", 			ConnPolicy() ); # TorqueSensor
+connect ("EtherCATread.left_arm_Aout1",				"LPERA_SensorTorques.voltage_in", 			ConnPolicy() ); # TorqueSensor
 
 ## References ##
 connect ("LPERA_JointToMotorSpace.out",				"TrajectoryActionlib.current_pos3",			ConnPolicy() ); # Ref Pos
@@ -256,7 +264,7 @@ connect ("LPERA_Safety.enable",						SL_ID_LLOWERARM+".enablePort", 				ConnPoli
 ## Homing ##
 connect ("LPERA_MotorToJointSpace.out",				"LPERA_Homing.position", 					ConnPolicy() ); # Position
 connect ("LPERA_Controller.jointErrors",			"LPERA_Homing.servo_error_in", 				ConnPolicy() ); # JointErrors
-connect ("LPERA_AnalogIns.stdvect_out_2",			"LPERA_Homing.abs_pos_in", 					ConnPolicy() ); # AbsoluteSensors
+connect ("EtherCATread.left_arm_Aout2",				"LPERA_Homing.abs_pos_in", 					ConnPolicy() ); # AbsoluteSensors
 connect ("LPERA_SensorTorques.measured_torques_out","LPERA_Homing.force_in", 					ConnPolicy() ); # ForceSensors
 connect ("LPERA_Homing.homing_finished",			"Supervisor.left_arm_homingfinished", 		ConnPolicy() ); # Homing_finished
 connect ("LPERA_Homing.posout1",					"LPERA_Controller.ref_in1", 				ConnPolicy() ); # Ref Pos

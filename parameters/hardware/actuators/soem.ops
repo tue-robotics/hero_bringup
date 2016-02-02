@@ -20,7 +20,7 @@ var string SL_ID_RSHOULDER 	= "Soem.Slave_1015"
 var string SL_ID_RUPPERARM 	= "Soem.Slave_1016"
 var string SL_ID_RLOWERARM 	= "Soem.Slave_1017"
 		
-#### MAKING PARAMETERS GLOBAL #### to do find a way to add a doubles/ints globally
+#### MAKING PARAMETERS GLOBAL ####
 loadService("HARDWARE","os")
 os.setenv("SL_ID_LSHOULDER",SL_ID_LSHOULDER)
 os.setenv("SL_ID_LUPPERARM",SL_ID_LUPPERARM)
@@ -85,46 +85,12 @@ EtherCATwrite.configure
 setActivity("EtherCATwrite",TS,HighestPriority,ORO_SCHED_RT)
 EtherCATwrite.bodypart_names = DEFAULT_PART_NAMES
 
-##### LOAD COMPONENT TO ENABLE ANALOG INS PERA ###
-loadComponent("RPERA_AnalogIns","SOEM::AnalogInsGeneric")
-addPeer("Supervisor","RPERA_AnalogIns")
-setActivity("RPERA_AnalogIns",TS,HighestPriority,ORO_SCHED_RT)
-RPERA_AnalogIns.inport_dimensions                   = array (3.0, 3.0, 3.0, 3.0, 3.0, 3.0)
-RPERA_AnalogIns.outport_dimensions                  = array (8.0, 8.0)
-RPERA_AnalogIns.from_which_inport                   = array (1.0, 1.0, 2.0, 2.0, 2.0, 3.0, 3.0, 3.0, 4.0, 4.0, 5.0, 5.0, 5.0, 6.0, 6.0, 6.0)
-RPERA_AnalogIns.from_which_entry                    = array (1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0, 1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0)
-RPERA_AnalogIns.configure
-connect (SL_ID_RSHOULDER+".forceSensors","RPERA_AnalogIns.beckhoffmsg_in_1", ConnPolicy() )
-connect (SL_ID_RUPPERARM+".forceSensors","RPERA_AnalogIns.beckhoffmsg_in_2", ConnPolicy() )
-connect (SL_ID_RLOWERARM+".forceSensors","RPERA_AnalogIns.beckhoffmsg_in_3", ConnPolicy() )
-connect (SL_ID_RSHOULDER+".positionSensors","RPERA_AnalogIns.beckhoffmsg_in_4", ConnPolicy() )
-connect (SL_ID_RUPPERARM+".positionSensors","RPERA_AnalogIns.beckhoffmsg_in_5", ConnPolicy() )
-connect (SL_ID_RLOWERARM+".positionSensors","RPERA_AnalogIns.beckhoffmsg_in_6", ConnPolicy() )
-
-#### LOAD COMPONENT TO ENABLE ANALOG INS PERA ###
-loadComponent("LPERA_AnalogIns","SOEM::AnalogInsGeneric")
-addPeer("Supervisor","LPERA_AnalogIns")
-setActivity("LPERA_AnalogIns",TS,HighestPriority,ORO_SCHED_RT)
-LPERA_AnalogIns.inport_dimensions                   = array (3.0, 3.0, 3.0, 3.0, 3.0, 3.0)
-LPERA_AnalogIns.outport_dimensions                  = array (8.0, 8.0)
-LPERA_AnalogIns.from_which_inport                   = array (1.0, 1.0, 2.0, 2.0, 2.0, 3.0, 3.0, 3.0, 4.0, 4.0, 5.0, 5.0, 5.0, 6.0, 6.0, 6.0)
-LPERA_AnalogIns.from_which_entry                    = array (1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0, 1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0)
-LPERA_AnalogIns.configure
-connect (SL_ID_LSHOULDER+".forceSensors","LPERA_AnalogIns.beckhoffmsg_in_1", ConnPolicy() )
-connect (SL_ID_LUPPERARM+".forceSensors","LPERA_AnalogIns.beckhoffmsg_in_2", ConnPolicy() )
-connect (SL_ID_LLOWERARM+".forceSensors","LPERA_AnalogIns.beckhoffmsg_in_3", ConnPolicy() )
-connect (SL_ID_LSHOULDER+".positionSensors","LPERA_AnalogIns.beckhoffmsg_in_4", ConnPolicy() )
-connect (SL_ID_LUPPERARM+".positionSensors","LPERA_AnalogIns.beckhoffmsg_in_5", ConnPolicy() )
-connect (SL_ID_LLOWERARM+".positionSensors","LPERA_AnalogIns.beckhoffmsg_in_6", ConnPolicy() )
-
 #### START COMPONENTS ####
 Supervisor.AddAllwaysOnPeer ("JointStateAggregator")
 Supervisor.AddAllwaysOnPeer ("TrajectoryActionlib")
 Supervisor.AddAllwaysOnPeer ("EtherCATread")
 Supervisor.AddAllwaysOnPeer ("Soem")
 Supervisor.AddAllwaysOnPeer ("EtherCATwrite")
-Supervisor.AddAllwaysOnPeer ("RPERA_AnalogIns")
-Supervisor.AddAllwaysOnPeer ("LPERA_AnalogIns")
 Supervisor.setPeriod(0.01)
 Supervisor.start()
 

@@ -29,7 +29,7 @@ var double ENCODERCOUNTS_SM		= 256.0*4.0
 var double ENCODERCOUNTS_S3	    = 256.0*4.0
 var double ENCODERCOUNTS_EM		= 500.0*4.0 
 var double ENCODERCOUNTS_WM		= 128.0*4.0
-var double ENCODERCOUNTS_HM		= 8.0*128.0*4.0 ;# (TO DO: should be 16*4, remove this factor 8)
+var double ENCODERCOUNTS_HM		= 8.0*128.0*4.0
 var double ENC2SI_SM			= TWOPI*GEARRATIO_SM/ENCODERCOUNTS_SM
 var double ENC2SI_S3			= TWOPI*GEARRATIO_S3/ENCODERCOUNTS_S3
 var double ENC2SI_EM			= TWOPI*GEARRATIO_EM/ENCODERCOUNTS_EM
@@ -53,6 +53,7 @@ TrajectoryActionlib.interpolatorEps4	= 1.0
 EtherCATwrite.AddAnalogOuts(BODYPARTNAME, array(8.0), array(3.0, 3.0, 3.0),array(1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0),array(1.0, 2.0, 0.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0))
 EtherCATread.AddEncoderIns(BODYPARTNAME,array(1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0), array(8.0),array(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0),array(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0))
 EtherCATread.AddEnc2Si_E(BODYPARTNAME, 1, array(ENCODERBITS, ENCODERBITS, ENCODERBITS, ENCODERBITS, ENCODERBITS, ENCODERBITS, ENCODERBITS, ENCODERBITS), array(ENC2SI_SM, ENC2SI_SM, ENC2SI_S3, ENC2SI_EM, ENC2SI_EM, ENC2SI_WM, ENC2SI_WM, ENC2SI_HM ))
+EtherCATread.AddAnalogIns(BODYPARTNAME, array(3.0, 3.0, 3.0, 3.0, 3.0, 3.0), array(8.0, 8.0), array(1.0, 1.0, 2.0, 2.0, 2.0, 3.0, 3.0, 3.0, 4.0, 4.0, 5.0, 5.0, 5.0, 6.0, 6.0, 6.0), array(1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0, 1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0))
 
 #### HIGH PRIORITY COMPONENTS ####
 
@@ -156,7 +157,7 @@ setActivity("RPERA_SensorTorques",TS,HighestPriority/2,ORO_SCHED_RT)
 RPERA_SensorTorques.vector_size				= N
 RPERA_SensorTorques.c1 						= array (42.0,		4250.0,		94.0,		20.0,		825.0,		1.0,		1.0,		32.3375		)
 RPERA_SensorTorques.c2 						= array (-0.8,		12.0,	     1.0,		-2.2,		1.0,		1.0,		1.0,		0.2			)
-RPERA_SensorTorques.c3 						= array (1500.0,	 	-294.40,	-30.56,		-30.9,		-168.32,	1.0, 		1.0,		-22.66		)
+RPERA_SensorTorques.c3 						= array (1500.0,	-294.40,	-30.56,		-30.9,		-168.32,	1.0, 		1.0,		-22.66		)
 RPERA_SensorTorques.configure
 
 ### PERA Homing ###							## Note that all properties follow the [q1,q2,q3....q8] structure and not the structure provided by homing_order
@@ -221,6 +222,13 @@ connect (SL_ID_RUPPERARM+".encoder3",				"EtherCATread.right_arm_Ein5", 				Conn
 connect (SL_ID_RLOWERARM+".encoder1",				"EtherCATread.right_arm_Ein6", 				ConnPolicy() ); # Enc 6
 connect (SL_ID_RLOWERARM+".encoder2",				"EtherCATread.right_arm_Ein7", 				ConnPolicy() ); # Enc 7
 connect (SL_ID_RLOWERARM+".encoder3",				"EtherCATread.right_arm_Ein8", 				ConnPolicy() ); # Enc 8
+connect (SL_ID_RSHOULDER+".forceSensors",			"EtherCATread.right_arm_Ain1", 				ConnPolicy() )
+connect (SL_ID_RUPPERARM+".forceSensors",			"EtherCATread.right_arm_Ain2", 				ConnPolicy() )
+connect (SL_ID_RLOWERARM+".forceSensors",			"EtherCATread.right_arm_Ain3", 				ConnPolicy() )
+connect (SL_ID_RSHOULDER+".positionSensors",		"EtherCATread.right_arm_Ain4", 				ConnPolicy() )
+connect (SL_ID_RUPPERARM+".positionSensors",		"EtherCATread.right_arm_Ain5", 				ConnPolicy() )
+connect (SL_ID_RLOWERARM+".positionSensors",		"EtherCATread.right_arm_Ain6", 				ConnPolicy() )
+
 connect ("EtherCATread.right_arm_Eout1",			"RPERA_MotorToJointSpace.in", 				ConnPolicy() ); # Position MS
 connect ("RPERA_MotorToJointSpace.out",				"RPERA_Controller.pos_in", 					ConnPolicy() ); # Position JS
 connect ("RPERA_Controller.out",					"RPERA_JointToMotorSpace.in", 				ConnPolicy() ); # ControlEffort JS
@@ -228,7 +236,7 @@ connect ("RPERA_JointToMotorSpace.out",				"EtherCATwrite.right_arm_Ain1", 			Co
 connect ("EtherCATwrite.right_arm_Aout1",			SL_ID_RSHOULDER+".pwmDutyMotors", 			ConnPolicy() );
 connect ("EtherCATwrite.right_arm_Aout2",			SL_ID_RUPPERARM+".pwmDutyMotors", 			ConnPolicy() );
 connect ("EtherCATwrite.right_arm_Aout3",			SL_ID_RLOWERARM+".pwmDutyMotors", 			ConnPolicy() );
-connect ("RPERA_AnalogIns.stdvect_out_1",			"RPERA_SensorTorques.voltage_in", 			ConnPolicy() ); # TorqueSensor
+connect ("EtherCATread.right_arm_Aout1",			"RPERA_SensorTorques.voltage_in", 			ConnPolicy() ); # TorqueSensor
 
 ## References ##
 connect ("RPERA_MotorToJointSpace.out",				"TrajectoryActionlib.current_pos4",			ConnPolicy() ); # Ref Pos
@@ -256,7 +264,7 @@ connect ("RPERA_Safety.enable",						SL_ID_RLOWERARM+".enablePort",				ConnPolic
 ## Homing ##
 connect ("RPERA_MotorToJointSpace.out",				"RPERA_Homing.position", 					ConnPolicy() ); # Position
 connect ("RPERA_Controller.jointErrors",			"RPERA_Homing.servo_error_in", 				ConnPolicy() ); # JointErrors
-connect ("RPERA_AnalogIns.stdvect_out_2",			"RPERA_Homing.abs_pos_in", 					ConnPolicy() ); # AbsoluteSensors
+connect ("EtherCATread.right_arm_Aout2",			"RPERA_Homing.abs_pos_in", 					ConnPolicy() ); # AbsoluteSensors
 connect ("RPERA_SensorTorques.measured_torques_out","RPERA_Homing.force_in", 					ConnPolicy() ); # ForceSensors
 connect ("RPERA_Homing.homing_finished",			"Supervisor.right_arm_homingfinished", 		ConnPolicy() ); # Homing_finished
 connect ("RPERA_Homing.posout1",					"RPERA_Controller.ref_in1", 				ConnPolicy() ); # Ref Pos
