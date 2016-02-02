@@ -17,9 +17,9 @@ setActivity("RGB_light_controller",Ts,HighestPriority,ORO_SCHED_RT)
 RGB_light_controller.configure
 
 #### CONNECT COMPONENTS ####
-connect ("RGB_light_controller.red", 	"DigitalOuts.in6", 	ConnPolicy() );	#Red
-connect ("RGB_light_controller.green", 	"DigitalOuts.in7", 	ConnPolicy() );	#Green
-connect ("RGB_light_controller.blue", 	"DigitalOuts.in8", 	ConnPolicy() );	#Blue
+connect ("RGB_light_controller.red", 	"EtherCATwrite.generic_Din4", 	ConnPolicy() );	#Red
+connect ("RGB_light_controller.green", 	"EtherCATwrite.generic_Din5", 	ConnPolicy() );	#Green
+connect ("RGB_light_controller.blue", 	"EtherCATwrite.generic_Din6", 	ConnPolicy() );	#Blue
 
 #### CONNECT ROS STREAMS ####
 stream("RGB_light_controller.rgbtopic", ros.topic("/amigo/rgb_lights_controller/reference"));
