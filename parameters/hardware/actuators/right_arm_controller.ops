@@ -18,7 +18,7 @@ var array LOWERJOINTLIMIT 		= array (	-1.57,		-1.57,		-1.57,  	0.0, 		-1.83,		-0
 var array HOMINGSTROKE 			= array (	0.0,		0.0,		-1.57,  	0.0, 		-1.83,		-1.05, 		-0.80, 		0.0		)
 var array MAXERRORS 			= array (	0.09,     	0.09,   	0.09,     	0.09, 	   	0.09,    	0.09, 	   	0.09, 		2.0		)
 var array ABSPOS				= array	(	1.11,		1.72,		0.0,		0.0,		0.0,		0.0,		0.0,		0.0		)
-var double ENCODERBITS			= 65536.0
+var array ENCODERBITS			= array (   65536.0,	65536.0,	65536.0,	65536.0,	65536.0,	65536.0,	65536.0,	65536.0   )		
 var double TWOPI 				= 2.0*3.141592
 var double GEARRATIO_SM			= 1.0/550.0
 var double GEARRATIO_S3		    = 1.0/371.25
@@ -35,6 +35,7 @@ var double ENC2SI_S3			= TWOPI*GEARRATIO_S3/ENCODERCOUNTS_S3
 var double ENC2SI_EM			= TWOPI*GEARRATIO_EM/ENCODERCOUNTS_EM
 var double ENC2SI_WM			= TWOPI*GEARRATIO_WM/ENCODERCOUNTS_WM
 var double ENC2SI_HM 			= TWOPI*GEARRATIO_HM/ENCODERCOUNTS_HM
+var array ENC2SI				= array(	ENC2SI_SM,	ENC2SI_SM,	ENC2SI_S3,	ENC2SI_EM,	ENC2SI_EM,	ENC2SI_WM,	ENC2SI_WM,	ENC2SI_HM )
 var int N						= 8
 var int BODYPARTNR 				= 4
 var string BODYPARTNAME 		= "right_arm"
@@ -52,26 +53,28 @@ TrajectoryActionlib.interpolatorDt4 	= TS
 TrajectoryActionlib.interpolatorEps4	= 1.0
 EtherCATwrite.AddAnalogOuts(BODYPARTNAME, array(8.0), array(3.0, 3.0, 3.0),array(1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0),array(1.0, 2.0, 0.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0))
 EtherCATread.AddEncoderIns(BODYPARTNAME,array(1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0), array(8.0),array(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0),array(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0))
-EtherCATread.AddEnc2Si_E(BODYPARTNAME, 1, array(ENCODERBITS, ENCODERBITS, ENCODERBITS, ENCODERBITS, ENCODERBITS, ENCODERBITS, ENCODERBITS, ENCODERBITS), array(ENC2SI_SM, ENC2SI_SM, ENC2SI_S3, ENC2SI_EM, ENC2SI_EM, ENC2SI_WM, ENC2SI_WM, ENC2SI_HM ))
+EtherCATread.AddEnc2Si_E(BODYPARTNAME, 1, ENCODERBITS, ENC2SI)
 EtherCATread.AddAnalogIns(BODYPARTNAME, array(3.0, 3.0, 3.0, 3.0, 3.0, 3.0), array(8.0, 8.0), array(1.0, 1.0, 2.0, 2.0, 2.0, 3.0, 3.0, 3.0, 4.0, 4.0, 5.0, 5.0, 5.0, 6.0, 6.0, 6.0), array(1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0, 1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0))
+EtherCATread.AddMatrixTransform_E("right_arm", 1, 8, 8)
+EtherCATread.right_arm1_matrixtransform1 	= array  ( 0.5, -0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0)
+EtherCATread.right_arm1_matrixtransform2 	= array  ( 0.5,  0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0)
+EtherCATread.right_arm1_matrixtransform3 	= array  ( 0.0,  0.0,  1.0,  0.0,  0.0,  0.0,  0.0,  0.0)
+EtherCATread.right_arm1_matrixtransform4 	= array  ( 0.0,  0.0,  0.0,  0.5,  0.5,  0.0,  0.0,  0.0)
+EtherCATread.right_arm1_matrixtransform5 	= array  ( 0.0,  0.0,  0.0, -0.5,  0.5,  0.0,  0.0,  0.0)
+EtherCATread.right_arm1_matrixtransform6 	= array  ( 0.0,  0.0,  0.0,  0.0,  0.0,  0.5,  0.5,  0.0)
+EtherCATread.right_arm1_matrixtransform7 	= array  ( 0.0,  0.0,  0.0,  0.0,  0.0, -0.5,  0.5,  0.0)
+EtherCATread.right_arm1_matrixtransform8 	= array  ( 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  1.0)
+EtherCATwrite.AddMatrixTransform_A("right_arm", 1, 8, 8)
+EtherCATwrite.right_arm1_matrixtransform1	= array ( 0.5,  0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0)
+EtherCATwrite.right_arm1_matrixtransform2	= array (-0.5,  0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0)
+EtherCATwrite.right_arm1_matrixtransform3 	= array ( 0.0,  0.0,  1.0,  0.0,  0.0,  0.0,  0.0,  0.0)
+EtherCATwrite.right_arm1_matrixtransform4 	= array ( 0.0,  0.0,  0.0,  0.5, -0.5,  0.0,  0.0,  0.0)
+EtherCATwrite.right_arm1_matrixtransform5 	= array ( 0.0,  0.0,  0.0,  0.5,  0.5,  0.0,  0.0,  0.0)
+EtherCATwrite.right_arm1_matrixtransform6 	= array ( 0.0,  0.0,  0.0,  0.0,  0.0,  0.5, -0.5,  0.0)
+EtherCATwrite.right_arm1_matrixtransform7 	= array ( 0.0,  0.0,  0.0,  0.0,  0.0,  0.5,  0.5,  0.0)
+EtherCATwrite.right_arm1_matrixtransform8 	= array ( 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  1.0)
 
 #### HIGH PRIORITY COMPONENTS ####
-
-### Motor to joint angles ###
-loadComponent("RPERA_MotorToJointSpace","MATH::MatrixTransform")
-addPeer("Supervisor","RPERA_MotorToJointSpace")
-setActivity("RPERA_MotorToJointSpace",0.0,HighestPriority,ORO_SCHED_RT)
-RPERA_MotorToJointSpace.Nrows 				= N
-RPERA_MotorToJointSpace.Ncolumns			= N
-RPERA_MotorToJointSpace.configure
-RPERA_MotorToJointSpace.function1 			= array  ( 0.5, -0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0)
-RPERA_MotorToJointSpace.function2 			= array  ( 0.5,  0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0)
-RPERA_MotorToJointSpace.function3 			= array  ( 0.0,  0.0,  1.0,  0.0,  0.0,  0.0,  0.0,  0.0)
-RPERA_MotorToJointSpace.function4 			= array  ( 0.0,  0.0,  0.0,  0.5,  0.5,  0.0,  0.0,  0.0)
-RPERA_MotorToJointSpace.function5 			= array  ( 0.0,  0.0,  0.0, -0.5,  0.5,  0.0,  0.0,  0.0)
-RPERA_MotorToJointSpace.function6 			= array  ( 0.0,  0.0,  0.0,  0.0,  0.0,  0.5,  0.5,  0.0)
-RPERA_MotorToJointSpace.function7 			= array  ( 0.0,  0.0,  0.0,  0.0,  0.0, -0.5,  0.5,  0.0)
-RPERA_MotorToJointSpace.function8 			= array  ( 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  1.0)
 
 ### Gripper force controller ###
 loadComponent("RPERA_GripperControl","ARM::GripperControl")
@@ -85,22 +88,6 @@ RPERA_GripperControl.gripper_acc 			= 1.5
 RPERA_GripperControl.InterpolDt 			= TS
 RPERA_GripperControl.InterpolEps 			= 1.0
 RPERA_GripperControl.configure
-
-### Joint to motor torques ###
-loadComponent("RPERA_JointToMotorSpace","MATH::MatrixTransform")
-addPeer("Supervisor","RPERA_JointToMotorSpace")
-setActivity("RPERA_JointToMotorSpace",0.0,HighestPriority,ORO_SCHED_RT)
-RPERA_JointToMotorSpace.Nrows 				= N
-RPERA_JointToMotorSpace.Ncolumns 			= N
-RPERA_JointToMotorSpace.configure
-RPERA_JointToMotorSpace.function1			= array ( 0.5,  0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0)
-RPERA_JointToMotorSpace.function2			= array (-0.5,  0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0)
-RPERA_JointToMotorSpace.function3 			= array ( 0.0,  0.0,  1.0,  0.0,  0.0,  0.0,  0.0,  0.0)
-RPERA_JointToMotorSpace.function4 			= array ( 0.0,  0.0,  0.0,  0.5, -0.5,  0.0,  0.0,  0.0)
-RPERA_JointToMotorSpace.function5 			= array ( 0.0,  0.0,  0.0,  0.5,  0.5,  0.0,  0.0,  0.0)
-RPERA_JointToMotorSpace.function6 			= array ( 0.0,  0.0,  0.0,  0.0,  0.0,  0.5, -0.5,  0.0)
-RPERA_JointToMotorSpace.function7 			= array ( 0.0,  0.0,  0.0,  0.0,  0.0,  0.5,  0.5,  0.0)
-RPERA_JointToMotorSpace.function8 			= array ( 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  1.0)
 
 ### Negative feedback controller ###
 loadComponent("RPERA_Controller","FILTERS::Controller")
@@ -229,26 +216,24 @@ connect (SL_ID_RSHOULDER+".positionSensors",		"EtherCATread.right_arm_Ain4", 			
 connect (SL_ID_RUPPERARM+".positionSensors",		"EtherCATread.right_arm_Ain5", 				ConnPolicy() )
 connect (SL_ID_RLOWERARM+".positionSensors",		"EtherCATread.right_arm_Ain6", 				ConnPolicy() )
 
-connect ("EtherCATread.right_arm_Eout1",			"RPERA_MotorToJointSpace.in", 				ConnPolicy() ); # Position MS
-connect ("RPERA_MotorToJointSpace.out",				"RPERA_Controller.pos_in", 					ConnPolicy() ); # Position JS
-connect ("RPERA_Controller.out",					"RPERA_JointToMotorSpace.in", 				ConnPolicy() ); # ControlEffort JS
-connect ("RPERA_JointToMotorSpace.out",				"EtherCATwrite.right_arm_Ain1", 			ConnPolicy() ); # ControlEffort MS
+connect ("EtherCATread.right_arm_Eout1",			"RPERA_Controller.pos_in", 					ConnPolicy() ); # Position JS
+connect ("RPERA_Controller.out",					"EtherCATwrite.right_arm_Ain1", 			ConnPolicy() ); # ControlEffort MS
 connect ("EtherCATwrite.right_arm_Aout1",			SL_ID_RSHOULDER+".pwmDutyMotors", 			ConnPolicy() );
 connect ("EtherCATwrite.right_arm_Aout2",			SL_ID_RUPPERARM+".pwmDutyMotors", 			ConnPolicy() );
 connect ("EtherCATwrite.right_arm_Aout3",			SL_ID_RLOWERARM+".pwmDutyMotors", 			ConnPolicy() );
 connect ("EtherCATread.right_arm_Aout1",			"RPERA_SensorTorques.voltage_in", 			ConnPolicy() ); # TorqueSensor
 
 ## References ##
-connect ("RPERA_MotorToJointSpace.out",				"TrajectoryActionlib.current_pos4",			ConnPolicy() ); # Ref Pos
+connect ("EtherCATread.right_arm_Eout1",			"TrajectoryActionlib.current_pos4",			ConnPolicy() ); # Initial Pos
 connect ("TrajectoryActionlib.pos_out4",			"RPERA_Controller.ref_in1", 				ConnPolicy() ); # Ref Pos
 
 ## Gripper control ##
 connect ("RPERA_SensorTorques.measured_torques_out","RPERA_GripperControl.torque_in", 			ConnPolicy() ); # Torqin
-connect ("RPERA_MotorToJointSpace.out", 			"RPERA_GripperControl.position_in", 		ConnPolicy() ); # Posin
+connect ("EtherCATread.right_arm_Eout1", 			"RPERA_GripperControl.position_in", 		ConnPolicy() ); # Posin
 connect ("RPERA_GripperControl.posout", 			"RPERA_Controller.ref_in2", 				ConnPolicy() ); # Posin
 
 ## Ros communication ##
-connect ("RPERA_MotorToJointSpace.out",				"RPERA_JointOutputLimiter.in", 				ConnPolicy() ); # Positions JS
+connect ("EtherCATread.right_arm_Eout1",			"RPERA_JointOutputLimiter.in", 				ConnPolicy() ); # Positions JS
 connect ("RPERA_JointOutputLimiter.out",			"RPERA_WriteClippedJointAngles.pos_in", 	ConnPolicy() ); # Clipped Positions
 connect ("RPERA_WriteClippedJointAngles.out", 		"JointStateAggregator.right_arm", 			ConnPolicy() ); # Jointstate
 
@@ -262,7 +247,7 @@ connect ("RPERA_Safety.enable",						SL_ID_RUPPERARM+".enablePort", 				ConnPoli
 connect ("RPERA_Safety.enable",						SL_ID_RLOWERARM+".enablePort",				ConnPolicy() ); # Enable
 
 ## Homing ##
-connect ("RPERA_MotorToJointSpace.out",				"RPERA_Homing.position", 					ConnPolicy() ); # Position
+connect ("EtherCATread.right_arm_Eout1",			"RPERA_Homing.position", 					ConnPolicy() ); # Position
 connect ("RPERA_Controller.jointErrors",			"RPERA_Homing.servo_error_in", 				ConnPolicy() ); # JointErrors
 connect ("EtherCATread.right_arm_Aout2",			"RPERA_Homing.abs_pos_in", 					ConnPolicy() ); # AbsoluteSensors
 connect ("RPERA_SensorTorques.measured_torques_out","RPERA_Homing.force_in", 					ConnPolicy() ); # ForceSensors
@@ -295,8 +280,6 @@ EtherCATread.ResetEncoders(BODYPARTNR, 1, array(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.
 Supervisor.AddAllwaysOnPeer(	"RPERA_Diagnostics")
 Supervisor.AddAllwaysOnPeer(	"RPERA_JointOutputLimiter")
 Supervisor.AddAllwaysOnPeer(	"RPERA_WriteClippedJointAngles")
-Supervisor.AddAllwaysOnPeer(	"RPERA_MotorToJointSpace")
-Supervisor.AddAllwaysOnPeer(	"RPERA_JointToMotorSpace")
 Supervisor.AddAllwaysOnPeer(	"RPERA_Controller")
 
 Supervisor.AddHomingOnlyPeer(	"RPERA_Homing", 			BODYPARTNR)
