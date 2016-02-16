@@ -38,7 +38,6 @@ stream("EtherCATread.spindle_DoutMsg2", ros.topic("/amigo/spindle_endstop") )
 
 # Publish JointState Component
 loadComponent("SPINDLE_WriteJointStates","ROS::DoublesToJointState")
-addPeer("Supervisor","SPINDLE_WriteJointStates")
 setActivity("SPINDLE_WriteJointStates",0.05,LowestPriority,ORO_SCHED_OTHER)
 SPINDLE_WriteJointStates.JointNames 		= JOINT_NAMES
 SPINDLE_WriteJointStates.configure
@@ -46,7 +45,6 @@ SPINDLE_WriteJointStates.configure
 ### Negative feedback controller ###
 loadComponent("SPINDLE_Controller","FILTERS::Controller")
 setActivity("SPINDLE_Controller",0.0,HighestPriority,ORO_SCHED_RT)
-addPeer("Supervisor","SPINDLE_Controller")
 SPINDLE_Controller.vector_size    			= N
 SPINDLE_Controller.gains					= array(-80.0); # -40.0
 SPINDLE_Controller.controllers				= strings("WeakIntegrator","LeadLag","LowPass")
@@ -117,7 +115,6 @@ SPINDLE_Homing.configure
 
 #### LOAD COMPONENT TO PUBLISH DIAGNOSTICS ###
 loadComponent("SPINDLE_Diagnostics","ROS::RosDiagnostics")
-addPeer("Supervisor","SPINDLE_Diagnostics")
 setActivity("SPINDLE_Diagnostics",1.0,LowestPriority,ORO_SCHED_OTHER)
 SPINDLE_Diagnostics.statusname 				= BODYPARTNAME+"_Controller"
 SPINDLE_Diagnostics.NumberOfVectorPorts 	= 3
@@ -175,28 +172,12 @@ stream("SPINDLE_WriteJointStates.out", 				ros.topic("/amigo/torso/measurements"
 EtherCATread.ResetEncoders(BODYPARTNR, 1, array(0.0));
 
 #### START COMPONENTS ####
-Supervisor.AddAllwaysOnPeer (	"SPINDLE_WriteJointStates")
-Supervisor.AddAllwaysOnPeer (	"SPINDLE_Diagnostics")
-Supervisor.AddAllwaysOnPeer (	"SPINDLE_Controller")
+SPINDLE_WriteJointStates.start()
+SPINDLE_Diagnostics.start()
+SPINDLE_Controller.start()
 
 Supervisor.AddHomingOnlyPeer (	"SPINDLE_Homing", 				BODYPARTNR )
 
 Supervisor.AddEnabledPeer (		"SPINDLE_FFW", 					BODYPARTNR )
 Supervisor.AddEnabledPeer (		"SPINDLE_Safety", 				BODYPARTNR )
 
-
-
-### Setting up tracing ###
-#loadComponent("Tracing","Signal::Tracing")
-#addPeer("Supervisor","Tracing")
-#setActivity("Tracing",0.0,HighestPriority,ORO_SCHED_RT)
-#Tracing.vector_sizes = array (1.0, 1.0)
-#Tracing.buffersize =  40000;
-#Tracing.filename = "/home/amigo/ros/data/private/hardware_tracing/max/homingtest3012/Test.dat"
-#Tracing.Ts = TS
-#Tracing.configure
-#connect ("SPINDLE_ReadEncoders.out",         "Tracing.in1",                              ConnPolicy())
-#connect ("EtherCATread.spindle_Eout1",       "Tracing.in2",                              ConnPolicy())
-
-
-#Tracing.start

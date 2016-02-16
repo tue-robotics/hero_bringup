@@ -92,7 +92,6 @@ LPERA_GripperControl.configure
 ### Negative feedback controller ###
 loadComponent("LPERA_Controller","FILTERS::Controller")
 setActivity("LPERA_Controller",0.0,HighestPriority,ORO_SCHED_RT)
-addPeer("Supervisor","LPERA_Controller")
 LPERA_Controller.vector_size    			= N
 LPERA_Controller.controllers				= strings("WeakIntegrator","LeadLag","LowPass")
 LPERA_Controller.sampling_time				= TS
@@ -123,7 +122,6 @@ LPERA_Safety.configure
 
 ### Output limiter ###
 loadComponent("LPERA_JointOutputLimiter","DISCONTINUITIES::Saturation")
-addPeer("Supervisor","LPERA_JointOutputLimiter")
 setActivity("LPERA_JointOutputLimiter",0.0,HighestPriority,ORO_SCHED_RT)
 LPERA_JointOutputLimiter.vector_size 		= N
 LPERA_JointOutputLimiter.upper_limit 		= UPPERJOINTLIMIT
@@ -132,7 +130,6 @@ LPERA_JointOutputLimiter.configure
 
 ### Publishing joint angles on ROS-topic ###
 loadComponent("LPERA_WriteClippedJointAngles","ROS::DoublesToJointState")
-addPeer("Supervisor","LPERA_WriteClippedJointAngles")
 setActivity("LPERA_WriteClippedJointAngles",0.05,LowestPriority,ORO_SCHED_OTHER)
 LPERA_WriteClippedJointAngles.JointNames 	= JOINT_NAMES
 LPERA_WriteClippedJointAngles.configure
@@ -188,7 +185,6 @@ LPERA_HandoverDetector.configure
 
 #### Diagnostics ###
 loadComponent("LPERA_Diagnostics","ROS::RosDiagnostics")
-addPeer("Supervisor","LPERA_Diagnostics")
 setActivity("LPERA_Diagnostics",1.0,LowestPriority,ORO_SCHED_OTHER)
 LPERA_Diagnostics.statusname 				= BODYPARTNAME+"_Controller"
 LPERA_Diagnostics.NumberOfVectorPorts 		= 3
@@ -277,10 +273,10 @@ stream ("LPERA_HandoverDetector.result", 			ros.topic("/amigo/handoverdetector_l
 EtherCATread.ResetEncoders(BODYPARTNR, 1, array(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
 
 #### START COMPONENTS ####
-Supervisor.AddAllwaysOnPeer(	"LPERA_Diagnostics")
-Supervisor.AddAllwaysOnPeer(	"LPERA_JointOutputLimiter")
-Supervisor.AddAllwaysOnPeer(	"LPERA_WriteClippedJointAngles")
-Supervisor.AddAllwaysOnPeer(	"LPERA_Controller")
+LPERA_Diagnostics.start()
+LPERA_JointOutputLimiter.start()
+LPERA_WriteClippedJointAngles.start()
+LPERA_Controller.start()
 
 Supervisor.AddHomingOnlyPeer(	"LPERA_Homing", 			BODYPARTNR)
 

@@ -33,7 +33,7 @@ os.setenv("SL_ID_RLOWERARM",SL_ID_RLOWERARM)
 loadComponent("Supervisor","SUPERVISORY::Supervisor")
 Supervisor.ebuttonorder	= strings("Wired","Wireless")
 Supervisor.configure
-setActivity("Supervisor",0.5,HighestPriority,ORO_SCHED_RT)
+setActivity("Supervisor",0.01,HighestPriority,ORO_SCHED_RT)
 stream("Supervisor.ebuttonWired", ros.topic("/amigo/runstop"))
 stream("Supervisor.ebuttonWireless", ros.topic("/amigo/emergency_switch"))
 stream("Supervisor.rosshutdown", ros.topic("/amigo/etherCAT_shutdown")); 
@@ -55,7 +55,6 @@ stream("JointStateAggregator.out", ros.topic("/amigo/joint_states"))
 
 #### LOAD TrajectoryActionlib ####
 loadComponent("TrajectoryActionlib","ROS::TrajectoryActionlib")
-addPeer("Supervisor","TrajectoryActionlib")
 setActivity("TrajectoryActionlib",TS,HighestPriority, ORO_SCHED_RT)
 loadService("TrajectoryActionlib","actionlib")
 TrajectoryActionlib.actionlib.connect("/amigo/body/joint_trajectory_action");
@@ -73,25 +72,22 @@ EtherCATread.bodypart_names = DEFAULT_PART_NAMES
 
 ### LOAD SOEM COMPONENT FOR ETHERCAT COMMUNICATION ###
 loadComponent("Soem","soem_master::SoemMasterComponent")
-addPeer("Supervisor","Soem")
 Soem.configure
 setActivity("Soem",TS,HighestPriority,ORO_SCHED_RT)
 connect ("Soem.Slave_1002.Slave_1002_value", "Supervisor.serialRunning", ConnPolicy() )
 
 ### LOAD ETHERCAT WRITE ###
 loadComponent("EtherCATwrite","ETHERCATWRITE::EtherCATwrite") 
-addPeer("Supervisor","EtherCATwrite")
 EtherCATwrite.configure
 setActivity("EtherCATwrite",TS,HighestPriority,ORO_SCHED_RT)
 EtherCATwrite.bodypart_names = DEFAULT_PART_NAMES
 
 #### START COMPONENTS ####
-Supervisor.AddAllwaysOnPeer ("JointStateAggregator")
-Supervisor.AddAllwaysOnPeer ("TrajectoryActionlib")
-Supervisor.AddAllwaysOnPeer ("EtherCATread")
-Supervisor.AddAllwaysOnPeer ("Soem")
-Supervisor.AddAllwaysOnPeer ("EtherCATwrite")
-Supervisor.setPeriod(0.01)
+JointStateAggregator.start()
+TrajectoryActionlib.start()
+EtherCATread.start()
+Soem.start()
+EtherCATwrite.start()
 Supervisor.start()
 
 #### DIGITAL OUTS ####
@@ -117,6 +113,8 @@ stream("EtherCATread.generic_DoutMsg3", ros.topic("/amigo/fuse3"))
 stream("EtherCATread.generic_DoutMsg4", ros.topic("/amigo/fuse4"))
 stream("EtherCATread.generic_DoutMsg5", ros.topic("/amigo/runstop"))
 stream("EtherCATread.generic_DoutMsg6", ros.topic("/amigo/emergency_switch"))
+connect ("EtherCATread.generic_DoutMsg5","Supervisor.ebuttonWired", ConnPolicy() );
+connect ("EtherCATread.generic_DoutMsg6","Supervisor.ebuttonWireless", ConnPolicy() );
 
 #### BATTERY IN ####
 EtherCATread.AddAnalogIns("generic", array(1.0), array(1.0), array(1.0), array(1.0))

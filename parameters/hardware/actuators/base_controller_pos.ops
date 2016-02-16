@@ -38,7 +38,6 @@ EtherCATwrite.AddMultiply_A(BODYPARTNAME, 1, array (SI2V, SI2V, SI2V, SI2V))
 
 ### DECOUPLE POSITION ###
 loadComponent("BASE_MotorToJointSpace","MATH::MatrixTransform")
-addPeer("Supervisor","BASE_MotorToJointSpace")
 setActivity("BASE_MotorToJointSpace",0.0,HighestPriority,ORO_SCHED_RT)
 BASE_MotorToJointSpace.Nrows = 3
 BASE_MotorToJointSpace.Ncolumns = 4
@@ -49,7 +48,6 @@ BASE_MotorToJointSpace.function3 = array ( 0.25*WHEELRAD/DIS2CENT,   0.25*WHEELR
 
 #### LOAD COMPONENT TO PUBLISH ODOMETRY ###
 loadComponent("BASE_OdometryPublisher","ROS::PublishOdometry")
-addPeer("Supervisor","BASE_OdometryPublisher")
 setActivity("BASE_OdometryPublisher",0.05,LowestPriority,ORO_SCHED_OTHER)
 BASE_OdometryPublisher.base_link_frame = "/amigo/base_link"
 BASE_OdometryPublisher.odom_frame = "/amigo/odom"
@@ -117,7 +115,6 @@ BASE_Safety.configure
 
 #### LOAD COMPONENT TO PUBLISH DIAGNOSTICS ###
 loadComponent("BASE_Diagnostics","ROS::RosDiagnostics")
-addPeer("Supervisor","BASE_Diagnostics")
 setActivity("BASE_Diagnostics",1.0,LowestPriority,ORO_SCHED_OTHER)
 BASE_Diagnostics.statusname = BODYPARTNAME+"_Controller"
 BASE_Diagnostics.NumberOfVectorPorts = 2
@@ -129,14 +126,6 @@ BASE_Diagnostics.boolname1 = "Amplifiers"
 
 #### SET UP JOINTSTATE AGGREGATOR ####
 # To Do JointState message base
-
-
-loadComponent("SG","SIGNALGENERATOR::SignalGenerator")
-setActivity("SG",0.001,HighestPriority,ORO_SCHED_RT)
-SG.configure
-SG.start
-SG.AddDigitalSignal(1, array (0.0), false);
-
 
 #### CONNECT COMPONENTS ####
 connect ("Soem.Slave_1002.Slave_1002_value",		"EtherCATread.base_Ein1", 			ConnPolicy() ); # Enc 1
@@ -177,9 +166,9 @@ stream ("BASE_Diagnostics.diagnostics", 			ros.topic(ROBOT+"/base_diagnostics"))
 EtherCATread.ResetEncoders(BODYPARTNR, 1, array(0.0, 0.0, 0.0, 0.0)); # to do can we automate this? (question is where)
 
 #### START COMPONENTS ####
-Supervisor.AddAllwaysOnPeer ("BASE_MotorToJointSpace")
-Supervisor.AddAllwaysOnPeer ("BASE_OdometryPublisher")
-Supervisor.AddAllwaysOnPeer ("BASE_Diagnostics")
+BASE_MotorToJointSpace.start()
+BASE_OdometryPublisher.start()
+BASE_Diagnostics.start()
 
 Supervisor.AddEnabledPeer ("BASE_Controller", BODYPARTNR)
 Supervisor.AddEnabledPeer ("BASE_ReadReferences",BODYPARTNR )
