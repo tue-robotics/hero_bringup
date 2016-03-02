@@ -25,7 +25,7 @@ plugins:
           frame_id: /map
           min_z: 0.025
           max_z: 1.8
-          default_offset: 0.7
+          default_offset: 0.8
           depth_sensor_integration:
               topic: /amigo/top_kinect/rgbd
               num_samples: 320
