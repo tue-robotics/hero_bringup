@@ -36,6 +36,9 @@ var double ENC2SI_EM			= TWOPI*GEARRATIO_EM/ENCODERCOUNTS_EM
 var double ENC2SI_WM			= TWOPI*GEARRATIO_WM/ENCODERCOUNTS_WM
 var double ENC2SI_HM 			= TWOPI*GEARRATIO_HM/ENCODERCOUNTS_HM
 var array ENC2SI				= array(	ENC2SI_SM,	ENC2SI_SM,	ENC2SI_S3,	ENC2SI_EM,	ENC2SI_EM,	ENC2SI_WM,	ENC2SI_WM,	ENC2SI_HM )
+var array SENSORTORQUES_C1 		= array (	35.0,		87.0,		1050.0,		35.0,		300.0,		1.0,		1.0,		32.34	)
+var array SENSORTORQUES_C2 		= array (	-0.2,		0.2,		6.0,		-0.8,		1.0,		1.0,		1.0,		0.2		)
+var array SENSORTORQUES_C3 		= array (	-76.26,		-95.29,	    -145.16,	-38.71,		-111.7,		1.0,		1.0,	  	-60.0		)
 var int N						= 8
 var int BODYPARTNR 				= 3
 var string BODYPARTNAME 		= "left_arm"
@@ -51,11 +54,12 @@ JointStateAggregator.addAggregationPort(BODYPARTNAME)
 TrajectoryActionlib.AddBodyPart (BODYPARTNR, JOINT_NAMES)
 TrajectoryActionlib.interpolatorDt3 		= TS
 TrajectoryActionlib.interpolatorEps3		= 1.0
-EtherCATwrite.AddAnalogOuts(BODYPARTNAME, array(8.0), array(3.0, 3.0, 3.0),array(1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0),array(1.0, 2.0, 0.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0))
+
+# EtherCATread
 EtherCATread.AddEncoderIns(BODYPARTNAME,array(1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0), array(8.0),array(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0),array(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0))
 EtherCATread.AddEnc2Si_E(BODYPARTNAME, 1, ENCODERBITS, ENC2SI)
 EtherCATread.AddAnalogIns(BODYPARTNAME, array(3.0, 3.0, 3.0, 3.0, 3.0, 3.0), array(8.0, 8.0), array(1.0, 1.0, 2.0, 2.0, 2.0, 3.0, 3.0, 3.0, 4.0, 4.0, 5.0, 5.0, 5.0, 6.0, 6.0, 6.0), array(1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0, 1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0))
-EtherCATread.AddMatrixTransform_E("left_arm", 1, 8, 8)
+EtherCATread.AddMatrixTransform_E(BODYPARTNAME, 1, 8, 8)
 EtherCATread.left_arm1_matrixtransform1 	= array  ( 0.5, -0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0)
 EtherCATread.left_arm1_matrixtransform2 	= array  (-0.5, -0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0)
 EtherCATread.left_arm1_matrixtransform3 	= array  ( 0.0,  0.0, -1.0,  0.0,  0.0,  0.0,  0.0,  0.0)
@@ -64,7 +68,13 @@ EtherCATread.left_arm1_matrixtransform5 	= array  ( 0.0,  0.0,  0.0,  0.5, -0.5,
 EtherCATread.left_arm1_matrixtransform6 	= array  ( 0.0,  0.0,  0.0,  0.0,  0.0,  0.5,  0.5,  0.0)
 EtherCATread.left_arm1_matrixtransform7 	= array  ( 0.0,  0.0,  0.0,  0.0,  0.0,  0.5, -0.5,  0.0)
 EtherCATread.left_arm1_matrixtransform8 	= array  ( 0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0,  1.0)
-EtherCATwrite.AddMatrixTransform_A("left_arm", 1, 8, 8)
+EtherCATread.AddSaturation_E(BODYPARTNAME,1, LOWERJOINTLIMIT, UPPERJOINTLIMIT)
+EtherCATread.AddMsgOut_E(BODYPARTNAME, 1,JOINT_NAMES);
+EtherCATread.AddTorqueSensor_A(BODYPARTNAME, 1, SENSORTORQUES_C1, SENSORTORQUES_C2, SENSORTORQUES_C3)
+
+# EtherCATwrite 
+EtherCATwrite.AddAnalogOuts(BODYPARTNAME, array(8.0), array(3.0, 3.0, 3.0),array(1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0),array(1.0, 2.0, 0.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0))
+EtherCATwrite.AddMatrixTransform_A(BODYPARTNAME, 1, 8, 8)
 EtherCATwrite.left_arm1_matrixtransform1	= array ( 0.5, -0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0)
 EtherCATwrite.left_arm1_matrixtransform2	= array (-0.5, -0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0)
 EtherCATwrite.left_arm1_matrixtransform3 	= array ( 0.0,  0.0, -1.0,  0.0,  0.0,  0.0,  0.0,  0.0)
@@ -119,30 +129,6 @@ LPERA_Safety.maxJointErrors					= MAXERRORS
 LPERA_Safety.motorSaturations				= array (1000.0, 	1000.0,	 	400.0, 	   	500.0,  	500.0, 	   	500.0, 		500.0, 		900.0)
 LPERA_Safety.maxConSatTime					= 5.0
 LPERA_Safety.configure
-
-### Output limiter ###
-loadComponent("LPERA_JointOutputLimiter","DISCONTINUITIES::Saturation")
-setActivity("LPERA_JointOutputLimiter",0.0,HighestPriority,ORO_SCHED_RT)
-LPERA_JointOutputLimiter.vector_size 		= N
-LPERA_JointOutputLimiter.upper_limit 		= UPPERJOINTLIMIT
-LPERA_JointOutputLimiter.lower_limit 		= LOWERJOINTLIMIT
-LPERA_JointOutputLimiter.configure
-
-### Publishing joint angles on ROS-topic ###
-loadComponent("LPERA_WriteClippedJointAngles","ROS::DoublesToJointState")
-setActivity("LPERA_WriteClippedJointAngles",0.05,LowestPriority,ORO_SCHED_OTHER)
-LPERA_WriteClippedJointAngles.JointNames 	= JOINT_NAMES
-LPERA_WriteClippedJointAngles.configure
-
-### Conversion analog PERA_IO values to torques ###
-loadComponent("LPERA_SensorTorques","ARM::SensorTorques")
-addPeer("Supervisor","LPERA_SensorTorques")
-setActivity("LPERA_SensorTorques",TS,HighestPriority/2,ORO_SCHED_RT)
-LPERA_SensorTorques.vector_size				= N
-LPERA_SensorTorques.c1 						= array (35.0,		87.0,		1050.0,		35.0,		300.0,		1.0,		1.0,		32.34	)
-LPERA_SensorTorques.c2 						= array (-0.2,		0.2,		6.0,		-0.8,		1.0,		1.0,		1.0,		0.2		)
-LPERA_SensorTorques.c3 						= array (-76.26,	-95.29,	    -145.16,	-38.71,		-111.7,		1.0,		1.0,	  -60.0		)
-LPERA_SensorTorques.configure
 
 ### PERA Homing ###							## Note that all properties follow the [q1,q2,q3....q8] structure and not the structure provided by homing_order
 loadComponent("LPERA_Homing","SUPERVISORY::Homing")
@@ -217,21 +203,18 @@ connect ("LPERA_Controller.out",					"EtherCATwrite.left_arm_Ain1", 				ConnPoli
 connect ("EtherCATwrite.left_arm_Aout1",			SL_ID_LSHOULDER+".pwmDutyMotors", 			ConnPolicy() );
 connect ("EtherCATwrite.left_arm_Aout2",			SL_ID_LUPPERARM+".pwmDutyMotors", 			ConnPolicy() );
 connect ("EtherCATwrite.left_arm_Aout3",			SL_ID_LLOWERARM+".pwmDutyMotors", 			ConnPolicy() );
-connect ("EtherCATread.left_arm_Aout1",				"LPERA_SensorTorques.voltage_in", 			ConnPolicy() ); # TorqueSensor
 
 ## References ##
 connect ("EtherCATread.left_arm_Eout1",				"TrajectoryActionlib.current_pos3",			ConnPolicy() ); # 
 connect ("TrajectoryActionlib.pos_out3",			"LPERA_Controller.ref_in1", 				ConnPolicy() ); # Ref Pos
 
 ## Gripper control ##
-connect ("LPERA_SensorTorques.measured_torques_out","LPERA_GripperControl.torque_in", 			ConnPolicy() ); # Torqin
+connect ("EtherCATread.left_arm_Aout1",				"LPERA_GripperControl.torque_in", 			ConnPolicy() ); # Torqin
 connect ("EtherCATread.left_arm_Eout1", 			"LPERA_GripperControl.position_in", 		ConnPolicy() ); # Posin
 connect ("LPERA_GripperControl.posout", 			"LPERA_Controller.ref_in2", 				ConnPolicy() ); # Posin
 
 ## Ros communication ##
-connect ("EtherCATread.left_arm_Eout1",				"LPERA_JointOutputLimiter.in", 				ConnPolicy() ); # Positions JS
-connect ("LPERA_JointOutputLimiter.out",			"LPERA_WriteClippedJointAngles.pos_in", 	ConnPolicy() ); # Clipped Positions
-connect ("LPERA_WriteClippedJointAngles.out", 		"JointStateAggregator.left_arm", 			ConnPolicy() ); # Jointstate
+connect ("EtherCATread.left_arm_EoutMsg1",			"JointStateAggregator.left_arm", 			ConnPolicy() ); # Jointstate
 
 ## Safety ##
 connect ("LPERA_Controller.jointErrors",			"LPERA_Safety.jointErrors", 				ConnPolicy() ); # JointErrors
@@ -240,13 +223,13 @@ connect ("LPERA_Safety.enable",						"LPERA_Controller.enable", 					ConnPolicy(
 connect ("LPERA_Safety.error",						"Supervisor.left_arm_error", 				ConnPolicy() ); # Error
 connect ("LPERA_Safety.enable",						SL_ID_LSHOULDER+".enablePort", 				ConnPolicy() ); # Enable
 connect ("LPERA_Safety.enable",						SL_ID_LUPPERARM+".enablePort", 				ConnPolicy() ); # Enable
-connect ("LPERA_Safety.enable",						SL_ID_LLOWERARM+".enablePort", 				ConnPolicy() ); # Enable
+connect ("LPERA_Safety.enable",						SL_ID_LLOWERARM+".enablePort",				ConnPolicy() ); # Enable
 
 ## Homing ##
 connect ("EtherCATread.left_arm_Eout1",				"LPERA_Homing.position", 					ConnPolicy() ); # Position
 connect ("LPERA_Controller.jointErrors",			"LPERA_Homing.servo_error_in", 				ConnPolicy() ); # JointErrors
+connect ("EtherCATread.left_arm_Aout1",				"LPERA_Homing.force_in", 					ConnPolicy() ); # ForceSensors
 connect ("EtherCATread.left_arm_Aout2",				"LPERA_Homing.abs_pos_in", 					ConnPolicy() ); # AbsoluteSensors
-connect ("LPERA_SensorTorques.measured_torques_out","LPERA_Homing.force_in", 					ConnPolicy() ); # ForceSensors
 connect ("LPERA_Homing.homing_finished",			"Supervisor.left_arm_homingfinished", 		ConnPolicy() ); # Homing_finished
 connect ("LPERA_Homing.posout1",					"LPERA_Controller.ref_in1", 				ConnPolicy() ); # Ref Pos
 connect ("LPERA_Homing.posout2",					"LPERA_Controller.ref_in2", 				ConnPolicy() ); # Ref Pos
@@ -258,30 +241,23 @@ connect ("LPERA_Controller.out", 					"LPERA_Diagnostics.vec3", 					ConnPolicy(
 connect ("LPERA_Safety.error",						"LPERA_Diagnostics.bool1", 					ConnPolicy() ); # Enable
 
 #### CONNECT ROS STREAMS ####
-stream ("LPERA_WriteClippedJointAngles.out", 		ros.topic("/amigo/left_arm/measurements"))
+stream ("EtherCATread.left_arm_EoutMsg1", 			ros.topic("/amigo/left_arm/measurements"))
 stream ("LPERA_GripperControl.gripper_measurement", ros.topic("/amigo/left_arm/gripper/measurements"))
 stream ("LPERA_GripperControl.gripper_command", 	ros.topic("/amigo/left_arm/gripper/references"))
 stream ("LPERA_Diagnostics.diagnostics", 			ros.topic("/amigo/diagnostics"));
 
 ### Handover Detector
-connect ("LPERA_SensorTorques.measured_torques_out","LPERA_HandoverDetector.torques", 			ConnPolicy() );
+connect ("EtherCATread.left_arm_Aout1",				"LPERA_HandoverDetector.torques", 			ConnPolicy() );
 connect ("LPERA_HandoverDetector.gripper", 			"LPERA_GripperControl.gripper_command", 	ConnPolicy() );
 stream ("LPERA_HandoverDetector.toggle_human2robot",ros.topic("/amigo/handoverdetector_left/toggle_human2robot"));
 stream ("LPERA_HandoverDetector.toggle_robot2human",ros.topic("/amigo/handoverdetector_left/toggle_robot2human"));
 stream ("LPERA_HandoverDetector.result", 			ros.topic("/amigo/handoverdetector_left/result"));
-
 EtherCATread.ResetEncoders(BODYPARTNR, 1, array(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0));
 
 #### START COMPONENTS ####
 LPERA_Diagnostics.start()
-LPERA_JointOutputLimiter.start()
-LPERA_WriteClippedJointAngles.start()
 LPERA_Controller.start()
-
 Supervisor.AddHomingOnlyPeer(	"LPERA_Homing", 			BODYPARTNR)
-
 Supervisor.AddOpOnlyPeer(		"LPERA_GripperControl",		BODYPARTNR)
 Supervisor.AddOpOnlyPeer(		"LPERA_HandoverDetector",	BODYPARTNR)
-
-Supervisor.AddEnabledPeer(		"LPERA_SensorTorques", 		BODYPARTNR)
 Supervisor.AddEnabledPeer(		"LPERA_Safety", 			BODYPARTNR)
