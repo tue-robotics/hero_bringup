@@ -82,6 +82,15 @@ EtherCATwrite.configure
 setActivity("EtherCATwrite",TS,HighestPriority,ORO_SCHED_RT)
 EtherCATwrite.bodypart_names = DEFAULT_PART_NAMES
 
+### TRACING COMPONENT ###
+#loadComponent("Tracing","Signal::TracingContinous")
+#setActivity("Tracing",TS,HighestPriority,ORO_SCHED_RT)
+#Tracing.buffersize = 10000
+#Tracing.sendErrorLog_delay = 1000 
+#Tracing.loglocation = "/home/amigo/ros/data/private/hardware_tracing/autolog/";
+#Tracing.Ts = TS
+#Tracing.configure
+
 #### START COMPONENTS ####
 JointStateAggregator.start()
 TrajectoryActionlib.start()
@@ -89,6 +98,7 @@ EtherCATread.start()
 Soem.start()
 EtherCATwrite.start()
 Supervisor.start()
+#Tracing.start()
 
 #### DIGITAL OUTS ####
 EtherCATwrite.AddDigitalOuts("generic", array(1.0, 1.0, 1.0, 1.0, 1.0, 1.0), array(8.0, 8.0), array(1.0, 0.0, 3.0, 0.0, 0.0, 4.0, 5.0, 6.0, 3.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0), array(1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0))

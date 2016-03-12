@@ -261,3 +261,10 @@ Supervisor.AddHomingOnlyPeer(	"RPERA_Homing", 			BODYPARTNR)
 Supervisor.AddOpOnlyPeer(		"RPERA_GripperControl",		BODYPARTNR)
 Supervisor.AddOpOnlyPeer(		"RPERA_HandoverDetector",	BODYPARTNR)
 Supervisor.AddEnabledPeer(		"RPERA_Safety", 			BODYPARTNR)
+
+## Permanent tracing
+#Tracing.AddBodypart(BODYPARTNAME,BODYPARTNR,3,N,strings("err","ref","pos"))
+#connect ("RPERA_Controller.jointErrors",			"Tracing.right_arm_err", 					ConnPolicy() )
+#connect ("TrajectoryActionlib.pos_out4",			"Tracing.right_arm_ref", 					ConnPolicy() )
+#connect ("EtherCATread.right_arm_Eout1",			"Tracing.right_arm_pos", 					ConnPolicy() )
+#connect ("RPERA_Safety.error",						"Tracing.right_arm_error", 					ConnPolicy() )
