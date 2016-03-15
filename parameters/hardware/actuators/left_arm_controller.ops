@@ -90,11 +90,11 @@ EtherCATwrite.left_arm1_matrixtransform8 	= array ( 0.0,  0.0,  0.0,  0.0,  0.0,
 loadComponent("LPERA_GripperControl","ARM::GripperControl")
 addPeer("Supervisor","LPERA_GripperControl")
 setActivity("LPERA_GripperControl",TS,HighestPriority,ORO_SCHED_RT)
-LPERA_GripperControl.threshold_closed 		= 30.0
+LPERA_GripperControl.threshold_closed 		= 40.0; #30.0
 LPERA_GripperControl.max_pos 				= 7.0
 LPERA_GripperControl.min_pos 				= 0.0
 LPERA_GripperControl.gripper_vel 			= 3.0
-LPERA_GripperControl.gripper_acc 			= 1.5
+LPERA_GripperControl.gripper_acc 			= 12.0; #1.5
 LPERA_GripperControl.InterpolDt 			= TS
 LPERA_GripperControl.InterpolEps 			= 1.0
 LPERA_GripperControl.configure
@@ -261,3 +261,12 @@ Supervisor.AddHomingOnlyPeer(	"LPERA_Homing", 			BODYPARTNR)
 Supervisor.AddOpOnlyPeer(		"LPERA_GripperControl",		BODYPARTNR)
 Supervisor.AddOpOnlyPeer(		"LPERA_HandoverDetector",	BODYPARTNR)
 Supervisor.AddEnabledPeer(		"LPERA_Safety", 			BODYPARTNR)
+
+# Streaming doubles to ROS
+loadComponent("LPERA_TorquePub","ROS::DoublesToROS")
+setActivity("LPERA_TorquePub",0.05,LowestPriority,ORO_SCHED_OTHER)
+LPERA_TorquePub.NumberOfDoublesInVector = 8
+LPERA_TorquePub.configure
+connect ("EtherCATread.left_arm_Aout1",				"LPERA_TorquePub.in", 			ConnPolicy() ); # Torque_in
+stream ("LPERA_TorquePub.out8",ros.topic("/amigo/left_arm/gripper_torque"));
+LPERA_TorquePub.start

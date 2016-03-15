@@ -90,11 +90,11 @@ EtherCATwrite.right_arm1_matrixtransform8 	= array ( 0.0,  0.0,  0.0,  0.0,  0.0
 loadComponent("RPERA_GripperControl","ARM::GripperControl")
 addPeer("Supervisor","RPERA_GripperControl")
 setActivity("RPERA_GripperControl",TS,HighestPriority,ORO_SCHED_RT)
-RPERA_GripperControl.threshold_closed 		= 25.0
+RPERA_GripperControl.threshold_closed 		= 30.0;  #25.0
 RPERA_GripperControl.max_pos 				= 7.0
 RPERA_GripperControl.min_pos 				= 0.0
 RPERA_GripperControl.gripper_vel 			= 3.0
-RPERA_GripperControl.gripper_acc 			= 1.5
+RPERA_GripperControl.gripper_acc 			= 12.0; #1.5
 RPERA_GripperControl.InterpolDt 			= TS
 RPERA_GripperControl.InterpolEps 			= 1.0
 RPERA_GripperControl.configure
@@ -268,3 +268,12 @@ Supervisor.AddEnabledPeer(		"RPERA_Safety", 			BODYPARTNR)
 #connect ("TrajectoryActionlib.pos_out4",			"Tracing.right_arm_ref", 					ConnPolicy() )
 #connect ("EtherCATread.right_arm_Eout1",			"Tracing.right_arm_pos", 					ConnPolicy() )
 #connect ("RPERA_Safety.error",						"Tracing.right_arm_error", 					ConnPolicy() )
+
+# Streaming doubles to ROS
+loadComponent("RPERA_TorquePub","ROS::DoublesToROS")
+setActivity("RPERA_TorquePub",0.05,LowestPriority,ORO_SCHED_OTHER)
+RPERA_TorquePub.NumberOfDoublesInVector = 8
+RPERA_TorquePub.configure
+connect ("EtherCATread.right_arm_Aout1",				"RPERA_TorquePub.in", 			ConnPolicy() ); # Torque_in
+stream ("RPERA_TorquePub.out8",ros.topic("/amigo/right_arm/gripper_torque"));
+RPERA_TorquePub.start
