@@ -13,11 +13,6 @@
             <arg name="machine" value="amigo1" />
         </include>
 
-        <!-- Joke -->
-        <include file="$(find robot_launch_files)/launch/essentials/joke.launch" >  
-            <arg name="machine" value="amigo1" />
-        </include>
-
         <!-- Phone UI -->
         <include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch">
             <arg name="machine" value="amigo1" />
@@ -39,7 +34,7 @@
     </group>
 
     <!-- TF Server: advertises services for looking up transformations -->
-    <include file="$(find robot_launch_files)/launch/essentials/tf_server.launch" >  
+    <include file="$(find robot_launch_files)/launch/essentials/tf_server.launch" >
         <arg name="machine" value="amigo1" />
     </include>
 
