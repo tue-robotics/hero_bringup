@@ -261,3 +261,10 @@ Supervisor.AddHomingOnlyPeer(	"LPERA_Homing", 			BODYPARTNR)
 Supervisor.AddOpOnlyPeer(		"LPERA_GripperControl",		BODYPARTNR)
 Supervisor.AddOpOnlyPeer(		"LPERA_HandoverDetector",	BODYPARTNR)
 Supervisor.AddEnabledPeer(		"LPERA_Safety", 			BODYPARTNR)
+
+#### AUTOLOG ####
+#Tracing.AddBodypart(BODYPARTNAME,BODYPARTNR,3,N,strings("err","ref","pos"))
+#connect ("LPERA_Controller.jointErrors","Tracing.left_arm_err", ConnPolicy() )
+#connect ("TrajectoryActionlib.pos_out3","Tracing.left_arm_ref", ConnPolicy() )
+#connect ("EtherCATread.left_arm_Eout1","Tracing.left_arm_pos", ConnPolicy() )
+#connect ("LPERA_Safety.error","Tracing.left_arm_error", ConnPolicy() )
