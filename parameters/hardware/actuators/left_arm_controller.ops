@@ -90,12 +90,12 @@ EtherCATwrite.left_arm1_matrixtransform8 	= array ( 0.0,  0.0,  0.0,  0.0,  0.0,
 loadComponent("LPERA_GripperControl","ARM::GripperControl")
 addPeer("Supervisor","LPERA_GripperControl")
 setActivity("LPERA_GripperControl",TS,HighestPriority,ORO_SCHED_RT)
-LPERA_GripperControl.threshold_closed 		= 30.0
+LPERA_GripperControl.threshold_closed 		= 40.0
 LPERA_GripperControl.max_pos 				= 7.0
 LPERA_GripperControl.min_pos 				= 0.0
 LPERA_GripperControl.gripper_vel 			= 3.0
 LPERA_GripperControl.gripper_acc 			= 1.5
-LPERA_GripperControl.InterpolDt 			= TS
+LPERA_GripperControl.InterpolDt 			= 12.0
 LPERA_GripperControl.InterpolEps 			= 1.0
 LPERA_GripperControl.configure
 
@@ -156,7 +156,7 @@ LPERA_Homing.reset_stroke					= array 	(0.0,	0.0,	0.0,	0.0,	0.0,	0.0,	0.0, 	0.0 
 LPERA_Homing.homing_endpos					= array 	(-0.1,  -0.2, 	0.2, 	0.8,	0.0,	0.0, 	0.0)
 LPERA_Homing.homing_errors					= array 	(0.03,  0.03,   0.03,   0.03, 	0.03,   0.03,  	0.03,	0.03)
 LPERA_Homing.homing_absPos					= ABSPOS
-LPERA_Homing.homing_forces					= array 	(0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	20.0)
+LPERA_Homing.homing_forces					= array 	(0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	40.0)
 LPERA_Homing.homing_order					= ints 		(8,		6, 		7, 		5, 		4, 		3, 		2, 		1 	)
 LPERA_Homing.interpolatorDt 				= TS
 LPERA_Homing.interpolatorEps				= 1.0
