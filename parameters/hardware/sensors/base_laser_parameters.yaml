@@ -1,1 +1,3 @@
 frame_id: /amigo/base_laser
+min_angle: -2.3
+max_angle: 2.3
