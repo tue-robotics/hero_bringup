@@ -31,6 +31,8 @@ plugins:
               num_samples: 640
               slope_threshold: 1
               slope_window_size: 30
+              min_distance: 0.4
+              max_distance: 2.0
 
 - name: tf_publisher
   lib: libed_tf_publisher_plugin.so
