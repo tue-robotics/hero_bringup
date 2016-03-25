@@ -28,7 +28,7 @@ plugins:
           default_offset: 0.7
           depth_sensor_integration:
               topic: /amigo/top_kinect/rgbd
-              num_samples: 320
+              num_samples: 640
               slope_threshold: 1
               slope_window_size: 30
 
