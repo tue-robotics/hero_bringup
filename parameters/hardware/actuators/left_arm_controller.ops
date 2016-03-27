@@ -15,6 +15,7 @@ var strings JOINT_NAMES 		= strings( "shoulder_yaw_joint_left", "shoulder_pitch_
 var strings DUMMY_JOINT_NAMES 	= strings( "finger1_joint_left", "finger1_tip_joint_left", "finger2_joint_left", "finger2_tip_joint_left" )
 var array UPPERJOINTLIMIT 		= array (	0.0,		1.57,		1.57, 		2.23,  		1.83, 		0.95,  		0.61,  		7.5		  )
 var array LOWERJOINTLIMIT 		= array (	-1.57,		-1.57,		-1.57,  	0.0, 		-1.83,		-0.95, 		-0.61, 		-1.0	  )
+var array RESETPOS				= array (	-0.1,  		-0.2, 		0.2, 		0.8,		0.0,		0.0, 		0.0)
 var array HOMINGSTROKE 			= array (	0.0,		0.0,		-1.57,  	0.0, 		-1.83,		-1.05, 		-0.8, 		0.0		  )
 var array MAXERRORS 			= array (	0.09,     	0.09,   	0.09,     	0.09, 	   	0.09,    	0.09, 	   	0.09, 		2.0		  )
 var array ABSPOS				= array	(	0.63,		2.085,		0.0,		0.0,		0.0,		0.0,		0.0,		0.0		  )
@@ -38,7 +39,8 @@ var double ENC2SI_HM 			= TWOPI*GEARRATIO_HM/ENCODERCOUNTS_HM
 var array ENC2SI				= array(	ENC2SI_SM,	ENC2SI_SM,	ENC2SI_S3,	ENC2SI_EM,	ENC2SI_EM,	ENC2SI_WM,	ENC2SI_WM,	ENC2SI_HM )
 var array SENSORTORQUES_C1 		= array (	35.0,		87.0,		1050.0,		35.0,		300.0,		1.0,		1.0,		32.34	)
 var array SENSORTORQUES_C2 		= array (	-0.2,		0.2,		6.0,		-0.8,		1.0,		1.0,		1.0,		0.2		)
-var array SENSORTORQUES_C3 		= array (	-76.26,		-95.29,	    -145.16,	-38.71,		-111.7,		1.0,		1.0,	  	-60.0		)
+var array SENSORTORQUES_C3 		= array (	-76.26,		-95.29,	    -145.16,	-38.71,		-111.7,		1.0,		1.0,	  	-80.0	)
+var double GRIPPERFORCE			= 15.0;
 var int N						= 8
 var int BODYPARTNR 				= 3
 var string BODYPARTNAME 		= "left_arm"
@@ -90,11 +92,11 @@ EtherCATwrite.left_arm1_matrixtransform8 	= array ( 0.0,  0.0,  0.0,  0.0,  0.0,
 loadComponent("LPERA_GripperControl","ARM::GripperControl")
 addPeer("Supervisor","LPERA_GripperControl")
 setActivity("LPERA_GripperControl",TS,HighestPriority,ORO_SCHED_RT)
-LPERA_GripperControl.threshold_closed 		= 40.0
+LPERA_GripperControl.threshold_closed 		= GRIPPERFORCE
 LPERA_GripperControl.max_pos 				= 7.0
 LPERA_GripperControl.min_pos 				= 0.0
 LPERA_GripperControl.gripper_vel 			= 3.0
-LPERA_GripperControl.gripper_acc 			= 1.5
+LPERA_GripperControl.gripper_acc 			= 12.0
 LPERA_GripperControl.InterpolDt 			= 12.0
 LPERA_GripperControl.InterpolEps 			= 1.0
 LPERA_GripperControl.configure
@@ -153,10 +155,10 @@ LPERA_Homing.homing_velocity				= array 	(0.05,	0.05,	0.25,	0.25,	0.25,	0.2,	0.2
 LPERA_Homing.homing_acceleration			= array 	(0.2, 	0.2, 	0.3, 	0.5,	0.5, 	0.5,	0.5,	0.5	)
 LPERA_Homing.homing_stroke					= HOMINGSTROKE
 LPERA_Homing.reset_stroke					= array 	(0.0,	0.0,	0.0,	0.0,	0.0,	0.0,	0.0, 	0.0 )
-LPERA_Homing.homing_endpos					= array 	(-0.1,  -0.2, 	0.2, 	0.8,	0.0,	0.0, 	0.0)
+LPERA_Homing.homing_endpos					= RESETPOS
 LPERA_Homing.homing_errors					= array 	(0.03,  0.03,   0.03,   0.03, 	0.03,   0.03,  	0.03,	0.03)
 LPERA_Homing.homing_absPos					= ABSPOS
-LPERA_Homing.homing_forces					= array 	(0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	40.0)
+LPERA_Homing.homing_forces					= array 	(0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	GRIPPERFORCE)
 LPERA_Homing.homing_order					= ints 		(8,		6, 		7, 		5, 		4, 		3, 		2, 		1 	)
 LPERA_Homing.interpolatorDt 				= TS
 LPERA_Homing.interpolatorEps				= 1.0
@@ -263,8 +265,8 @@ Supervisor.AddOpOnlyPeer(		"LPERA_HandoverDetector",	BODYPARTNR)
 Supervisor.AddEnabledPeer(		"LPERA_Safety", 			BODYPARTNR)
 
 #### AUTOLOG ####
-#Tracing.AddBodypart(BODYPARTNAME,BODYPARTNR,3,N,strings("err","ref","pos"))
-#connect ("LPERA_Controller.jointErrors","Tracing.left_arm_err", ConnPolicy() )
-#connect ("TrajectoryActionlib.pos_out3","Tracing.left_arm_ref", ConnPolicy() )
-#connect ("EtherCATread.left_arm_Eout1","Tracing.left_arm_pos", ConnPolicy() )
-#connect ("LPERA_Safety.error","Tracing.left_arm_error", ConnPolicy() )
+Tracing.AddBodypart(BODYPARTNAME,BODYPARTNR,3,N,strings("err","ref","pos"))
+connect ("LPERA_Controller.jointErrors","Tracing.left_arm_err", ConnPolicy() )
+connect ("LPERA_Controller.references","Tracing.left_arm_ref", ConnPolicy() )
+connect ("EtherCATread.left_arm_Aout1","Tracing.left_arm_pos", ConnPolicy() )
+connect ("LPERA_Safety.error","Tracing.left_arm_error", ConnPolicy() )
