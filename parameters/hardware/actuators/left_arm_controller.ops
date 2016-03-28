@@ -17,7 +17,7 @@ var array UPPERJOINTLIMIT 		= array (	0.0,		1.57,		1.57, 		2.23,  		1.83, 		0.95
 var array LOWERJOINTLIMIT 		= array (	-1.57,		-1.57,		-1.57,  	0.0, 		-1.83,		-0.95, 		-0.61, 		-1.0	  )
 var array RESETPOS				= array (	-0.1,  		-0.2, 		0.2, 		0.8,		0.0,		0.0, 		0.0)
 var array HOMINGSTROKE 			= array (	0.0,		0.0,		-1.57,  	0.0, 		-1.83,		-1.05, 		-0.8, 		0.0		  )
-var array MAXERRORS 			= array (	0.09,     	0.09,   	0.09,     	0.09, 	   	0.09,    	0.09, 	   	0.09, 		2.0		  )
+var array MAXERRORS 			= array (	0.09,     	0.09,   	0.09,     	0.09, 	   	0.09,    	0.09, 	   	0.09, 		0.5		  )
 var array ABSPOS				= array	(	0.63,		2.085,		0.0,		0.0,		0.0,		0.0,		0.0,		0.0		  )
 var array ENCODERBITS			= array (   65536.0,	65536.0,	65536.0,	65536.0,	65536.0,	65536.0,	65536.0,	65536.0   )		
 var double TWOPI 				= 2.0*3.141592
@@ -40,7 +40,8 @@ var array ENC2SI				= array(	ENC2SI_SM,	ENC2SI_SM,	ENC2SI_S3,	ENC2SI_EM,	ENC2SI_
 var array SENSORTORQUES_C1 		= array (	35.0,		87.0,		1050.0,		35.0,		300.0,		1.0,		1.0,		32.34	)
 var array SENSORTORQUES_C2 		= array (	-0.2,		0.2,		6.0,		-0.8,		1.0,		1.0,		1.0,		0.2		)
 var array SENSORTORQUES_C3 		= array (	-76.26,		-95.29,	    -145.16,	-38.71,		-111.7,		1.0,		1.0,	  	-80.0	)
-var double GRIPPERFORCE			= 15.0;
+var double GRIPPERFORCE			= 33.0;
+var double GRIPPERHOMINGFORCE	= 25.0;
 var int N						= 8
 var int BODYPARTNR 				= 3
 var string BODYPARTNAME 		= "left_arm"
@@ -93,10 +94,10 @@ loadComponent("LPERA_GripperControl","ARM::GripperControl")
 addPeer("Supervisor","LPERA_GripperControl")
 setActivity("LPERA_GripperControl",TS,HighestPriority,ORO_SCHED_RT)
 LPERA_GripperControl.threshold_closed 		= GRIPPERFORCE
-LPERA_GripperControl.max_pos 				= 7.0
+LPERA_GripperControl.max_pos 				= 7.5
 LPERA_GripperControl.min_pos 				= 0.0
-LPERA_GripperControl.gripper_vel 			= 3.0
-LPERA_GripperControl.gripper_acc 			= 12.0
+LPERA_GripperControl.gripper_vel 			= 4.0
+LPERA_GripperControl.gripper_acc 			= 20.0
 LPERA_GripperControl.InterpolDt 			= TS
 LPERA_GripperControl.InterpolEps 			= 1.0
 LPERA_GripperControl.configure
@@ -158,7 +159,7 @@ LPERA_Homing.reset_stroke					= array 	(0.0,	0.0,	0.0,	0.0,	0.0,	0.0,	0.0, 	0.0 
 LPERA_Homing.homing_endpos					= RESETPOS
 LPERA_Homing.homing_errors					= array 	(0.03,  0.03,   0.03,   0.03, 	0.03,   0.03,  	0.03,	0.03)
 LPERA_Homing.homing_absPos					= ABSPOS
-LPERA_Homing.homing_forces					= array 	(0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	GRIPPERFORCE)
+LPERA_Homing.homing_forces					= array 	(0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	GRIPPERHOMINGFORCE)
 LPERA_Homing.homing_order					= ints 		(8,		6, 		7, 		5, 		4, 		3, 		2, 		1 	)
 LPERA_Homing.interpolatorDt 				= TS
 LPERA_Homing.interpolatorEps				= 1.0
@@ -265,9 +266,10 @@ Supervisor.AddOpOnlyPeer(		"LPERA_HandoverDetector",	BODYPARTNR)
 Supervisor.AddEnabledPeer(		"LPERA_Safety", 			BODYPARTNR)
 
 #### AUTOLOG ####
-Tracing.AddBodypart(BODYPARTNAME,BODYPARTNR,4,N,strings("err","ref","pos","for"))
-connect ("LPERA_Controller.jointErrors","Tracing.left_arm_err", ConnPolicy() )
-connect ("LPERA_Controller.references","Tracing.left_arm_ref", ConnPolicy() )
-connect ("EtherCATread.left_arm_Eout1","Tracing.left_arm_pos", ConnPolicy() )
-connect ("EtherCATread.left_arm_Aout1","Tracing.left_arm_for", ConnPolicy() )
-connect ("LPERA_Safety.error","Tracing.left_arm_error", ConnPolicy() )
+Tracing.AddBodypart(BODYPARTNAME,BODYPARTNR,5,N,strings("ref","pos","err","eff","for"))
+connect ("LPERA_Controller.references",				"Tracing.left_arm_ref", 					ConnPolicy() )
+connect ("EtherCATread.left_arm_Eout1",				"Tracing.left_arm_pos", 					ConnPolicy() )
+connect ("LPERA_Controller.jointErrors",			"Tracing.left_arm_err", 					ConnPolicy() )
+connect ("LPERA_Controller.out",					"Tracing.left_arm_eff", 					ConnPolicy() )
+connect ("EtherCATread.left_arm_Aout1",				"Tracing.left_arm_for", 					ConnPolicy() )
+connect ("LPERA_Safety.error",						"Tracing.left_arm_error", 					ConnPolicy() )

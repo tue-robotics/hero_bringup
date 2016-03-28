@@ -17,7 +17,7 @@ var array UPPERJOINTLIMIT 		= array (	0.0,		1.57,		1.57, 		2.23,  		1.83, 		0.95
 var array LOWERJOINTLIMIT 		= array (	-1.57,		-1.57,		-1.57,  	0.0, 		-1.83,		-0.95, 		-0.61, 		-1.0	)
 var array RESETPOS 				= array	(	-0.1,  		-0.2, 		0.2, 		0.8,		0.0,		0.0, 		0.0)
 var array HOMINGSTROKE 			= array (	0.0,		0.0,		-1.57,  	0.0, 		-1.83,		-1.05, 		-0.80, 		0.0		)
-var array MAXERRORS 			= array (	0.09,     	0.09,   	0.09,     	0.09, 	   	0.09,    	0.09, 	   	0.09, 		2.0		)
+var array MAXERRORS 			= array (	0.09,     	0.09,   	0.09,     	0.09, 	   	0.09,    	0.09, 	   	0.09, 		0.5		)
 var array ABSPOS				= array	(	1.11,		1.72,		0.0,		0.0,		0.0,		0.0,		0.0,		0.0		)
 var array ENCODERBITS			= array (   65536.0,	65536.0,	65536.0,	65536.0,	65536.0,	65536.0,	65536.0,	65536.0 )		
 var double TWOPI 				= 2.0*3.141592
@@ -40,7 +40,8 @@ var array ENC2SI				= array(	ENC2SI_SM,	ENC2SI_SM,	ENC2SI_S3,	ENC2SI_EM,	ENC2SI_
 var array SENSORTORQUES_C1 		= array (	42.0,		4250.0,		94.0,		20.0,		825.0,		1.0,		1.0,		32.3375		)
 var array SENSORTORQUES_C2 		= array (	-0.8,		12.0,	     1.0,		-2.2,		1.0,		1.0,		1.0,		0.2			)
 var array SENSORTORQUES_C3 		= array (	1500.0,		-294.40,	-30.56,		-30.9,		-168.32,	1.0, 		1.0,		-37.0		)
-var double GRIPPERFORCE			= 15.0;
+var double GRIPPERFORCE			= 14.0;
+var double GRIPPERHOMINGFORCE	= 12.0;
 var int N						= 8
 var int BODYPARTNR 				= 4
 var string BODYPARTNAME 		= "right_arm"
@@ -61,7 +62,7 @@ TrajectoryActionlib.interpolatorEps4	= 1.0
 EtherCATread.AddEncoderIns(BODYPARTNAME,array(1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0), array(8.0),array(1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0),array(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0))
 EtherCATread.AddEnc2Si_E(BODYPARTNAME, 1, ENCODERBITS, ENC2SI)
 EtherCATread.AddAnalogIns(BODYPARTNAME, array(3.0, 3.0, 3.0, 3.0, 3.0, 3.0), array(8.0, 8.0), array(1.0, 1.0, 2.0, 2.0, 2.0, 3.0, 3.0, 3.0, 4.0, 4.0, 5.0, 5.0, 5.0, 6.0, 6.0, 6.0), array(1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0, 1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0))
-EtherCATread.AddMatrixTransform_E("right_arm", 1, 8, 8)
+EtherCATread.AddMatrixTransform_E(BODYPARTNAME, 1, 8, 8)
 EtherCATread.right_arm1_matrixtransform1 	= array  ( 0.5, -0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0)
 EtherCATread.right_arm1_matrixtransform2 	= array  ( 0.5,  0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0)
 EtherCATread.right_arm1_matrixtransform3 	= array  ( 0.0,  0.0,  1.0,  0.0,  0.0,  0.0,  0.0,  0.0)
@@ -93,9 +94,9 @@ loadComponent("RPERA_GripperControl","ARM::GripperControl")
 addPeer("Supervisor","RPERA_GripperControl")
 setActivity("RPERA_GripperControl",TS,HighestPriority,ORO_SCHED_RT)
 RPERA_GripperControl.threshold_closed 		= GRIPPERFORCE
-RPERA_GripperControl.max_pos 				= 7.0
+RPERA_GripperControl.max_pos 				= 7.5
 RPERA_GripperControl.min_pos 				= 0.0
-RPERA_GripperControl.gripper_vel 			= 3.0
+RPERA_GripperControl.gripper_vel 			= 4.0
 RPERA_GripperControl.gripper_acc 			= 20.0
 RPERA_GripperControl.InterpolDt 			= TS
 RPERA_GripperControl.InterpolEps 			= 1.0
@@ -158,7 +159,7 @@ RPERA_Homing.reset_stroke					= array 	(0.0,	0.0,	0.0,	0.0,	0.0,	0.0,	0.0, 	0.0 
 RPERA_Homing.homing_endpos					= RESETPOS
 RPERA_Homing.homing_errors					= array 	(0.03,  0.03,   0.03,   0.03, 	0.03,   0.03,  	0.03,	0.03)
 RPERA_Homing.homing_absPos					= ABSPOS
-RPERA_Homing.homing_forces					= array 	(0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	GRIPPERFORCE)
+RPERA_Homing.homing_forces					= array 	(0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	0.0, 	GRIPPERHOMINGFORCE)
 RPERA_Homing.homing_order					= ints 		(8,		6, 		7, 		5, 		4, 		3, 		2, 		1 	)
 RPERA_Homing.interpolatorDt 				= TS
 RPERA_Homing.interpolatorEps				= 1.0
@@ -265,9 +266,10 @@ Supervisor.AddOpOnlyPeer(		"RPERA_HandoverDetector",	BODYPARTNR)
 Supervisor.AddEnabledPeer(		"RPERA_Safety", 			BODYPARTNR)
 
 #### AUTOLOG ####
-Tracing.AddBodypart(BODYPARTNAME,BODYPARTNR,4,N,strings("err","ref","pos","for"))
-connect ("RPERA_Controller.jointErrors","Tracing.right_arm_err", ConnPolicy() )
-connect ("RPERA_Controller.references","Tracing.right_arm_ref", ConnPolicy() )
-connect ("EtherCATread.right_arm_Eout1","Tracing.right_arm_pos", ConnPolicy() )
-connect ("EtherCATread.right_arm_Aout1","Tracing.right_arm_for", ConnPolicy() )
-connect ("RPERA_Safety.error","Tracing.right_arm_error", ConnPolicy() )
+Tracing.AddBodypart(BODYPARTNAME,BODYPARTNR,5,N,strings("ref","pos","err","eff","for"))
+connect ("RPERA_Controller.references",				"Tracing.right_arm_ref", 					ConnPolicy() )
+connect ("EtherCATread.right_arm_Eout1",			"Tracing.right_arm_pos", 					ConnPolicy() )
+connect ("RPERA_Controller.jointErrors",			"Tracing.right_arm_err", 					ConnPolicy() )
+connect ("RPERA_Controller.out",					"Tracing.right_arm_eff", 					ConnPolicy() )
+connect ("EtherCATread.right_arm_Aout1",			"Tracing.right_arm_for", 					ConnPolicy() )
+connect ("RPERA_Safety.error",						"Tracing.right_arm_error", 					ConnPolicy() )
