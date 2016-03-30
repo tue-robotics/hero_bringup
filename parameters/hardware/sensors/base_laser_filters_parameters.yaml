@@ -1,10 +1,10 @@
-shadow_filter_chain:
+scan_filter_chain:
 - name: shadows
   type: ScanShadowsFilter
   params:
-    min_angle: 80
-    max_angle: 100
-    neighbors: 1
+    min_angle: 10
+    max_angle: 180
+    neighbors: 0
     window: 1
         
 array_filter_chain:
