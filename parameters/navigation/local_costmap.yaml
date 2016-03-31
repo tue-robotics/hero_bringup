@@ -5,8 +5,8 @@ robot_base_frame: /amigo/base_link
 rolling_window: true
 track_unknown_space: false
 resolution: 0.025
-width: 5.0
-height: 5.0
+width: 4.0
+height: 4.0
 robot_radius: 0.35
 
 update_frequency: 0.0
@@ -16,7 +16,7 @@ always_send_full_costmap: true
 
 # LAYER SETUP
 
-plugins: 
+plugins:
     # Obstacles
     - {name: ed_occupancy_grid,                 type: "costmap_2d::StaticLayer"}
     - {name: recent_obstacles,                  type: "costmap_2d::ObstacleLayer"}
@@ -78,7 +78,7 @@ free_space_inflation:
     dilation_radius: 1.1
     inflation_radius: 1.1
 
-# Workspace to configuration space 
+# Workspace to configuration space
 configuration_space:
     use_footprint: false
     target_cell_value: 254
