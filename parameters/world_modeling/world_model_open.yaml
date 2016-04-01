@@ -59,6 +59,8 @@ plugins:
       image: $(rospkg challenge_open)/images/reo2016/suitcase.jpg
     - name: reo2016/workbench
       image: $(rospkg challenge_open)/images/reo2016/workbench.jpg
+    - name: reo2016/sideboard
+      image: $(rospkg challenge_open)/images/reo2016/sideboard.jpg
 
 - name: laser_integration
   lib: libed_laser_plugin.so
