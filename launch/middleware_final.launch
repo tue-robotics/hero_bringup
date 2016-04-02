@@ -2,13 +2,13 @@
 
 <launch>
 
-    <group ns="amigo">
+    <!-- Syncing of ed XMLRCP Server -->
+    <include file="$(find robot_launch_files)/launch/multirobot/world_model_client_bridge.launch">
+        <arg name="machine" value="amigo1"/>
+        <arg name="other_robot" value="sergio"/>
+    </include>
 
-        <!-- Syncing of ed XMLRCP Server -->
-        <include file="$(find robot_launch_files)/launch/multirobot/world_model_client_bridge.launch">
-            <arg name="machine" value="amigo1"/>
-            <arg name="other_robot" value="sergio"/>
-        </include>
+    <group ns="amigo">
 
         <!-- MANIPULATION -->
         <include file="$(find robot_launch_files)/launch/manipulation/moveit.launch">
