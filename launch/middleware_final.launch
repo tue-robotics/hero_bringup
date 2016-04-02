@@ -27,14 +27,8 @@
             <arg name="machine" value="amigo1"/>
         </include>
 
-        <!-- LOCALIZATION GMAPPING -->
-        <include file="$(find robot_launch_files)/launch/localization/gmapping.launch">
-            <arg name="machine" value="amigo1"/>
-	    	<arg name="sensor" value="base_laser"/>
-        </include>
-
         <!-- NAVIGATION GMAPPING -->
-        <include file="$(find robot_launch_files)/launch/navigation/navigation_gmapping.launch">
+        <include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
             <arg name="machine" value="amigo1"/>
         </include>
 
