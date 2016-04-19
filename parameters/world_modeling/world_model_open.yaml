@@ -38,37 +38,30 @@ plugins:
     map_filter_padding: 0.3
     rgbd_topic: /amigo/top_kinect/rgbd
     nav_goal_topic: /amigo/local_planner/action_server/goal
+    head_goal_topic: /amigo/head_ref/action_server/goal
     models:
-    # - name: reo2016/bed
-    #  image: $(rospkg challenge_open)/images/reo2016/bed.jpg
-    #- name: reo2016/nightstand
-    #  image: $(rospkg challenge_open)/images/reo2016/bedstand.jpg
-    - name: reo2016/couch
-      image: $(rospkg challenge_open)/images/reo2016/couch.jpg
-    #- name: reo2016/closet
-    #  image: $(rospkg challenge_open)/images/reo2016/cupboard.jpg
-    - name: reo2016/dinnertable
-      image: $(rospkg challenge_open)/images/reo2016/dinnertable.jpg
-    #- name: reo2016/fridge
-    #  image: $(rospkg challenge_open)/images/reo2016/fridge.jpg
-    #- name: reo2016/kitchencounter
-    #  image: $(rospkg challenge_open)/images/reo2016/kitchen_counter.jpg
-    - name: reo2016/tv_stand
-      image: $(rospkg challenge_open)/images/reo2016/tvstand.jpg
-    - name: reo2016/bookcase
-      image: $(rospkg challenge_open)/images/reo2016/bookcase.jpg
-    - name: reo2016/hallway_trashbin
-      image: $(rospkg challenge_open)/images/reo2016/hallway_trashbin.jpg
-    #- name: reo2016/kitchen_trashbin
-    #  image: $(rospkg challenge_open)/images/reo2016/kitchen_trashbin.jpg
-    - name: reo2016/suitcase
-      image: $(rospkg challenge_open)/images/reo2016/suitcase.jpg
-    #- name: reo2016/workbench
-    #  image: $(rospkg challenge_open)/images/reo2016/workbench.jpg
-    - name: reo2016/sideboard
-      image: $(rospkg challenge_open)/images/reo2016/sideboard.jpg
-    - name: reo2016/NAVIGATE
-      image: $(rospkg challenge_open)/images/reo2016/NAVIGATE.jpg
+    - name: ddw.couch
+      image: $(rospkg challenge_open)/images/robotics_testlabs/ddw.couch.jpg
+    - name: ddw.salon
+      image: $(rospkg challenge_open)/images/robotics_testlabs/ddw.salon.jpg
+    - name: ddw.table
+      image: $(rospkg challenge_open)/images/robotics_testlabs/ddw.table.jpg
+    - name: robotics_testlabs/plant
+      image: $(rospkg challenge_open)/images/robotics_testlabs/plant.jpg
+    - name: robotics_testlab_B.bed
+      image: $(rospkg challenge_open)/images/robotics_testlabs/robotics_testlab_B.bed.jpg
+    - name: robotics_testlab_B.bed_cabinet
+      image: $(rospkg challenge_open)/images/robotics_testlabs/robotics_testlab_B.bed_cabinet.jpg
+    - name: robotics_testlab_B.corridor_cabinet
+      image: $(rospkg challenge_open)/images/robotics_testlabs/robotics_testlab_B.corridor_cabinet.jpg
+    - name: robotics_testlab_B.plastic_cabinet
+      image: $(rospkg challenge_open)/images/robotics_testlabs/robotics_testlab_B.plastic_cabinet.jpg
+    - name: table_120x80x76
+      image: $(rospkg challenge_open)/images/robotics_testlabs/table_120x80x76.jpg
+    # - name: chair
+    #   image: $(rospkg challenge_open)/images/robotics_testlabs/chair.jpg
+    # - name: flight_case
+    #   image: $(rospkg challenge_open)/images/robotics_testlabs/flight_case.jpg
 
 - name: laser_integration
   lib: libed_laser_plugin.so
