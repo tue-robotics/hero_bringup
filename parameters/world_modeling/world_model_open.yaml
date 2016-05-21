@@ -79,7 +79,7 @@ plugins:
       type: robotics_testlab_B.corridor_cabinet
       image: $(rospkg challenge_open)/images/robotics_testlabs/robotics_testlab_B.corridor_cabinet.jpg
     - id: bookcase
-      type: robotics_testlab_B.plastic_cabinet
+      type: robotics_testlabs/plastic_cabinet
       image: $(rospkg challenge_open)/images/robotics_testlabs/robotics_testlab_B.plastic_cabinet.jpg
     - id: dinner_table
       type: table_120x80x76
