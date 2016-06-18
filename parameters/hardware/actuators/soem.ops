@@ -132,4 +132,9 @@ Tracing.Ts = TS
 Tracing.configure
 Tracing.start()
 
+#### EtherCAT ping ####
+#loadComponent("EtherCATping","ETHERCATPING::EtherCATping") 
+#EtherCATping.configure
+#setActivity("EtherCATping",TS,HighestPriority,ORO_SCHED_RT)
+#EtherCATping.start()
 
