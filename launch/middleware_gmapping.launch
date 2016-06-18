@@ -19,12 +19,12 @@
         <include file="$(find robot_launch_files)/launch/manipulation/head.launch">
             <arg name="machine" value="amigo1"/>
         </include>
-       
+
         <!-- LOCALIZATION GMAPPING -->
         <include file="$(find robot_launch_files)/launch/localization/gmapping.launch">
             <arg name="machine" value="amigo1"/>
 	    	<arg name="sensor" value="base_laser"/>
-        </include> 
+        </include>
 
         <!-- NAVIGATION GMAPPING -->
         <include file="$(find robot_launch_files)/launch/navigation/navigation_gmapping.launch">
@@ -38,11 +38,6 @@
         </include>
 
         <include file="$(find robot_launch_files)/launch/world_modeling/reasoner.launch">
-            <arg name="machine" value="amigo3"/>
-        </include>
-
-        <!-- SPEECH RECOGNITION -->
-        <include file="$(find robot_launch_files)/launch/interaction/speech_recognition.launch">
             <arg name="machine" value="amigo3"/>
         </include>
 
