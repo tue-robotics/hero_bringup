@@ -275,6 +275,6 @@ connect ("EtherCATread.left_arm_Aout1",				"Tracing.left_arm_for", 					ConnPoli
 connect ("LPERA_Safety.error",						"Tracing.left_arm_error", 					ConnPolicy() )
 
 #### EtherCAT ping ####
-#connect (SL_ID_LSHOULDER+".encoder1","EtherCATping.in1", ConnPolicy() );
-#connect (SL_ID_LUPPERARM+".encoder1","EtherCATping.in2", ConnPolicy() );
-#connect (SL_ID_LLOWERARM+".encoder1","EtherCATping.in3", ConnPolicy() );
+connect (SL_ID_LSHOULDER+".encoder1","EtherCATping.in1", ConnPolicy() );
+connect (SL_ID_LUPPERARM+".encoder1","EtherCATping.in2", ConnPolicy() );
+connect (SL_ID_LLOWERARM+".encoder1","EtherCATping.in3", ConnPolicy() );
