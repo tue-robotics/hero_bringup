@@ -31,7 +31,7 @@ Supervisor.AddBodyPart( BODYPARTNR, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RE
 
 ## Pan-tilt controller
 loadComponent("HEAD_PanTiltController", "DYNAMIXEL::DynamixelController")
-setActivity("HEAD_PanTiltController",TS,HighestPriority,ORO_SCHED_RT)
+setActivity("HEAD_PanTiltController",TS/10,HighestPriority,ORO_SCHED_RT)
 HEAD_PanTiltController.joint_names 			= JOINT_NAMES
 HEAD_PanTiltController.dynamixel_ids		= ints(PAN_ID, 					TILT_ID)
 HEAD_PanTiltController.dynamixel_offset 	= ints(PAN_OFFSET, 				TILT_OFFSET)
