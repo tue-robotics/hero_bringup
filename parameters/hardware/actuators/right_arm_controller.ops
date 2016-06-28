@@ -7,7 +7,7 @@
 #########################################################################
 
 #### DECLARATION OF PARAMETERS ####
-var double TS 					= 0.001
+var double TS 					= 0.002
 var string SL_ID_RSHOULDER 		= os.getenv("SL_ID_RSHOULDER")
 var string SL_ID_RUPPERARM 		= os.getenv("SL_ID_RUPPERARM")
 var string SL_ID_RLOWERARM 		= os.getenv("SL_ID_RLOWERARM")
@@ -275,6 +275,6 @@ connect ("EtherCATread.right_arm_Aout1",			"Tracing.right_arm_for", 					ConnPol
 connect ("RPERA_Safety.error",						"Tracing.right_arm_error", 					ConnPolicy() )
 
 #### EtherCAT ping ####
-connect (SL_ID_RSHOULDER+".encoder1","EtherCATping.in4", ConnPolicy() );
-connect (SL_ID_RUPPERARM+".encoder1","EtherCATping.in5", ConnPolicy() );
-connect (SL_ID_RLOWERARM+".encoder1","EtherCATping.in6", ConnPolicy() );
+#connect (SL_ID_RSHOULDER+".encoder1","EtherCATping.in4", ConnPolicy() );
+#connect (SL_ID_RUPPERARM+".encoder1","EtherCATping.in5", ConnPolicy() );
+#connect (SL_ID_RLOWERARM+".encoder1","EtherCATping.in6", ConnPolicy() );

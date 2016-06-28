@@ -7,7 +7,7 @@
 ########################################################################
 
 #### DECLARATION OF PARAMETERS ####
-var double TS 				= 0.001
+var double TS 					= 0.002
 var strings JOINT_NAMES 	= strings( "torso_joint" )
 var double ENCODERBITS		= 65536.0
 var double ENC2SI 			= -4.1666667e-7; # Minus because spindle up is defined positive.
