@@ -8,6 +8,11 @@
 
 	<group ns="amigo">
 
+		<!-- HMI Recorder -->
+		<group ns="hmi">
+			<node pkg="test_tools" type="hmi_logger.py" name="hmi_logger" machine="$(arg machine)" />
+		</group>
+
 		<!-- Topics that are going to be recorded, throttle them if required -->
 		<node pkg="topic_tools" type="throttle" name="record_throttle_tf" args="bytes /tf 100000 1 record/tf" machine="$(arg machine)" />
 		<node pkg="topic_tools" type="throttle" name="record_throttle_ed_map" args="messages ed/navigation/map 0.05 record/map" machine="$(arg machine)" />
