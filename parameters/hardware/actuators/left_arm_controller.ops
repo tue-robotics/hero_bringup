@@ -7,7 +7,7 @@
 #########################################################################
 
 #### DECLARATION OF PARAMETERS ####
-var double TS 					= 0.002
+var double TS 					= 0.001
 var string SL_ID_LSHOULDER 		= os.getenv("SL_ID_LSHOULDER")
 var string SL_ID_LUPPERARM 		= os.getenv("SL_ID_LUPPERARM")
 var string SL_ID_LLOWERARM 		= os.getenv("SL_ID_LLOWERARM")

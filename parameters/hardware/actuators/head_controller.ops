@@ -7,7 +7,7 @@
 ########################################################################
 
 #### DECLARATION OF PARAMETERS ####
-var double TS 						= 0.002
+var double TS 						= 0.001
 var double RAD_TO_STEP 				= 195.37860814; # IF YOU CHANGE THIS VARIABLE, ALSO RECALCULATE PAN_MIN, PAN_MAX, TILT_MIN AND TILT_MAX, (From header file) 
 var strings JOINT_NAMES 			= strings( "neck_pan_joint", "neck_tilt_joint" )
 var int PAN_ID 						= 2 	; # Dynamixel id
@@ -31,7 +31,7 @@ Supervisor.AddBodyPart( BODYPARTNR, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RE
 
 ## Pan-tilt controller
 loadComponent("HEAD_PanTiltController", "DYNAMIXEL::DynamixelController")
-setActivity("HEAD_PanTiltController",TS/10,HighestPriority,ORO_SCHED_RT)
+setActivity("HEAD_PanTiltController",TS/20,HighestPriority,ORO_SCHED_RT)
 HEAD_PanTiltController.joint_names 			= JOINT_NAMES
 HEAD_PanTiltController.dynamixel_ids		= ints(PAN_ID, 					TILT_ID)
 HEAD_PanTiltController.dynamixel_offset 	= ints(PAN_OFFSET, 				TILT_OFFSET)
