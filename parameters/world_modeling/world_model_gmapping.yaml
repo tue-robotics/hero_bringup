@@ -107,30 +107,64 @@ plugins:
     nav_goal_topic: /amigo/local_planner/action_server/goal
     head_goal_topic: /amigo/head_ref/action_server/goal
     models:
-    - id: hallway_table
-      type: ddw.couch
-      image: $(rospkg challenge_open)/images/robotics_testlabs/ddw.couch.jpg
-    - id: couch_table
-      type: ddw.salon
-      image: $(rospkg challenge_open)/images/robotics_testlabs/ddw.salon.jpg
-    - id: bar
-      type: ddw.table
-      image: $(rospkg challenge_open)/images/robotics_testlabs/ddw.table.jpg
-    - id: plant
-      type: robotics_testlabs/plant
-      image: $(rospkg challenge_open)/images/robotics_testlabs/plant.jpg
-    - id: bed
-      type: robotics_testlab_B.bed
-      image: $(rospkg challenge_open)/images/robotics_testlabs/robotics_testlab_B.bed.jpg
-    - id: nightstand
-      type: robotics_testlab_B.bed_cabinet
-      image: $(rospkg challenge_open)/images/robotics_testlabs/robotics_testlab_B.bed_cabinet.jpg
-    - id: cabinet
-      type: robotics_testlab_B.corridor_cabinet
-      image: $(rospkg challenge_open)/images/robotics_testlabs/robotics_testlab_B.corridor_cabinet.jpg
-    - id: bookcase
-      type: robotics_testlabs/plastic_cabinet
-      image: $(rospkg challenge_open)/images/robotics_testlabs/robotics_testlab_B.plastic_cabinet.jpg
-    - id: dinner_table
-      type: table_120x80x76
-      image: $(rospkg challenge_open)/images/robotics_testlabs/table_120x80x76.jpg
+    - id: bed_frame
+      type: rwc2016/bed_frame
+    - id: bookcase1
+      type: rwc2016/bookcase1 
+    - id: bookcase2
+      type: rwc2016/bookcase2
+    - id: bookcase_noback1
+      type: rwc2016/bookcase_noback
+    - id: bookcase_noback2
+      type: rwc2016/bookcase_noback
+    - id: bookcase_noback3
+      type: rwc2016/bookcase_noback
+    - id: bookcase_noback4
+      type: rwc2016/bookcase_noback
+    - id: cabinet_2doors1
+      type: rwc2016/cabinet_2doors
+    - id: cabinet_2doors2
+      type: rwc2016/cabinet_2doors
+    - id: cabinet_2doors3
+      type: rwc2016/cabinet_2doors
+    - id: cabinet_2slides
+      type: rwc2016/cabinet_2slides
+    - id: cabinet_2slides2
+      type: rwc2016/cabinet_2slides
+    - id: cabinet_2slides3
+      type: rwc2016/cabinet_2slides
+    - id: cabinet_open_large
+      type: rwc2016/cabinet_open_large
+    - id: cabinet_open_small
+      type: rwc2016/cabinet_open_small
+    - id: cabinet_open_small2
+      type: rwc2016/cabinet_open_small
+    - id: cabinet_open_small3
+      type: rwc2016/cabinet_open_small
+    - id: couch
+      type: rwc2016/couch
+    - id: kitchen_counter
+      type: rwc2016/kitchen_counter
+    - id: table_black
+      type: rwc2016/table_black
+    - id: plant_small_1
+      type: rwc2016/plant
+    - id: plant_small_2
+      type: rwc2016/plant
+    - id: plant_big
+      type: rwc2016/plant
+    - id: table_bureau
+      type: rwc2016/table_bureau
+    - id: table_bureau2
+      type: rwc2016/table_bureau
+    - id: table_bureau3
+      type: rwc2016/table_bureau
+    - id: table_salon
+      type: rwc2016/table_salon
+      # image: $(rospkg challenge_open)/images/robotics_testlabs/table_120x80x76.jpg
+    - id: armchair_1
+      type: rwc2016/armchair
+    - id: armchair_2
+      type: rwc2016/armchair
+    - id: armchair_3
+      type: rwc2016/armchair
