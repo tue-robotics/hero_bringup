@@ -1,5 +1,7 @@
 frame_id: /amigo/top_kinect/openni_rgb_optical_frame
-fx: 538.6725257330964
-fy: 502.5794530135827
+fx: 538.673
+fy: 521.579
+cx: 310.5
+cy: 228.391
 high_resolution: True
 time_offset: -0.07
