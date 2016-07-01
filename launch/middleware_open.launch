@@ -5,11 +5,9 @@
     <group ns="amigo">
 
         <!-- Syncing of ed XMLRCP Server -->
-        <!--include file="$(find robot_launch_files)/launch/multirobot/world_model_server_bridge.launch">
+        <include file="$(find robot_launch_files)/launch/multirobot/world_model_server_bridge.launch">
             <arg name="machine" value="sergio1"/>
-            <arg name="ip" value="192.168.2.71" />
-            <arg name="port" value="4000" />
-        </include-->
+        </include>
 
         <!-- MANIPULATION -->
         <include file="$(find robot_launch_files)/launch/manipulation/moveit.launch">
