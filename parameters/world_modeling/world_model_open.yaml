@@ -58,32 +58,34 @@ plugins:
     nav_goal_topic: /amigo/local_planner/action_server/goal
     head_goal_topic: /amigo/head_ref/action_server/goal
     models:
-    - id: bed_frame
-      type: rwc2016/bed_frame
-    - id: bookcase1
-      type: rwc2016/bookcase1 
-    - id: bookcase2
-      type: rwc2016/bookcase2
-    - id: bookcase_noback
-      type: rwc2016/bookcase_noback
-    - id: cabinet_2doors
+    - id: drawer
       type: rwc2016/cabinet_2doors
-    - id: cabinet_2slides
-      type: rwc2016/cabinet_2slides
-    - id: cabinet_open_large
-      type: rwc2016/cabinet_open_large
-    - id: cabinet_open_small
-      type: rwc2016/cabinet_open_small
-    - id: couch
-      type: rwc2016/couch
-    - id: kitchen_counter
-      type: rwc2016/kitchen_counter
-    - id: table_black
-      type: rwc2016/table_black
-    - id: table_bureau
+    - id: desk
       type: rwc2016/table_bureau
-    - id: table_salon
+    - id: bed
+      type: rwc2016/bed_frame
+    - id: bedside
+      type: rwc2016/bookcase_noback
+    - id: bar
+      type: rwc2016/bookcase_noback
+    - id: cupboard
+      type: rwc2016/cabinet_2doors
+    - id: sink
+      type: rwc2016/kitchen_counter
+    - id: sideshelf
+      type: rwc2016/cabinet_2slides
+    - id: bookcase
+      type: rwc2016/bookcase_noback
+    - id: dining_table
+      type: rwc2016/table_black
+    - id: tv_stand
+      type: rwc2016/cabinet_open_small
+    - id: living_shelf
+      type: rwc2016/cabinet_open_large
+    - id: living_table
       type: rwc2016/table_salon
+    - id: cabinet
+      type: rwc2016/cabinet_open_small
       # image: $(rospkg challenge_open)/images/robotics_testlabs/table_120x80x76.jpg
 
 - name: laser_integration
