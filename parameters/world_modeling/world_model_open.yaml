@@ -72,6 +72,7 @@ plugins:
       image: $(rospkg challenge_open)/images/rwc2016a/couch.jpg
     - id: sink
       type: rwc2016/kitchen_counter
+      image: $(rospkg challenge_open)/images/rwc2016a/kitchen_counter.jpg
     - id: bedside
       type: rwc2016/bookcase_noback
       image: $(rospkg challenge_open)/images/rwc2016a/bookcase.jpg
