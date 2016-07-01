@@ -8,12 +8,12 @@
 ########################################################################
 
 #### DECLARATION OF PARAMETERS ####
-var double Ts = 0.001
+var double TS = 0.001
 
 #### RGB CONTROLLER ####
 loadComponent("RGB_light_controller", "LIGHTING::rgb_controller")
 addPeer("Supervisor","RGB_light_controller")
-setActivity("RGB_light_controller",Ts,HighestPriority,ORO_SCHED_RT)
+setActivity("RGB_light_controller",TS,HighestPriority,ORO_SCHED_RT)
 RGB_light_controller.configure
 
 #### CONNECT COMPONENTS ####
