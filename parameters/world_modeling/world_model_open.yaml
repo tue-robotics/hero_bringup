@@ -86,6 +86,10 @@ plugins:
       type: rwc2016/table_salon
     - id: cabinet
       type: rwc2016/cabinet_open_small
+    - id: door_left
+      type: rwc2016/door_left
+    - id: door_right
+      type: rwc2016/door_right
       # image: $(rospkg challenge_open)/images/robotics_testlabs/table_120x80x76.jpg
 
 - name: laser_integration
@@ -99,6 +103,7 @@ plugins:
       min_cluster_size: 0.2
       max_cluster_size: 1.0
       max_gap_size: 10
+      fit_entities: 1
 
 - name: entity_clearer
   lib: libed_clearer_plugin.so
