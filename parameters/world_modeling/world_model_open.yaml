@@ -60,31 +60,42 @@ plugins:
     models:
     - id: bed_frame
       type: rwc2016/bed_frame
+      image: $(rospkg challenge_open)/images/rwc2016a/bed_frame.jpg
     - id: bookcase1
-      type: rwc2016/bookcase1 
+      type: rwc2016/bookcase1
+      image: $(rospkg challenge_open)/images/rwc2016a/bookcase.jpg
     - id: bookcase2
       type: rwc2016/bookcase2
+      image: $(rospkg challenge_open)/images/rwc2016a/bookcase.jpg
     - id: bookcase_noback
       type: rwc2016/bookcase_noback
+      image: $(rospkg challenge_open)/images/rwc2016a/bookcase.jpg
     - id: cabinet_2doors
       type: rwc2016/cabinet_2doors
+      image: $(rospkg challenge_open)/images/rwc2016a/cabinet_2doors.jpg
     - id: cabinet_2slides
       type: rwc2016/cabinet_2slides
+      image: $(rospkg challenge_open)/images/rwc2016a/cabinet_2slides.jpg
     - id: cabinet_open_large
       type: rwc2016/cabinet_open_large
+      image: $(rospkg challenge_open)/images/rwc2016a/cabinet_open.jpg
     - id: cabinet_open_small
       type: rwc2016/cabinet_open_small
+      image: $(rospkg challenge_open)/images/rwc2016a/cabinet_open.jpg
     - id: couch
       type: rwc2016/couch
+      image: $(rospkg challenge_open)/images/rwc2016a/couch.jpg
     - id: kitchen_counter
       type: rwc2016/kitchen_counter
     - id: table_black
       type: rwc2016/table_black
+      image: $(rospkg challenge_open)/images/rwc2016a/table_black.jpg
     - id: table_bureau
       type: rwc2016/table_bureau
+      image: $(rospkg challenge_open)/images/rwc2016a/table_bureau.jpg
     - id: table_salon
       type: rwc2016/table_salon
-      # image: $(rospkg challenge_open)/images/robotics_testlabs/table_120x80x76.jpg
+      image: $(rospkg challenge_open)/images/rwc2016a/table_salon.jpg
 
 - name: laser_integration
   lib: libed_laser_plugin.so
