@@ -74,8 +74,8 @@ plugins:
       type: rwc2016/kitchen_counter
       image: $(rospkg challenge_open)/images/rwc2016a/kitchen_counter.jpg
     - id: bedside
-      type: rwc2016/bookcase_noback
-      image: $(rospkg challenge_open)/images/rwc2016a/bookcase.jpg
+      type: rwc2016/ikea_table_red
+      image: $(rospkg challenge_open)/images/rwc2016a/bedside.jpg
     - id: bar
       type: rwc2016/bookcase_noback
       image: $(rospkg challenge_open)/images/rwc2016a/bookcase.jpg
