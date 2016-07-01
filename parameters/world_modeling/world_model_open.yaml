@@ -58,44 +58,57 @@ plugins:
     nav_goal_topic: /amigo/local_planner/action_server/goal
     head_goal_topic: /amigo/head_ref/action_server/goal
     models:
-    - id: bed_frame
-      type: rwc2016/bed_frame
-      image: $(rospkg challenge_open)/images/rwc2016a/bed_frame.jpg
-    - id: bookcase1
-      type: rwc2016/bookcase1
-      image: $(rospkg challenge_open)/images/rwc2016a/bookcase.jpg
-    - id: bookcase2
-      type: rwc2016/bookcase2
-      image: $(rospkg challenge_open)/images/rwc2016a/bookcase.jpg
-    - id: bookcase_noback
-      type: rwc2016/bookcase_noback
-      image: $(rospkg challenge_open)/images/rwc2016a/bookcase.jpg
-    - id: cabinet_2doors
+    - id: drawer
       type: rwc2016/cabinet_2doors
       image: $(rospkg challenge_open)/images/rwc2016a/cabinet_2doors.jpg
-    - id: cabinet_2slides
-      type: rwc2016/cabinet_2slides
-      image: $(rospkg challenge_open)/images/rwc2016a/cabinet_2slides.jpg
-    - id: cabinet_open_large
-      type: rwc2016/cabinet_open_large
-      image: $(rospkg challenge_open)/images/rwc2016a/cabinet_open.jpg
-    - id: cabinet_open_small
-      type: rwc2016/cabinet_open_small
-      image: $(rospkg challenge_open)/images/rwc2016a/cabinet_open.jpg
+    - id: desk
+      type: rwc2016/table_bureau
+      image: $(rospkg challenge_open)/images/rwc2016a/table_bureau.jpg
+    - id: bed
+      type: rwc2016/bed_frame
+      image: $(rospkg challenge_open)/images/rwc2016a/bed_frame.jpg
     - id: couch
       type: rwc2016/couch
       image: $(rospkg challenge_open)/images/rwc2016a/couch.jpg
-    - id: kitchen_counter
+    - id: sink
       type: rwc2016/kitchen_counter
-    - id: table_black
+    - id: bedside
+      type: rwc2016/bookcase_noback
+      image: $(rospkg challenge_open)/images/rwc2016a/bookcase.jpg
+    - id: bar
+      type: rwc2016/bookcase_noback
+      image: $(rospkg challenge_open)/images/rwc2016a/bookcase.jpg
+    - id: cupboard
+      type: rwc2016/cabinet_2doors
+      image: $(rospkg challenge_open)/images/rwc2016a/cabinet_2doors.jpg
+    - id: sideshelf
+      type: rwc2016/cabinet_2slides
+      image: $(rospkg challenge_open)/images/rwc2016a/cabinet_2slides.jpg
+    - id: bookcase
+      type: rwc2016/bookcase_noback
+      image: $(rospkg challenge_open)/images/rwc2016a/bookcase.jpg
+    - id: dining_table
       type: rwc2016/table_black
       image: $(rospkg challenge_open)/images/rwc2016a/table_black.jpg
-    - id: table_bureau
-      type: rwc2016/table_bureau
-      image: $(rospkg challenge_open)/images/rwc2016a/table_bureau.jpg
     - id: table_salon
       type: rwc2016/table_salon
       image: $(rospkg challenge_open)/images/rwc2016a/table_salon.jpg
+    - id: tv_stand
+      type: rwc2016/cabinet_open_small
+      image: $(rospkg challenge_open)/images/rwc2016a/cabinet_open.jpg
+    - id: living_shelf
+      type: rwc2016/cabinet_open_large
+      image: $(rospkg challenge_open)/images/rwc2016a/cabinet_open.jpg
+    - id: living_table
+      type: rwc2016/table_salon
+      image: $(rospkg challenge_open)/images/rwc2016a/table_salon.jpg
+    - id: cabinet
+      type: rwc2016/cabinet_open_small
+      image: $(rospkg challenge_open)/images/rwc2016a/cabinet_open.jpg
+    - id: door_left
+      type: rwc2016/door_left
+    - id: door_right
+      type: rwc2016/door_right
 
 - name: laser_integration
   lib: libed_laser_plugin.so
@@ -108,6 +121,7 @@ plugins:
       min_cluster_size: 0.2
       max_cluster_size: 1.0
       max_gap_size: 10
+      fit_entities: 1
 
 - name: entity_clearer
   lib: libed_clearer_plugin.so
