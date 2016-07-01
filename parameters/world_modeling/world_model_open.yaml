@@ -108,8 +108,10 @@ plugins:
       image: $(rospkg challenge_open)/images/rwc2016a/cabinet_open.jpg
     - id: door_left
       type: rwc2016/door_left
+      image: $(rospkg challenge_open)/images/rwc2016a/door.jpg
     - id: door_right
       type: rwc2016/door_right
+      image: $(rospkg challenge_open)/images/rwc2016a/door.jpg
 
 - name: laser_integration
   lib: libed_laser_plugin.so
