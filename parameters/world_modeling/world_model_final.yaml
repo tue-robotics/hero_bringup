@@ -6,7 +6,7 @@ plugins:
 
 - name: sync_plugin
   lib: libed_sync_plugin.so
-  frequency: 1
+  frequency: 2
   parameters:
       server: /sergio/ed/query
 
