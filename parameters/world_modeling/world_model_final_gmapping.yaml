@@ -70,6 +70,18 @@ plugins:
     - id: bar
       type: rwc2016/cabinet_open_small
       image: $(rospkg challenge_final)/images/bar.jpg
+    - id: sideshelf
+      type: rwc2016/cabinet_2slides
+      image: $(rospkg challenge_open)/images/rwc2016a/cabinet_2slides.jpg
+    - id: bookcase
+      type: rwc2016/bookcase_noback
+      image: $(rospkg challenge_open)/images/rwc2016a/bookcase.jpg
+    - id: door_right
+      type: rwc2016/door_right
+      image: $(rospkg challenge_open)/images/rwc2016a/door.jpg
+    - id: sink
+      type: rwc2016/kitchen_counter
+      image: $(rospkg challenge_open)/images/rwc2016a/kitchen_counter.jpg
 
 - name: laser_integration
   lib: libed_laser_plugin.so
