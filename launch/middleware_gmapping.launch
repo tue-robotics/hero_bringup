@@ -4,56 +4,59 @@
 
     <group ns="amigo">
 
-        <!-- MANIPULATION -->        
-        <include file="$(find robot_launch_files)/launch/manipulation/torso.launch">
+        <!-- MANIPULATION -->
+        <include file="$(find robot_launch_files)/launch/manipulation/moveit.launch">
             <arg name="machine" value="amigo1"/>
         </include>
-        
         <include file="$(find robot_launch_files)/launch/manipulation/arm.launch">
             <arg name="name" value="left_arm"/>
             <arg name="machine" value="amigo1"/>
         </include>
-
         <include file="$(find robot_launch_files)/launch/manipulation/arm.launch">
             <arg name="name" value="right_arm"/>
             <arg name="machine" value="amigo1"/>
         </include>
-
         <include file="$(find robot_launch_files)/launch/manipulation/head.launch">
             <arg name="machine" value="amigo1"/>
         </include>
-       
+
         <!-- LOCALIZATION GMAPPING -->
         <include file="$(find robot_launch_files)/launch/localization/gmapping.launch">
             <arg name="machine" value="amigo1"/>
 	    	<arg name="sensor" value="base_laser"/>
-        </include> 
+        </include>
 
         <!-- NAVIGATION GMAPPING -->
         <include file="$(find robot_launch_files)/launch/navigation/navigation_gmapping.launch">
             <arg name="machine" value="amigo1"/>
-        </include> 
+        </include>
 
-        <!-- WORLD MODEL - TODO check with kinect plugin integration, also localization is done by gmapping -->
-        <!--include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
+        <!-- WORLD MODEL -->
+        <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
             <arg name="machine" value="amigo1"/>
-        </include--> 
+            <arg name="config" value="world_modeling/world_model_gmapping.yaml"/>
+        </include>
 
-        <!-- SPEECH RECOGNITION -->
-        <include file="$(find robot_launch_files)/launch/interaction/speech_recognition.launch">
+        <include file="$(find robot_launch_files)/launch/world_modeling/reasoner.launch">
             <arg name="machine" value="amigo3"/>
-        </include> 
+        </include>
 
         <!-- TEXT TO SPEECH -->
         <include file="$(find robot_launch_files)/launch/interaction/text_to_speech.launch">
-            <arg name="machine" value="amigo3"/>
-        </include> 
+            <arg name="machine-tts" value="amigo3"/>
+            <arg name="machine-play" value="amigo3"/>
+        </include>
 
         <!-- Action server -->
         <include file="$(find robot_launch_files)/launch/interaction/action_server.launch">
             <arg name="machine" value="amigo1"/>
             <arg name="robot" value="amigo" />
-        </include> 
+        </include>
+
+        <!-- Joke -->
+        <include file="$(find robot_launch_files)/launch/essentials/joke.launch" >
+            <arg name="machine" value="amigo1" />
+        </include>
 
     </group>
 

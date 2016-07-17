@@ -1,4 +1,4 @@
-world_name: $(env ROBOT_SIM_ENV)
+world_name: empty
 
 # -----------------------------------------------------------------------------------------------------------------------------
 
@@ -47,11 +47,41 @@ plugins:
   parameters:
       topic: /amigo/top_kinect/rgbd
 
-- name: entity_clearer
-  lib: libed_clearer_plugin.so
-  enabled: 1
+- name: robocup
+  lib: libed_robocup_plugin.so
   parameters:
-      entity_timeout: 1.0
+    map_topic_in: /amigo/gmapping/map
+    map_topic_out: /map
+    wall_height: 1.7
+    map_filter_padding: 0.3
+    rgbd_topic: /amigo/top_kinect/rgbd
+    nav_goal_topic: /amigo/local_planner/action_server/goal
+    head_goal_topic: /amigo/head_ref/action_server/goal
+    models:
+    - id: table1
+      type: rwc2016/table_bureau
+      image: $(rospkg challenge_final)/images/table1.jpg
+    - id: table2
+      type: rwc2016/table_bureau
+      image: $(rospkg challenge_final)/images/table2.jpg
+    - id: table3
+      type: rwc2016/table_bureau
+      image: $(rospkg challenge_final)/images/table3.jpg
+    - id: bar
+      type: rwc2016/cabinet_open_small
+      image: $(rospkg challenge_final)/images/bar.jpg
+    - id: sideshelf
+      type: rwc2016/cabinet_2slides
+      image: $(rospkg challenge_open)/images/rwc2016a/cabinet_2slides.jpg
+    - id: bookcase
+      type: rwc2016/bookcase_noback
+      image: $(rospkg challenge_open)/images/rwc2016a/bookcase.jpg
+    - id: door_right
+      type: rwc2016/door_right
+      image: $(rospkg challenge_open)/images/rwc2016a/door.jpg
+    - id: sink
+      type: rwc2016/kitchen_counter
+      image: $(rospkg challenge_open)/images/rwc2016a/kitchen_counter.jpg
 
 - name: laser_integration
   lib: libed_laser_plugin.so
@@ -64,40 +94,13 @@ plugins:
       min_cluster_size: 0.2
       max_cluster_size: 1.0
       max_gap_size: 10
+      fit_entities: 1
+
+- name: entity_clearer
+  lib: libed_clearer_plugin.so
+  enabled: 1
+  parameters:
+      entity_timeout: 1.0
 
 - name: perception
   lib: libed_perception_plugin.so
-
-- name: localization
-  lib: libed_localization_plugin.so
-  frequency: 40
-  enabled: 1
-  parameters:
-      robot_name: amigo
-      initial_pose_topic: /amigo/initialpose
-      num_particles: 500
-      initial_pose:
-          x: 1.5 #$(env ROBOT_INIT_X)
-          y: 2.5 #$(env ROBOT_INIT_Y)
-          rz: 3.1415 #$(env ROBOT_INIT_PHI)
-      laser_model:
-          topic: /amigo/base_laser/scan
-          num_beams: 100
-          z_hit: 0.95
-          sigma_hit: 0.2
-          z_short: 0.1
-          z_max: 0.05
-          z_rand: 0.05
-          lambda_short: 0.1
-          range_max: 10
-          min_particle_distance: 0.01
-          min_particle_rotation_distance: 0.02
-      odom_model:
-          map_frame: map
-          odom_frame: /amigo/odom
-          base_link_frame: /amigo/base_link
-          alpha1: 0.05   # rot -> trans + strafe
-          alpha2: 0.5    # trans -> rot
-          alpha3: 0.5    # trans -> trans
-          alpha4: 0.5    # rot -> rot
-          alpha5: 0.5    # trans -> strafe

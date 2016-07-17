@@ -31,19 +31,18 @@
             <arg name="machine" value="amigo1"/>
         </include>
 
-        <!-- NAVIGATION GMAPPING -->
+        <!-- NAVIGATION -->
         <include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
             <arg name="machine" value="amigo1"/>
         </include>
 
         <!-- WORLD MODEL -->
-		<include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
+        <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
             <arg name="machine" value="amigo1"/>
             <arg name="config" value="world_modeling/world_model_final.yaml"/>
-		</include>
+        </include>
 
-        <!-- SPEECH RECOGNITION -->
-        <include file="$(find robot_launch_files)/launch/interaction/speech_recognition.launch">
+        <include file="$(find robot_launch_files)/launch/world_modeling/reasoner.launch">
             <arg name="machine" value="amigo3"/>
         </include>
 
@@ -57,6 +56,11 @@
         <include file="$(find robot_launch_files)/launch/interaction/action_server.launch">
             <arg name="machine" value="amigo1"/>
             <arg name="robot" value="amigo" />
+        </include>
+
+        <!-- Joke -->
+        <include file="$(find robot_launch_files)/launch/essentials/joke.launch" >
+            <arg name="machine" value="amigo1" />
         </include>
 
     </group>

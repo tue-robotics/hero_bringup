@@ -40,11 +40,6 @@
             <arg name="config" value="world_modeling/world_model_restaurant.yaml"/>
         </include>
 
-        <!-- SPEECH RECOGNITION -->
-        <include file="$(find robot_launch_files)/launch/interaction/speech_recognition.launch">
-            <arg name="machine" value="amigo3"/>
-        </include>
-
         <!-- TEXT TO SPEECH -->
         <include file="$(find robot_launch_files)/launch/interaction/text_to_speech.launch">
 			<arg name="machine-tts" value="amigo3"/>

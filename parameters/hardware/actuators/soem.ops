@@ -12,7 +12,7 @@ import("rtt_ros")
 ros.import("amigo_hardware")
 
 #### DECLARATION OF PARAMETERS ####
-var double TS 					= 0.001
+var double TS 				= 0.001
 var string SL_ID_LSHOULDER 	= "Soem.Slave_1012"
 var string SL_ID_LUPPERARM 	= "Soem.Slave_1013"
 var string SL_ID_LLOWERARM 	= "Soem.Slave_1014"
@@ -132,4 +132,8 @@ Tracing.Ts = TS
 Tracing.configure
 Tracing.start()
 
-
+#### EtherCAT ping ####
+#loadComponent("EtherCATping","ETHERCATPING::EtherCATping") 
+#EtherCATping.configure
+#setActivity("EtherCATping",TS,HighestPriority,ORO_SCHED_RT)
+#EtherCATping.start()

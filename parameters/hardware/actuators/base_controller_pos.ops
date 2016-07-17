@@ -7,7 +7,7 @@
 ########################################################################
 
 #### DECLARATION OF PARAMETERS ####
-var double Ts 				= 0.001
+var double TS 				= 0.001
 var double WHEELRAD 		= 0.075*0.9825; # Corrected for effective wheel radius
 var double DIS2CENT 		= 0.29072 * 64.0 / 62.8; # (Correction for corrected TWOPI)
 var double HALFSQRT2		= 0.7071
@@ -56,7 +56,7 @@ BASE_OdometryPublisher.configure
 ### READ REFERENCE VELOCITIES ###
 loadComponent("BASE_ReadReferences","ROS::ReadTwistMsg")
 addPeer("Supervisor","BASE_ReadReferences")
-setActivity("BASE_ReadReferences",Ts,HighestPriority,ORO_SCHED_RT)
+setActivity("BASE_ReadReferences",TS,HighestPriority,ORO_SCHED_RT)
 BASE_ReadReferences.max_start_vel = 1.0
 BASE_ReadReferences.max_vel = MAX_VELOCITIES
 BASE_ReadReferences.max_acc = array (0.7, 0.7, 2.0)
@@ -88,7 +88,7 @@ setActivity("BASE_Controller",0.0,HighestPriority,ORO_SCHED_RT)
 addPeer("Supervisor","BASE_Controller")
 BASE_Controller.vector_size    				= N
 BASE_Controller.controllers					= strings("WeakIntegrator","LeadLag","LowPass")
-BASE_Controller.sampling_time				= Ts
+BASE_Controller.sampling_time				= TS
 BASE_Controller.number_of_refports			= 1
 BASE_Controller.refinport_sizes				= ints (N)
 BASE_Controller.number_of_ffwports			= 0
@@ -175,3 +175,12 @@ Supervisor.AddEnabledPeer ("BASE_ReadReferences",BODYPARTNR )
 Supervisor.AddEnabledPeer ("BASE_JointToMotorSpace",BODYPARTNR )
 Supervisor.AddEnabledPeer ("BASE_VelocityToPosition",BODYPARTNR )
 Supervisor.AddEnabledPeer ("BASE_Safety", BODYPARTNR)
+
+#### AUTOLOG ####
+Tracing.AddBodypart(BODYPARTNAME,BODYPARTNR,2,N,strings("ref","pos"))
+connect ("BASE_Controller.references",				"Tracing.base_ref", 					ConnPolicy() )
+connect ("EtherCATread.base_Eout1",					"Tracing.base_pos", 					ConnPolicy() )
+connect ("BASE_Safety.error",						"Tracing.base_error", 					ConnPolicy() )
+
+#### EtherCAT ping ####
+#connect ("Soem.Slave_1002.Slave_1002_value",		"EtherCATping.in7", 					ConnPolicy() );

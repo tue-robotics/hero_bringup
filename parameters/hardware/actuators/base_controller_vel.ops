@@ -8,7 +8,7 @@
 ########################################################################
 
 #### DECLARATION OF PARAMETERS ####
-var double Ts 					= 0.001
+var double TS 					= 0.001
 var double WHEELRAD 			= 0.075*0.9825; # Corrected for effective wheel radius
 var double DIS2CENT 			= 0.29072 * 64.0 / 62.8; # (Correction for corrected TWOPI)
 var double HALFSQRT2			= 0.7071
@@ -40,7 +40,7 @@ Supervisor.AddBodyPart( BODYPARTNR, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RE
 ### READ WHEEL ENCODERS ###
 loadComponent("BASE_ReadEncoders","SOEM::ReadEncoders")
 addPeer("Supervisor","BASE_ReadEncoders")
-setActivity("BASE_ReadEncoders",Ts,HighestPriority,ORO_SCHED_RT)
+setActivity("BASE_ReadEncoders",TS,HighestPriority,ORO_SCHED_RT)
 BASE_ReadEncoders.encoderbits 			= 65536
 BASE_ReadEncoders.enc2SI 				= array (ENC2SI, ENC2SI, ENC2SI, ENC2SI)
 BASE_ReadEncoders.configure
@@ -50,7 +50,7 @@ loadComponent("BASE_Controller","FILTERS::Controller")
 addPeer("Supervisor","BASE_Controller")
 setActivity("BASE_Controller",0.0,HighestPriority,ORO_SCHED_RT)
 BASE_Controller.vector_size 			= N;
-BASE_Controller.sampling_time 			= Ts;
+BASE_Controller.sampling_time 			= TS;
 BASE_Controller.controllers 			= strings ("WeakIntegrator","LowPass");
 BASE_Controller.number_of_refports		= 1
 BASE_Controller.refinport_sizes			= ints (N)
@@ -74,7 +74,7 @@ loadComponent("BASE_ErrorFilter","FILTERS::SecondOrderLowPasses")
 addPeer("Supervisor","BASE_ErrorFilter")
 setActivity("BASE_ErrorFilter",0.0,HighestPriority,ORO_SCHED_RT)
 BASE_ErrorFilter.vector_size			= 4
-BASE_ErrorFilter.sampling_time			= Ts
+BASE_ErrorFilter.sampling_time			= TS
 BASE_ErrorFilter.pole_frequency			= array(100.0, 	100.0, 	100.0, 	100.0);
 BASE_ErrorFilter.pole_damping			= array(0.7, 	0.7, 	0.7, 	0.7);
 BASE_ErrorFilter.configure
@@ -94,7 +94,7 @@ BASE_Safety.configure
 ### READ REFERENCE VELOCITIES ###
 loadComponent("BASE_ReadReferences","ROS::ReadTwistMsg")
 addPeer("Supervisor","BASE_ReadReferences")
-setActivity("BASE_ReadReferences",Ts,LowestPriority,ORO_SCHED_OTHER)
+setActivity("BASE_ReadReferences",TS,LowestPriority,ORO_SCHED_OTHER)
 BASE_ReadReferences.max_start_vel 		= MAX_START_VEL
 BASE_ReadReferences.max_acc 			= MAX_ACC
 BASE_ReadReferences.max_interval 		= MAX_INTERVAL
@@ -104,7 +104,7 @@ BASE_ReadReferences.configure
 ### DECOUPLE REFERENCE ###
 loadComponent("BASE_JointToMotorSpace","MATH::MatrixTransform")
 addPeer("Supervisor","BASE_JointToMotorSpace")
-setActivity("BASE_JointToMotorSpace",Ts,LowestPriority,ORO_SCHED_OTHER)
+setActivity("BASE_JointToMotorSpace",TS,LowestPriority,ORO_SCHED_OTHER)
 BASE_JointToMotorSpace.Nrows 			= 4
 BASE_JointToMotorSpace.Ncolumns 		= 3
 BASE_JointToMotorSpace.configure

@@ -26,6 +26,11 @@
 
 		</group>
 
+        <!-- SPEECH RECOGNITION -->
+        <include file="$(find robot_launch_files)/launch/interaction/speech_recognition.launch">
+            <arg name="machine" value="amigo3"/>
+        </include>
+
 		<!-- DIAGNOSTICS -->
 		<include file="$(find robot_launch_files)/launch/diagnostics/diagnostics.launch" >
 			<arg name="machine" value="amigo1" />

@@ -2,11 +2,23 @@
 <launch>
 
     <!-- Get the machine file -->
-    <arg name="machine" default="amigo3"/>
+    <arg name="machine" default="amigo1"/>
 
     <include file="$(find amigo_bringup)/machines/$(arg machine).machine" />
 
 	<group ns="amigo">
+
+		<!-- HMI Recorder -->
+		<group ns="hmi">
+			<node pkg="test_tools" type="hmi_logger.py" name="hmi_logger" machine="$(arg machine)" />
+		</group>
+
+        <!-- Audio -->
+		<group ns="record">
+            <node name="audio_capture" pkg="audio_capture" type="audio_capture" output="log" machine="$(arg machine)">
+                <param name="bitrate" value="128"/>                                         
+            </node>
+		</group>
 
 		<!-- Topics that are going to be recorded, throttle them if required -->
 		<node pkg="topic_tools" type="throttle" name="record_throttle_tf" args="bytes /tf 100000 1 record/tf" machine="$(arg machine)" />

@@ -181,3 +181,9 @@ Supervisor.AddHomingOnlyPeer (	"SPINDLE_Homing", 				BODYPARTNR )
 Supervisor.AddEnabledPeer (		"SPINDLE_FFW", 					BODYPARTNR )
 Supervisor.AddEnabledPeer (		"SPINDLE_Safety", 				BODYPARTNR )
 
+#### AUTOLOG ####
+Tracing.AddBodypart(BODYPARTNAME,BODYPARTNR,2,N,strings("ref","pos"))
+connect ("SPINDLE_Controller.references",			"Tracing.spindle_ref", 					ConnPolicy() )
+connect ("EtherCATread.spindle_Eout1",				"Tracing.spindle_pos", 					ConnPolicy() )
+connect ("SPINDLE_Safety.error",					"Tracing.spindle_error", 				ConnPolicy() )
+
