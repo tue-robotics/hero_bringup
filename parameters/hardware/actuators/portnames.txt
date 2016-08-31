@@ -1,0 +1,94 @@
+Ewrite:			What:		Should be called:
+
+  base_Ain1      
+  base_Ain2      
+  base_Aout1     
+  generic_Din1   
+  generic_Din2   
+  generic_Din3   
+  generic_Din4   
+  generic_Din5   
+  generic_Din6   
+  generic_Dout1  
+  generic_Dout2  
+  left_arm_Ain1  
+  left_arm_Aout1 
+  left_arm_Aout2 
+  left_arm_Aout3 
+  right_arm_Ain1 
+  right_arm_Aout1 
+  right_arm_Aout2 
+  right_arm_Aout3
+
+Eread:			What:		Should be called:
+
+  base_Ein2      	EncIn		BaseEncIn1			-> Eread bodypart+"EncIn"+number
+  base_Ein2      
+  base_Ein3      
+  base_Ein4      
+  base_Eout1     	EncOut		BaseEncOut			-> Eread bodypart+"EncOut"+number(if (number != 1))
+  base_Eout_vel1 	EncOutVel	BaseEncOutVel			-> Eread bodypart+"EncOutVel"+number(if (number != 1))
+  generic_Ain1   	BatteryIn	AmigoBatteryIn			-> All generics should be Amigo			
+  generic_Aout1  	BatteryOut	AmigoBatteryOut
+  generic_AoutMsg1 	BatteryOutMsg	AmigoBatteryOutMsg
+  generic_Din1   	EL1008		
+  generic_Dout1  
+  generic_Dout2  
+  generic_Dout3  
+  generic_Dout4  
+  generic_Dout5  
+  generic_Dout6  
+  generic_DoutMsg1 
+  generic_DoutMsg2 
+  generic_DoutMsg3 
+  generic_DoutMsg4 
+  generic_DoutMsg5 
+  generic_DoutMsg6 
+  left_arm_Ain1  
+  left_arm_Ain2  
+  left_arm_Ain3  
+  left_arm_Ain4  
+  left_arm_Ain5  
+  left_arm_Ain6  
+  left_arm_Aout1 
+  left_arm_Aout2 
+  left_arm_Ein1  
+  left_arm_Ein2  
+  left_arm_Ein3  
+  left_arm_Ein4  
+  left_arm_Ein5  
+  left_arm_Ein6  
+  left_arm_Ein7  
+  left_arm_Ein8  
+  left_arm_Eout1 
+  left_arm_EoutMsg1 
+  left_arm_Eout_vel1 
+  left_arm_Esatout1 
+  right_arm_Ain1 
+  right_arm_Ain2 
+  right_arm_Ain3 
+  right_arm_Ain4 
+  right_arm_Ain5 
+  right_arm_Ain6 
+  right_arm_Aout1 
+  right_arm_Aout2 
+  right_arm_Ein1 
+  right_arm_Ein2 
+  right_arm_Ein3 
+  right_arm_Ein4 
+  right_arm_Ein5 
+  right_arm_Ein6 
+  right_arm_Ein7 
+  right_arm_Ein8 
+  right_arm_Eout1 
+  right_arm_EoutMsg1 
+  right_arm_Eout_vel1 
+  right_arm_Esatout1 
+  spindle_Din1   
+  spindle_Dout1  
+  spindle_Dout2  
+  spindle_DoutMsg1 
+  spindle_DoutMsg2 
+  spindle_Ein1   
+  spindle_Eout1  
+  spindle_Eout_vel1 
