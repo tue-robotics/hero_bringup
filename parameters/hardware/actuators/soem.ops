@@ -1,7 +1,7 @@
 ########################################################################
 #                                                                      #
 # Simple Open EtherCAT Master (SOEM) deployer file 		       		   #
-# to do make ROBOTNS also work in the othere ops files                 #
+# 														               #
 #                                                                      #
 #                                                                      #
 #                                                                      #
@@ -94,12 +94,12 @@ Supervisor.start()
 #### DIGITAL OUTS ####
 EtherCATwrite.AddDigitalOuts("generic", array(1.0, 1.0, 1.0, 1.0, 1.0, 1.0), array(8.0, 8.0), array(1.0, 0.0, 3.0, 0.0, 0.0, 4.0, 5.0, 6.0, 3.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0), array(1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0))
 EtherCATwrite.AddForcedHigh_D("generic",1);										# IN1: Forced High, # IN2: BaseSafety.enable, # IN3: SpindleSafety.enable, # IN4: RGB:R, # IN5: RGB:G, # IN6: RGB:B, 		 
-connect ("EtherCATwrite.generic_Dout1","Soem.Slave_100b.bits", ConnPolicy() ); 	# OUT1: 	1 Enable amps (D04:DO1)		 3 SpindleSafety.enable (brake)	6 RGB:R 	7 RGB:G 	8 RGB:B
-connect ("EtherCATwrite.generic_Dout2","Soem.Slave_100c.bits", ConnPolicy() ); 	# OUT2: 	1 SpindleSafety.enable (amp) 2 BaseSafety.enable (amp)
+connect("EtherCATwrite.generic_Dout1","Soem.Slave_100b.bits", ConnPolicy() ); 	# OUT1: 	1 Enable amps(D04:DO1)		 3 SpindleSafety.enable(brake)	6 RGB:R 	7 RGB:G 	8 RGB:B
+connect("EtherCATwrite.generic_Dout2","Soem.Slave_100c.bits", ConnPolicy() ); 	# OUT2: 	1 SpindleSafety.enable(amp) 2 BaseSafety.enable(amp)
 
 #### DIGITAL INS ####
-EtherCATread.AddDigitalIns("generic", array(8.0), array(1.0, 1.0, 1.0, 1.0, 1.0, 1.0), array(1.0, 1.0, 1.0, 1.0, 1.0, 1.0), array(1.0, 2.0, 3.0, 4.0, 5.0, 6.0), arrat)
-connect ("Soem.Slave_1009.bits", 		"EtherCATread.generic_Din1", ConnPolicy() )
+EtherCATread.AddDigitalIns("generic", array(8.0), array(1.0, 1.0, 1.0, 1.0, 1.0, 1.0), array(1.0, 1.0, 1.0, 1.0, 1.0, 1.0), array(1.0, 2.0, 3.0, 4.0, 5.0, 6.0))
+connect("Soem.Slave_1009.bits", 		"EtherCATread.generic_Din1", ConnPolicy() )
 EtherCATread.AddFlip_D("generic", 5)
 EtherCATread.AddFlip_D("generic", 6)
 EtherCATread.AddMsgOut_D("generic",1)
@@ -114,12 +114,12 @@ stream("EtherCATread.generic_DoutMsg3", ros.topic(ROBOTNS+"/fuse3"))
 stream("EtherCATread.generic_DoutMsg4", ros.topic(ROBOTNS+"/fuse4"))
 stream("EtherCATread.generic_DoutMsg5", ros.topic(ROBOTNS+"/runstop"))
 stream("EtherCATread.generic_DoutMsg6", ros.topic(ROBOTNS+"/emergency_switch"))
-connect ("EtherCATread.generic_DoutMsg5","Supervisor.ebuttonWired", ConnPolicy() );
-connect ("EtherCATread.generic_DoutMsg6","Supervisor.ebuttonWireless", ConnPolicy() );
+connect("EtherCATread.generic_DoutMsg5","Supervisor.ebuttonWired", ConnPolicy() );
+connect("EtherCATread.generic_DoutMsg6","Supervisor.ebuttonWireless", ConnPolicy() );
 
 #### BATTERY IN ####
 EtherCATread.AddAnalogIns("generic", array(1.0), array(1.0), array(1.0), array(1.0))
-connect ("Soem.Slave_100e.values",		"EtherCATread.generic_Ain1", ConnPolicy() );
+connect("Soem.Slave_100e.values",		"EtherCATread.generic_Ain1", ConnPolicy() );
 EtherCATread.AddMsgOut_A("generic",1)
 stream("EtherCATread.generic_AoutMsg1", ros.topic(ROBOTNS+"/battery_value"))
 

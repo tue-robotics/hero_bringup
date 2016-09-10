@@ -8,21 +8,23 @@
 ########################################################################
 
 #### DECLARATION OF PARAMETERS ####
-var double TS = 0.001
+var double 	TS 							= 0.001
+var string	ROBOTNS						= os.getenv("ROBOT")
+
 
 #### RGB CONTROLLER ####
-loadComponent("RGB_light_controller", "LIGHTING::rgb_controller")
+loadComponent("RGB_light_controller", 	"LIGHTING::rgb_controller")
 addPeer("Supervisor","RGB_light_controller")
 setActivity("RGB_light_controller",TS,HighestPriority,ORO_SCHED_RT)
 RGB_light_controller.configure
 
 #### CONNECT COMPONENTS ####
-connect ("RGB_light_controller.red", 	"EtherCATwrite.generic_Din4", 	ConnPolicy() );	#Red
-connect ("RGB_light_controller.green", 	"EtherCATwrite.generic_Din5", 	ConnPolicy() );	#Green
-connect ("RGB_light_controller.blue", 	"EtherCATwrite.generic_Din6", 	ConnPolicy() );	#Blue
+connect("RGB_light_controller.red", 	"EtherCATwrite.generic_Din4", 	ConnPolicy() );	#Red
+connect("RGB_light_controller.green", 	"EtherCATwrite.generic_Din5", 	ConnPolicy() );	#Green
+connect("RGB_light_controller.blue", 	"EtherCATwrite.generic_Din6", 	ConnPolicy() );	#Blue
 
 #### CONNECT ROS STREAMS ####
-stream("RGB_light_controller.rgbtopic", ros.topic("/amigo/rgb_lights_controller/reference"));
+stream("RGB_light_controller.rgbtopic", ros.topic(ROBOTNS+"/rgb_lights_controller/reference"));
 
 #### START COMPONENTS ####
-Supervisor.AddAllwaysOnPeer ("RGB_light_controller")
+Supervisor.AddAllwaysOnPeer("RGB_light_controller")
