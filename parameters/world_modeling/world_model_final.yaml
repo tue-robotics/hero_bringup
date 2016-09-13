@@ -70,6 +70,7 @@ plugins:
       min_cluster_size: 0.2
       max_cluster_size: 1.0
       max_gap_size: 10
+      fit_entities: true
 
 - name: perception
   lib: libed_perception_plugin.so
