@@ -19,7 +19,7 @@ var string SL_ID_LLOWERARM 				= "Soem.Slave_1014"
 var string SL_ID_RSHOULDER 				= "Soem.Slave_1015"
 var string SL_ID_RUPPERARM 				= "Soem.Slave_1016"
 var string SL_ID_RLOWERARM 				= "Soem.Slave_1017"
-var string  ROBOTNS						= "/amigo";
+var string ROBOTNS						= "/amigo";
 
 #### MAKING PARAMETERS GLOBAL ####
 loadService("HARDWARE",					"os")
