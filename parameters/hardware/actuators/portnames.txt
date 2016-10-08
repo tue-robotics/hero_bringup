@@ -20,24 +20,24 @@ Ewrite:			What:		Should be called:
   right_arm_Aout2 
   right_arm_Aout3
 
-Eread:			What:		Should be called:
+Eread:				What:					Should be called:
 
-  base_Ein2      	EncIn		BaseEncIn1			-> Eread bodypart+"EncIn"+number
+  base_Ein1      	EncIn					baseEncIn1				-> Eread bodypart+"EncIn"+number								
   base_Ein2      
   base_Ein3      
   base_Ein4      
-  base_Eout1     	EncOut		BaseEncOut			-> Eread bodypart+"EncOut"+number(if (number != 1))
-  base_Eout_vel1 	EncOutVel	BaseEncOutVel			-> Eread bodypart+"EncOutVel"+number(if (number != 1))
-  generic_Ain1   	BatteryIn	AmigoBatteryIn			-> All generics should be Amigo			
-  generic_Aout1  	BatteryOut	AmigoBatteryOut
-  generic_AoutMsg1 	BatteryOutMsg	AmigoBatteryOutMsg
-  generic_Din1   	EL1008		
-  generic_Dout1  
+  base_Eout1     	EncOut					baseEncOut				-> Eread bodypart+"EncOut"+number(if (number != 1))
+  base_Eout_vel1 	EncOutVel				baseEncOutVel			-> Eread bodypart+"EncOutVel"+number(if (number != 1))
+  generic_Ain1   	BatteryIn				soemBatteryIn			-> All generics should be Amigo
+  generic_Aout1  	BatteryOut				amigoBatteryOut
+  generic_AoutMsg1 	BatteryOutMsg			amigoBatteryOutMsg
+  generic_Din1   	EL1008					digitalIn				-> 
+  generic_Dout1  	Fuse					amigoFuse1
   generic_Dout2  
   generic_Dout3  
   generic_Dout4  
-  generic_Dout5  
-  generic_Dout6  
+  generic_Dout5  	runstop					amigoRunstop
+  generic_Dout6  	emergency_switch		amigoEmergencySwitch
   generic_DoutMsg1 
   generic_DoutMsg2 
   generic_DoutMsg3 
@@ -92,3 +92,12 @@ Eread:			What:		Should be called:
   spindle_Ein1   
   spindle_Eout1  
   spindle_Eout_vel1 
+
+
+	1) It is not allowed to provide a vector of strings in Orocos "Battery; Fuse1; Fuse2; Fuse3; Fuse4;" Could be an option. Where the delimiter ';' separates the entries.
+	2) The A,E,D annotations are not clear. E should become Enc, Strings are for the encoders not needed anymore since they are alwas encoders and the bodypart is already denoted.
+	3) Concept: Copy all AddIns and AddOut functions to have one with the normal arguments and one with the normal arguments plus two strings.
+				The two strings should provide names for each port. For example one could load the analog ins of arm 1 with the top line (Same as old)
+	
+EtherCATread.AddAnalogIns(BODYPARTNAME, array(3.0, 3.0, 3.0, 3.0, 3.0, 3.0), array(8.0, 8.0), array(1.0, 1.0, 2.0, 2.0, 2.0, 3.0, 3.0, 3.0, 4.0, 4.0, 5.0, 5.0, 5.0, 6.0, 6.0, 6.0), array(1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0, 1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0))
+EtherCATread.AddAnalogIns(BODYPARTNAME, array(3.0, 3.0, 3.0, 3.0, 3.0, 3.0), array(8.0, 8.0), array(1.0, 1.0, 2.0, 2.0, 2.0, 3.0, 3.0, 3.0, 4.0, 4.0, 5.0, 5.0, 5.0, 6.0, 6.0, 6.0), array(1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0, 1.0, 2.0, 1.0, 2.0, 3.0, 1.0, 2.0, 3.0), "SLAVE1;SLAVE2;SLAVE3;SLAVE1;SLAVE2;SLAVE3","Torque;AbsPos")
