@@ -66,7 +66,8 @@ plugins:
       max_gap_size: 10
 
 - name: perception
-  lib: libed_perception_plugin.so
+  #lib: libed_perception_plugin.so
+  lib: libed_perception_plugin_tensorflow.so
 
 - name: localization
   lib: libed_localization_plugin.so
