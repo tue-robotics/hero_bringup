@@ -30,15 +30,6 @@
             <arg name="machine" value="amigo1"/>
         </include>
 
-        <include file="$(find robot_launch_files)/launch/world_modeling/reasoner.launch">
-            <arg name="machine" value="amigo3"/>
-        </include>
-        
-        <!-- PERCEPTION -->
-        <include file="$(find robot_launch_files)/launch/perception/tensorflow_object_recognition.launch">
-            <arg name="machine" value="amigo1"/>
-        </include>
-
         <!-- TEXT TO SPEECH -->
         <include file="$(find robot_launch_files)/launch/interaction/text_to_speech.launch">
             <arg name="machine-tts" value="amigo3"/>
