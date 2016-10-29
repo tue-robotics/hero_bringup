@@ -67,7 +67,7 @@ plugins:
 
 - name: perception
   #lib: libed_perception_plugin.so
-  lib: libed_perception_plugin_tensorflow.so
+  lib: libed_perception_plugin_image_recognition.so
 
 - name: localization
   lib: libed_localization_plugin.so
