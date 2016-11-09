@@ -1,2 +1,0 @@
-database_path: ~/data/tensorflow/active/output_graph.pb
-models_path: ~/data/tensorflow/active/output_labels.txt
