@@ -19,7 +19,7 @@ var array 	RESETPOS					= array(	-0.02,  	-0.0, 		0.0, 		0.0,		0.0,		0.0, 		0.0)
 var array 	HOMINGSTROKE 				= array(	0.0,		0.0,		-1.57,  	0.0, 		-1.83,		-1.05, 		-0.8, 		0.0		  )
 var array 	MAXERRORS 					= array(	0.09,     	0.09,   	0.09,     	0.09, 	   	0.09,    	0.09, 	   	0.09, 		0.5		  )
 var array 	ABSPOS						= array	(	0.64,		2.10,		0.0,		0.0,		0.0,		0.0,		0.0,		0.0		  )
-var array 	ENCODERBITS					= array(   65536.0,	65536.0,	65536.0,	65536.0,	65536.0,	65536.0,	65536.0,	65536.0   )		
+var array 	ENCODERBITS					= array(   65536.0,	65536.0,	65536.0,	65536.0,	65536.0,	65536.0,	65536.0,	65536.0       )		
 var double 	TWOPI 						= 2.0*3.141592
 var double 	GEARRATIO_SM				= 1.0/550.0
 var double 	GEARRATIO_S3		    	= 1.0/371.25
@@ -112,10 +112,10 @@ LPERA_Controller.sampling_time			= TS
 LPERA_Controller.number_of_refports		= 2
 LPERA_Controller.refinport_sizes		= ints(7, 1)
 LPERA_Controller.number_of_ffwports		= 0
-LPERA_Controller.gains					= array(20000.0, 	20000.0, 	10000.0, 	17500.0, 	17500.0, 	17500.0, 	21500.0, 	5000.0);
+LPERA_Controller.gains					= array(20000.0, 	20000.0, 	10000.0, 	17500.0, 	17500.0, 	17500.0, 	21500.0, 	6000.0);
 LPERA_Controller.zero_freq_WeakIntegrator = array(0.0065,	0.0065,		0.009, 		0.004, 		0.004, 		0.02, 		0.02, 		0.000001); 
-LPERA_Controller.zero_freq_LeadLag		= array(25.0, 		25.0, 		15.0, 		100.0, 		100.0,		5.0,  		5.0,  		4.5)
-LPERA_Controller.pole_freq_LeadLag		= array(80.0, 		80.0, 		40.0, 		200.0, 		200.0, 		40.0, 		40.0, 		45.0)
+LPERA_Controller.zero_freq_LeadLag		= array(25.0, 		25.0, 		15.0, 		100.0, 		100.0,		5.0,  		5.0,  		5.0)
+LPERA_Controller.pole_freq_LeadLag		= array(80.0, 		80.0, 		40.0, 		200.0, 		200.0, 		40.0, 		40.0, 		50.0)
 LPERA_Controller.pole_freq_LowPass		= array(125.0, 		125.0, 		125.0, 		125.0, 		62.5, 		125.0, 		125.0, 		125.0)
 LPERA_Controller.pole_damp_LowPass		= array(0.7, 		0.7, 		0.7, 		0.7, 		0.7, 		0.7, 		0.7, 		0.7)
 LPERA_Controller.configure
@@ -134,7 +134,7 @@ LPERA_Safety.motorSaturations			= array(1000.0, 	1000.0,	 	400.0, 	   	500.0,  	
 LPERA_Safety.maxConSatTime				= 5.0
 LPERA_Safety.configure
 
-### PERA Homing ###							## Note that all properties follow the [q1,q2,q3....q8] structure and not the structure provided by homing_order
+### PERA Homing ###						## Note that all properties follow the [q1,q2,q3....q8] structure and not the structure provided by homing_order
 loadComponent("LPERA_Homing",			"SUPERVISORY::Homing")
 connectPeers("Supervisor",				"LPERA_Homing")
 addPeer("LPERA_Homing",					"EtherCATread")
@@ -157,6 +157,7 @@ LPERA_Homing.homing_velocity			= array 	(0.05,	0.05,	0.25,	0.25,	0.25,	0.2,	0.2,
 LPERA_Homing.homing_acceleration		= array 	(0.2, 	0.2, 	0.3, 	0.5,	0.5, 	0.5,	0.5,	0.5	)
 LPERA_Homing.homing_stroke				= HOMINGSTROKE
 LPERA_Homing.reset_stroke				= array 	(0.0,	0.0,	0.0,	0.0,	0.0,	0.0,	0.0, 	0.0 )
+LPERA_Homing.require_reset				= ints 		(1, 	1,	 	0, 		1,	 	0, 		0,	 	0, 		0	)
 LPERA_Homing.homing_endpos				= RESETPOS
 LPERA_Homing.homing_errors				= array 	(0.03,  0.03,   0.03,   0.03, 	0.03,   0.03,  	0.03,	0.03)
 LPERA_Homing.homing_absPos				= ABSPOS

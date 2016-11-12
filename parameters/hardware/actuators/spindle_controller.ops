@@ -102,6 +102,7 @@ SPINDLE_Homing.partNr 					= BODYPARTNR
 SPINDLE_Homing.jointnames				= JOINT_NAMES
 SPINDLE_Homing.homing_type				= ints(1)
 SPINDLE_Homing.require_homing			= ints(1)
+SPINDLE_Homing.require_reset			= ints(1)
 SPINDLE_Homing.homing_order				= ints(1)
 SPINDLE_Homing.homing_direction			= ints(1)
 SPINDLE_Homing.homing_velocity			= array(0.01)
