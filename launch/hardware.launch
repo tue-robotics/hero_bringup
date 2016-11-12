@@ -7,13 +7,13 @@
         <include file="$(find robot_launch_files)/launch/hardware/deployer.launch">
             <arg name="DEPLOYER_ARGS" value="gnulinux
                 HARDWARE
-                -s $(env ROBOT_PARAMETER_PATH)/hardware/actuators/soem.ops
-                -s $(env ROBOT_PARAMETER_PATH)/hardware/actuators/base_controller_pos.ops
-                -s $(env ROBOT_PARAMETER_PATH)/hardware/actuators/spindle_controller.ops
-                -s $(env ROBOT_PARAMETER_PATH)/hardware/actuators/left_arm_controller.ops
-                -s $(env ROBOT_PARAMETER_PATH)/hardware/actuators/right_arm_controller.ops
-                -s $(env ROBOT_PARAMETER_PATH)/hardware/actuators/head_controller.ops
-                -s $(env ROBOT_PARAMETER_PATH)/hardware/actuators/rgb_lights.ops
+                -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/soem.ops
+                -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/base_controller_pos.ops
+                -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/spindle_controller.ops
+                -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/left_arm_controller.ops
+                -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/right_arm_controller.ops
+                -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/head_controller.ops
+                -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/rgb_lights.ops
             "/>
             <arg name="NAME" value ="hardware"/>
             <arg name="LOG_LEVEL" value="Warning"/>

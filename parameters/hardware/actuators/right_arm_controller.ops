@@ -266,6 +266,12 @@ Supervisor.AddOpOnlyPeer(		"RPERA_GripperControl",		BODYPARTNR)
 Supervisor.AddOpOnlyPeer(		"RPERA_HandoverDetector",	BODYPARTNR)
 Supervisor.AddEnabledPeer(		"RPERA_Safety", 			BODYPARTNR)
 
+### HANDOVER DETECTOR ###
+loadComponent("GRIP",	"ROS::AnyToROS")
+setActivity("GRIP",0.0,HighestPriority,ORO_SCHED_RT)
+GRIP.configure
+GRIP.start
+
 #### AUTOLOG ####
 Tracing.AddBodypart(BODYPARTNAME,BODYPARTNR,5,N,strings("ref","pos","err","eff","for"))
 connect("RPERA_Controller.references",				"Tracing.right_arm_ref", 					ConnPolicy() )
