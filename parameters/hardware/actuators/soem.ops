@@ -73,6 +73,7 @@ EtherCATread.bodypart_names 			= DEFAULT_PART_NAMES
 
 ### LOAD SOEM COMPONENT FOR ETHERCAT COMMUNICATION ###
 loadComponent("Soem",					"soem_master::SoemMasterComponent")
+Soem.ifname="eno1"
 Soem.configure
 setActivity("Soem",TS,HighestPriority,ORO_SCHED_RT)
 connect("Soem.Slave_1002.Slave_1002_value", "Supervisor.serialRunning", ConnPolicy() )
