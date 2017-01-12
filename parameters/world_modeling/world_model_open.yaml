@@ -124,7 +124,7 @@ plugins:
       min_cluster_size: 0.2
       max_cluster_size: 1.0
       max_gap_size: 10
-      fit_entities: 1
+      fit_entities: 0
 
 - name: entity_clearer
   lib: libed_clearer_plugin.so
@@ -133,4 +133,4 @@ plugins:
       entity_timeout: 1.0
 
 - name: perception
-  lib: libed_perception_plugin.so
+  lib: libed_perception_plugin_image_recognition.so
