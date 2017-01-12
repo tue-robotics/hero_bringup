@@ -1,2 +1,3 @@
 publish_frequency: 50.0
+use_tf_static: true
 #tf_prefix: /amigo
