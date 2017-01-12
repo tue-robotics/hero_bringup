@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <group ns="amigo">
+
+        <!-- MANIPULATION -->
+        <include file="$(find robot_launch_files)/launch/manipulation/moveit.launch">
+            <arg name="machine" value="amigo1"/>
+        </include>
+        <include file="$(find robot_launch_files)/launch/manipulation/arm.launch">
+            <arg name="name" value="left_arm"/>
+            <arg name="machine" value="amigo1"/>
+        </include>
+        <include file="$(find robot_launch_files)/launch/manipulation/arm.launch">
+            <arg name="name" value="right_arm"/>
+            <arg name="machine" value="amigo1"/>
+        </include>
+        <include file="$(find robot_launch_files)/launch/manipulation/head.launch">
+            <arg name="machine" value="amigo1"/>
+        </include>
+
+        <!-- NAVIGATION -->
+        <include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
+            <arg name="machine" value="amigo1"/>
+        </include>
+
+        <!-- WORLD MODEL -->
+        <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
+            <arg name="machine" value="amigo1"/>
+            <arg name="config" value="world_modeling/world_model_r5cop.yaml"/>
+        </include>
+
+        <!-- TEXT TO SPEECH -->
+        <include file="$(find robot_launch_files)/launch/interaction/text_to_speech.launch">
+            <arg name="machine-tts" value="amigo1"/>
+            <arg name="machine-play" value="amigo1"/>
+        </include>
+
+        <!-- Action server -->
+        <include file="$(find robot_launch_files)/launch/interaction/action_server.launch">
+            <arg name="machine" value="amigo1"/>
+            <arg name="robot" value="amigo" />
+        </include>
+
+        <!-- Joke -->
+        <include file="$(find robot_launch_files)/launch/essentials/joke.launch" >
+            <arg name="machine" value="amigo1" />
+        </include>
+
+    </group>
+
+</launch>
