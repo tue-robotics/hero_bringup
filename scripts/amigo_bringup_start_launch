@@ -1,2 +1,0 @@
-#!/bin/bash
-sudo -H -u amigo bash -c 'source ~/.tue/setup.bash && roslaunch amigo_bringup start.launch'
