@@ -1,0 +1,21 @@
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+JOB_NAME=amigo-bringup
+
+rosrun robot_upstart install --job $JOB_NAME --setup /home/amigo/.tue/setup.bash --provider systemd --symlink amigo_bringup/launch/start.launch
+
+# robot_upstart does not properly handle permissions on serial devices for some reason
+# Therefore, we will copy a simple file file that does a sudo -u amigo 
+sudo cp $DIR/amigo_bringup_start_launch /usr/sbin/${JOB_NAME}-start
+sudo rm /usr/sbin/${JOB_NAME}-stop
+
+# Reload and enable
+echo "Reloading, starting and enabling service ..."
+sudo systemctl daemon-reload
+sudo systemctl start $JOB_NAME.service
+sudo systemctl enable $JOB_NAME.service
+
+echo "Check the journal for the log"
+echo "sudo journalctl -u amigo_bringup_start"
