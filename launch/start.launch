@@ -19,25 +19,25 @@
         </include>
 
         <group if="$(optenv ROBOT_REAL false)">
-		<!-- OROCOS HARDWARE -->
-		<include file="$(find robot_launch_files)/launch/hardware/deployer.launch">
-		    <arg name="DEPLOYER_ARGS" value="gnulinux
-			HARDWARE
-			-s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/soem.ops
-			-s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/base_controller_pos.ops
-			-s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/spindle_controller.ops
-			-s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/left_arm_controller.ops
-			-s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/right_arm_controller.ops
-			-s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/head_controller.ops
-			-s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/rgb_lights.ops
-		    "/>
-		    <arg name="NAME" value ="hardware"/>
-		    <arg name="LOG_LEVEL" value="Error"/>
-		    <arg name="DEBUG" value="false"/>
-		    <arg name="machine" value="amigo1" />
-		</include>
+			<!-- OROCOS HARDWARE -->
+			<include file="$(find robot_launch_files)/launch/hardware/deployer.launch">
+				<arg name="DEPLOYER_ARGS" value="gnulinux
+				HARDWARE
+				-s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/soem.ops
+				-s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/base_controller_pos.ops
+				-s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/spindle_controller.ops
+				-s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/left_arm_controller.ops
+				-s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/right_arm_controller.ops
+				-s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/head_controller.ops
+				-s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/rgb_lights.ops
+				"/>
+				<arg name="NAME" value ="hardware"/>
+				<arg name="LOG_LEVEL" value="Error"/>
+				<arg name="DEBUG" value="false"/>
+				<arg name="machine" value="amigo1" />
+			</include>
 
-		<!-- MANAGERS -->
+			<!-- MANAGERS -->
 			<include file="$(find robot_launch_files)/launch/hardware/managers/emergency_button_manager.launch">
 				<arg name="machine" value="amigo1"/>
 			</include>
@@ -50,34 +50,39 @@
 				<arg name="machine" value="amigo1"/>
 			</include>
 
+			<!-- SENSORS -->
+			<include file="$(find robot_launch_files)/launch/hardware/sensors/kinect.launch">
+				<arg name="name" value="top_kinect"/>
+				<arg name="machine" value="amigo1"/>
+				<arg name="gdb" value="true"/>
+			</include>
+			<include file="$(find robot_launch_files)/launch/hardware/sensors/laser.launch">
+				<arg name="name" value="base_laser"/>
+				<arg name="machine" value="amigo1"/>
+			</include>
+			<include file="$(find robot_launch_files)/launch/hardware/sensors/laser.launch">
+				<arg name="name" value="torso_laser"/>
+				<arg name="machine" value="amigo1"/>
+			</include>
+		</group>
 
-		<!-- SENSORS -->
-		<include file="$(find robot_launch_files)/launch/hardware/sensors/kinect.launch">
-		    <arg name="name" value="top_kinect"/>
-		    <arg name="machine" value="amigo1"/>
-		    <arg name="gdb" value="true"/>
-		</include>
-		<include file="$(find robot_launch_files)/launch/hardware/sensors/laser.launch">
-		    <arg name="name" value="base_laser"/>
-		    <arg name="machine" value="amigo1"/>
-		</include>
-		<include file="$(find robot_launch_files)/launch/hardware/sensors/laser.launch">
-		    <arg name="name" value="torso_laser"/>
-		    <arg name="machine" value="amigo2"/>
-		</include>
-        </group>
+		<!-- Launch simulator if we are not on a real robot -->
+		<group unless="$(optenv ROBOT_REAL false)">
 
-        <!-- Launch simulator if we are not on a real robot -->
-        <group unless="$(optenv ROBOT_REAL false)">
+			<!-- Simulator -->
+			<include file="$(find robot_launch_files)/launch/simulator/simulator.launch" />
 
-		<!-- Simulator -->
-		<include file="$(find robot_launch_files)/launch/simulator/simulator.launch" />
-
-	</group>
+		</group>
 
         <!-- SPEECH RECOGNITION -->
         <include file="$(find robot_launch_files)/launch/interaction/speech_recognition.launch">
-            <arg name="machine" value="amigo3"/>
+            <arg name="machine" value="amigo1"/>
+        </include>
+
+        <!-- TEXT TO SPEECH -->
+        <include file="$(find robot_launch_files)/launch/interaction/text_to_speech.launch">
+            <arg name="machine-tts" value="amigo3"/>
+            <arg name="machine-play" value="amigo3"/>
         </include>
 
 		<!-- DIAGNOSTICS -->
