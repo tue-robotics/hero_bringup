@@ -172,6 +172,46 @@ stream("SPINDLE_WriteJointStates.out", 				ros.topic(ROBOTNS+"/torso/measurement
 # Reset Encoder
 EtherCATread.ResetEncoders(BODYPARTNR, 1, array(0.0));
 
+####################
+# Publish Homing stuff Component
+loadComponent("SPINDLE_HOME_PUB", "ROS::DoublesToJointState")
+setActivity("SPINDLE_HOME_PUB",0.05,LowestPriority,ORO_SCHED_OTHER)
+SPINDLE_HOME_PUB.JointNames 	= JOINT_NAMES
+SPINDLE_HOME_PUB.configure
+connect("SPINDLE_Homing.posout1", "SPINDLE_HOME_PUB.pos_in", ConnPolicy() );
+connect("SPINDLE_Homing.velout1", "SPINDLE_HOME_PUB.vel_in", ConnPolicy() );
+connect("SPINDLE_Homing.accout1", "SPINDLE_HOME_PUB.eff_in", ConnPolicy() );
+stream("SPINDLE_HOME_PUB.out", ros.topic("/amigo/spindle_homing") );
+SPINDLE_HOME_PUB.start()
+
+# Publish Position Component
+loadComponent("SPINDLE_POS_PUB", "ROS::DoublesToJointState")
+setActivity("SPINDLE_POS_PUB",0.05,LowestPriority,ORO_SCHED_OTHER)
+SPINDLE_POS_PUB.JointNames 	= JOINT_NAMES
+SPINDLE_POS_PUB.configure
+connect("EtherCATread.spindle_Eout1", "SPINDLE_POS_PUB.pos_in", ConnPolicy() );
+stream("SPINDLE_POS_PUB.out", ros.topic("/amigo/raw_spindle_pos") );
+SPINDLE_POS_PUB.start()
+
+# Publish Feedforward Component
+loadComponent("SPINDLE_FF_PUB", "ROS::DoublesToJointState")
+setActivity("SPINDLE_FF_PUB",0.05,LowestPriority,ORO_SCHED_OTHER)
+SPINDLE_FF_PUB.JointNames 	= JOINT_NAMES
+SPINDLE_FF_PUB.configure
+connect("SPINDLE_FFW.FFW_out", "SPINDLE_FF_PUB.pos_in", ConnPolicy() );
+stream("SPINDLE_FF_PUB.out", ros.topic("/amigo/spindle_ffw") );
+SPINDLE_FF_PUB.start()
+
+# Publish Control effort Component
+loadComponent("SPINDLE_CONTROL_PUB", "ROS::DoublesToJointState")
+setActivity("SPINDLE_CONTROL_PUB",0.05,LowestPriority,ORO_SCHED_OTHER)
+SPINDLE_CONTROL_PUB.JointNames 	= JOINT_NAMES
+SPINDLE_CONTROL_PUB.configure
+connect("SPINDLE_Controller.out", "SPINDLE_CONTROL_PUB.pos_in", ConnPolicy() );
+stream("SPINDLE_CONTROL_PUB.out", ros.topic("/amigo/spindle_control") );
+SPINDLE_CONTROL_PUB.start()
+####################
+
 #### START COMPONENTS ####
 SPINDLE_WriteJointStates.start()
 SPINDLE_Diagnostics.start()
