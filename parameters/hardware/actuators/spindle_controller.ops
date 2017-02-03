@@ -10,7 +10,7 @@
 var double 	TS 							= 0.001
 var strings JOINT_NAMES 				= strings( "torso_joint" )
 var double 	ENCODERBITS					= 65536.0
-var double 	ENC2SI 						= -4.1666667e-7; # Minus because spindle up is defined positive.
+var double 	ENC2SI 						= -4.1666667e-7; # Minus because spindle up is defined positive. 10cm=240.000 counts
 var array 	MAXERR						= array(0.01)
 var int 	N 							= 1
 var int 	BODYPARTNR 					= 2
