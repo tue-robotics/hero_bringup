@@ -1,4 +1,4 @@
 frame_id: /amigo/base_laser
 min_angle: -2.3
 max_angle: 2.3
-serial_port: /dev/sensors/hokuyo_busid_3-14
+serial_port: /dev/sensors/hokuyo_busid_3-1
