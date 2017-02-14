@@ -1,0 +1,15 @@
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+JOB_NAME=amigo-start
+
+sudo cp $DIR/$JOB_NAME.service /etc/systemd/system/
+
+# Reload and enable
+sudo systemctl daemon-reload
+sudo systemctl start $JOB_NAME.service
+sudo systemctl enable $JOB_NAME.service
+
+echo "Check the journal for the log"
+echo "sudo journalctl -u $JOB_NAME"

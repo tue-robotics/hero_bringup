@@ -15,7 +15,7 @@ var double 	TORQUE2CURRENT 				= 1.0/0.0302; 					# [Amp/Nm]
 var double 	CURRENT2VOLT 				= 1.0/1.0
 var double 	GEARRATIO 					= 8.0/343.0
 var double 	TWOPI 						= 2.0*3.141592
-var double 	ENCODERCOUNTS 				= 500.0*4.0
+var double 	ENCODERCOUNTS 				= 500.0*4.0;					# 85750 counts per wheel rotation
 var double 	ENCODERBITS					= 65536.0
 var double 	ENC2SI 						= TWOPI*GEARRATIO/ENCODERCOUNTS
 var double 	SI2V 						= TORQUE2CURRENT * CURRENT2VOLT * GEARRATIO
@@ -174,10 +174,10 @@ Supervisor.AddEnabledPeer("BASE_VelocityToPosition",BODYPARTNR )
 Supervisor.AddEnabledPeer("BASE_Safety", 			BODYPARTNR)
 
 #### AUTOLOG ####
-Tracing.AddBodypart(BODYPARTNAME,BODYPARTNR,2,N,strings("ref","pos"))
-connect("BASE_Controller.references",				"Tracing.base_ref", 					ConnPolicy() )
-connect("EtherCATread.base_Eout1",					"Tracing.base_pos", 					ConnPolicy() )
-connect("BASE_Safety.error",						"Tracing.base_error", 					ConnPolicy() )
+#Tracing.AddBodypart(BODYPARTNAME,BODYPARTNR,2,N,strings("ref","pos"))
+#connect("BASE_Controller.references",				"Tracing.base_ref", 					ConnPolicy() )
+#connect("EtherCATread.base_Eout1",					"Tracing.base_pos", 					ConnPolicy() )
+#connect("BASE_Safety.error",						"Tracing.base_error", 					ConnPolicy() )
 
 #### EtherCAT ping ####
 #connect("Soem.Slave_1002.Slave_1002_value",		"EtherCATping.in7", 					ConnPolicy() );
