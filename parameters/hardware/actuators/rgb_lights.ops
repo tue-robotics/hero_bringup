@@ -9,7 +9,7 @@
 
 #### DECLARATION OF PARAMETERS ####
 var double 	TS 							= 0.001
-var string	ROBOTNS						= os.getenv("ROBOT")
+var string	ROBOTNS						= os.getenv("ROBOTNS")
 
 
 #### RGB CONTROLLER ####
