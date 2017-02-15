@@ -22,7 +22,7 @@
 
 		<!-- Joke -->
 		<include file="$(find robot_launch_files)/launch/essentials/joke.launch" >
-			<arg name="machine" value="amigo1" />
+			<arg name="machine" value="amigo2" />
 		</include>
 
     </group>
