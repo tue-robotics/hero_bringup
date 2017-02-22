@@ -14,17 +14,15 @@
 			<arg name="machine" value="amigo2"/>
 		</include>
 
-		<!-- Action server -->
-		<include file="$(find robot_launch_files)/launch/interaction/action_server.launch">
-			<arg name="machine" value="amigo2"/>
-			<arg name="robot" value="amigo" />
-		</include>
-
 		<!-- Joke -->
 		<include file="$(find robot_launch_files)/launch/essentials/joke.launch" >
 			<arg name="machine" value="amigo2" />
 		</include>
 
     </group>
+
+	<!-- Action server state machine -->
+	<node name="state_machine" pkg="action_server" type="action_server_main" args="amigo" output="log" required="true" />
+	<node name="state_machine_py" pkg="action_server" type="main.py" args="amigo" output="log" required="true" />
 
 </launch>
