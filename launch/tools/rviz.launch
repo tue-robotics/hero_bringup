@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<launch>
+
+	<!-- rviz -->
+	<include file="$(find robot_launch_files)/launch/tools/rviz.launch" />
+
+</launch>
