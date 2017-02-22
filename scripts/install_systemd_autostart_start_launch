@@ -2,14 +2,14 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-JOB_NAME=amigo-start
-
-sudo cp $DIR/$JOB_NAME.service /etc/systemd/system/
+sudo cp $DIR/*.service /etc/systemd/system/
 
 # Reload and enable
 sudo systemctl daemon-reload
-sudo systemctl start $JOB_NAME.service
-sudo systemctl enable $JOB_NAME.service
+sudo systemctl start roscore.service
+sudo systemctl start amigo-start.service
+sudo systemctl enable roscore.service
+sudo systemctl enable amigo-start.service
 
 echo "Check the journal for the log"
-echo "sudo journalctl -u $JOB_NAME"
+echo "sudo journalctl -u [job_name, e.g. roscore, amigo-start]"
