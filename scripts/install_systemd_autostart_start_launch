@@ -12,4 +12,4 @@ sudo systemctl enable roscore.service
 sudo systemctl enable amigo-start.service
 
 echo "Check the journal for the log"
-echo "sudo journalctl -u [job_name, e.g. roscore, amigo-start]"
+echo "sudo journalctl -fu [job_name, e.g. roscore, amigo-start]"
