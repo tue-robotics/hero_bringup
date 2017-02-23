@@ -15,9 +15,9 @@
 			<!--arg name="config" value="world_modeling/world_model_r5cop.yaml"/-->
 		</include>
 
-		<!-- Start the challenge -->
-		<node pkg="r5cop_demo" type="challenge_amigo.py" name="challenge" args="amigo --initial_pose=[0.95,4.1,0]" output="screen" />
-
     </group>
+
+	<!-- Start the challenge -->
+	<node pkg="r5cop_demo" type="challenge_amigo.py" name="state_machine" args="amigo" output="screen" required="true"/>
 
 </launch>
