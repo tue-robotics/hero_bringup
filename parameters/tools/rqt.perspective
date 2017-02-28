@@ -5,7 +5,7 @@
       "keys": {
         "running-plugins": {
           "type": "repr", 
-          "repr": "{u'rqt_rviz/RViz': [1]}"
+          "repr": "{u'tue_rqt/State Machine Plugin': [1]}"
         }
       }, 
       "groups": {
@@ -30,6 +30,28 @@
               "groups": {}
             }
           }
+        }, 
+        "plugin__tue_rqt__State Machine Plugin__1": {
+          "keys": {}, 
+          "groups": {
+            "dock_widget__": {
+              "keys": {
+                "dockable": {
+                  "type": "repr", 
+                  "repr": "True"
+                }, 
+                "parent": {
+                  "type": "repr", 
+                  "repr": "None"
+                }, 
+                "dock_widget_title": {
+                  "type": "repr", 
+                  "repr": "u''"
+                }
+              }, 
+              "groups": {}
+            }
+          }
         }
       }
     }, 
@@ -37,13 +59,13 @@
       "keys": {
         "geometry": {
           "type": "repr(QByteArray.hex)", 
-          "repr(QByteArray.hex)": "QtCore.QByteArray('01d9d0cb000200000000006400000064000005c8000003a40000006400000080000005c8000003a400000000000000000780')", 
-          "pretty-print": "     d d     d           "
+          "repr(QByteArray.hex)": "QtCore.QByteArray('01d9d0cb000200000000012c0000020500000690000002780000012c00000221000006900000027800000000000000000780')", 
+          "pretty-print": "     ,     x , !   x     "
         }, 
         "state": {
           "type": "repr(QByteArray.hex)", 
-          "repr(QByteArray.hex)": "QtCore.QByteArray('000000ff00000000fd0000000100000003000005650000030ffc0100000001fb00000026007200710074005f007200760069007a005f005f005200560069007a005f005f0031005f005f0100000000000005650000030000ffffff000005650000000000000004000000040000000800000008fc00000001000000030000000100000036004d0069006e0069006d0069007a006500640044006f0063006b00570069006400670065007400730054006f006f006c0062006100720000000000ffffffff0000000000000000')", 
-          "pretty-print": "                 &rqt_rviz__RViz__1__                            6MinimizedDockWidgetsToolbar        "
+          "repr(QByteArray.hex)": "QtCore.QByteArray('000000ff00000000fd00000001000000030000056500000042fc0100000002fb00000026007200710074005f007200760069007a005f005f005200560069007a005f005f0031005f005f0100000000000005650000000000000000fb00000044007400750065005f007200710074005f005f005300740061007400650020004d0061006300680069006e006500200050006c007500670069006e005f005f0031005f005f0100000000000005650000008e00ffffff000005650000000000000004000000040000000800000008fc00000001000000030000000100000036004d0069006e0069006d0069007a006500640044006f0063006b00570069006400670065007400730054006f006f006c0062006100720000000000ffffffff0000000000000000')", 
+          "pretty-print": "                 &rqt_rviz__RViz__1__          Dtue_rqt__State Machine Plugin__1__                            6MinimizedDockWidgetsToolbar        "
         }
       }, 
       "groups": {
