@@ -1,5 +1,5 @@
 # Parameters only required for philips text to speech
-tts_module: festival
+tts_module: philips
 philips_executable: /home/amigo/ros/kinetic/system/src/philips_text_to_speech/amigo/ptts_v911.exe
 
 character: default
