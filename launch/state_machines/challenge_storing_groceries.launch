@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <group ns="amigo">
+
+		<!-- NAVIGATION -->
+		<include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
+			<arg name="machine" value="amigo2"/>
+		</include>
+
+		<!-- WORLD MODEL -->
+		<include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
+			<arg name="machine" value="amigo2"/>
+			<!--arg name="config" value="world_modeling/world_model_r5cop.yaml"/-->
+		</include>
+
+    </group>
+
+	<!-- Start the challenge -->
+	<node pkg="challenge_storing_groceries" type="challenge_storing_groceries.py" name="state_machine" args="amigo" output="screen" required="true"/>
+
+</launch>
