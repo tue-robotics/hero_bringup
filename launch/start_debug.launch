@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="debug" default="false" />
+
+    <group ns="amigo">
+
+        <!-- PARAMETERS: desciption, joint groups and specific skills -->
+        <param name="robot_description" textfile="$(find amigo_description)/urdf/amigo.urdf" />
+        <rosparam file="$(find amigo_description)/custom/joint_groups.yaml" command="load" />
+        <rosparam file="$(find amigo_description)/custom/skills.yaml" command="load" />
+
+        <!-- Robot state publisher -->
+        <include file="$(find robot_launch_files)/launch/essentials/robot_state_publisher.launch">
+            <arg name="machine" value="amigo1" />
+        </include>
+
+        <!-- Phone UI -->
+        <include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch">
+            <arg name="machine" value="amigo1" />
+        </include>
+
+        <group if="$(optenv ROBOT_REAL false)">
+            <!-- OROCOS HARDWARE -->
+            <include file="$(find robot_launch_files)/launch/hardware/deployer.launch">
+                <arg name="DEPLOYER_ARGS" value="--DeployerName HARDWARE
+                -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/soem.ops
+                -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/base_controller_pos.ops
+                -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/spindle_controller.ops
+                -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/left_arm_controller.ops
+                -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/right_arm_controller.ops
+                -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/head_controller.ops
+                -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/rgb_lights.ops
+                "/>
+                <arg name="NAME" value ="hardware"/>
+                <arg name="LOG_LEVEL" value="Warning"/>
+                <arg name="DEBUG" value="$(arg debug)"/>
+                <arg name="machine" value="amigo1" />
+            </include>
+
+            <!-- MANAGERS -->
+            <include file="$(find robot_launch_files)/launch/hardware/managers/emergency_button_manager.launch">
+                <arg name="machine" value="amigo1"/>
+            </include>
+
+            <include file="$(find robot_launch_files)/launch/hardware/managers/rgb_lights_manager.launch" >
+                <arg name="machine" value="amigo1"/>
+            </include>
+
+            <include file="$(find robot_launch_files)/launch/hardware/managers/battery_manager.launch" >
+                <arg name="machine" value="amigo1"/>
+			</include>
+
+		</group>
+
+    <!-- TF Server: advertises services for looking up transformations -->
+    <include file="$(find robot_launch_files)/launch/essentials/tf_server.launch" >
+        <arg name="machine" value="amigo1" />
+	</include>
+
+    </group>
+
+ </launch>
