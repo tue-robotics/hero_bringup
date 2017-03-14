@@ -166,7 +166,7 @@ connect("SPINDLE_Controller.out", 					"SPINDLE_Diagnostics.vec3", 				ConnPolic
 connect("SPINDLE_Safety.enable",					"SPINDLE_Diagnostics.bool1", 				ConnPolicy() ); # Enable
 
 #### CONNECT ROS STREAMS ####
-stream("SPINDLE_Diagnostics.diagnostics", 			ros.topic("/diagnostics"))
+stream("SPINDLE_Diagnostics.diagnostics", 			ros.topic(ROBOTNS+"/diagnostics"))
 stream("SPINDLE_WriteJointStates.out", 				ros.topic(ROBOTNS+"/torso/measurements"))
 
 # Reset Encoder

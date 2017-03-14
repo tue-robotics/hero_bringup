@@ -157,7 +157,6 @@ stream("BASE_OdometryPublisher.odom", 				ros.topic(ROBOTNS+"/base/measurements"
 stream("BASE_OdometryPublisher.reset", 				ros.topic(ROBOTNS+"/base/reset_odometry"));
 stream("BASE_ReadReferences.cmd_vel", 				ros.topic(ROBOTNS+"/base/references"));
 stream("BASE_Diagnostics.diagnostics", 				ros.topic(ROBOTNS+"/diagnostics"));
-stream("BASE_Diagnostics.diagnostics", 				ros.topic(ROBOTNS+"/base_diagnostics"));
 
 # Reset Encoder
 EtherCATread.ResetEncoders(BODYPARTNR, 1, array(0.0, 0.0, 0.0, 0.0));

@@ -178,7 +178,7 @@ stream ("BASE_OdometryPublisher.reset", 		ros.topic(ROBOT+"/base/reset_odometry"
 connect ("BASE_ReadReferences.out", 			"BASE_Diagnostics.vec1", 		ConnPolicy() )
 connect ("BASE_Controller.jointErrors", 		"BASE_Diagnostics.vec2", 		ConnPolicy() )
 connect ("BASE_SI2Volt.out", 					"BASE_Diagnostics.vec3", 		ConnPolicy() )
-stream ("BASE_Diagnostics.diagnostics", 		ros.topic(ROBOT+"/base_diagnostics"));
+stream ("BASE_Diagnostics.diagnostics", 		ros.topic(ROBOT+"/diagnostics"));
 
 #### START COMPONENTS ####
 # Control loop
