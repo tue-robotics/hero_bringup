@@ -17,6 +17,6 @@
     </group>
 
     <!-- Start the challenge -->
-    <node pkg="challenge_storing_groceries" type="test_inspect_shelves" name="state_machine" args="amigo" output="screen" required="true"/>
+    <node pkg="challenge_storing_groceries" type="challenge_storing_groceries" name="state_machine" args="amigo" output="screen" required="true"/>
 
 </launch>
