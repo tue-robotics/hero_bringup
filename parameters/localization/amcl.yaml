@@ -1,5 +1,5 @@
-odom_frame_id: /sergio/odom
-base_frame_id: /sergio/base_link
+odom_frame_id: /amigo/odom
+base_frame_id: /amigo/base_link
 
 gui_publish_rate: 10.0
 
