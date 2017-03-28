@@ -16,10 +16,10 @@ var strings DUMMY_JOINT_NAMES 			= strings( "finger1_joint_left", "finger1_tip_j
 var array 	UPPERJOINTLIMIT 			= array(	0.0,		1.57,		1.57, 		2.23,  		1.83, 		0.95,  		0.61,  		7.5		  )
 var array 	LOWERJOINTLIMIT 			= array(	-1.57,		-1.57,		-1.57,  	0.0, 		-1.83,		-0.95, 		-0.61, 		-1.0	  )
 var array 	RESETPOS					= array(	-0.02,  	-0.0, 		0.0, 		0.0,		0.0,		0.0, 		0.0)
-var array 	HOMINGSTROKE 				= array(	0.0,		0.0,		-1.57,  	0.0, 		-1.83,		-1.05, 		-0.8, 		0.0		  )
+var array 	HOMINGSTROKE 				= array(	0.0,		0.0,		-1.62,  	0.0, 		-1.95,		-1.05, 		-0.8, 		0.0		  )
 var array 	MAXERRORS 					= array(	0.09,     	0.09,   	0.09,     	0.09, 	   	0.09,    	0.09, 	   	0.09, 		0.5		  )
-var array 	ABSPOS						= array	(	0.64,		2.10,		0.0,		0.0,		0.0,		0.0,		0.0,		0.0		  )
-var array 	ENCODERBITS					= array(   65536.0,	65536.0,	65536.0,	65536.0,	65536.0,	65536.0,	65536.0,	65536.0       )		
+var array 	ABSPOS						= array	(	0.634,		2.11,		0.0,		0.0,		0.0,		0.0,		0.0,		0.0		  )
+var array 	ENCODERBITS					= array(   65536.0,	65536.0,	65536.0,	65536.0,	65536.0,	65536.0,	65536.0,	65536.0       )
 var double 	TWOPI 						= 2.0*3.141592
 var double 	GEARRATIO_SM				= 1.0/550.0
 var double 	GEARRATIO_S3		    	= 1.0/371.25
@@ -28,7 +28,7 @@ var double 	GEARRATIO_WM				= 1.0/290.0
 var double 	GEARRATIO_HM				= 196.0/3249.0
 var double 	ENCODERCOUNTS_SM			= 256.0*4.0
 var double 	ENCODERCOUNTS_S3	    	= 256.0*4.0
-var double 	ENCODERCOUNTS_EM			= 500.0*4.0 
+var double 	ENCODERCOUNTS_EM			= 500.0*4.0
 var double 	ENCODERCOUNTS_WM			= 128.0*4.0
 var double 	ENCODERCOUNTS_HM			= 8.0*128.0*4.0
 var double 	ENC2SI_SM					= TWOPI*GEARRATIO_SM/ENCODERCOUNTS_SM
@@ -76,7 +76,7 @@ EtherCATread.AddSaturation_E(BODYPARTNAME,1, LOWERJOINTLIMIT, UPPERJOINTLIMIT)
 EtherCATread.AddMsgOut_E(BODYPARTNAME, 1,JOINT_NAMES);
 EtherCATread.AddTorqueSensor_A(BODYPARTNAME, 1, SENSORTORQUES_C1, SENSORTORQUES_C2, SENSORTORQUES_C3)
 
-# EtherCATwrite 
+# EtherCATwrite
 EtherCATwrite.AddAnalogOuts(BODYPARTNAME, array(8.0), array(3.0, 3.0, 3.0),array(1.0, 1.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0),array(1.0, 2.0, 0.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0))
 EtherCATwrite.AddMatrixTransform_A(BODYPARTNAME, 1, 8, 8)
 EtherCATwrite.left_arm1_matrixtransform1 = array( 0.5, -0.5,  0.0,  0.0,  0.0,  0.0,  0.0,  0.0)
@@ -113,7 +113,7 @@ LPERA_Controller.number_of_refports		= 2
 LPERA_Controller.refinport_sizes		= ints(7, 1)
 LPERA_Controller.number_of_ffwports		= 0
 LPERA_Controller.gains					= array(20000.0, 	20000.0, 	10000.0, 	17500.0, 	17500.0, 	17500.0, 	21500.0, 	6000.0);
-LPERA_Controller.zero_freq_WeakIntegrator = array(0.0065,	0.0065,		0.009, 		0.004, 		0.004, 		0.02, 		0.02, 		0.000001); 
+LPERA_Controller.zero_freq_WeakIntegrator = array(0.0065,	0.0065,		0.009, 		0.004, 		0.004, 		0.02, 		0.02, 		0.000001);
 LPERA_Controller.zero_freq_LeadLag		= array(25.0, 		25.0, 		15.0, 		100.0, 		100.0,		5.0,  		5.0,  		5.0)
 LPERA_Controller.pole_freq_LeadLag		= array(80.0, 		80.0, 		40.0, 		200.0, 		200.0, 		40.0, 		40.0, 		50.0)
 LPERA_Controller.pole_freq_LowPass		= array(125.0, 		125.0, 		125.0, 		125.0, 		62.5, 		125.0, 		125.0, 		125.0)
@@ -187,7 +187,7 @@ LPERA_Diagnostics.vecname3 				= "Reference Path Planning"
 LPERA_Diagnostics.boolname1 			= "Error"
 
 #### CONNECT COMPONENTS ####
-## Control loop	## 
+## Control loop	##
 connect(SL_ID_LSHOULDER+".encoder1",				"EtherCATread.left_arm_Ein1", 				ConnPolicy() ); # Enc 1
 connect(SL_ID_LSHOULDER+".encoder2",				"EtherCATread.left_arm_Ein2", 				ConnPolicy() ); # Enc 2
 connect(SL_ID_LUPPERARM+".encoder1",				"EtherCATread.left_arm_Ein3", 				ConnPolicy() ); # Enc 3
@@ -210,7 +210,7 @@ connect("EtherCATwrite.left_arm_Aout2",				SL_ID_LUPPERARM+".pwmDutyMotors", 			
 connect("EtherCATwrite.left_arm_Aout3",				SL_ID_LLOWERARM+".pwmDutyMotors", 			ConnPolicy() );
 
 ## References ##
-connect("EtherCATread.left_arm_Eout1",				"TrajectoryActionlib.current_pos3",			ConnPolicy() ); # 
+connect("EtherCATread.left_arm_Eout1",				"TrajectoryActionlib.current_pos3",			ConnPolicy() ); #
 connect("TrajectoryActionlib.pos_out3",				"LPERA_Controller.ref_in1", 				ConnPolicy() ); # Ref Pos
 
 ## Gripper control ##
