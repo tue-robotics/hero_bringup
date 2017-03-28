@@ -27,7 +27,7 @@ var double MAX_INTERVAL 		= 1.0
 var array MAX_OUTPUT 			= array(9.9, 9.9, 9.9, 9.9)
 var double MAX_SATURATION_TIME	= 0.1
 var int N						= 4
-var string ROBOT 				= "/amigo"
+var string ROBOTNS 				= "/amigo"
 var int BODYPARTNR 					= 1
 var string BODYPARTNAME 		= "base"
 var bool HOMEABLE 				= false
@@ -128,8 +128,8 @@ BASE_MotorToJointSpace.function3 		= array ( 0.25*WHEELRAD/DIS2CENT,   0.25*WHEE
 loadComponent("BASE_OdometryPublisher","ROS::PublishOdometry")
 addPeer("Supervisor","BASE_OdometryPublisher")
 setActivity("BASE_OdometryPublisher",0.05,LowestPriority,ORO_SCHED_OTHER)
-BASE_OdometryPublisher.base_link_frame 	= ROBOT+"/base_link"
-BASE_OdometryPublisher.odom_frame 		= ROBOT+"/odom"
+BASE_OdometryPublisher.base_link_frame 	= ROBOTNS+"/base_link"
+BASE_OdometryPublisher.odom_frame 		= ROBOTNS+"/odom"
 BASE_OdometryPublisher.configure
 
 ### LOAD COMPONENT TO PUBLISH DIAGNOSTICS ###
@@ -164,21 +164,21 @@ connect ("BASE_Safety.enable",					"BASE_Controller.enable", 		ConnPolicy() ); #
 connect ("BASE_Safety.enable", 					"DigitalOuts2.in2", 			ConnPolicy() ); # Enable (amplifiers)
 
 # Reference signal
-stream  ("BASE_ReadReferences.cmd_vel", 		ros.topic(ROBOT+"/base/references"		));
+stream  ("BASE_ReadReferences.cmd_vel", 		ros.topic(ROBOTNS+"/base/references"		));
 connect ("BASE_ReadReferences.out",				"BASE_JointToMotorSpace.in", 	ConnPolicy() )
 connect ("BASE_JointToMotorSpace.out",			"BASE_Controller.ref_in1", 		ConnPolicy() );
 
 # Odom to ros
 connect ("BASE_ReadEncoders.out",				"BASE_MotorToJointSpace.in", 	ConnPolicy() )
 connect ("BASE_MotorToJointSpace.out", 			"BASE_OdometryPublisher.pos", 	ConnPolicy() );
-stream ("BASE_OdometryPublisher.odom", 			ros.topic(ROBOT+"/base/measurements"));
-stream ("BASE_OdometryPublisher.reset", 		ros.topic(ROBOT+"/base/reset_odometry"));
+stream ("BASE_OdometryPublisher.odom", 			ros.topic(ROBOTNS+"/base/measurements"));
+stream ("BASE_OdometryPublisher.reset", 		ros.topic(ROBOTNS+"/base/reset_odometry"));
 
 # Diagnostics
 connect ("BASE_ReadReferences.out", 			"BASE_Diagnostics.vec1", 		ConnPolicy() )
 connect ("BASE_Controller.jointErrors", 		"BASE_Diagnostics.vec2", 		ConnPolicy() )
 connect ("BASE_SI2Volt.out", 					"BASE_Diagnostics.vec3", 		ConnPolicy() )
-stream ("BASE_Diagnostics.diagnostics", 		ros.topic(ROBOT+"/base_diagnostics"));
+stream ("BASE_Diagnostics.diagnostics", 		ros.topic(ROBOTNS+"/diagnostics"));
 
 #### START COMPONENTS ####
 # Control loop
