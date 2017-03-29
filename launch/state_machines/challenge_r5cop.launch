@@ -12,7 +12,7 @@
 		<!-- WORLD MODEL -->
 		<include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
 			<arg name="machine" value="amigo2"/>
-			<!--arg name="config" value="world_modeling/world_model_r5cop.yaml"/-->
+			<arg name="config" value="world_modeling/world_model_r5cop.yaml"/>
 		</include>
 
 		<node name="ed_server_bridge" pkg="multirobot_communication" type="ed_server_bridge.py">
