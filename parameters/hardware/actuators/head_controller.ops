@@ -8,7 +8,8 @@
 
 #### DECLARATION OF PARAMETERS ####
 var double 	TSdynamixel					= 0.02; 		#Runs lower than other components
-var double 	RAD_TO_STEP 				= 195.37860814; # IF YOU CHANGE THIS VARIABLE, ALSO RECALCULATE PAN_MIN, PAN_MAX, TILT_MIN AND TILT_MAX, (From header file) 
+var double 	RAD_TO_STEP 				= 195.37860814; # IF YOU CHANGE THIS VARIABLE, ALSO RECALCULATE PAN_MIN, PAN_MAX, TILT_MIN AND TILT_MAX, (From header file)
+var double  RAD_TO_STEP_TILT			= 190.9859; # RX-64
 var strings JOINT_NAMES 				= strings( "neck_pan_joint", "neck_tilt_joint" )
 var int 	PAN_ID 						= 2; 			# Dynamixel id
 var int 	TILT_ID 					= 1; 			# Dynamixel id
@@ -16,8 +17,8 @@ var int 	PAN_OFFSET 					= 512; 			# Center pan dynamixel
 var int 	TILT_OFFSET 				= 512; 			# Center tilt dynamixel
 var int 	PAN_MIN 					= -306; 		# -1.57*RAD_TO_STEP
 var int 	PAN_MAX 					= 306; 			#  1.57*RAD_TO_STEP
-var int 	TILT_MIN 					= -97; 			# -0.5 *RAD_TO_STEP
-var int 	TILT_MAX 					= 171; 			#  0.88*RAD_TO_STEP
+var int 	TILT_MIN 					= -95; 			# -0.5 *RAD_TO_STEP_TILT
+var int 	TILT_MAX 					= 168; 			#  0.88*RAD_TO_STEP_TILT
 var int 	PAN_SPEED 					= 50
 var int 	TILT_SPEED 	 				= 25
 var int 	BODYPARTNR 					= 5
