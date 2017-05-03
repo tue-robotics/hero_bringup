@@ -118,7 +118,7 @@ plugins:
       type: rgo2017/table_dinner
       image: $(rospkg challenge_open)/images/rgo2017/table_dinner.jpg
     - id: desk
-      type: rgo2017/bureau
+      type: rgo2017/table_bureau
       image: $(rospkg challenge_open)/images/rgo2017/table_bureau.jpg
     - id: cabinet
       type: rgo2017/bookcase
@@ -162,3 +162,6 @@ plugins:
     - id: stove
       type: rgo2017/kitchen_sink
       image: $(rospkg challenge_open)/images/rgo2017/kitchen_sink.jpg
+    - id: stove
+      type: rgo2017/tv
+      image: $(rospkg challenge_open)/images/rgo2017/tv.jpg
