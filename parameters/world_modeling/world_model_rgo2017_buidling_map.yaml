@@ -117,31 +117,31 @@ plugins:
     - id: dinner_table
       type: rgo2017/table_dinner
       image: $(rospkg challenge_open)/images/rgo2017/table_dinner.jpg
-    - id: bureau
+    - id: desk
       type: rgo2017/bureau
       image: $(rospkg challenge_open)/images/rgo2017/table_bureau.jpg
-    - id: bookcase1
+    - id: cabinet
       type: rgo2017/bookcase
       image: $(rospkg challenge_open)/images/rgo2017/bookcase.jpg
-    - id: bookcase2
+    - id: bookshelf
       type: rgo2017/bookcase
       image: $(rospkg challenge_open)/images/rgo2017/bookcase.jpg
-    - id: bookcase3
+    - id: closet
       type: rgo2017/bookcase
       image: $(rospkg challenge_open)/images/rgo2017/bookcase.jpg
-    - id: table_salon_double
+    - id: couch_table
       type: rgo2017/table_salon_double
       image: $(rospkg challenge_open)/images/rgo2017/table_salon_double.jpg
-    - id: table_salon1
+    - id: side_table
       type: rgo2017/table_salon
       image: $(rospkg challenge_open)/images/rgo2017/table_salon.jpg
-    - id: table_salon2
+    - id: table_bedroom
       type: rgo2017/table_salon
       image: $(rospkg challenge_open)/images/rgo2017/table_salon.jpg
-    - id: bed_frame
+    - id: bed
       type: rgo2017/bed_frame
       image: $(rospkg challenge_open)/images/rgo2017/bed_frame.jpg
-    - id: couch
+    - id: sofa
       type: rgo2017/couch
       image: $(rospkg challenge_open)/images/rgo2017/couch.jpg
     - id: armchair1
@@ -153,12 +153,12 @@ plugins:
     - id: armchair3
       type: rgo2017/armchair
       image: $(rospkg challenge_open)/images/rgo2017/armchair.jpg
-    - id: table_party
+    - id: bar
       type: rgo2017/table_party
       image: $(rospkg challenge_open)/images/rgo2017/table_party.jpg
-    - id: kitchen_counter
+    - id: kitchencounter
       type: rgo2017/kitchen_counter
       image: $(rospkg challenge_open)/images/rgo2017/kitchen_counter.jpg
-    - id: kitchen_sink
+    - id: stove
       type: rgo2017/kitchen_sink
       image: $(rospkg challenge_open)/images/rgo2017/kitchen_sink.jpg
