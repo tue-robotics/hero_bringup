@@ -17,7 +17,7 @@ plugins:
   parameters:
       robot_name: amigo
 
- name: localization
+- name: localization
   lib: libed_localization_plugin.so
   frequency: 40
   enabled: 1
@@ -26,9 +26,9 @@ plugins:
       initial_pose_topic: /amigo/initialpose
       num_particles: 500
       initial_pose:
-          x: 1.5 #$(env ROBOT_INIT_X)
-          y: 2.5 #$(env ROBOT_INIT_Y)
-          rz: 3.1415 #$(env ROBOT_INIT_PHI)
+          x: -1.0 #$(env ROBOT_INIT_X)
+          y: 0.0 #$(env ROBOT_INIT_Y)
+          rz: 0.0 #$(env ROBOT_INIT_PHI)
       laser_model:
           topic: /amigo/base_laser/scan
           num_beams: 100
