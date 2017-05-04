@@ -33,7 +33,7 @@
                 -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/rgb_lights.ops
                 "/>
                 <arg name="NAME" value ="hardware"/>
-                <arg name="LOG_LEVEL" value="Info"/>
+                <arg name="LOG_LEVEL" value="Warning"/>
                 <arg name="DEBUG" value="$(arg debug)"/>
                 <arg name="machine" value="amigo1" />
             </include>
