@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <arg name="robot_name" value="amigo" />
+    <arg name="skip" default="true" />
+    <arg name="number_of_tasks" default="0" />
+    <arg name="entrance_number" />
+
+    <group ns="$(arg robot_name)">
+
+        <!-- NAVIGATION -->
+        <include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
+            <arg name="machine" value="amigo2"/>
+        </include>
+
+        <!-- WORLD MODEL -->
+        <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
+            <arg name="machine" value="amigo2"/>
+			<arg name="config" value="world_modeling/world_model_gpsr.yaml"/>
+        </include>
+
+        <!-- Start the action server -->
+        <node pkg="action_server" type="main.py" name="action_server" output="screen" respawn="true">
+            <param name="robot_name" value="$(arg robot_name)" />
+        </node>
+
+    </group>
+
+    <!-- Start the challenge -->
+    <node pkg="challenge_gpsr" type="gpsr.py" name="state_machine" output="screen" required="true">
+        <param name="robot_name" value="$(arg robot_name)" />
+        <param name="skip" value="$(arg skip)" />
+        <param name="number_of_tasks" value="$(arg number_of_tasks)" />
+        <param name="entrance_number" value="$(arg entrance_number)" />
+    </node>
+
+</launch>
