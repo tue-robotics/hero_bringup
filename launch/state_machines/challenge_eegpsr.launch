@@ -5,7 +5,8 @@
     <arg name="robot_name" value="amigo" />
     <arg name="skip" default="true" />
     <arg name="number_of_tasks" default="0" />
-    <arg name="entrance_number" />
+    <arg name="restart" default="false" />
+    <arg name="entrance_number" value="1" />
 
     <group ns="$(arg robot_name)">
 
@@ -33,6 +34,7 @@
         <param name="skip" value="$(arg skip)" />
         <param name="number_of_tasks" value="$(arg number_of_tasks)" />
         <param name="entrance_number" value="$(arg entrance_number)" />
+        <param name="restart" value="$(arg restart)" />
     </node>
 
 </launch>
