@@ -17,14 +17,14 @@
         <!-- WORLD MODEL -->
         <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
             <arg name="machine" value="amigo2"/>
-            <!--arg name="config" value="world_modeling/world_model_gpsr.yaml"/-->
+			<arg name="config" value="world_modeling/world_model_gpsr.yaml"/>
         </include>
 
         <!-- Start the action server -->
         <node pkg="action_server" type="main.py" name="action_server" output="screen" respawn="true">
             <param name="robot_name" value="$(arg robot_name)" />
         </node>
-        
+
     </group>
 
     <!-- Start the challenge -->
