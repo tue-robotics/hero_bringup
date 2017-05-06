@@ -22,8 +22,9 @@
         </include>
 
     </group>
-    
-    <!-- Start the challenge -->
-    <node pkg="challenge_restaurant" type="challenge_restaurant" name="state_machine" args="amigo" output="screen" required="true"/>
 
+    <!-- Start the challenge -->
+	<!--
+	 <node pkg="challenge_restaurant" type="challenge_restaurant" name="state_machine" args="amigo" output="screen" required="true"/>
+	-->
 </launch>
