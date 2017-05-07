@@ -16,7 +16,4 @@
 
 	</group>
 
-	<!-- Challenge -->
-	<node pkg="challenge_final" type="challenge-final" name="state_machine" args="amigo" output="screen" required="true"/>
-
 </launch>
