@@ -6,7 +6,7 @@ Panels:
       Expanded:
         - /Global Options1
         - /TF1/Frames1
-      Splitter Ratio: 0.678570986
+      Splitter Ratio: 0.678571
     Tree Height: 775
   - Class: rviz/Selection
     Name: Selection
@@ -16,7 +16,7 @@ Panels:
       - /2D Nav Goal1
       - /Publish Point1
     Name: Tool Properties
-    Splitter Ratio: 0.588679016
+    Splitter Ratio: 0.588679
   - Class: rviz/Views
     Expanded:
       - /Current View1
@@ -412,7 +412,7 @@ Visualization Manager:
       Color: 255; 255; 255
       Enabled: true
       Line Style:
-        Line Width: 0.0299999993
+        Line Width: 0.03
         Value: Lines
       Name: Grid
       Normal Cell Count: 0
@@ -447,7 +447,7 @@ Visualization Manager:
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.00999999978
+      Size (m): 0.01
       Style: Flat Squares
       Topic: /amigo/depth/points
       Unreliable: false
@@ -485,7 +485,7 @@ Visualization Manager:
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.0250000004
+      Size (m): 0.025
       Style: Flat Squares
       Topic: /amigo/base_laser/scan
       Unreliable: false
@@ -515,14 +515,14 @@ Visualization Manager:
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.00999999978
+      Size (m): 0.01
       Style: Flat Squares
       Topic: /amigo/torso_laser/scan
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
       Value: false
-    - Alpha: 0.699999988
+    - Alpha: 0.7
       Class: rviz/Map
       Color Scheme: map
       Draw Behind: false
@@ -568,20 +568,20 @@ Visualization Manager:
       Class: rviz/Path
       Color: 25; 255; 0
       Enabled: true
-      Head Diameter: 0.300000012
-      Head Length: 0.200000003
-      Length: 0.300000012
+      Head Diameter: 0.3
+      Head Length: 0.2
+      Length: 0.3
       Line Style: Lines
-      Line Width: 0.0299999993
+      Line Width: 0.03
       Name: Local Planner - Trajectory
       Offset:
         X: 0
         Y: 0
         Z: 0
       Pose Style: None
-      Radius: 0.0299999993
-      Shaft Diameter: 0.100000001
-      Shaft Length: 0.100000001
+      Radius: 0.03
+      Shaft Diameter: 0.1
+      Shaft Length: 0.1
       Topic: /amigo/local_planner/DWAPlannerROS/local_traj
       Unreliable: false
       Value: true
@@ -616,7 +616,7 @@ Visualization Manager:
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.00999999978
+      Size (m): 0.01
       Style: Flat Squares
       Topic: /amigo/local_planner/dwa_planner/cost_cloud
       Unreliable: false
@@ -654,7 +654,7 @@ Visualization Manager:
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.00999999978
+      Size (m): 0.01
       Style: Flat Squares
       Topic: /amigo/local_planner/visualization/trajectory_cloud
       Unreliable: false
@@ -666,9 +666,9 @@ Visualization Manager:
       Class: rviz/Path
       Color: 25; 255; 0
       Enabled: true
-      Head Diameter: 0.300000012
-      Head Length: 0.200000003
-      Length: 0.300000012
+      Head Diameter: 0.3
+      Head Length: 0.2
+      Length: 0.3
       Line Style: Lines
       Line Width: 0.0299999993
       Name: Local Planner - Plan
@@ -677,14 +677,13 @@ Visualization Manager:
         Y: 0
         Z: 0
       Pose Style: None
-      Radius: 0.0299999993
-      Shaft Diameter: 0.100000001
-      Shaft Length: 0.100000001
+      Radius: 0.03
+      Shaft Diameter: 0.1
+      Shaft Length: 0.1
       Topic: /amigo/local_planner/DWAPlannerROS/local_plan
       Unreliable: false
       Value: true
-    - Alpha: 0.699999988
-      Class: rviz/Map
+    - Alpha: 0.7
       Color Scheme: map
       Draw Behind: false
       Enabled: false
@@ -692,7 +691,7 @@ Visualization Manager:
       Topic: /amigo/global_planner/global_costmap/costmap
       Unreliable: false
       Value: false
-    - Alpha: 0.699999988
+    - Alpha: 0.7
       Class: rviz/Map
       Color Scheme: map
       Draw Behind: false
@@ -719,8 +718,8 @@ Visualization Manager:
       Value: true
     - Class: ed_rviz_plugins/WorldModel
       Enabled: true
-      Entity Area label opacity: 0.400000006
-      Entity Area opacity: 0.200000003
+      Entity Area label opacity: 0.4
+      Entity Area opacity: 0.2
       Entity label opacity: 1
       Mesh query service name: /amigo/ed/gui/query_meshes
       Name: WorldModel
@@ -750,14 +749,14 @@ Visualization Manager:
       Queue Size: 10
       Selectable: true
       Size (Pixels): 3
-      Size (m): 0.0399999991
+      Size (m): 0.04
       Style: Spheres
       Topic: /amigo/ed/navigation/cloud
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
-    - Alpha: 0.699999988
+    - Alpha: 0.7
       Class: rviz/Map
       Color Scheme: map
       Draw Behind: false
@@ -806,9 +805,9 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 4.98795223
+      Distance: 5.0
       Enable Stereo Rendering:
-        Stereo Eye Separation: 0.0599999987
+        Stereo Eye Separation: 0.06
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
@@ -817,23 +816,23 @@ Visualization Manager:
         Y: 6.35618353
         Z: 1.55338001
       Focal Shape Fixed Size: true
-      Focal Shape Size: 0.0500000007
+      Focal Shape Size: 0.05
       Name: Current View
-      Near Clip Distance: 0.00999999978
-      Pitch: 0.959800005
+      Near Clip Distance: 0.01
+      Pitch: 0.96
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 0.771830261
+      Yaw: 0.77
     Saved:
       - Angle: 0
         Class: rviz/TopDownOrtho
         Enable Stereo Rendering:
-          Stereo Eye Separation: 0.0599999987
+          Stereo Eye Separation: 0.06
           Stereo Focal Distance: 1
           Swap Stereo Eyes: false
           Value: false
         Name: TopDownOrtho
-        Near Clip Distance: 0.00999999978
+        Near Clip Distance: 0.01
         Scale: 164.283005
         Target Frame: <Fixed Frame>
         Value: TopDownOrtho (rviz)
@@ -842,12 +841,12 @@ Visualization Manager:
       - Angle: 0
         Class: rviz/TopDownOrtho
         Enable Stereo Rendering:
-          Stereo Eye Separation: 0.0599999987
+          Stereo Eye Separation: 0.05
           Stereo Focal Distance: 1
           Swap Stereo Eyes: false
           Value: false
         Name: MaxObsVel
-        Near Clip Distance: 0.00999999978
+        Near Clip Distance: 0.01
         Scale: 259.09201
         Target Frame: <Fixed Frame>
         Value: TopDownOrtho (rviz)
@@ -856,12 +855,12 @@ Visualization Manager:
       - Angle: 0
         Class: rviz/TopDownOrtho
         Enable Stereo Rendering:
-          Stereo Eye Separation: 0.0599999987
+          Stereo Eye Separation: 0.06
           Stereo Focal Distance: 1
           Swap Stereo Eyes: false
           Value: false
         Name: MaxObsVel2
-        Near Clip Distance: 0.00999999978
+        Near Clip Distance: 0.01
         Scale: 259.09201
         Target Frame: <Fixed Frame>
         Value: TopDownOrtho (rviz)
