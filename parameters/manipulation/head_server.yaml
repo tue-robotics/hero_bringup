@@ -1,3 +1,4 @@
 tf_prefix: amigo
 default_pan: 0
 default_tilt: 1.0
+float_topics: false

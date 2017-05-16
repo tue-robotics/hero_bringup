@@ -16,7 +16,7 @@
         <!-- Audio -->
 		<group ns="record">
             <node name="audio_capture" pkg="audio_capture" type="audio_capture" output="log" machine="$(arg machine)">
-                <param name="bitrate" value="128"/>                                         
+                <param name="bitrate" value="128"/>
             </node>
 		</group>
 

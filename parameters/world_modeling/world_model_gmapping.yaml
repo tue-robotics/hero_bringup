@@ -60,7 +60,7 @@ plugins:
       max_gap_size: 10
 
 - name: perception
-  lib: libed_perception_plugin.so
+  lib: libed_perception_plugin_image_recognition.so
 
 # - name: localization
 #   lib: libed_localization_plugin.so
@@ -110,7 +110,7 @@ plugins:
     - id: bed_frame
       type: rwc2016/bed_frame
     - id: bookcase1
-      type: rwc2016/bookcase1 
+      type: rwc2016/bookcase1
     - id: bookcase2
       type: rwc2016/bookcase2
     - id: bookcase_noback1

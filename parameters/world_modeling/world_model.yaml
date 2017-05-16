@@ -78,9 +78,9 @@ plugins:
       initial_pose_topic: /amigo/initialpose
       num_particles: 500
       initial_pose:
-          x: 1.5 #$(env ROBOT_INIT_X)
-          y: 2.5 #$(env ROBOT_INIT_Y)
-          rz: 3.1415 #$(env ROBOT_INIT_PHI)
+          x: -1.0 #$(env ROBOT_INIT_X)
+          y: 0.0 #$(env ROBOT_INIT_Y)
+          rz: 0.0 #$(env ROBOT_INIT_PHI)
       laser_model:
           topic: /amigo/base_laser/scan
           num_beams: 100
@@ -102,33 +102,3 @@ plugins:
           alpha3: 0.5    # trans -> trans
           alpha4: 0.5    # rot -> rot
           alpha5: 0.5    # trans -> strafe
-
-- name: robocup
-  lib: libed_robocup_plugin.so
-  parameters:
-    map_topic_in: /amigo/gmapping/map
-    map_topic_out: /map
-    wall_height: 1.7
-    map_filter_padding: 0.3
-    rgbd_topic: /amigo/top_kinect/rgbd
-    nav_goal_topic: /amigo/local_planner/action_server/goal
-    head_goal_topic: /amigo/head_ref/action_server/goal
-    models:
-    - id: cabinet
-      type: robotics_testlab_B/corridor_cabinet
-      image: $(rospkg challenge_open)/images/rwc2016a/cabinet_open.jpg
-    - id: dinner_table
-      type: table_120x80x76
-      image: $(rospkg challenge_open)/images/rwc2016a/table_salon.jpg
-    - id: trashbin
-      type: trashbin
-      image: $(rospkg challenge_open)/images/reo2016/hallway_trashbin.jpg
-    - id: bar
-      type: ddw/table
-      image: $(rospkg challenge_open)/images/robotics_testlabs/ddw.table.jpg
-    - id: couch_table
-      type: ddw/salon
-      image: $(rospkg challenge_open)/images/robotics_testlabs/ddw.salon.jpg
-    - id: hallway_table
-      type: ddw/couch
-      image: $(rospkg challenge_open)/images/robotics_testlabs/ddw.couch.jpg
