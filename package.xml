@@ -16,4 +16,6 @@
   <build_depend>amigo_moveit_config</build_depend>
   <run_depend>amigo_moveit_config</run_depend>
 
+  <run_depend>freenect_launch</run_depend>
+
 </package>
