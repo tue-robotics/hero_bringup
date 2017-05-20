@@ -79,12 +79,6 @@
 
         </group>
 
-        <!-- rgbd to ros -->
-        <include file="$(find robot_launch_files)/launch/essentials/rgbd_to_ros.launch">
-            <arg name="name" value="top_kinect"/>
-            <arg name="machine" value="amigo1"/>
-        </include>
-
         <!-- SPEECH RECOGNITION -->
         <include file="$(find robot_launch_files)/launch/interaction/speech_recognition.launch">
             <arg name="machine" value="amigo1"/>
