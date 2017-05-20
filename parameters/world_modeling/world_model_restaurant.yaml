@@ -39,13 +39,13 @@ plugins:
   lib: libed_kinect_plugin.so
   enabled: 1
   parameters:
-      topic: /amigo/top_kinect/rgbd
+      topic: /amigo/top_kinect
 - name: navigation
   lib: libed_navigation_plugin.so
   parameters:
       depth_sensor_integration:
           frame_id: map
-          topic: /amigo/top_kinect/rgbd
+          topic: /amigo/top_kinect
           num_samples: 640
           slope_threshold: 1
           slope_window_size: 30
