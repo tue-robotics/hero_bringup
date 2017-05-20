@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="debug" default="false" />
+
+    <group ns="amigo">
+
+        <!-- PARAMETERS: desciption, joint groups and specific skills -->
+        <param name="robot_description" textfile="$(find amigo_description)/urdf/amigo.urdf" />
+        <rosparam file="$(find amigo_description)/custom/joint_groups.yaml" command="load" />
+        <rosparam file="$(find amigo_description)/custom/skills.yaml" command="load" />
+
+        <!-- Robot state publisher -->
+        <include file="$(find robot_launch_files)/launch/essentials/robot_state_publisher.launch">
+            <arg name="machine" value="amigo1" />
+        </include>
+
+
+        <!-- Launch simulator if we are not on a real robot -->
+        <group unless="$(optenv ROBOT_REAL false)">
+
+            <!-- Simulator -->
+            <include file="$(find robot_launch_files)/launch/simulator/simulator.launch" />
+
+        </group>
+
+    </group>
+
+ </launch>
