@@ -17,7 +17,7 @@ plugins:
 - name: tf_publisher
   lib: libed_tf_publisher_plugin.so
   parameters:
-      root_frame_id: /map
+      root_frame_id: map
       exclude: amigo
 - name: laser_integration
   lib: libed_laser_plugin.so
@@ -44,7 +44,7 @@ plugins:
   lib: libed_navigation_plugin.so
   parameters:
       depth_sensor_integration:
-          frame_id: /map
+          frame_id: map
           topic: /amigo/top_kinect/rgbd
           num_samples: 640
           slope_threshold: 1

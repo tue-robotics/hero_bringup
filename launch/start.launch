@@ -37,7 +37,7 @@
                 <arg name="DEBUG" value="$(arg debug)"/>
                 <arg name="machine" value="amigo1" />
             </include>
-            
+
             <!-- BODYPART RESETTER ROBOCUP HACK -->
             <node name="spindle_resetter" pkg="robot_launch_files" type="bodypart_resetter.py" args="amigo spindle 1"/>
 
@@ -57,6 +57,7 @@
             <!-- SENSORS -->
             <include file="$(find robot_launch_files)/launch/hardware/sensors/kinect.launch">
                 <arg name="name" value="top_kinect"/>
+                <arg name="robot_name" value="amigo"/>
                 <arg name="machine" value="amigo1"/>
                 <arg name="gdb" value="true"/>
             </include>
