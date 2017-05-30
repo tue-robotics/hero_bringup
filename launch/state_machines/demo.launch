@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 
 <launch>
+    <arg name="robot_name" value="amigo" />
 
-    <group ns="amigo">
+	<group ns="$(arg robot_name)">
 
         <!-- LOCALIZATION GMAPPING -->
         <include file="$(find robot_launch_files)/launch/localization/gmapping.launch">
@@ -23,7 +24,9 @@
 
     </group>
 
-    <!-- Action server state machine -->
-    <node name="state_machine" pkg="action_server" type="main.py" args="amigo" output="log" required="true" />
+	<!-- Start the action server -->
+        <node pkg="action_server" type="main.py" name="action_server" output="screen" respawn="true">
+            <param name="robot_name" value="$(arg robot_name)" />
+        </node>
 
 </launch>
