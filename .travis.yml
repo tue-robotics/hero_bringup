@@ -16,4 +16,5 @@ install:
   - apt-get update
   - apt-get install lsb-release
 
-script: "lsb_release"
+script: 
+  - lsb_release
