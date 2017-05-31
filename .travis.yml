@@ -2,19 +2,20 @@ sudo: true
 
 language: cpp
 
-compiler:
-  - g++
-
 services:
   - docker
 
 before_install:
-  - docker pull ubuntu:16.04
-  - docker run -it ubuntu bash
+  - export IMAGE_BRANCH_NAME=tuerobotics/tue-env:`echo "$TRAVIS_BRANCH" | tr '[:upper:]' '[:lower:]' | sed -e 's:/:_:g'`
+  - export IMAGE_MASTER_NAME=tuerobotics/tue-env:master
+  - export REPO_NAME=${TRAVIS_REPO_SLUG#*/}
+  # Use master if identical branch does not exist
+  - docker run --detach --interactive --name tue-env $IMAGE_BRANCH_NAME || docker run --detach --interactive --name tue-env $IMAGE_MASTER_NAME 
 
 install:
-  - apt-get update
-  - apt-get install lsb-release
+  - docker exec tue-env bash -c 'export CI="true"; source /home/noblean/.bashrc; nobleo-get install ros-REPO_NAME'
+  - docker exec tue-env cd ~/ros/kinetic/system/src/$REPO_NAME
+  - docker exec tue-env git reset --hard "$TRAVIS_COMMIT"
 
 script: 
-  - lsb_release
+  - docker exec tue-env bash -c 'export CI="true"; source /home/noblean/.bashrc; catkin build --this --no-status'
