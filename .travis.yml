@@ -15,7 +15,7 @@ before_install:
 install:
   - docker exec tue-env bash -c "export CI='true'; source /home/amigo/.bashrc; tue-get install ros-$REPO_NAME"
   - docker exec tue-env bash -c "cd ~/ros/kinetic/system/src/$REPO_NAME"
-  - docker exec tue-env bash -c "git reset --hard "$TRAVIS_COMMIT"
+  - docker exec tue-env bash -c "git reset --hard $TRAVIS_COMMIT"
 
 script: 
   - docker exec tue-env bash -c "export CI='true'; source /home/amigo/.bashrc; catkin build --this --no-status"
