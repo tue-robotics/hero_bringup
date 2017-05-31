@@ -13,7 +13,7 @@ before_install:
   - docker run --detach --interactive --name tue-env $IMAGE_BRANCH_NAME || docker run --detach --interactive --name tue-env $IMAGE_MASTER_NAME 
 
 install:
-  - docker exec tue-env bash -c 'export CI="true"; source /home/amigo/.bashrc; tue-get install ros-REPO_NAME'
+  - docker exec tue-env bash -c 'export CI="true"; source /home/amigo/.bashrc; tue-get install ros-$REPO_NAME'
   - docker exec tue-env cd ~/ros/kinetic/system/src/$REPO_NAME
   - docker exec tue-env git reset --hard "$TRAVIS_COMMIT"
 
