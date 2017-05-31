@@ -8,7 +8,9 @@ services:
 before_install:
   - export IMAGE_BRANCH_NAME=tuerobotics/tue-env:`echo "$TRAVIS_BRANCH" | tr '[:upper:]' '[:lower:]' | sed -e 's:/:_:g'`
   - export IMAGE_MASTER_NAME=tuerobotics/tue-env:master
+  - echo $TRAVIS_REPO_SLUG
   - export REPO_NAME=${TRAVIS_REPO_SLUG#*/}
+  - echo $REPO_NAME
   # Use master if identical branch does not exist
   - docker run --detach --interactive --name tue-env $IMAGE_BRANCH_NAME || docker run --detach --interactive --name tue-env $IMAGE_MASTER_NAME 
 
