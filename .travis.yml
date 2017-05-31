@@ -13,9 +13,9 @@ before_install:
   - docker run --detach --interactive --name tue-env $IMAGE_BRANCH_NAME || docker run --detach --interactive --name tue-env $IMAGE_MASTER_NAME 
 
 install:
-  - docker exec tue-env bash -c 'export CI="true"; source /home/noblean/.bashrc; nobleo-get install ros-REPO_NAME'
+  - docker exec tue-env bash -c 'export CI="true"; source /home/amigo/.bashrc; tue-get install ros-REPO_NAME'
   - docker exec tue-env cd ~/ros/kinetic/system/src/$REPO_NAME
   - docker exec tue-env git reset --hard "$TRAVIS_COMMIT"
 
 script: 
-  - docker exec tue-env bash -c 'export CI="true"; source /home/noblean/.bashrc; catkin build --this --no-status'
+  - docker exec tue-env bash -c 'export CI="true"; source /home/amigo/.bashrc; catkin build --this --no-status'
