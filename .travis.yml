@@ -9,11 +9,11 @@ before_install:
   - wget https://raw.githubusercontent.com/tue-robotics/tue-env/master/ci/install-package.sh
   - wget https://raw.githubusercontent.com/tue-robotics/tue-env/master/ci/build-package.sh
   - export PACKAGE=${TRAVIS_REPO_SLUG#*/}
-  - 'if [[ $TRAVIS_PULL_REQUEST == "true" ]]; 
+  - 'if [[ $TRAVIS_PULL_REQUEST == "false" ]]; 
      then
-         COMMIT=$TRAVIS_PULL_REQUEST_SHA;
-     else
          COMMIT=$TRAVIS_COMMIT;
+     else
+         COMMIT=$TRAVIS_PULL_REQUEST_SHA;
      fi'
   - echo $TRAVIS_PULL_REQUEST_SHA
 
