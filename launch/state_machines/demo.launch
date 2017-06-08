@@ -32,8 +32,8 @@
     <!-- Start the challenge -->
     <node pkg="challenge_demo" type="demo.py" name="state_machine" output="screen" required="true">
         <param name="robot_name" value="$(arg robot_name)" />
-        <param name="skip" value="true" />
-        <param name="number_of_tasks" value="99" />
+        <param name="skip" value="True" />
+        <param name="number_of_tasks" value="10" />
     </node>
 
 </launch>
