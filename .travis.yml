@@ -6,6 +6,7 @@ services:
   - docker
 
 before_install:
+  - exit 0
   - wget https://raw.githubusercontent.com/tue-robotics/tue-env/feature/pullrequest-ci/ci/install-package.sh
   - wget https://raw.githubusercontent.com/tue-robotics/tue-env/feature/pullrequest-ci/ci/build-package.sh
   - export PACKAGE=${TRAVIS_REPO_SLUG#*/}
