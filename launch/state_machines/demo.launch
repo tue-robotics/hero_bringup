@@ -25,8 +25,15 @@
     </group>
 
 	<!-- Start the action server -->
-        <node pkg="action_server" type="main.py" name="action_server" output="screen" respawn="true">
-            <param name="robot_name" value="$(arg robot_name)" />
-        </node>
+    <node pkg="action_server" type="main.py" name="action_server" output="screen" respawn="true">
+        <param name="robot_name" value="$(arg robot_name)" />
+    </node>
+
+    <!-- Start the challenge -->
+    <node pkg="challenge_demo" type="demo.py" name="state_machine" output="screen" required="true">
+        <param name="robot_name" value="$(arg robot_name)" />
+        <param name="skip" value="true" />
+        <param name="number_of_tasks" value="99" />
+    </node>
 
 </launch>
