@@ -11,9 +11,9 @@ before_install:
   - export PACKAGE=${TRAVIS_REPO_SLUG#*/}
   - 'if [[ $TRAVIS_PULL_REQUEST == "true" ]]; 
      then
-         COMMIT=$TRAVIS_COMMIT;
-     else
          COMMIT=$TRAVIS_PULL_REQUEST_SHA;
+     else
+         COMMIT=$TRAVIS_COMMIT;
      fi'
   - echo $TRAVIS_PULL_REQUEST_SHA
 
