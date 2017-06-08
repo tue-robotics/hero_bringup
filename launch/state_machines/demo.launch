@@ -2,6 +2,8 @@
 
 <launch>
     <arg name="robot_name" value="amigo" />
+    <arg name="skip" default="true" />
+    <arg name="number_of_tasks" default="3" />
 
 	<group ns="$(arg robot_name)">
 
@@ -32,8 +34,8 @@
     <!-- Start the challenge -->
     <node pkg="challenge_demo" type="demo.py" name="state_machine" output="screen" required="true">
         <param name="robot_name" value="$(arg robot_name)" />
-        <param name="skip" value="True" />
-        <param name="number_of_tasks" value="10" />
+        <param name="skip" value="$(arg skip)" />
+        <param name="number_of_tasks" value="$(arg number_of_tasks)" />
     </node>
 
 </launch>
