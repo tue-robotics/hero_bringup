@@ -3,7 +3,7 @@
 <launch>
     <arg name="robot_name" value="amigo" />
     <arg name="skip" default="true" />
-    <arg name="number_of_tasks" default="3" />
+    <arg name="number_of_tasks" default="15" />
 
 	<group ns="$(arg robot_name)">
 
