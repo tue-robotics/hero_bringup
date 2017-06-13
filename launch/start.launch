@@ -56,7 +56,7 @@
 
             <!-- SENSORS -->
             <include file="$(find robot_launch_files)/launch/hardware/sensors/kinect.launch">
-                <arg name="name" value="top_kinect"/>
+                <arg name="name" value="top_kinect_amigo1"/>
                 <arg name="robot_name" value="amigo"/>
             </include>
             <include file="$(find robot_launch_files)/launch/hardware/sensors/laser.launch">

@@ -10,6 +10,14 @@
         <include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
         </include>
 
+        <!-- Relay of the kinect to save bandwidth -->
+        <group if="$(optenv ROBOT_REAL false)">
+            <include file="$(find robot_launch_files)/launch/hardware/sensors/kinect_relay.launch">
+                <arg name="from" value="top_kinect_amigo1"/>
+                <arg name="to" value="top_kinect"/>
+            </include>
+        </group>
+
         <!-- WORLD MODEL -->
         <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
 			<arg name="config" value="world_modeling/world_model.yaml"/>
