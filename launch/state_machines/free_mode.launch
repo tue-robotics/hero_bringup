@@ -30,7 +30,7 @@
     </group>
 
     <!-- Action server state machine -->
-    <node name="state_machine" pkg="action_server" type="main.py" output="log" required="true" >
+    <node name="state_machine" pkg="action_server" type="main.py" output="log" required="false" >
         <param name="robot_name" value="amigo"/>
     </node>
 

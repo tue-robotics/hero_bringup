@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
 
 <launch>
+    <arg name="robot_name" value="amigo" />
+    <arg name="skip" default="true" />
+    <arg name="number_of_tasks" default="15" />
 
-    <group ns="amigo">
+	<group ns="$(arg robot_name)">
 
         <!-- LOCALIZATION GMAPPING -->
         <include file="$(find robot_launch_files)/launch/localization/gmapping.launch">
@@ -31,7 +34,16 @@
 
     </group>
 
-    <!-- Action server state machine -->
-    <node name="state_machine" pkg="action_server" type="main.py" args="amigo" output="log" required="true" />
+	<!-- Start the action server -->
+    <node pkg="action_server" type="main.py" name="action_server" output="screen" respawn="true">
+        <param name="robot_name" value="$(arg robot_name)" />
+    </node>
+
+    <!-- Start the challenge -->
+    <node pkg="challenge_demo" type="demo.py" name="state_machine" output="screen" required="true">
+        <param name="robot_name" value="$(arg robot_name)" />
+        <param name="skip" value="$(arg skip)" />
+        <param name="number_of_tasks" value="$(arg number_of_tasks)" />
+    </node>
 
 </launch>

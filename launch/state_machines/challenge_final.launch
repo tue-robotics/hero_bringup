@@ -2,6 +2,8 @@
 
 <launch>
 
+	<arg name="robot_env" default="$(optenv ROBOT_ENV robotics_testlabs)" />
+
     <group ns="amigo">
 
 		<!-- NAVIGATION -->
@@ -20,6 +22,7 @@
 		<!-- WORLD MODEL -->
 		<include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
 			<arg name="machine" value="amigo2"/>
+			<arg name="faces_db" value="~/MEGA/data/$(arg robot_env)/models/openface_ros/faces.pkl" />
 		</include>
 
 	</group>
