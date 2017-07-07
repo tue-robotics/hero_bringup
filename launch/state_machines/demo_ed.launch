@@ -18,6 +18,6 @@
     </group>
 
 	<!-- Start the challenge -->
-	<node pkg="challenge_demo_ed" type="demo_ed.py" name="state_machine" args="amigo" output="screen" required="true"/>
-
+	<!-- <node pkg="challenge_demo_ed" type="demo_ed.py" name="state_machine" args="amigo" output="screen" required="true"/>
+-->
 </launch>
