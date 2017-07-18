@@ -539,6 +539,15 @@ Visualization Manager:
         {}
       Queue Size: 100
       Value: false
+    - Class: rviz/InteractiveMarkers
+      Enable Transparency: true
+      Enabled: false
+      Name: Sim - Object controls
+      Show Axes: false
+      Show Descriptions: true
+      Show Visual Aids: false
+      Update Topic: /interactive_simobject/update
+      Value: false
     - Class: rviz/MarkerArray
       Enabled: true
       Marker Topic: /amigo/world_model
