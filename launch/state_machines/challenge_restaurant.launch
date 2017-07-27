@@ -23,7 +23,6 @@
 
     </group>
 
-    <!-- Start the challenge -->	
-	 <node pkg="challenge_restaurant" type="challenge_restaurant" name="state_machine" args="amigo" output="screen" required="true"/>
+    <!-- Don't start the challenge, first drive a little to initialze gmapping -->	
 	
 </launch>
