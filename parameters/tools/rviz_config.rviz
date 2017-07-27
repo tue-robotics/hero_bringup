@@ -464,7 +464,7 @@ Visualization Manager:
       Marker Topic: /amigo/head_ref/head_target_marker
       Name: Cam - Head Target
       Namespaces:
-        {}
+        head_target: true
       Queue Size: 100
       Value: true
     - Alpha: 1
@@ -567,7 +567,7 @@ Visualization Manager:
       Marker Topic: /amigo/global_planner/visualization/markers/goal_positions
       Name: Global Planner - Goal Area
       Namespaces:
-        {}
+        "": true
       Queue Size: 100
       Value: true
     - Class: rviz/Marker
@@ -575,7 +575,7 @@ Visualization Manager:
       Marker Topic: /amigo/global_planner/visualization/markers/global_plan
       Name: Global Planner - Plan
       Namespaces:
-        {}
+        "": true
       Queue Size: 100
       Value: true
     - Alpha: 1
@@ -804,7 +804,7 @@ Visualization Manager:
       Shaft Length: 0.5
       Shaft Radius: 0.0299999993
       Shape: Arrow
-      Topic: /amigo/amigo/ssl/direction_of_arrival
+      Topic: /amigo/ssl/direction_of_arrival
       Unreliable: false
       Value: true
   Enabled: true
@@ -838,17 +838,17 @@ Visualization Manager:
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -1.37627995
-        Y: 1.2295984
+        X: -0.311051548
+        Y: -1.54267311
         Z: 1.55336785
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.859798253
+      Pitch: 1.26479805
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 2.05499458
+      Yaw: 1.45999467
     Saved:
       - Angle: 0
         Class: rviz/TopDownOrtho
