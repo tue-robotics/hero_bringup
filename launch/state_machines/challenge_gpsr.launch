@@ -3,7 +3,8 @@
 <launch>
 
     <arg name="robot_name" value="amigo" />
-    <arg name="skip" default="false" />
+	<arg name="skip" default="false" />
+	<arg name="restart" default="false" />
     <arg name="number_of_tasks" default="3" />
     <arg name="test_mode" default="false" />
 
@@ -32,7 +33,8 @@
         <param name="robot_name" value="$(arg robot_name)" />
         <param name="skip" value="$(arg skip)" />
         <param name="number_of_tasks" value="$(arg number_of_tasks)" />
-        <param name="test_mode" value="$(arg test_mode)" />
+		<param name="test_mode" value="$(arg test_mode)" />
+		<param name="restart" value="$(arg restart)" />
     </node>
 
 </launch>
