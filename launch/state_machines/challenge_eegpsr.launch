@@ -8,6 +8,7 @@
     <arg name="restart" default="false" />
     <arg name="test_mode" default="false" />
     <arg name="time_limit" default="0" />
+    <arg name="eegpsr" value="true" />
 
     <group ns="$(arg robot_name)">
 
@@ -37,6 +38,7 @@
         <param name="restart" value="$(arg restart)" />
         <param name="test_mode" value="$(arg test_mode)" />
         <param name="time_limit" value="$(arg time_limit)" />
+        <param name="eegpsr" value="$(arg eegpsr)" />
     </node>
 
 </launch>
