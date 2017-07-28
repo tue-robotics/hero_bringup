@@ -19,6 +19,12 @@
 
     </group>
 
+	<group if="$(optenv ROBOT_REAL false)">
+		<include file="$(find challenge_open)/launch/amigo_dependencies.launch">
+			<arg name="local_server_host" value="amigo2"/>
+		</include>
+	</group>
+
     <!-- Start the challenge -->
 	<node pkg="challenge_open" type="challenge_open.py" name="state_machine" output="screen" required="true" args="amigo" />
 
