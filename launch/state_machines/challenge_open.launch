@@ -20,7 +20,7 @@
 
 	<group if="$(optenv ROBOT_REAL false)">
 		<include file="$(find challenge_open)/launch/amigo_dependencies.launch">
-			<arg name="local_server_host" value="amigo2"/>
+			<arg name="local_server_host" value="192.168.44.92"/>
 		</include>
 	</group>
 
