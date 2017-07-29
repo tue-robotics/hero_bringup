@@ -463,7 +463,7 @@ Visualization Manager:
       Marker Topic: /amigo/head_ref/head_target_marker
       Name: Cam - Head Target
       Namespaces:
-        {}
+        head_target: true
       Queue Size: 100
       Value: true
     - Alpha: 1
@@ -566,7 +566,7 @@ Visualization Manager:
       Marker Topic: /amigo/global_planner/visualization/markers/goal_positions
       Name: Global Planner - Goal Area
       Namespaces:
-        {}
+        "": true
       Queue Size: 100
       Value: true
     - Class: rviz/Marker
@@ -574,7 +574,7 @@ Visualization Manager:
       Marker Topic: /amigo/global_planner/visualization/markers/global_plan
       Name: Global Planner - Plan
       Namespaces:
-        {}
+        "": true
       Queue Size: 100
       Value: true
     - Alpha: 1
@@ -788,9 +788,7 @@ Visualization Manager:
       Marker Topic: /amigo/people_detector/viz
       Name: skeletons
       Namespaces:
-        joints: true
-        links: true
-        persons: true
+        {}
       Queue Size: 100
       Value: true
     - Alpha: 1
@@ -820,6 +818,14 @@ Visualization Manager:
       Transport Hint: raw
       Unreliable: false
       Value: false
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /amigo/thirsty_people
+      Name: thirsty people
+      Namespaces:
+        {}
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 0; 0; 0
@@ -851,17 +857,17 @@ Visualization Manager:
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -0.0828408003
-        Y: 0.858218193
-        Z: 1.55337071
+        X: -0.185389876
+        Y: -1.15172839
+        Z: 1.55337024
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 1.04479766
+      Pitch: 0.709797025
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.63499749
+      Yaw: 1.23999786
     Saved:
       - Angle: 0
         Class: rviz/TopDownOrtho
