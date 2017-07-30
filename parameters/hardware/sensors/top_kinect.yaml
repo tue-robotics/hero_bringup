@@ -3,5 +3,5 @@ fx: 538.673
 fy: 521.579
 cx: 319.5
 cy: 228.391
-high_resolution: True
+high_resolution: False
 time_offset: -0.07
