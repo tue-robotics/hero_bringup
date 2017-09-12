@@ -82,12 +82,12 @@ SPINDLE_Safety.Nm						= N
 SPINDLE_Safety.maxJointErrors			= MAXERR
 SPINDLE_Safety.motorSaturations			= array(100.0)
 SPINDLE_Safety.maxConSatTime			= 1.0
-SPINDLE_Safety.additional_safeties		= strings("endswitch")
+#SPINDLE_Safety.additional_safeties		= strings("endswitch")
 SPINDLE_Safety.configure
 
 #Loading Homing component
 loadComponent("SPINDLE_Homing",			"SUPERVISORY::Homing")
-connectPeers("Supervisor","SPINDLE_Homing")	
+connectPeers("Supervisor","SPINDLE_Homing")
 addPeer("SPINDLE_Homing","SPINDLE_Safety")
 addPeer("SPINDLE_Homing","TrajectoryActionlib")
 addPeer("SPINDLE_Homing","EtherCATread")
@@ -127,7 +127,7 @@ SPINDLE_Diagnostics.vecname3 			= "ControlEffort"
 SPINDLE_Diagnostics.boolname1 			= "Safe"
 
 #### CONNECT COMPONENTS ####
-## Control loop	## 
+## Control loop	##
 connect("Soem.Slave_1006.Slave_1006_value",			"EtherCATread.spindle_Ein1", 				ConnPolicy() ); # Enc 1
 connect("EtherCATread.spindle_Eout1",				"SPINDLE_Controller.pos_in", 				ConnPolicy() ); # Position
 connect("SPINDLE_FFW.FFW_out",						"SPINDLE_Controller.ffw_in1", 				ConnPolicy() ); # FFW
@@ -141,7 +141,7 @@ connect("TrajectoryActionlib.acc_out2",				"SPINDLE_FFW.ref_acc", 						ConnPoli
 
 ## Ros communication ##
 connect( "EtherCATread.spindle_Eout1", 				"SPINDLE_WriteJointStates.pos_in", 			ConnPolicy() ); # Position
-connect("SPINDLE_WriteJointStates.out", 			"JointStateAggregator.torso", 				ConnPolicy() ); # JointState 
+connect("SPINDLE_WriteJointStates.out", 			"JointStateAggregator.torso", 				ConnPolicy() ); # JointState
 
 ## Homing ##
 connect("EtherCATread.spindle_Eout1",				"SPINDLE_Homing.position", 					ConnPolicy() ); # Position
@@ -154,7 +154,7 @@ connect("SPINDLE_Homing.accout1",					"SPINDLE_FFW.ref_acc", 						ConnPolicy() 
 ## Safety ##
 connect("SPINDLE_Controller.jointErrors",			"SPINDLE_Safety.jointErrors", 				ConnPolicy() ); # Joint Errors
 connect("SPINDLE_Controller.out",					"SPINDLE_Safety.controlEffort", 			ConnPolicy() ); # ControlEffort
-connect("EtherCATread.spindle_DoutMsg2",			"SPINDLE_Safety.endswitch", 				ConnPolicy() );	# Endstop
+#connect("EtherCATread.spindle_DoutMsg2",			"SPINDLE_Safety.endswitch", 				ConnPolicy() );	# Endstop
 connect("SPINDLE_Safety.enable",					"SPINDLE_Controller.enable", 				ConnPolicy() ); # Enable
 connect("SPINDLE_Safety.error",						"Supervisor.spindle_error", 				ConnPolicy() ); # Spindle_error
 connect("SPINDLE_Safety.enable", 					"EtherCATwrite.generic_Din3", 				ConnPolicy() ); # Enabling amp/disabling brake

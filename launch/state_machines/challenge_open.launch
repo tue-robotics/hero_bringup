@@ -14,12 +14,14 @@
         <!-- WORLD MODEL -->
         <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
 			<arg name="config" value="world_modeling/world_model.yaml"/>
-            <arg name="faces_db" value="~/MEGA/data/$(arg robot_env)/models/openface_ros/faces.pkl" />
         </include>
 
     </group>
 
-    <!-- Start the challenge -->
-	<node pkg="challenge_open" type="challenge_open.py" name="state_machine" output="screen" required="true" args="amigo" />
+	<group if="$(optenv ROBOT_REAL false)">
+		<include file="$(find challenge_open)/launch/amigo_dependencies.launch">
+			<arg name="local_server_host" value="192.168.44.92"/>
+		</include>
+	</group>
 
 </launch>
