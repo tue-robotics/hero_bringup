@@ -17,12 +17,5 @@
         </include>
 
     </group>
-	<!--
-	<group if="$(optenv ROBOT_REAL false)">
-		<include file="$(find challenge_final)/launch/amigo_dependencies.launch">
-			<arg name="local_server_host" value="192.168.44.92"/>
-		</include>
-	</group>
-	-->
 	
 </launch>
