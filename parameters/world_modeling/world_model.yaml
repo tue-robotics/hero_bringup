@@ -19,6 +19,7 @@ plugins:
 
 - name: navigation
   lib: libed_navigation_plugin.so
+  frequency: 1
   parameters:
       occupancy_grid_publisher:
           resolution: 0.05
@@ -26,6 +27,10 @@ plugins:
           min_z: 0.025
           max_z: 1.8
           default_offset: 0.7
+
+- name: kinectnavigation
+  lib: libed_kinect_navigation_plugin.so
+  parameters:
       depth_sensor_integration:
           frame_id: /map
           topic: /amigo/top_kinect/rgbd
