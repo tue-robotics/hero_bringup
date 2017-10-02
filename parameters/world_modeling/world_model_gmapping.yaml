@@ -17,8 +17,8 @@ plugins:
   parameters:
       robot_name: amigo
 
-- name: navigation
-  lib: libed_navigation_plugin.so
+- name: kinect_navigation
+  lib: libed_kinect_navigation_plugin.so
   parameters:
       depth_sensor_integration:
           frame_id: /map

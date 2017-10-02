@@ -28,7 +28,7 @@ plugins:
           max_z: 1.8
           default_offset: 0.7
 
-- name: kinectnavigation
+- name: kinect_navigation
   lib: libed_kinect_navigation_plugin.so
   parameters:
       depth_sensor_integration:

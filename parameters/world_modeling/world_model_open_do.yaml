@@ -8,6 +8,7 @@ plugins:
   frequency: 1
   parameters:
       server: /sergio/ed/query
+
 - name: robot_plugin
   lib: libed_robot_plugin.so
   parameters:
@@ -15,15 +16,18 @@ plugins:
       urdf_rosparam: /amigo/robot_description
       joint_topics:
         - topic: /amigo/joint_states
+
 - name: gui_server
   lib: libed_gui_server_plugin.so
   parameters:
       robot_name: amigo
+
 - name: tf_publisher
   lib: libed_tf_publisher_plugin.so
   parameters:
       root_frame_id: /map
       exclude: amigo
+
 - name: kinect_integration
   lib: libed_kinect2_plugin.so
   enabled: 1
@@ -34,8 +38,10 @@ plugins:
       max_correspondence_distance: 0.1
       max_range: 3.0
       downsample_factor: 2
+
 - name: navigation
   lib: libed_navigation_plugin.so
+  frequency: 1
   parameters:
       occupancy_grid_publisher:
           resolution: 0.05
@@ -43,6 +49,10 @@ plugins:
           min_z: 0.025
           max_z: 1.8
           default_offset: 0.7
+
+- name: kinect_navigation
+  lib: libed_kinect_navigation_plugin.so
+  parameters:
       depth_sensor_integration:
           frame_id: /map
           topic: /amigo/top_kinect/rgbd
@@ -51,6 +61,7 @@ plugins:
           slope_window_size: 30
           min_distance: 0.4
           max_distance: 2.0
+
 - name: localization
   lib: libed_localization_plugin.so
   enabled: 1
@@ -82,10 +93,12 @@ plugins:
           alpha3: 0.5    # trans -> trans
           alpha4: 0.5    # rot -> rot
           alpha5: 0.5    # trans -> strafe
+
 - name: laser_integration
   lib: libed_laser_plugin.so
   parameters:
       laser_topic: /amigo/torso_laser/scan
+
 - name: entity_clearer
   lib: libed_clearer_plugin.so
   enabled: 1
