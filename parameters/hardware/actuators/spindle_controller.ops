@@ -154,7 +154,7 @@ connect("SPINDLE_Homing.accout1",					"SPINDLE_FFW.ref_acc", 						ConnPolicy() 
 ## Safety ##
 connect("SPINDLE_Controller.jointErrors",			"SPINDLE_Safety.jointErrors", 				ConnPolicy() ); # Joint Errors
 connect("SPINDLE_Controller.out",					"SPINDLE_Safety.controlEffort", 			ConnPolicy() ); # ControlEffort
-#connect("EtherCATread.spindle_DoutMsg2",			"SPINDLE_Safety.endswitch", 				ConnPolicy() );	# Endstop
+connect("EtherCATread.spindle_DoutMsg2",			"SPINDLE_Safety.endswitch", 				ConnPolicy() );	# Endstop
 connect("SPINDLE_Safety.enable",					"SPINDLE_Controller.enable", 				ConnPolicy() ); # Enable
 connect("SPINDLE_Safety.error",						"Supervisor.spindle_error", 				ConnPolicy() ); # Spindle_error
 connect("SPINDLE_Safety.enable", 					"EtherCATwrite.generic_Din3", 				ConnPolicy() ); # Enabling amp/disabling brake
