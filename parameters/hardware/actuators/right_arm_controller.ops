@@ -18,7 +18,7 @@ var array   LOWERJOINTLIMIT             = array(    -1.57,      -1.57,      -1.5
 var array   RESETPOS                    = array(    -0.1,      -0.2,         0.2,       0.8,         0.0        ,0.0        ,0.0)
 var array   HOMINGSTROKE                = array(    0.0,        0.0,        -1.62,      0.0,        -1.83,      -1.05,      -0.80,      0.0)
 var array   MAXERRORS                   = array(    0.09,       0.09,       0.09,       0.09,       0.09,       0.09,       0.09,       0.5)
-var array   ABSPOS                      = array(    1.091,       1.719,      0.0,        0.0,        0.0,        0.0,        0.0,        0.0)
+var array   ABSPOS                      = array(    1.070,       1.71971,      0.0,        0.0,        0.0,        0.0,        0.0,        0.0); # q1: outside is lower; q2: forward is lower
 var array   ENCODERBITS                 = array(    65536.0,    65536.0,    65536.0,    65536.0,    65536.0,    65536.0,    65536.0,    65536.0)
 var double  TWOPI                       = 2.0*3.141592
 var double  GEARRATIO_SM                = 1.0/550.0
@@ -202,6 +202,7 @@ connect(SL_ID_RLOWERARM+".forceSensors",            "EtherCATread.right_arm_Ain3
 connect(SL_ID_RSHOULDER+".positionSensors",         "EtherCATread.right_arm_Ain4",              ConnPolicy() )
 connect(SL_ID_RUPPERARM+".positionSensors",         "EtherCATread.right_arm_Ain5",              ConnPolicy() )
 connect(SL_ID_RLOWERARM+".positionSensors",         "EtherCATread.right_arm_Ain6",              ConnPolicy() )
+
 
 connect("EtherCATread.right_arm_Eout1",             "RPERA_Controller.pos_in",                  ConnPolicy() ); # Position JS
 connect("RPERA_Controller.out",                     "EtherCATwrite.right_arm_Ain1",             ConnPolicy() ); # ControlEffort MS
