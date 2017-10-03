@@ -82,7 +82,7 @@ SPINDLE_Safety.Nm						= N
 SPINDLE_Safety.maxJointErrors			= MAXERR
 SPINDLE_Safety.motorSaturations			= array(100.0)
 SPINDLE_Safety.maxConSatTime			= 1.0
-#SPINDLE_Safety.additional_safeties		= strings("endswitch")
+SPINDLE_Safety.additional_safeties		= strings("endswitch")
 SPINDLE_Safety.configure
 
 #Loading Homing component
