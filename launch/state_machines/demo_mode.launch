@@ -26,7 +26,7 @@
     </group>
 
     <!-- Action server state machine -->
-    <node name="state_machine" pkg="action_server" type="main.py" output="screen" required="false" >
+    <node name="state_machine" pkg="action_server" type="main.py" output="screen" required="true" >
         <param name="robot_name" value="amigo"/>
     </node>
 
