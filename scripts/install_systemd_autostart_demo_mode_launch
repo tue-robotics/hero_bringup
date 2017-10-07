@@ -1,0 +1,10 @@
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+sudo cp $DIR/*.service /etc/systemd/system/
+
+# Reload and enable
+sudo systemctl daemon-reload
+sudo systemctl start amigo-demo-mode.service
+sudo systemctl enable amigo-demo-mode.service
