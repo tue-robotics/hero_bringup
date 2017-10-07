@@ -7,6 +7,11 @@
 
     <group ns="$(arg robot_name)">
 
+        <!-- ROBOCUP RECORDER -->
+        <include file="$(find robot_launch_files)/launch/essentials/record_robocup.launch">
+            <arg name="machine" value="amigo2" />
+        </include>
+
         <!-- NAVIGATION -->
         <include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
         </include>
