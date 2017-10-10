@@ -6,6 +6,7 @@
     <arg name="robot_name" value="amigo" />
     <arg name="skip" default="true" />
     <arg name="number_of_tasks" default="15" />
+    <arg name="time_limit" default="999" />
 
     <group ns="$(arg robot_name)">
 
@@ -38,6 +39,7 @@
         <param name="robot_name" value="$(arg robot_name)" />
         <param name="skip" value="$(arg skip)" />
         <param name="number_of_tasks" value="$(arg number_of_tasks)" />
+        <param name="time_limit" value="$(arg time_limit)" />
     </node>
 
 </launch>

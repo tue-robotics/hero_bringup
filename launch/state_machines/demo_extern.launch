@@ -6,8 +6,9 @@
     <arg name="robot_name" value="amigo" />
     <arg name="skip" default="true" />
     <arg name="number_of_tasks" default="15" />
+    <arg name="time_limit" default="999" />
 
-    <group ns="amigo">
+    <group ns="$(arg robot_name)">
 
         <!-- LOCALIZATION GMAPPING -->
         <include file="$(find robot_launch_files)/launch/localization/gmapping.launch">
@@ -23,7 +24,7 @@
         <!-- WORLD MODEL -->
         <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
             <arg name="machine" value="amigo2"/>
-            <arg name="config" value="world_modeling/world_model_demo.yaml"/>
+            <arg name="config" value="world_modeling/world_model_demo_extern.yaml"/>
         </include>
 
     </group>
@@ -38,5 +39,7 @@
         <param name="robot_name" value="$(arg robot_name)" />
         <param name="skip" value="$(arg skip)" />
         <param name="number_of_tasks" value="$(arg number_of_tasks)" />
+        <param name="time_limit" value="$(arg time_limit)" />
+    </node>
 
 </launch>
