@@ -46,6 +46,17 @@ plugins:
   parameters:
       topic: /amigo/top_kinect/rgbd
 
+- name: navigation
+  lib: libed_navigation_plugin.so
+  frequency: 1
+  parameters:
+      occupancy_grid_publisher:
+          resolution: 0.05
+          frame_id: /map
+          min_z: 0.025
+          max_z: 1.8
+          default_offset: 0.7
+
 - name: kinect_navigation
   lib: libed_kinect_navigation_plugin.so
   parameters:
