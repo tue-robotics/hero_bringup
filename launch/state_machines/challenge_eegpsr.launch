@@ -6,9 +6,16 @@
     <arg name="skip" default="false" />
     <arg name="number_of_tasks" default="0" />
     <arg name="restart" default="false" />
-    <arg name="entrance_number" value="1" />
+    <arg name="test_mode" default="false" />
+    <arg name="time_limit" default="0" />
+    <arg name="eegpsr" value="true" />
 
     <group ns="$(arg robot_name)">
+
+        <!-- ROBOCUP RECORDER -->
+        <include file="$(find robot_launch_files)/launch/essentials/record_robocup.launch">
+            <arg name="machine" value="amigo2" />
+        </include>
 
         <!-- NAVIGATION -->
         <include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
@@ -41,8 +48,10 @@
         <param name="robot_name" value="$(arg robot_name)" />
         <param name="skip" value="$(arg skip)" />
         <param name="number_of_tasks" value="$(arg number_of_tasks)" />
-        <param name="entrance_number" value="$(arg entrance_number)" />
         <param name="restart" value="$(arg restart)" />
+        <param name="test_mode" value="$(arg test_mode)" />
+        <param name="time_limit" value="$(arg time_limit)" />
+        <param name="eegpsr" value="$(arg eegpsr)" />
     </node>
 
 </launch>

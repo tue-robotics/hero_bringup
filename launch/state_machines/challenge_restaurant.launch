@@ -4,6 +4,11 @@
 
     <group ns="amigo">
 
+        <!-- ROBOCUP RECORDER -->
+        <include file="$(find robot_launch_files)/launch/essentials/record_robocup.launch">
+            <arg name="machine" value="amigo2" />
+        </include>
+
         <!-- LOCALIZATION GMAPPING -->
         <include file="$(find robot_launch_files)/launch/localization/gmapping.launch">
             <arg name="machine" value="amigo2"/>
@@ -31,8 +36,6 @@
 
     </group>
 
-    <!-- Start the challenge -->
-	<!--
-	 <node pkg="challenge_restaurant" type="challenge_restaurant" name="state_machine" args="amigo" output="screen" required="true"/>
-	-->
+    <!-- Don't start the challenge, first drive a little to initialze gmapping -->
+
 </launch>

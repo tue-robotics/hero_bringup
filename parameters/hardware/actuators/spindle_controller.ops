@@ -87,7 +87,7 @@ SPINDLE_Safety.configure
 
 #Loading Homing component
 loadComponent("SPINDLE_Homing",			"SUPERVISORY::Homing")
-connectPeers("Supervisor","SPINDLE_Homing")	
+connectPeers("Supervisor","SPINDLE_Homing")
 addPeer("SPINDLE_Homing","SPINDLE_Safety")
 addPeer("SPINDLE_Homing","TrajectoryActionlib")
 addPeer("SPINDLE_Homing","EtherCATread")
@@ -127,7 +127,7 @@ SPINDLE_Diagnostics.vecname3 			= "ControlEffort"
 SPINDLE_Diagnostics.boolname1 			= "Safe"
 
 #### CONNECT COMPONENTS ####
-## Control loop	## 
+## Control loop	##
 connect("Soem.Slave_1006.Slave_1006_value",			"EtherCATread.spindle_Ein1", 				ConnPolicy() ); # Enc 1
 connect("EtherCATread.spindle_Eout1",				"SPINDLE_Controller.pos_in", 				ConnPolicy() ); # Position
 connect("SPINDLE_FFW.FFW_out",						"SPINDLE_Controller.ffw_in1", 				ConnPolicy() ); # FFW
@@ -141,7 +141,7 @@ connect("TrajectoryActionlib.acc_out2",				"SPINDLE_FFW.ref_acc", 						ConnPoli
 
 ## Ros communication ##
 connect( "EtherCATread.spindle_Eout1", 				"SPINDLE_WriteJointStates.pos_in", 			ConnPolicy() ); # Position
-connect("SPINDLE_WriteJointStates.out", 			"JointStateAggregator.torso", 				ConnPolicy() ); # JointState 
+connect("SPINDLE_WriteJointStates.out", 			"JointStateAggregator.torso", 				ConnPolicy() ); # JointState
 
 ## Homing ##
 connect("EtherCATread.spindle_Eout1",				"SPINDLE_Homing.position", 					ConnPolicy() ); # Position

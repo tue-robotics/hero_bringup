@@ -4,12 +4,12 @@
 
     <group ns="amigo">
 
-		<!-- NAVIGATION -->
-		<include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
-			<arg name="machine" value="amigo2"/>
-		</include>
+        <!-- ROBOCUP RECORDER -->
+        <include file="$(find robot_launch_files)/launch/essentials/record_robocup.launch">
+            <arg name="machine" value="amigo2" />
+        </include>
 
-		<!-- Relay of the kinect to save bandwidth -->
+        <!-- Relay of the kinect to save bandwidth -->
         <group if="$(optenv ROBOT_REAL false)">
             <include file="$(find robot_launch_files)/launch/hardware/sensors/kinect_relay.launch">
                 <arg name="from" value="top_kinect_amigo1"/>
@@ -17,10 +17,15 @@
             </include>
         </group>
 
-		<!-- WORLD MODEL -->
-		<include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
-			<arg name="machine" value="amigo2"/>
-		</include>
+   		<!-- NAVIGATION -->
+   		<include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
+   			<arg name="machine" value="amigo2"/>
+   		</include>
+
+   		<!-- WORLD MODEL -->
+   		<include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
+   			<arg name="machine" value="amigo2"/>
+   		</include>
 
 	</group>
 
