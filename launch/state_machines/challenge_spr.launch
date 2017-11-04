@@ -2,31 +2,32 @@
 
 <launch>
 
-    <group ns="amigo">
+        <group ns="amigo">
 
-        <!-- ROBOCUP RECORDER -->
-        <include file="$(find robot_launch_files)/launch/essentials/record_robocup.launch">
-            <arg name="machine" value="amigo2" />
-        </include>
+                <!-- ROBOCUP RECORDER -->
+                <include file="$(find robot_launch_files)/launch/essentials/record_robocup.launch">
+                        <arg name="machine" value="amigo2" />
+                </include>
 
-    		<!-- NAVIGATION -->
-    		<include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
-    			<arg name="machine" value="amigo2"/>
-    		</include>
+                <!-- NAVIGATION -->
+                <include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
+                        <arg name="machine" value="amigo2"/>
+                </include>
 
-    		<!-- WORLD MODEL -->
-    		<include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
-    			<arg name="machine" value="amigo2"/>
-    		</include>
+                <!-- WORLD MODEL -->
+                <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
+                        <arg name="machine" value="amigo2"/>
+                        <arg name="config" value="world_modeling/world_model_spr.yaml"/>
+                </include>
 
-	</group>
+        </group>
 
-	<!--Launch SkyBiometry rosrun skybiometry_ros face_properties_node-->
-	<node pkg="skybiometry_ros" type="face_properties_node" name="skybiometry_face_properties">
-		<param name="api_timeout" value="60" />
-	</node>
+        <!--Launch SkyBiometry rosrun skybiometry_ros face_properties_node-->
+        <node pkg="skybiometry_ros" type="face_properties_node" name="skybiometry_face_properties">
+                <param name="api_timeout" value="60" />
+        </node>
 
-	<!-- Start the challenge -->
-	<node pkg="challenge_spr" type="challenge_spr.py" name="state_machine" args="amigo" output="screen" required="true"/>
+        <!-- Start the challenge -->
+        <node pkg="challenge_spr" type="challenge_spr.py" name="state_machine" args="amigo" output="screen" required="true"/>
 
 </launch>
