@@ -183,8 +183,14 @@ Supervisor.AddEnabledPeer(		"SPINDLE_FFW", 					BODYPARTNR )
 Supervisor.AddEnabledPeer(		"SPINDLE_Safety", 				BODYPARTNR )
 
 #### AUTOLOG ####
-#Tracing.AddBodypart(BODYPARTNAME,BODYPARTNR,2,N,strings("ref","pos"))
-#connect("SPINDLE_Controller.references",			"Tracing.spindle_ref", 					ConnPolicy() )
-#connect("EtherCATread.spindle_Eout1",				"Tracing.spindle_pos", 					ConnPolicy() )
-#connect("SPINDLE_Safety.error",						"Tracing.spindle_error", 				ConnPolicy() )
-
+#loadComponent("Tracing","Signal::Tracing")
+#setActivity("Tracing",TS,HighestPriority,ORO_SCHED_RT)
+#Tracing.buffersize                      = 60000
+#Tracing.filename                        = "/tmp/log.dat"
+#Tracing.vector_sizes                    = array(1.0,1.0,1.0,1.0)
+#Tracing.configure
+#connect("SPINDLE_Controller.references",			"Tracing.in1", 					ConnPolicy() )
+#connect("EtherCATread.spindle_Eout1",				"Tracing.in2", 					ConnPolicy() )
+#connect("SPINDLE_Controller.jointErrors",           "Tracing.in3",                  ConnPolicy() )
+#connect("SPINDLE_Controller.out",					"Tracing.in4",   				ConnPolicy() )
+#Tracing.start
