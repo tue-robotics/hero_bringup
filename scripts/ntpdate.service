@@ -1,0 +1,9 @@
+[Unit]
+Description=NTPDATE
+
+[Install]
+WantedBy=roscore.service
+
+[Service]
+Restart=on-abort
+ExecStart=ntpdate ntp.ubuntu.com

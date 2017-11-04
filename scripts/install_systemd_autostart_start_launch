@@ -6,8 +6,10 @@ sudo cp $DIR/*.service /etc/systemd/system/
 
 # Reload and enable
 sudo systemctl daemon-reload
+sudo systemctl start ntpdate.service
 sudo systemctl start roscore.service
 sudo systemctl start amigo-start.service
+sudo systemctl enable ntpdate.service
 sudo systemctl enable roscore.service
 sudo systemctl enable amigo-start.service
 
