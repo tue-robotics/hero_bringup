@@ -6,4 +6,4 @@ WantedBy=roscore.service
 
 [Service]
 Restart=on-abort
-ExecStart=ntpdate ntp.ubuntu.com
+ExecStart=/usr/sbin/ntpdate ntp.ubuntu.com
