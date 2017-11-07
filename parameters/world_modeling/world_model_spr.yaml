@@ -19,6 +19,7 @@ plugins:
 
 - name: navigation
   lib: libed_navigation_plugin.so
+  frequency: 1
   parameters:
       occupancy_grid_publisher:
           resolution: 0.05
@@ -26,6 +27,10 @@ plugins:
           min_z: 0.025
           max_z: 1.8
           default_offset: 0.7
+
+- name: kinect_navigation
+  lib: libed_kinect_navigation_plugin.so
+  parameters:
       depth_sensor_integration:
           frame_id: /map
           topic: /amigo/top_kinect/rgbd
@@ -77,9 +82,9 @@ plugins:
       initial_pose_topic: /amigo/initialpose
       num_particles: 500
       initial_pose:
-          x: $(env ROBOT_INIT_X)
-          y: $(env ROBOT_INIT_Y)
-          rz: $(env ROBOT_INIT_PHI)
+          x: 1.5 #$(env ROBOT_INIT_X)
+          y: 2.5 #$(env ROBOT_INIT_Y)
+          rz: 3.1415 #$(env ROBOT_INIT_PHI)
       laser_model:
           topic: /amigo/base_laser/scan
           num_beams: 100
