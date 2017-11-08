@@ -8,6 +8,7 @@
 ########################################################################
 
 #### DECLARATION OF PARAMETERS ####
+var int    TUE_HighestPriority  = os.getenv("TUE_HighestPriority");
 var double TS 					= 0.001
 var double WHEELRAD 			= 0.075*0.9825; # Corrected for effective wheel radius
 var double DIS2CENT 			= 0.29072 * 64.0 / 62.8; # (Correction for corrected TWOPI)
@@ -40,7 +41,7 @@ Supervisor.AddBodyPart( BODYPARTNR, BODYPARTNAME, HOMEABLE, HOMINGOBLIGATORY, RE
 ### READ WHEEL ENCODERS ###
 loadComponent("BASE_ReadEncoders","SOEM::ReadEncoders")
 addPeer("Supervisor","BASE_ReadEncoders")
-setActivity("BASE_ReadEncoders",TS,HighestPriority,ORO_SCHED_RT)
+setActivity("BASE_ReadEncoders",TS,TUE_HighestPriority,ORO_SCHED_RT)
 BASE_ReadEncoders.encoderbits 			= 65536
 BASE_ReadEncoders.enc2SI 				= array (ENC2SI, ENC2SI, ENC2SI, ENC2SI)
 BASE_ReadEncoders.configure
@@ -48,7 +49,7 @@ BASE_ReadEncoders.configure
 ### CONTROLLER COMPONENT ###
 loadComponent("BASE_Controller","FILTERS::Controller")
 addPeer("Supervisor","BASE_Controller")
-setActivity("BASE_Controller",0.0,HighestPriority,ORO_SCHED_RT)
+setActivity("BASE_Controller",0.0,TUE_HighestPriority,ORO_SCHED_RT)
 BASE_Controller.vector_size 			= N;
 BASE_Controller.sampling_time 			= TS;
 BASE_Controller.controllers 			= strings ("WeakIntegrator","LowPass");
@@ -64,7 +65,7 @@ BASE_Controller.configure
 ### SI2VOLT ###
 loadComponent("BASE_SI2Volt","MATH::Gain")
 addPeer("Supervisor","BASE_SI2Volt")
-setActivity("BASE_SI2Volt",0.0,HighestPriority,ORO_SCHED_RT)
+setActivity("BASE_SI2Volt",0.0,TUE_HighestPriority,ORO_SCHED_RT)
 BASE_SI2Volt.vectorsize 				= N;
 BASE_SI2Volt.gain 						= array (SI2V, SI2V, SI2V, SI2V)
 BASE_SI2Volt.configure
@@ -72,7 +73,7 @@ BASE_SI2Volt.configure
 ### ERROR FILTER (used to filter out missed encoder counts) ###
 loadComponent("BASE_ErrorFilter","FILTERS::SecondOrderLowPasses")
 addPeer("Supervisor","BASE_ErrorFilter")
-setActivity("BASE_ErrorFilter",0.0,HighestPriority,ORO_SCHED_RT)
+setActivity("BASE_ErrorFilter",0.0,TUE_HighestPriority,ORO_SCHED_RT)
 BASE_ErrorFilter.vector_size			= 4
 BASE_ErrorFilter.sampling_time			= TS
 BASE_ErrorFilter.pole_frequency			= array(100.0, 	100.0, 	100.0, 	100.0);
@@ -82,7 +83,7 @@ BASE_ErrorFilter.configure
 ### Safety ###
 loadComponent("BASE_Safety","SUPERVISORY::Safety")
 addPeer("Supervisor","BASE_Safety")
-setActivity("BASE_Safety",0.0,HighestPriority,ORO_SCHED_RT)
+setActivity("BASE_Safety",0.0,TUE_HighestPriority,ORO_SCHED_RT)
 BASE_Safety.prefix 						= "BASE"
 BASE_Safety.Nj							= N
 BASE_Safety.Nm							= N
@@ -116,7 +117,7 @@ BASE_JointToMotorSpace.function4 		= array (  HALFSQRT2/WHEELRAD,  HALFSQRT2/WHE
 ### DECOUPLE POSITION ###
 loadComponent("BASE_MotorToJointSpace","MATH::MatrixTransform")
 addPeer("Supervisor","BASE_MotorToJointSpace")
-setActivity("BASE_MotorToJointSpace",0.0,HighestPriority,ORO_SCHED_RT)
+setActivity("BASE_MotorToJointSpace",0.0,TUE_HighestPriority,ORO_SCHED_RT)
 BASE_MotorToJointSpace.Nrows 			= 3
 BASE_MotorToJointSpace.Ncolumns 		= 4
 BASE_MotorToJointSpace.configure

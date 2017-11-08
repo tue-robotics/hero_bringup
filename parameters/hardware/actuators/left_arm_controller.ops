@@ -7,6 +7,7 @@
 #########################################################################
 
 #### DECLARATION OF PARAMETERS ####
+var int     TUE_HighestPriority         = os.getenv("TUE_HighestPriority");
 var double 	TS 							= 0.001
 var string 	SL_ID_LSHOULDER 			= os.getenv("SL_ID_LSHOULDER")
 var string 	SL_ID_LUPPERARM 			= os.getenv("SL_ID_LUPPERARM")
@@ -93,7 +94,7 @@ EtherCATwrite.left_arm1_matrixtransform8 = array( 0.0,  0.0,  0.0,  0.0,  0.0,  
 ### Gripper force controller ###
 loadComponent("LPERA_GripperControl",	"ARM::GripperControl")
 addPeer("Supervisor","LPERA_GripperControl")
-setActivity("LPERA_GripperControl",TS,HighestPriority,ORO_SCHED_RT)
+setActivity("LPERA_GripperControl",TS,TUE_HighestPriority,ORO_SCHED_RT)
 LPERA_GripperControl.threshold_closed 	= GRIPPERFORCE
 LPERA_GripperControl.max_pos 			= 7.5
 LPERA_GripperControl.min_pos 			= 0.0
@@ -105,7 +106,7 @@ LPERA_GripperControl.configure
 
 ### Negative feedback controller ###
 loadComponent("LPERA_Controller","FILTERS::Controller")
-setActivity("LPERA_Controller",0.0,HighestPriority,ORO_SCHED_RT)
+setActivity("LPERA_Controller",0.0,TUE_HighestPriority,ORO_SCHED_RT)
 LPERA_Controller.vector_size    		= N
 LPERA_Controller.controllers			= strings("WeakIntegrator","LeadLag","LowPass")
 LPERA_Controller.sampling_time			= TS
@@ -124,7 +125,7 @@ LPERA_Controller.configure
 loadComponent("LPERA_Safety",			"SUPERVISORY::Safety")
 addPeer("Supervisor",					"LPERA_Safety")
 addPeer("LPERA_Safety",					"TrajectoryActionlib")
-setActivity("LPERA_Safety",0.0,HighestPriority,ORO_SCHED_RT)
+setActivity("LPERA_Safety",0.0,TUE_HighestPriority,ORO_SCHED_RT)
 LPERA_Safety.prefix 					= "LPERA"
 LPERA_Safety.partNr 					= BODYPARTNR
 LPERA_Safety.Nj							= N
@@ -141,7 +142,7 @@ addPeer("LPERA_Homing",					"EtherCATread")
 addPeer("LPERA_Homing",					"TrajectoryActionlib")
 addPeer("LPERA_Homing",					"LPERA_Safety")
 addPeer("LPERA_Homing",					"LPERA_GripperControl")
-setActivity("LPERA_Homing",TS,HighestPriority,ORO_SCHED_RT)
+setActivity("LPERA_Homing",TS,TUE_HighestPriority,ORO_SCHED_RT)
 LPERA_Homing.new_structure 				= true
 LPERA_Homing.vector_size 				= N
 LPERA_Homing.number_of_outports 		= 2
@@ -170,7 +171,7 @@ LPERA_Homing.configure
 ### HANDOVER DETECTOR ###
 loadComponent("LPERA_HandoverDetector",	"ARM::HandoverDetector")
 addPeer("Supervisor","LPERA_HandoverDetector")
-setActivity("LPERA_HandoverDetector",0.01,HighestPriority/2,ORO_SCHED_RT)
+setActivity("LPERA_HandoverDetector",0.01,TUE_HighestPriority/2,ORO_SCHED_RT)
 LPERA_HandoverDetector.threshold 		= 0.1
 LPERA_HandoverDetector.configure
 

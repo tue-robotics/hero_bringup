@@ -7,6 +7,7 @@
 ########################################################################
 
 #### DECLARATION OF PARAMETERS ####
+var int     TUE_HighestPriority         = os.getenv("TUE_HighestPriority");
 var double 	TS 							= 0.001
 var double 	WHEELRAD 					= 0.075*0.9825; 				# Corrected for effective wheel radius
 var double 	DIS2CENT 					= 0.29072 * 64.0 / 62.8; 		# (Correction for corrected TWOPI)
@@ -38,7 +39,7 @@ EtherCATwrite.AddMultiply_A(BODYPARTNAME, 1, array(SI2V, SI2V, SI2V, SI2V))
 
 ### DECOUPLE POSITION ###
 loadComponent("BASE_MotorToJointSpace",	"MATH::MatrixTransform")
-setActivity("BASE_MotorToJointSpace",0.0,HighestPriority,ORO_SCHED_RT)
+setActivity("BASE_MotorToJointSpace",0.0,TUE_HighestPriority,ORO_SCHED_RT)
 BASE_MotorToJointSpace.Nrows 			= 3
 BASE_MotorToJointSpace.Ncolumns 		= 4
 BASE_MotorToJointSpace.configure
@@ -56,7 +57,7 @@ BASE_OdometryPublisher.configure
 ### READ REFERENCE VELOCITIES ###
 loadComponent("BASE_ReadReferences",	"ROS::ReadTwistMsg")
 addPeer("Supervisor",					"BASE_ReadReferences")
-setActivity("BASE_ReadReferences",TS,HighestPriority,ORO_SCHED_RT)
+setActivity("BASE_ReadReferences",TS,TUE_HighestPriority,ORO_SCHED_RT)
 BASE_ReadReferences.max_start_vel 		= 1.0
 BASE_ReadReferences.max_vel 			= MAX_VELOCITIES
 BASE_ReadReferences.max_acc 			= array(0.7, 0.7, 2.0)
@@ -66,7 +67,7 @@ BASE_ReadReferences.configure
 ### DECOUPLE REFERENCE ###
 loadComponent("BASE_JointToMotorSpace",	"MATH::MatrixTransform")
 addPeer("Supervisor","BASE_JointToMotorSpace")
-setActivity("BASE_JointToMotorSpace",0.0,HighestPriority,ORO_SCHED_RT)
+setActivity("BASE_JointToMotorSpace",0.0,TUE_HighestPriority,ORO_SCHED_RT)
 BASE_JointToMotorSpace.Nrows = N
 BASE_JointToMotorSpace.Ncolumns = 3
 BASE_JointToMotorSpace.configure
@@ -78,13 +79,13 @@ BASE_JointToMotorSpace.function4 		= array( HALFSQRT2/WHEELRAD, HALFSQRT2/WHEELR
 ### VELOCITY TO POSITION ###
 loadComponent("BASE_VelocityToPosition","MATH::Integrator")
 addPeer("Supervisor","BASE_VelocityToPosition")
-setActivity("BASE_VelocityToPosition",0.0,HighestPriority,ORO_SCHED_RT)
+setActivity("BASE_VelocityToPosition",0.0,TUE_HighestPriority,ORO_SCHED_RT)
 BASE_VelocityToPosition.vector_size 	= N
 BASE_VelocityToPosition.configure
 
 ### Negative feedback controller ###
 loadComponent("BASE_Controller","FILTERS::Controller")
-setActivity("BASE_Controller",0.0,HighestPriority,ORO_SCHED_RT)
+setActivity("BASE_Controller",0.0,TUE_HighestPriority,ORO_SCHED_RT)
 addPeer("Supervisor","BASE_Controller")
 BASE_Controller.vector_size    			= N
 BASE_Controller.controllers				= strings("WeakIntegrator","LeadLag","LowPass")
@@ -103,7 +104,7 @@ BASE_Controller.configure
 ### Safety ###
 loadComponent("BASE_Safety",			"SUPERVISORY::Safety")
 addPeer("Supervisor","BASE_Safety")
-setActivity("BASE_Safety",0.0,HighestPriority,ORO_SCHED_RT)
+setActivity("BASE_Safety",0.0,TUE_HighestPriority,ORO_SCHED_RT)
 BASE_Safety.prefix 						= "BASE"
 BASE_Safety.partNr						= BODYPARTNR
 BASE_Safety.Nj							= N

@@ -11,6 +11,9 @@
 import("rtt_ros")
 ros.import("amigo_hardware")
 
+#### Priority ####
+var int TUE_HighestPriority             = 45;
+
 #### DECLARATION OF PARAMETERS ####
 var double TS 							= 0.001
 var string SL_ID_LSHOULDER 				= "Soem.Slave_1012"
@@ -30,12 +33,13 @@ os.setenv("SL_ID_RSHOULDER",			SL_ID_RSHOULDER)
 os.setenv("SL_ID_RUPPERARM",			SL_ID_RUPPERARM)
 os.setenv("SL_ID_RLOWERARM",			SL_ID_RLOWERARM)
 os.setenv("ROBOTNS",					ROBOTNS)
+os.setenv("TUE_HighestPriority",        TUE_HighestPriority)
 
 #### LOAD SUPERVISOR ###
 loadComponent("Supervisor",				"SUPERVISORY::Supervisor")
 Supervisor.ebuttonorder					= strings("Wired","Wireless")
 Supervisor.configure
-setActivity("Supervisor",0.01,HighestPriority,ORO_SCHED_RT)
+setActivity("Supervisor",0.01,TUE_HighestPriority,ORO_SCHED_RT)
 stream("Supervisor.ebuttonWired", 		ros.topic(ROBOTNS+"/runstop"))
 stream("Supervisor.ebuttonWireless", 	ros.topic(ROBOTNS+"/emergency_switch"))
 stream("Supervisor.rosshutdown", 		ros.topic(ROBOTNS+"/etherCAT_shutdown")); 
@@ -56,7 +60,7 @@ stream("JointStateAggregator.out", 		ros.topic(ROBOTNS+"/joint_states"))
 
 #### LOAD TrajectoryActionlib ####
 loadComponent("TrajectoryActionlib",	"ROS::TrajectoryActionlib")
-setActivity("TrajectoryActionlib",TS,HighestPriority, ORO_SCHED_RT)
+setActivity("TrajectoryActionlib",TS,TUE_HighestPriority, ORO_SCHED_RT)
 loadService("TrajectoryActionlib",		"actionlib")
 TrajectoryActionlib.actionlib.connect(	ROBOTNS+"/body/joint_trajectory_action");
 TrajectoryActionlib.actionlib.connect(	ROBOTNS+"/left_arm/joint_trajectory_action");
@@ -68,20 +72,20 @@ TrajectoryActionlib.configure
 loadComponent("EtherCATread",			"ETHERCATREAD::EtherCATread")
 addPeer("Supervisor",					"EtherCATread")
 EtherCATread.configure
-setActivity("EtherCATread",TS,HighestPriority,ORO_SCHED_RT)
+setActivity("EtherCATread",TS,TUE_HighestPriority,ORO_SCHED_RT)
 EtherCATread.bodypart_names 			= DEFAULT_PART_NAMES
 
 ### LOAD SOEM COMPONENT FOR ETHERCAT COMMUNICATION ###
 loadComponent("Soem",					"soem_master::SoemMasterComponent")
 Soem.ifname="eno1"
 Soem.configure
-setActivity("Soem",TS,HighestPriority,ORO_SCHED_RT)
+setActivity("Soem",TS,TUE_HighestPriority,ORO_SCHED_RT)
 connect("Soem.Slave_1002.Slave_1002_value", "Supervisor.serialRunning", ConnPolicy() )
 
 ### LOAD ETHERCAT WRITE ###
 loadComponent("EtherCATwrite",			"ETHERCATWRITE::EtherCATwrite") 
 EtherCATwrite.configure
-setActivity("EtherCATwrite",TS,HighestPriority,ORO_SCHED_RT)
+setActivity("EtherCATwrite",TS,TUE_HighestPriority,ORO_SCHED_RT)
 EtherCATwrite.bodypart_names 			= DEFAULT_PART_NAMES
 
 #### START COMPONENTS ####
@@ -126,7 +130,7 @@ stream("EtherCATread.generic_AoutMsg1", ros.topic(ROBOTNS+"/battery_value"))
 
 ### TRACING COMPONENT ###
 #loadComponent("Tracing",				"Signal::TracingContinous")
-#setActivity("Tracing",TS,HighestPriority,ORO_SCHED_RT)
+#setActivity("Tracing",TS,TUE_HighestPriority,ORO_SCHED_RT)
 #Tracing.buffersize 						= 25000
 #Tracing.sendErrorLog_delay 				= 1000 
 #Tracing.loglocation 					= "/home/amigo/ros/data/private/hardware_tracing/autolog";
@@ -137,5 +141,5 @@ stream("EtherCATread.generic_AoutMsg1", ros.topic(ROBOTNS+"/battery_value"))
 #### EtherCAT ping ####
 #loadComponent("EtherCATping","ETHERCATPING::EtherCATping") 
 #EtherCATping.configure
-#setActivity("EtherCATping",TS,HighestPriority,ORO_SCHED_RT)
+#setActivity("EtherCATping",TS,TUE_HighestPriority,ORO_SCHED_RT)
 #EtherCATping.start()
