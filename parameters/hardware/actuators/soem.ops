@@ -12,7 +12,7 @@ import("rtt_ros")
 ros.import("amigo_hardware")
 
 #### Priority ####
-var int TUE_HighestPriority             = 46
+var int TUE_HighestPriority             = 46; # always use an even number, because priority is sometimes halved
 
 #### DECLARATION OF PARAMETERS ####
 var double TS 							= 0.001
@@ -41,8 +41,8 @@ Supervisor.configure
 setActivity("Supervisor",0.01,TUE_HighestPriority,ORO_SCHED_RT)
 stream("Supervisor.ebuttonWired", 		ros.topic(ROBOTNS+"/runstop"))
 stream("Supervisor.ebuttonWireless", 	ros.topic(ROBOTNS+"/emergency_switch"))
-stream("Supervisor.rosshutdown", 		ros.topic(ROBOTNS+"/etherCAT_shutdown")); 
-stream("Supervisor.rosetherCATenabled", ros.topic(ROBOTNS+"/etherCAT_enabled")); 
+stream("Supervisor.rosshutdown", 		ros.topic(ROBOTNS+"/etherCAT_shutdown"));
+stream("Supervisor.rosetherCATenabled", ros.topic(ROBOTNS+"/etherCAT_enabled"));
 stream("Supervisor.hardware_status", 	ros.topic(ROBOTNS+"/hardware_status"));
 stream("Supervisor.dashboardCmd", 		ros.topic(ROBOTNS+"/dashboard_ctrlcmds"));
 stream("Supervisor.ebutton_status", 	ros.topic(ROBOTNS+"/ebutton_status"));
@@ -82,7 +82,7 @@ setActivity("Soem",TS,TUE_HighestPriority,ORO_SCHED_RT)
 connect("Soem.Slave_1002.Slave_1002_value", "Supervisor.serialRunning", ConnPolicy() )
 
 ### LOAD ETHERCAT WRITE ###
-loadComponent("EtherCATwrite",			"ETHERCATWRITE::EtherCATwrite") 
+loadComponent("EtherCATwrite",			"ETHERCATWRITE::EtherCATwrite")
 EtherCATwrite.configure
 setActivity("EtherCATwrite",TS,TUE_HighestPriority,ORO_SCHED_RT)
 EtherCATwrite.bodypart_names 			= DEFAULT_PART_NAMES
@@ -97,7 +97,7 @@ Supervisor.start()
 
 #### DIGITAL OUTS ####
 EtherCATwrite.AddDigitalOuts("generic", array(1.0, 1.0, 1.0, 1.0, 1.0, 1.0), array(8.0, 8.0), array(1.0, 0.0, 3.0, 0.0, 0.0, 4.0, 5.0, 6.0, 3.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0), array(1.0, 0.0, 1.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0))
-EtherCATwrite.AddForcedHigh_D("generic",1);										# IN1: Forced High, # IN2: BaseSafety.enable, # IN3: SpindleSafety.enable, # IN4: RGB:R, # IN5: RGB:G, # IN6: RGB:B, 		 
+EtherCATwrite.AddForcedHigh_D("generic",1);										# IN1: Forced High, # IN2: BaseSafety.enable, # IN3: SpindleSafety.enable, # IN4: RGB:R, # IN5: RGB:G, # IN6: RGB:B,
 connect("EtherCATwrite.generic_Dout1","Soem.Slave_100b.bits", ConnPolicy() ); 	# OUT1: 	1 Enable amps(D04:DO1)		 3 SpindleSafety.enable(brake)	6 RGB:R 	7 RGB:G 	8 RGB:B
 connect("EtherCATwrite.generic_Dout2","Soem.Slave_100c.bits", ConnPolicy() ); 	# OUT2: 	1 SpindleSafety.enable(amp) 2 BaseSafety.enable(amp)
 
@@ -131,14 +131,14 @@ stream("EtherCATread.generic_AoutMsg1", ros.topic(ROBOTNS+"/battery_value"))
 #loadComponent("Tracing",				"Signal::TracingContinous")
 #setActivity("Tracing",TS,TUE_HighestPriority,ORO_SCHED_RT)
 #Tracing.buffersize 						= 25000
-#Tracing.sendErrorLog_delay 				= 1000 
+#Tracing.sendErrorLog_delay 				= 1000
 #Tracing.loglocation 					= "/home/amigo/ros/data/private/hardware_tracing/autolog";
 #Tracing.Ts = TS
 #Tracing.configure
 #Tracing.start()
 
 #### EtherCAT ping ####
-#loadComponent("EtherCATping","ETHERCATPING::EtherCATping") 
+#loadComponent("EtherCATping","ETHERCATPING::EtherCATping")
 #EtherCATping.configure
 #setActivity("EtherCATping",TS,TUE_HighestPriority,ORO_SCHED_RT)
 #EtherCATping.start()
