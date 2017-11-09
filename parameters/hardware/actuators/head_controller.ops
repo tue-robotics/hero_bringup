@@ -7,7 +7,7 @@
 ########################################################################
 
 #### DECLARATION OF PARAMETERS ####
-var int     TUE_HighestPriority         = os.getenv("TUE_HighestPriority")
+var int TUE_HighestPriority             = 46
 var double 	TSdynamixel					= 0.02; 		#Runs lower than other components
 var double 	RAD_TO_STEP 				= 195.37860814; # IF YOU CHANGE THIS VARIABLE, ALSO RECALCULATE PAN_MIN, PAN_MAX, TILT_MIN AND TILT_MAX, (From header file)
 var double  RAD_TO_STEP_TILT			= 190.9859; # RX-64

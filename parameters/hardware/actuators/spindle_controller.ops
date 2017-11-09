@@ -7,7 +7,7 @@
 ########################################################################
 
 #### DECLARATION OF PARAMETERS ####
-var int     TUE_HighestPriority         = os.getenv("TUE_HighestPriority")
+var int TUE_HighestPriority             = 46
 var double 	TS 							= 0.001
 var strings JOINT_NAMES 				= strings( "torso_joint" )
 var double 	ENCODERBITS					= 65536.0

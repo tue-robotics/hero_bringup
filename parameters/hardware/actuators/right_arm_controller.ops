@@ -7,7 +7,7 @@
 #########################################################################
 
 #### DECLARATION OF PARAMETERS ####
-var int     TUE_HighestPriority         = os.getenv("TUE_HighestPriority")
+var int TUE_HighestPriority             = 46
 var double  TS                          = 0.001
 var string  SL_ID_RSHOULDER             = os.getenv("SL_ID_RSHOULDER")
 var string  SL_ID_RUPPERARM             = os.getenv("SL_ID_RUPPERARM")

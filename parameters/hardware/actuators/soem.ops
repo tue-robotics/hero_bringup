@@ -12,7 +12,7 @@ import("rtt_ros")
 ros.import("amigo_hardware")
 
 #### Priority ####
-var int TUE_HighestPriority             = 45
+var int TUE_HighestPriority             = 46
 
 #### DECLARATION OF PARAMETERS ####
 var double TS 							= 0.001
@@ -33,7 +33,6 @@ os.setenv("SL_ID_RSHOULDER",			SL_ID_RSHOULDER)
 os.setenv("SL_ID_RUPPERARM",			SL_ID_RUPPERARM)
 os.setenv("SL_ID_RLOWERARM",			SL_ID_RLOWERARM)
 os.setenv("ROBOTNS",					ROBOTNS)
-os.setenv("TUE_HighestPriority",        TUE_HighestPriority)
 
 #### LOAD SUPERVISOR ###
 loadComponent("Supervisor",				"SUPERVISORY::Supervisor")
