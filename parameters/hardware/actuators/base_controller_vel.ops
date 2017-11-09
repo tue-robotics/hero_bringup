@@ -8,7 +8,7 @@
 ########################################################################
 
 #### DECLARATION OF PARAMETERS ####
-var int    TUE_HighestPriority  = os.getenv("TUE_HighestPriority");
+var int    TUE_HighestPriority  = os.getenv("TUE_HighestPriority")
 var double TS 					= 0.001
 var double WHEELRAD 			= 0.075*0.9825; # Corrected for effective wheel radius
 var double DIS2CENT 			= 0.29072 * 64.0 / 62.8; # (Correction for corrected TWOPI)

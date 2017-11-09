@@ -12,7 +12,7 @@ import("rtt_ros")
 ros.import("amigo_hardware")
 
 #### Priority ####
-var int TUE_HighestPriority             = 45;
+var int TUE_HighestPriority             = 45
 
 #### DECLARATION OF PARAMETERS ####
 var double TS 							= 0.001

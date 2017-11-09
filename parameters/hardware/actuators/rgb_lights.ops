@@ -8,7 +8,7 @@
 ########################################################################
 
 #### DECLARATION OF PARAMETERS ####
-var int     TUE_HighestPriority         = os.getenv("TUE_HighestPriority");
+var int     TUE_HighestPriority         = os.getenv("TUE_HighestPriority")
 var double 	TS 							= 0.001
 var string	ROBOTNS						= os.getenv("ROBOTNS")
 
