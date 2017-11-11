@@ -22,11 +22,6 @@
 
         </group>
 
-        <!--Launch SkyBiometry rosrun skybiometry_ros face_properties_node-->
-        <node pkg="skybiometry_ros" type="face_properties_node" name="skybiometry_face_properties">
-                <param name="api_timeout" value="60" />
-        </node>
-
         <!-- Start the challenge -->
         <node pkg="challenge_spr" type="challenge_spr.py" name="state_machine" args="amigo" output="screen" required="true"/>
 
