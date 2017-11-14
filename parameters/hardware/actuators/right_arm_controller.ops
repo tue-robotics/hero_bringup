@@ -269,37 +269,3 @@ Supervisor.AddOpOnlyPeer(       "RPERA_GripperControl",     BODYPARTNR)
 Supervisor.AddOpOnlyPeer(       "RPERA_HandoverDetector",   BODYPARTNR)
 Supervisor.AddEnabledPeer(      "RPERA_Safety",             BODYPARTNR)
 
-### HANDOVER DETECTOR ###
-#loadComponent("GRIP",   "ROS::AnyToROS")
-#setActivity("GRIP",0.0,TUE_HighestPriority,ORO_SCHED_RT)
-#GRIP.configure
-#GRIP.AddDoublesToROS(8, ints(8),"pos"); # This is the event port
-#GRIP.AddDoublesToROS(8, ints(8),"ref")
-#GRIP.AddDoublesToROS(8, ints(8),"err")
-#GRIP.AddDoublesToROS(8, ints(8),"eff")
-#GRIP.AddDoublesToROS(8, ints(8),"for")
-#connect("EtherCATread.right_arm_Eout1",             "GRIP.in_posEv",                ConnPolicy() )
-#connect("RPERA_Controller.references",              "GRIP.in_ref",                  ConnPolicy() )
-#connect("RPERA_Controller.jointErrors",             "GRIP.in_err",                  ConnPolicy() )
-#connect("RPERA_Controller.out",                     "GRIP.in_eff",                  ConnPolicy() )
-#connect("EtherCATread.right_arm_Aout1",             "GRIP.in_for",                  ConnPolicy() )
-#stream("GRIP.outmsg_pos_8",             ros.topic(ROBOTNS+"/grip/pos"));
-#stream("GRIP.outmsg_ref_8",             ros.topic(ROBOTNS+"/grip/ref"));
-#stream("GRIP.outmsg_err_8",             ros.topic(ROBOTNS+"/grip/err"));
-#stream("GRIP.outmsg_eff_8",             ros.topic(ROBOTNS+"/grip/eff"));
-#stream("GRIP.outmsg_for_8",             ros.topic(ROBOTNS+"/grip/for"));
-#GRIP.start
-
-#### AUTOLOG ####
-#Tracing.AddBodypart(BODYPARTNAME,BODYPARTNR,5,N,strings("ref","pos","err","eff","for"))
-#connect("RPERA_Controller.references",              "Tracing.right_arm_ref",                    ConnPolicy() )
-#connect("EtherCATread.right_arm_Eout1",             "Tracing.right_arm_pos",                    ConnPolicy() )
-#connect("RPERA_Controller.jointErrors",             "Tracing.right_arm_err",                    ConnPolicy() )
-#connect("RPERA_Controller.out",                     "Tracing.right_arm_eff",                    ConnPolicy() )
-#connect("EtherCATread.right_arm_Aout1",             "Tracing.right_arm_for",                    ConnPolicy() )
-#connect("RPERA_Safety.error",                       "Tracing.right_arm_error",                  ConnPolicy() )
-
-#### EtherCAT ping ####
-#connect(SL_ID_RSHOULDER+".encoder1","EtherCATping.in4", ConnPolicy() );
-#connect(SL_ID_RUPPERARM+".encoder1","EtherCATping.in5", ConnPolicy() );
-#connect(SL_ID_RLOWERARM+".encoder1","EtherCATping.in6", ConnPolicy() );

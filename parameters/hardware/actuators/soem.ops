@@ -127,18 +127,3 @@ connect("Soem.Slave_100e.values",		"EtherCATread.generic_Ain1", ConnPolicy() );
 EtherCATread.AddMsgOut_A("generic",1)
 stream("EtherCATread.generic_AoutMsg1", ros.topic(ROBOTNS+"/battery_value"))
 
-### TRACING COMPONENT ###
-#loadComponent("Tracing",				"Signal::TracingContinous")
-#setActivity("Tracing",TS,TUE_HighestPriority,ORO_SCHED_RT)
-#Tracing.buffersize 						= 25000
-#Tracing.sendErrorLog_delay 				= 1000
-#Tracing.loglocation 					= "/home/amigo/ros/data/private/hardware_tracing/autolog";
-#Tracing.Ts = TS
-#Tracing.configure
-#Tracing.start()
-
-#### EtherCAT ping ####
-#loadComponent("EtherCATping","ETHERCATPING::EtherCATping")
-#EtherCATping.configure
-#setActivity("EtherCATping",TS,TUE_HighestPriority,ORO_SCHED_RT)
-#EtherCATping.start()

@@ -183,9 +183,15 @@ Supervisor.AddHomingOnlyPeer(	"SPINDLE_Homing", 				BODYPARTNR )
 Supervisor.AddEnabledPeer(		"SPINDLE_FFW", 					BODYPARTNR )
 Supervisor.AddEnabledPeer(		"SPINDLE_Safety", 				BODYPARTNR )
 
-#### AUTOLOG ####
-#Tracing.AddBodypart(BODYPARTNAME,BODYPARTNR,2,N,strings("ref","pos"))
-#connect("SPINDLE_Controller.references",			"Tracing.spindle_ref", 					ConnPolicy() )
-#connect("EtherCATread.spindle_Eout1",				"Tracing.spindle_pos", 					ConnPolicy() )
-#connect("SPINDLE_Safety.error",						"Tracing.spindle_error", 				ConnPolicy() )
-
+## Tracing ##
+#loadComponent("Tracing","Signal::Tracing")
+#setActivity("Tracing",0.0,HighestPriority,ORO_SCHED_RT)
+#Tracing.buffersize                      = 60000
+#Tracing.filename                        = "/home/amigo/hardwarelogs/log.dat"
+#Tracing.vector_sizes                    = array(1.0,1.0,1.0,1.0)
+#Tracing.configure
+#connect("SPINDLE_Controller.references",          "Tracing.in1",                  ConnPolicy() ) # Ref
+#connect("EtherCATread.spindle_Eout1",             "Tracing.in2",                  ConnPolicy() ) # Pos
+#connect("SPINDLE_Controller.jointErrors",         "Tracing.in3",                  ConnPolicy() ) # Err
+#connect("SPINDLE_Controller.out",                 "Tracing.in4",                  ConnPolicy() ) # Out
+#Tracing.start

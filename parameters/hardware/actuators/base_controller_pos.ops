@@ -173,11 +173,3 @@ Supervisor.AddEnabledPeer("BASE_JointToMotorSpace", BODYPARTNR )
 Supervisor.AddEnabledPeer("BASE_VelocityToPosition",BODYPARTNR )
 Supervisor.AddEnabledPeer("BASE_Safety", 			BODYPARTNR)
 
-#### AUTOLOG ####
-#Tracing.AddBodypart(BODYPARTNAME,BODYPARTNR,2,N,strings("ref","pos"))
-#connect("BASE_Controller.references",				"Tracing.base_ref", 					ConnPolicy() )
-#connect("EtherCATread.base_Eout1",					"Tracing.base_pos", 					ConnPolicy() )
-#connect("BASE_Safety.error",						"Tracing.base_error", 					ConnPolicy() )
-
-#### EtherCAT ping ####
-#connect("Soem.Slave_1002.Slave_1002_value",		"EtherCATping.in7", 					ConnPolicy() );
