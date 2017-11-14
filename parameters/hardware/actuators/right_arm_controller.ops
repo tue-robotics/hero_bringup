@@ -7,6 +7,7 @@
 #########################################################################
 
 #### DECLARATION OF PARAMETERS ####
+var int TUE_HighestPriority             = 46
 var double  TS                          = 0.001
 var string  SL_ID_RSHOULDER             = os.getenv("SL_ID_RSHOULDER")
 var string  SL_ID_RUPPERARM             = os.getenv("SL_ID_RUPPERARM")
@@ -93,7 +94,7 @@ EtherCATwrite.right_arm1_matrixtransform8 = array( 0.0,  0.0,  0.0,  0.0,  0.0, 
 ### Gripper force controller ###
 loadComponent("RPERA_GripperControl",   "ARM::GripperControl")
 addPeer("Supervisor","RPERA_GripperControl")
-setActivity("RPERA_GripperControl",TS,HighestPriority,ORO_SCHED_RT)
+setActivity("RPERA_GripperControl",TS,TUE_HighestPriority,ORO_SCHED_RT)
 RPERA_GripperControl.threshold_closed   = GRIPPERFORCE
 RPERA_GripperControl.max_pos            = 7.5
 RPERA_GripperControl.min_pos            = 0.0
@@ -105,7 +106,7 @@ RPERA_GripperControl.configure
 
 ### Negative feedback controller ###
 loadComponent("RPERA_Controller",       "FILTERS::Controller")
-setActivity("RPERA_Controller",0.0,HighestPriority,ORO_SCHED_RT)
+setActivity("RPERA_Controller",0.0,TUE_HighestPriority,ORO_SCHED_RT)
 RPERA_Controller.vector_size            = N
 RPERA_Controller.controllers            = strings("WeakIntegrator","LeadLag","LowPass")
 RPERA_Controller.sampling_time          = TS
@@ -124,7 +125,7 @@ RPERA_Controller.configure
 loadComponent("RPERA_Safety",           "SUPERVISORY::Safety")
 addPeer("Supervisor",                   "RPERA_Safety")
 addPeer("RPERA_Safety",                 "TrajectoryActionlib")
-setActivity("RPERA_Safety",0.0,HighestPriority,ORO_SCHED_RT)
+setActivity("RPERA_Safety",0.0,TUE_HighestPriority,ORO_SCHED_RT)
 RPERA_Safety.prefix                     = "RPERA"
 RPERA_Safety.partNr                     = BODYPARTNR
 RPERA_Safety.Nj                         = N
@@ -141,7 +142,7 @@ addPeer("RPERA_Homing",                 "EtherCATread")
 addPeer("RPERA_Homing",                 "TrajectoryActionlib")
 addPeer("RPERA_Homing",                 "RPERA_Safety")
 addPeer("RPERA_Homing",                 "RPERA_GripperControl")
-setActivity("RPERA_Homing",TS,HighestPriority,ORO_SCHED_RT)
+setActivity("RPERA_Homing",TS,TUE_HighestPriority,ORO_SCHED_RT)
 RPERA_Homing.new_structure              = true
 RPERA_Homing.vector_size                = N
 RPERA_Homing.number_of_outports         = 2
@@ -170,7 +171,7 @@ RPERA_Homing.configure
 ### HANDOVER DETECTOR ###
 loadComponent("RPERA_HandoverDetector", "ARM::HandoverDetector")
 addPeer("Supervisor","RPERA_HandoverDetector")
-setActivity("RPERA_HandoverDetector",0.01,HighestPriority/2,ORO_SCHED_RT)
+setActivity("RPERA_HandoverDetector",0.01,TUE_HighestPriority/2,ORO_SCHED_RT)
 RPERA_HandoverDetector.threshold        = 0.01
 RPERA_HandoverDetector.configure
 
@@ -270,7 +271,7 @@ Supervisor.AddEnabledPeer(      "RPERA_Safety",             BODYPARTNR)
 
 ### HANDOVER DETECTOR ###
 #loadComponent("GRIP",   "ROS::AnyToROS")
-#setActivity("GRIP",0.0,HighestPriority,ORO_SCHED_RT)
+#setActivity("GRIP",0.0,TUE_HighestPriority,ORO_SCHED_RT)
 #GRIP.configure
 #GRIP.AddDoublesToROS(8, ints(8),"pos"); # This is the event port
 #GRIP.AddDoublesToROS(8, ints(8),"ref")

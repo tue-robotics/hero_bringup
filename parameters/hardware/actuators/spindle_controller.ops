@@ -7,6 +7,7 @@
 ########################################################################
 
 #### DECLARATION OF PARAMETERS ####
+var int TUE_HighestPriority             = 46
 var double 	TS 							= 0.001
 var strings JOINT_NAMES 				= strings( "torso_joint" )
 var double 	ENCODERBITS					= 65536.0
@@ -44,7 +45,7 @@ SPINDLE_WriteJointStates.configure
 
 ### Negative feedback controller ###
 loadComponent("SPINDLE_Controller",		"FILTERS::Controller")
-setActivity("SPINDLE_Controller",0.0,HighestPriority,ORO_SCHED_RT)
+setActivity("SPINDLE_Controller",0.0,TUE_HighestPriority,ORO_SCHED_RT)
 SPINDLE_Controller.vector_size    		= N
 SPINDLE_Controller.gains				= array(-80.0); # -40.0
 SPINDLE_Controller.controllers			= strings("WeakIntegrator","LeadLag","LowPass")
@@ -61,7 +62,7 @@ SPINDLE_Controller.configure
 
 #Calculating Feed Forward
 loadComponent("SPINDLE_FFW",			"CalculateFFW")
-setActivity("SPINDLE_FFW",TS,HighestPriority,ORO_SCHED_RT)
+setActivity("SPINDLE_FFW",TS,TUE_HighestPriority,ORO_SCHED_RT)
 addPeer("Supervisor","SPINDLE_FFW")
 SPINDLE_FFW.FFWgrav 					= 0.07
 SPINDLE_FFW.FFWstat 					= 0.05
@@ -73,7 +74,7 @@ SPINDLE_FFW.configure
 ### Safety ###
 loadComponent("SPINDLE_Safety",			"SUPERVISORY::Safety")
 addPeer("Supervisor","SPINDLE_Safety")
-setActivity("SPINDLE_Safety",0.0,HighestPriority,ORO_SCHED_RT)
+setActivity("SPINDLE_Safety",0.0,TUE_HighestPriority,ORO_SCHED_RT)
 addPeer("SPINDLE_Safety","TrajectoryActionlib")
 SPINDLE_Safety.prefix 					= "SPINDLE"
 SPINDLE_Safety.partNr 					= BODYPARTNR
@@ -91,7 +92,7 @@ connectPeers("Supervisor","SPINDLE_Homing")
 addPeer("SPINDLE_Homing","SPINDLE_Safety")
 addPeer("SPINDLE_Homing","TrajectoryActionlib")
 addPeer("SPINDLE_Homing","EtherCATread")
-setActivity("SPINDLE_Homing",TS,HighestPriority,ORO_SCHED_RT)
+setActivity("SPINDLE_Homing",TS,TUE_HighestPriority,ORO_SCHED_RT)
 SPINDLE_Homing.new_structure 			= true
 SPINDLE_Homing.vector_size 				= N
 SPINDLE_Homing.number_of_outports 		= 1
