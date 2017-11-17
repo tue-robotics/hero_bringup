@@ -31,6 +31,10 @@ plugins:
 - name: kinect_navigation
   lib: libed_kinect_navigation_plugin.so
   parameters:
+      trigger:
+          local_planner_feedback_topic: /amigo/local_planner/action_server/feedback
+          trigger_duration: 1.0
+          backup_frequency: 1.0
       depth_sensor_integration:
           frame_id: /map
           topic: /amigo/top_kinect/rgbd
