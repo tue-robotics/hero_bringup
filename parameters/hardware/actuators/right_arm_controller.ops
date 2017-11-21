@@ -19,7 +19,7 @@ var array   LOWERJOINTLIMIT             = array(    -1.57,      -1.57,      -1.5
 var array   RESETPOS                    = array(    -0.1,      -0.2,         0.2,       0.8,         0.0        ,0.0        ,0.0)
 var array   HOMINGSTROKE                = array(    0.0,        0.0,        -1.62,      0.0,        -1.83,      -1.05,      -0.80,      0.0)
 var array   MAXERRORS                   = array(    0.09,       0.09,       0.09,       0.09,       0.09,       0.09,       0.09,       0.5)
-var array   ABSPOS                      = array(    2.105,       1.72,      0.0,        0.0,        0.0,        0.0,        0.0,        0.0); # q1: outside is lower; q2: forward is lower
+var array   ABSPOS                      = array(    2.095,       1.72,      0.0,        0.0,        0.0,        0.0,        0.0,        0.0); # q1: outside is lower; q2: forward is lower
 var array   ENCODERBITS                 = array(    65536.0,    65536.0,    65536.0,    65536.0,    65536.0,    65536.0,    65536.0,    65536.0)
 var double  TWOPI                       = 2.0*3.141592
 var double  GEARRATIO_SM                = 1.0/550.0
@@ -269,3 +269,16 @@ Supervisor.AddOpOnlyPeer(       "RPERA_GripperControl",     BODYPARTNR)
 Supervisor.AddOpOnlyPeer(       "RPERA_HandoverDetector",   BODYPARTNR)
 Supervisor.AddEnabledPeer(      "RPERA_Safety",             BODYPARTNR)
 
+## Tracing ##
+#loadComponent("Tracing","Signal::Tracing")
+#setActivity("Tracing",0.0,HighestPriority,ORO_SCHED_RT)
+#Tracing.buffersize                      = 80000
+#Tracing.filename                        = "/home/amigo/hardwarelogs/log.dat"
+#Tracing.vector_sizes                    = array(8.0,8.0,8.0,8.0,8.0)
+#Tracing.configure
+#connect("RPERA_Controller.references",          "Tracing.in1",                  ConnPolicy() ); # Ref
+#connect("EtherCATread.right_arm_Eout1",         "Tracing.in2",                  ConnPolicy() ); # Pos
+#connect("RPERA_Controller.jointErrors",         "Tracing.in3",                  ConnPolicy() ); # Err
+#connect("RPERA_Controller.out",                 "Tracing.in4",                  ConnPolicy() ); # Out
+#connect("EtherCATread.right_arm_Aout2",         "Tracing.in5",                  ConnPolicy() ); # An
+#Tracing.start
