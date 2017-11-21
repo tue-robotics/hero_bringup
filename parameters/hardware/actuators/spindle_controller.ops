@@ -190,8 +190,8 @@ Supervisor.AddEnabledPeer(		"SPINDLE_Safety", 				BODYPARTNR )
 #Tracing.filename                        = "/home/amigo/hardwarelogs/log.dat"
 #Tracing.vector_sizes                    = array(1.0,1.0,1.0,1.0)
 #Tracing.configure
-#connect("SPINDLE_Controller.references",          "Tracing.in1",                  ConnPolicy() ) # Ref
-#connect("EtherCATread.spindle_Eout1",             "Tracing.in2",                  ConnPolicy() ) # Pos
-#connect("SPINDLE_Controller.jointErrors",         "Tracing.in3",                  ConnPolicy() ) # Err
-#connect("SPINDLE_Controller.out",                 "Tracing.in4",                  ConnPolicy() ) # Out
+#connect("SPINDLE_Controller.references",          "Tracing.in1",                  ConnPolicy() ); # Ref
+#connect("EtherCATread.spindle_Eout1",             "Tracing.in2",                  ConnPolicy() ); # Pos
+#connect("SPINDLE_Controller.jointErrors",         "Tracing.in3",                  ConnPolicy() ); # Err
+#connect("SPINDLE_Controller.out",                 "Tracing.in4",                  ConnPolicy() ); # Out
 #Tracing.start
