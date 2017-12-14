@@ -4,16 +4,16 @@ scan_filter_chain:
   params: 
     range_filter_chain:
       - name: median_2
-        type: filters/MultiChannelMedianFilterFloat 
+        type: filters/MultiChannelMedianFilterFloat
         params:
           number_of_observations: 3
     intensity_filter_chain:
       - name: median_2
-        type: filters/MultiChannelMedianFilterFloat 
+        type: filters/MultiChannelMedianFilterFloat
         params:
           number_of_observations: 3
 - name: shadows
-  type: ScanShadowsFilter
+  type: laser_filters/ScanShadowsFilter
   params:
     min_angle: 30
     max_angle: 150
