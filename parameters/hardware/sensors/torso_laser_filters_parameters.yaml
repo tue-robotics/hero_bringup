@@ -1,15 +1,15 @@
 scan_filter_chain:
-- type: LaserArrayFilter
+- type: laser_filters/LaserArrayFilter
   name: laser_median_filter
   params: 
     range_filter_chain:
       - name: median_2
-        type: MultiChannelMedianFilterFloat 
+        type: filters/MultiChannelMedianFilterFloat 
         params:
           number_of_observations: 3
     intensity_filter_chain:
       - name: median_2
-        type: MultiChannelMedianFilterFloat 
+        type: filters/MultiChannelMedianFilterFloat 
         params:
           number_of_observations: 3
 - name: shadows
