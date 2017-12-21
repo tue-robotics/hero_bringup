@@ -8,7 +8,7 @@ for launch_file in ${launch_files}; do
     launch_file_name=$(echo ${launch_file##*/} | cut -d"." -f1)
     name=${bringup_name//_/-}-${launch_file_name//_/-}
     if [[ $launch_file == *"state_machines"* ]]; then
-        eval "${name}() { export ROBOT_BRINGUP_PATH=${package_path} && rosnode kill /state_machine && roslaunch ${launch_file} \$@; }"
+        eval "${name}() { export ROBOT_BRINGUP_PATH=${package_path} && rosnode kill /state_machine; roslaunch ${launch_file} \$@; }"
     else
         eval "${name}() { export ROBOT_BRINGUP_PATH=${package_path} && roslaunch ${launch_file} \$@; }"
     fi
