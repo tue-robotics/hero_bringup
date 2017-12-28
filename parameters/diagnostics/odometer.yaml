@@ -1,0 +1,4 @@
+rate: 0.0166666667 # 1/60
+cache_length: 50
+path: ~/MEGA/odometer
+filename: odometer
