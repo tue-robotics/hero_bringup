@@ -48,7 +48,7 @@ stream("Supervisor.dashboardCmd", 		ros.topic(ROBOTNS+"/dashboard_ctrlcmds"));
 stream("Supervisor.ebutton_status", 	ros.topic(ROBOTNS+"/ebutton_status"));
 
 #### Create Robot Object ####
-var strings DEFAULT_PART_NAMES 			= strings("base","spindle","left_arm", "right_arm", "head", "generic")
+var strings DEFAULT_PART_NAMES 			= strings("base","torso","left_arm", "right_arm", "head", "generic")
 Supervisor.CreateRobotObject("amigo", 	DEFAULT_PART_NAMES)
 
 #### LOAD JOINTSTATEAGGREGATOR ####

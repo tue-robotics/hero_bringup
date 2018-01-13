@@ -12,7 +12,7 @@ use_constrained_solver: false
 # Pre-grasping parameters
 max_yaw_delta: 1.2
 yaw_sampling_step: 0.39        # [rad]
-spindle_sampling_step: 0.05    # [m]
+torso_sampling_step: 0.05    # [m]
 pre_grasp_delta: 0.20
 pre_grasp_inbetween_sampling_steps: 20
 
