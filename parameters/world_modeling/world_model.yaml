@@ -4,6 +4,11 @@ world_name: $(env ROBOT_ENV)
 
 plugins:
 
+- name: wire_plugin
+  lib: libed_wire_plugin.so
+  parameters:
+      topic: /world_state
+
 - name: robot_plugin
   lib: libed_robot_plugin.so
   parameters:
