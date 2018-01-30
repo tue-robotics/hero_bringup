@@ -81,18 +81,18 @@ EtherCATread.AddTorqueSensor_A(BODYPARTNAME, 1, SENSORTORQUES_C1, SENSORTORQUES_
 
 # EtherCATread.left_arm_Aout1 is a size 8 force vector
 # EtherCATread.left_arm_Aout2 is a size 8 position vector
-# NEW: EtherCATread.left_arm_Aout3 is a size 1 vector for the proximity sensor, 
+# NEW: EtherCATread.left_arm_Aout3 is a size 1 vector for the proximity sensor
 # This new port is created in the AddAnalogIns call (at the same time with the two other size 8 ports for pos and for)
 # (Note that it is equal to the 8th value of the position vector, since I didn't want to change that vector, although unused)
-# Next steps are to add a constant value, and to add a multiplication. 
+# Next steps are to add a constant value, and to add a multiplication.
 # It does not matter in which order you add the addition and multiplication it will add first and then multiply
 # Now we have a orocos port that has the correct value to get it to ROS:
 # AddMsgOut_A will add a port to which std_msgs::Float32MultiArray msgs are published which is streamed to a ros topic
 
-var double  PROX_offset = 0.5
-var double  PROX_gain = 2.0
-EtherCATread.AddAddition_A(BODYPARTNAME, 3, PROX_offset) # add PROX_offset to left_arm_Aout3
-EtherCATread.AddMultiply_A(BODYPARTNAME, 3, PROX_gain)   # multiply (PROX_offset + left_arm_Aout3) with PROX_gain
+var array PROX_offset = array(0.0)
+var array PROX_gain = array(0.0621)
+EtherCATread.AddAddition_A(BODYPARTNAME, 3, PROX_offset); # add PROX_offset to left_arm_Aout3
+EtherCATread.AddMultiply_A(BODYPARTNAME, 3, PROX_gain);   # multiply (PROX_offset + left_arm_Aout3) with PROX_gain
 EtherCATread.AddMsgOut_A(BODYPARTNAME, 3)
 stream("EtherCATread.left_arm_AoutMsg3", 			ros.topic("/amigo/left_arm/proximity_sensor"))
 
