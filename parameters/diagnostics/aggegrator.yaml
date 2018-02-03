@@ -5,3 +5,13 @@ analyzers:
     timeout: -1
     startswith: node_alive
     remove_prefix: node_alive
+  openpose:
+    type: diagnostic_aggregator/GenericAnalyzer
+    path: OpenPose
+    startswith: openpose
+    remove_prefix: openpose
+    num_items: 1
+    timeout: 1
+    expected: [
+      'openpose: General' 
+    ]
