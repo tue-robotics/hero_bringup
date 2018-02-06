@@ -48,8 +48,9 @@ Description=%s
 WantedBy=multi-user.target
 
 [Service]
+User=%s
 Restart=on-abort
-ExecStart=/usr/bin/sudo -H -u %s bash -c 'source %s && rosnode kill /state_machine && roslaunch %s --wait'
+ExecStart=/bin/bash -c 'source %s && rosnode kill /state_machine && roslaunch %s --wait'
 """ % (description, user, environment_bash, launch_file)
 
 print SERVICE_FILE
