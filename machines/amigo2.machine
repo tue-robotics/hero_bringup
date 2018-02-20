@@ -1,6 +1,6 @@
 <launch>
 	<group if="$(optenv ROBOT_REAL false)">
-		<machine name="amigo2" address="amigo2" default="never" user="amigo" env-loader="/home/amigo/.ros-bash-and-run.sh"/>
+		<machine name="amigo2" address="amigo2.local" default="never" user="amigo" env-loader="/home/amigo/.ros-bash-and-run.sh"/>
 	</group>
 	<group unless="$(optenv ROBOT_REAL false)">
 		<machine name="amigo2" address="localhost"/>
