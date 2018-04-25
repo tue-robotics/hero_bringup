@@ -37,7 +37,11 @@
                 <arg name="DEBUG" value="$(arg debug)"/>
                 <arg name="machine" value="amigo1" />
             </include>
-            
+
+            <include file="$(find robot_launch_files)/launch/hardware/dynamixels.launch" >
+                <arg name="machine" value="amigo1"/>
+            </include>
+
             <!-- BODYPART RESETTER ROBOCUP HACK -->
             <node name="spindle_resetter" pkg="robot_launch_files" type="bodypart_resetter.py" args="amigo spindle 1"/>
 
