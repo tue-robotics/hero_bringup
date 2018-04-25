@@ -39,6 +39,11 @@
 
             <include file="$(find robot_launch_files)/launch/hardware/dynamixels.launch" >
                 <arg name="machine" value="amigo1"/>
+                <arg name="dynamixel_controller_args"
+                  value="--manager=dxl_manager
+                      --port=pan_tilt_laser_port
+                      neck_pan
+                      neck_tilt"/>
             </include>
 
             <!-- BODYPART RESETTER ROBOCUP HACK -->
