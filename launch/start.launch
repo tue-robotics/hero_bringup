@@ -29,7 +29,6 @@
                 -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/spindle_controller.ops
                 -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/left_arm_controller.ops
                 -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/right_arm_controller.ops
-                -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/head_controller.ops
                 -s $(env ROBOT_BRINGUP_PATH)/parameters/hardware/actuators/rgb_lights.ops
                 "/>
                 <arg name="NAME" value ="hardware"/>
