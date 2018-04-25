@@ -1,0 +1,35 @@
+dynamixel_manager:
+namespace: dxl_manager
+    serial_ports:
+        pan_tilt_port:
+            port_name: "/dev/ttyUSB0"
+            baud_rate: 57142
+            min_motor_id: 1
+            max_motor_id: 2
+            update_rate: 20
+
+pan_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: pan_joint
+    joint_speed: 0.26
+    motor:
+        id: 1
+        init: 467
+        min: 166
+        max: 770
+
+tilt_controller:
+    controller:
+        package: dynamixel_controllers
+        module: joint_position_controller
+        type: JointPositionController
+    joint_name: tilt_joint
+    joint_speed: 0.13
+    motor:
+        id: 2
+        init: 380
+        min: 190
+        max: 570
