@@ -3,7 +3,7 @@
 global_frame: /map
 robot_base_frame: /amigo/base_link
 rolling_window: false
-track_unknown_space: true
+track_unknown_space: false
 resolution: 0.05
 
 update_frequency: 1.0
@@ -13,7 +13,7 @@ always_send_full_costmap: true
 
 # LAYER SETUP
 
-plugins: 
+plugins:
     # Obstacles
     - {name: gmapping_occupancy_grid,                 type: "costmap_2d::StaticLayer"}
     - {name: recent_obstacles,                  type: "costmap_2d::ObstacleLayer"}
@@ -32,10 +32,10 @@ recent_obstacles:
     torso_laser:  {data_type: LaserScan, sensor_frame: /amigo/torso_laser, topic: /amigo/torso_laser/scan, observation_persistence: 0.0, inf_is_valid: true, obstacle_range: 10.0, marking: true, clearing: false, ray_trace_range: 10.0}
     top_kinect: {data_type: PointCloud2, sensor_frame: /amigo/top_kinect/openni_depth_optical_frame, topic: /amigo/ed/navigation/cloud, observation_persistence: 0.0, expected_update_rate: 1.0, min_obstacle_height: 0.0, max_obstacle_height: 0.5, obstacle_range: 10}
 
-# Workspace to configuration space 
+# Workspace to configuration space
 configuration_space:
     use_footprint: false
     target_cell_value: 254
     dilation_cell_value: 253
     dilation_radius: 0.37 # 2cm margin
-    inflation_radius: 0.6 
+    inflation_radius: 0.6
