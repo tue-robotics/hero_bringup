@@ -22,16 +22,22 @@
             <arg name="machine" value="amigo2" />
         </include>
 
-		<include file="$(find telegram_robot)/launch/conversation_engine_bot.launch" >
-		</include>
+		<!-- bridge to amigo telegram bot -->
+		<group if="$(optenv ROBOT_REAL false)">
+			<node name="telegram_ros_bridge" pkg="telegram_ros" type="telegram_ros_bridge" output="log" required="true">
+				<param name="token" value="520313034:AAF6eOsknvmPPVuWpy3TkmCftugOfJ6b-Hg" />
+			</node>
+        </group>
 
     </group>
+
+	<node name="conversation_engine" pkg="conversation_engine" type="engine" output="log" required="true" args="--robot amigo">
+		<remap from="robot_to_user" to="/amigo/message_to_telegram" />
+		<remap from="user_to_robot" to="/amigo/message_from_telegram" />
+    </node>
 
     <!-- Action server state machine -->
     <node name="state_machine" pkg="action_server" type="main.py" output="log" required="true" >
         <param name="robot_name" value="amigo"/>
     </node>
-
-	<node name="conversation_engine" pkg="conversation_engine" type="engine" output="log" required="true" args="--robot amigo" />
-
 </launch>
