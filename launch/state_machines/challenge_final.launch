@@ -1,26 +1,37 @@
 <?xml version="1.0"?>
 
+<!-- Checkout README.md to see when to use this launch file -->
+
 <launch>
 
-    <arg name="robot_name" value="amigo" />
-    <arg name="robot_env" default="$(optenv ROBOT_ENV robotics_testlabs)" />
-
-    <group ns="$(arg robot_name)">
-
-        <!-- ROBOCUP RECORDER -->
-        <include file="$(find robot_launch_files)/launch/essentials/record_robocup.launch">
-            <arg name="machine" value="amigo2" />
-        </include>
+    <group ns="amigo">
 
         <!-- NAVIGATION -->
         <include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
+            <arg name="machine" value="amigo2"/>
+            <arg name="faces_db" value="~/MEGA/data/$(optenv ROBOT_ENV rgo2018)/models/openface_ros/faces.pkl" />
         </include>
 
         <!-- WORLD MODEL -->
         <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
-			<arg name="config" value="world_modeling/world_model.yaml"/>
+            <arg name="machine" value="amigo2"/>
         </include>
 
+        <!-- Joke -->
+        <include file="$(find robot_launch_files)/launch/essentials/joke.launch" >
+            <arg name="machine" value="amigo2" />
+        </include>
+
+		<include file="$(find telegram_robot)/launch/conversation_engine_bot.launch" >
+		</include>
+
     </group>
+
+    <!-- Action server state machine -->
+    <node name="state_machine" pkg="action_server" type="main.py" output="log" required="true" >
+        <param name="robot_name" value="amigo"/>
+    </node>
+
+	<node name="conversation_engine" pkg="conversation_engine" type="engine" output="log" required="true" args="--robot amigo" />
 
 </launch>
