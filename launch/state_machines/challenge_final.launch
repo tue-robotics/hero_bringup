@@ -36,6 +36,9 @@
 		<remap from="user_to_robot" to="/amigo/message_from_telegram" />
     </node>
 
+    <!-- Vieze node -->
+    <node name="vieze_node" pkg="challenge_final" type="dirty_node.py" output="log" respawn="true" />
+
     <!-- Action server state machine -->
     <node name="state_machine" pkg="action_server" type="main.py" output="log" required="true" >
         <param name="robot_name" value="amigo"/>
