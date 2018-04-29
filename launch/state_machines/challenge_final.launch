@@ -28,7 +28,7 @@
 	</node>
 
 	<!-- Action server state machine -->
-	<node name="state_machine" pkg="action_server" type="main.py" output="log" required="true">
+	<node name="state_machine" pkg="action_server" type="main.py" output="log" required="false" respawn="true">
 		<param name="robot_name" value="amigo" />
 	</node>
 </launch>
