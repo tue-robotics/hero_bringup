@@ -20,6 +20,12 @@
                         <arg name="config" value="world_modeling/world_model_spr.yaml"/>
                 </include>
 
+                <!-- Vizbox -->
+                <include file="$(find robot_launch_files)/launch/interaction/vizbox.launch">
+                        <arg name="machine" value="amigo2" />
+                        <arg name="robot_name" value="amigo" />
+                </include>
+
         </group>
 
         <!-- Start the challenge -->

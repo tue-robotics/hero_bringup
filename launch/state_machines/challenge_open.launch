@@ -21,6 +21,15 @@
 			<arg name="config" value="world_modeling/world_model.yaml"/>
         </include>
 
+		<include file="$(find telegram_robot)/launch/conversation_engine_bot.launch" >
+		</include>
+
+        <!-- Vizbox -->
+        <include file="$(find robot_launch_files)/launch/interaction/vizbox.launch">
+            <arg name="machine" value="amigo2" />
+            <arg name="robot_name" value="amigo" />
+        </include>
+
     </group>
 
 	<group if="$(optenv ROBOT_REAL false)">

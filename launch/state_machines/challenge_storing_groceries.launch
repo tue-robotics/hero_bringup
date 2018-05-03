@@ -19,6 +19,12 @@
             <arg name="machine" value="amigo2"/>
         </include>
 
+        <!-- Vizbox -->
+        <include file="$(find robot_launch_files)/launch/interaction/vizbox.launch">
+            <arg name="machine" value="amigo2" />
+            <arg name="robot_name" value="amigo" />
+        </include>
+
     </group>
 
     <!-- Start the challenge -->
