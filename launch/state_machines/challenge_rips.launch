@@ -20,6 +20,16 @@
     		</include>
 
             <!-- Vizbox -->
+            <rosparam>
+story:
+    title: RIPS 
+    storyline:
+        - Wait for the door
+        - Go to the meeting point
+        - Wait for 'continue'
+        - Go to the exit
+            </rosparam>
+            
             <include file="$(find robot_launch_files)/launch/interaction/vizbox.launch">
                 <arg name="machine" value="amigo2" />
                 <arg name="robot_name" value="amigo" />
