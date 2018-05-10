@@ -27,6 +27,18 @@
         </include>
 
         <!-- Vizbox -->
+        <rosparam>
+story:
+    title: Restaurant
+    storyline:
+        - Find the table
+        - Wait for a waving human
+        - Ask waiter if I should take the order
+        - Go to the waving person
+        - Accept an order
+        - Get the order from the table
+        - Bring the order
+        </rosparam>
         <include file="$(find robot_launch_files)/launch/interaction/vizbox.launch">
             <arg name="machine" value="amigo2" />
             <arg name="robot_name" value="amigo" />

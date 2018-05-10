@@ -20,6 +20,15 @@
         </include>
 
         <!-- Vizbox -->
+        <rosparam>
+story:
+    title: Storing Groceries
+    storyline:
+        - Look at the cabinet
+        - Find the table
+        - Take item from the table
+        - Put item in the cabinet
+        </rosparam>
         <include file="$(find robot_launch_files)/launch/interaction/vizbox.launch">
             <arg name="machine" value="amigo2" />
             <arg name="robot_name" value="amigo" />

@@ -21,6 +21,16 @@
                 </include>
 
                 <!-- Vizbox -->
+                <rosparam>
+story:
+    title: Speech and person recognition
+    storyline:
+        - Turn around after operator mixed with crowd
+        - Observe crowd
+        - Answer 5 questions from operator
+        - Crowd gathers around robot
+        - Answer questions from crowd and look at them
+        </rosparam>
                 <include file="$(find robot_launch_files)/launch/interaction/vizbox.launch">
                         <arg name="machine" value="amigo2" />
                         <arg name="robot_name" value="amigo" />

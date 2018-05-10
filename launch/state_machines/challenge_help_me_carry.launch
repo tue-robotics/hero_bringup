@@ -21,6 +21,18 @@
     		</include>
 
             <!-- Vizbox -->
+            <rosparam>
+story:
+    title: Help me carry
+    storyline:
+        - Follow human to the car
+        - Remember where the car is
+        - Take item to carry
+        - Go back inside
+        - Deliver item
+        - Guide another human to the car
+            </rosparam>
+
             <include file="$(find robot_launch_files)/launch/interaction/vizbox.launch">
                 <arg name="machine" value="amigo2" />
                 <arg name="robot_name" value="amigo" />
