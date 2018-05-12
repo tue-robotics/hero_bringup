@@ -29,6 +29,12 @@
 
     </group>
 
+    <!-- Start conversation engine -->
+    <node name="conversation_engine" pkg="conversation_engine" type="engine" output="log" respawn="true" args="--robot amigo">
+        <remap from="robot_to_user" to="/amigo/message_to_telegram" />
+        <remap from="user_to_robot" to="/amigo/message_from_telegram" />
+    </node>
+
     <!-- Start the action server -->
     <node pkg="action_server" type="main.py" name="action_server" output="screen" respawn="true">
         <param name="robot_name" value="$(arg robot_name)" />
