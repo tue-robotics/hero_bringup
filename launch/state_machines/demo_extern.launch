@@ -30,13 +30,13 @@
         <!-- Slack bridge -->
         <include file="$(find robot_launch_files)/launch/interaction/slack.launch">
             <arg name="machine" value="amigo2"/>
-            <param name="robot_name" value="$(arg robot_name)" />
+            <arg name="robot_name" value="$(arg robot_name)" />
         </include>
 
         <!-- Telegram bridge -->
         <include file="$(find robot_launch_files)/launch/interaction/telegram.launch">
             <arg name="machine" value="amigo2"/>
-            <param name="robot_name" value="$(arg robot_name)" />
+            <arg name="robot_name" value="$(arg robot_name)" />
         </include>
 
     </group>
