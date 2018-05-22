@@ -99,10 +99,15 @@ plugins:
           min_particle_rotation_distance: 0.02
       odom_model:
           map_frame: map
-          odom_frame: /amigo/odom
+          odom_frame: /amigo/gmap
           base_link_frame: /amigo/base_link
           alpha1: 0.05   # rot -> trans + strafe
           alpha2: 0.5    # trans -> rot
           alpha3: 0.5    # trans -> trans
           alpha4: 0.5    # rot -> rot
           alpha5: 0.5    # trans -> strafe
+      update_window:
+          min_x: -3.7
+          max_x: 3.5
+          min_y: -1.22
+          max_y: 5.4
