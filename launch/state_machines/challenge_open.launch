@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
 
-<!-- Checkout README.md to see when to use this launch file -->
-
 <launch>
 
     <group ns="amigo">
