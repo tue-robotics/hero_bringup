@@ -24,7 +24,7 @@
     </group>
 
     <!-- Action server state machine -->
-    <node name="state_machine" pkg="action_server" type="main.py" output="log" required="false" >
+    <node name="state_machine" pkg="action_server" type="main.py" output="log" required="true" >
         <param name="robot_name" value="amigo"/>
     </node>
 
