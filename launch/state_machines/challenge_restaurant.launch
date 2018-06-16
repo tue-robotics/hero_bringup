@@ -26,6 +26,12 @@
             <arg name="config" value="world_modeling/world_model_gmapping.yaml"/>
         </include>
 
+        <group ns="top_kinect">
+            <include file="$(find challenge_restaurant)/launch/normal_estimation.launch">
+                <arg name="frame" value="amigo/base_link"/>
+            </include>
+        </group>
+
     </group>
 
     <!-- Don't start the challenge, first drive a little to initialze gmapping -->
