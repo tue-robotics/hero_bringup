@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 
 <launch>
-
+	<arg name="skip_door" default="false"/>
+	
     <group ns="amigo">
 
         <!-- ROBOCUP RECORDER -->
@@ -22,6 +23,8 @@
     </group>
 
     <!-- Start the challenge -->
-    <node pkg="challenge_storing_groceries" type="challenge_storing_groceries" name="state_machine" args="amigo" output="screen" required="true"/>
+    <node pkg="challenge_storing_groceries" type="challenge_storing_groceries" name="state_machine" args="amigo" output="screen" required="true">
+    	<param name="skip_door" value="$(arg skip_door)"/>
+    </node>
 
 </launch>
