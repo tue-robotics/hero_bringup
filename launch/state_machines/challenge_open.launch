@@ -12,6 +12,19 @@
 			<arg name="machine" value="amigo2" />
 			<arg name="faces_db" value="~/MEGA/data/$(optenv ROBOT_ENV rgo2018)/models/openface_ros/faces.pkl" />
 		</include>
+
+		<!-- Launch the websocket server (communication via roslib) -->
+		<node name="rosbridge_websocket_amigo2" pkg="rosbridge_server" type="rosbridge_websocket" output="log">
+			<param name="authenticate" value="false" />
+			<param name="port" value="9090"/>
+			<param name="address" value=""/>
+			<remap from="/amigo/hmi/string" to="/amigo/message_to_ros" />
+		</node>
+
+		<!-- Start the simple webserver to handle static files -->
+		<node pkg="tue_mobile_ui" type="webserver.py" name="webserver_amigo2" output="log">
+			<rosparam command="load" file="$(env ROBOT_BRINGUP_PATH)/parameters/interaction/mobile_ui_server.yaml" />
+		</node>
 	</group>
 
 	<node name="conversation_engine" pkg="conversation_engine" type="engine" output="log" required="true" args="--robot amigo">
