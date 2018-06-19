@@ -5,6 +5,10 @@
 
     <group ns="amigo">
 
+		<node name="telegram_ros_bridge" pkg="telegram_ros" type="telegram_ros_bridge" output="log" respawn="true">
+			<param name="token" value="$(env TELEGRAM_TOKEN)" />
+		</node>
+
         <!-- PARAMETERS: desciption, joint groups and specific skills -->
         <param name="robot_description" textfile="$(find amigo_description)/urdf/amigo.urdf" />
         <rosparam file="$(find amigo_description)/custom/joint_groups.yaml" command="load" />
@@ -37,7 +41,7 @@
                 <arg name="DEBUG" value="$(arg debug)"/>
                 <arg name="machine" value="amigo1" />
             </include>
-            
+
             <!-- BODYPART RESETTER ROBOCUP HACK -->
             <node name="spindle_resetter" pkg="robot_launch_files" type="bodypart_resetter.py" args="amigo spindle 1"/>
 
