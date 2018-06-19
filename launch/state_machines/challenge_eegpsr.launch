@@ -33,6 +33,9 @@
             <param name="robot_name" value="$(arg robot_name)" />
         </node>
 
+        <node pkg="topic_tools" type="relay" args="message_to_ros hmi/string" name="chat_to_hmi"/>
+        <node pkg="topic_tools" type="relay" args="text_to_speech/output message_from_ros" name="speech_to_chat"/>
+
     </group>
 
     <!-- Start the challenge -->
