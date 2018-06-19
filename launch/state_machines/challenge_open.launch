@@ -12,13 +12,6 @@
 			<arg name="machine" value="amigo2" />
 			<arg name="faces_db" value="~/MEGA/data/$(optenv ROBOT_ENV rgo2018)/models/openface_ros/faces.pkl" />
 		</include>
-
-		<!-- Joke -->
-		<include file="$(find robot_launch_files)/launch/essentials/joke.launch">
-			<arg name="machine" value="amigo2" />
-		</include>
-
-		<node name="face_recognizer" pkg="challenge_final" type="face_recognizer.py" output="log" respawn="true" />
 	</group>
 
 	<node name="conversation_engine" pkg="conversation_engine" type="engine" output="log" required="true" args="--robot amigo">
