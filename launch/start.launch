@@ -22,10 +22,6 @@
 
         <group if="$(optenv ROBOT_REAL false)">
 
-            <node name="telegram_ros_bridge" pkg="telegram_ros" type="telegram_ros_bridge" output="log" respawn="true">
-                <param name="token" value="$(env TELEGRAM_TOKEN)" />
-            </node>
-
             <!-- OROCOS HARDWARE -->
             <include file="$(find robot_launch_files)/launch/hardware/deployer.launch">
                 <arg name="DEPLOYER_ARGS" value="--DeployerName HARDWARE
