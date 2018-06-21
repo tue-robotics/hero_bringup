@@ -13,18 +13,25 @@
 			<arg name="faces_db" value="~/MEGA/data/$(optenv ROBOT_ENV rgo2018)/models/openface_ros/faces.pkl" />
 		</include>
 
-		<!-- Joke -->
-		<include file="$(find robot_launch_files)/launch/essentials/joke.launch">
-			<arg name="machine" value="amigo2" />
-		</include>
+		<!-- Launch the websocket server (communication via roslib) -->
+		<node name="rosbridge_websocket_amigo2" pkg="rosbridge_server" type="rosbridge_websocket" output="log">
+			<param name="authenticate" value="false" />
+			<param name="port" value="9090"/>
+			<param name="address" value=""/>
+			<remap from="/amigo/hmi/string" to="/amigo/message_to_ros" />
+		</node>
 
-		<!-- telegram face recognizer -->
-		<node name="telegram_face_recognizer" pkg="challenge_final" type="telegram_face_recognizer.py" output="log" respawn="true" />
+		<!-- Start the simple webserver to handle static files -->
+		<node pkg="tue_mobile_ui" type="webserver.py" name="webserver_amigo2" output="log">
+			<rosparam command="load" file="$(env ROBOT_BRINGUP_PATH)/parameters/interaction/mobile_ui_server.yaml" />
+		</node>
 	</group>
 
 	<node name="conversation_engine" pkg="conversation_engine" type="engine" output="log" required="true" args="--robot amigo">
-		<remap from="robot_to_user" to="/amigo/message_to_telegram" />
-		<remap from="user_to_robot" to="/amigo/message_from_telegram" />
+        <param name="robot" value="amigo" />
+        <param name="challenge" value="challenge_final" />
+		<remap from="robot_to_user" to="/amigo/message_from_ros" />
+		<remap from="user_to_robot" to="/amigo/message_to_ros" />
 	</node>
 
 	<!-- Action server state machine -->
