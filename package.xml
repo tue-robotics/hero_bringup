@@ -1,11 +1,12 @@
 <?xml version="1.0"?>
 <package>
-  <name>amigo_bringup</name>
+  <name>hero_bringup</name>
   <version>0.0.0</version>
-  <description>The amigo_bringup package</description>
+  <description>The hero_bringup package</description>
 
-  <maintainer email="reinzor@gmail.com">Rein Appeldoorn</maintainer>
-
+  <maintainer email="p.v.dooren@student.tue.nl">Peter van Dooren</maintainer>
+  <maintainer email="j.geijsberts@student.tue.nl">Josja Geijsberts</maintainer>
+  
   <license>TODO</license>
 
   <buildtool_depend>catkin</buildtool_depend>
@@ -13,8 +14,8 @@
   <build_depend>robot_launch_files</build_depend>
   <run_depend>robot_launch_files</run_depend>
 
-  <build_depend>amigo_moveit_config</build_depend>
+  <!-- build_depend>amigo_moveit_config</build_depend>
   <run_depend>amigo_moveit_config</run_depend>
-  <run_depend>test_tools</run_depend>
+  <run_depend>test_tools</run_depend-->
 
 </package>
