@@ -1,5 +1,5 @@
 # Launch file functions
-bringup_name=amigo
+bringup_name=hero
 package_path=`rospack find ${bringup_name}_bringup`
 launch_files=$(find ${package_path}/launch -name '*.launch')
 
