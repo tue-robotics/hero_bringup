@@ -19,7 +19,7 @@
     <arg name="enable_emergency_stop" default="true" />
 
 
-    <group ns="hero">
+    <group ns="$(arg namespace)">
 
         <!-- PARAMETERS: desciption, joint groups and specific skills -->
 <!--        <param name="robot_description" textfile="$(find hero_description)/urdf/hero.urdf" /> -->
@@ -27,9 +27,32 @@
         <rosparam file="$(find hero_description)/custom/skills.yaml" command="load" /-->
 
         <!-- Robot state publisher -->
-        <include file="$(find robot_launch_files)/launch/essentials/robot_state_publisher.launch">
+<!--        <include file="$(find robot_launch_files)/launch/essentials/robot_state_publisher.launch">
             <arg name="machine" value="hsrb" />
-        </include>
+        </include> -->
+
+<remap from="robot_description" to="/robot_description" />
+
+<!-- joint_statesを閉じ込めるためのネームスペース -->
+    <group ns="robot_state">
+      <!-- joint state publisher(0.9.4以降のjoint_state_controllerで不要になる) -->
+      <node name="joint_state_pub" pkg="joint_state_publisher" type="joint_state_publisher">
+        <param name="publish_default_velocities" value="true" />
+        <param name="publish_default_efforts" value="true" />
+        <param name="rate" value="50" />
+        <rosparam subst_value="true">
+          source_list:
+          - $(arg namespace)/joint_states
+        </rosparam>
+      </node>
+
+      <!-- robot state publisher -->
+      <node name="robot_state_pub" pkg="robot_state_publisher" type="robot_state_publisher">
+        <param name="publish_frequency" value="50.0" />
+        <param name="use_tf_static" value="true" />
+      </node>
+    </group>
+
 
         <!-- Phone UI -->
         <!--include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch">
@@ -40,21 +63,8 @@
             <!-- OROCOS HARDWARE -->
 		<!-- COPY from AMIGO bringup-->
 
-            <!-- MANAGERS -->
-	    <include file="$(find hsrb_bringup)/launch/$(arg robot_name)_monitor.launch" if="$(arg monitor)">
-   		 <arg name="namespace" value="$(arg namespace)" />
-	    </include>
-
-	<!--Hero hardware startup -->
-        <include file="$(find hsrb_bringup)/launch/$(arg robot_name)_bringup.launch" unless="$(arg auto_start)">
-    	  <arg name="namespace" value="$(arg namespace)" />
-   	  <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
-    	  <arg name="align_at_startup" value="false" />
-  	</include>
-
-
             <!-- SENSORS -->
-            <include file="$(find robot_launch_files)/launch/hardware/sensors/kinect.launch">
+<!--            <include file="$(find robot_launch_files)/launch/hardware/sensors/kinect.launch">
                 <arg name="name" value="top_kinect"/>
                 <arg name="machine" value="hsrb"/>
                 <arg name="gdb" value="true"/>
@@ -62,7 +72,7 @@
             <include file="$(find robot_launch_files)/launch/hardware/sensors/laser.launch">
                 <arg name="name" value="base_laser"/>
                 <arg name="machine" value="hsrb"/>
-            </include>
+            </include> -->
         </group>
 
         <!-- Launch simulator if we are not on a real robot -->
@@ -116,12 +126,49 @@
 			<arg name="machine" value="hsrb"/>
 		</include> -->
 
-    </group>
+    <!--</group>--> 
 
     <!-- TF Server: advertises services for looking up transformations -->
-    <!-- <include file="$(find robot_launch_files)/launch/essentials/tf_server.launch" >
+    <include file="$(find robot_launch_files)/launch/essentials/tf_server.launch" >
         <arg name="machine" value="hsrb" />
-    </include> -->
+    </include> 
+
+            <!-- MANAGERS -->
+            <include file="$(find hsrb_bringup)/launch/$(arg robot_name)_monitor.launch" if="$(arg monitor)">
+                 <arg name="namespace" value="$(arg namespace)" />
+            </include>
+
+        <!--Hero hardware startup -->
+        <include file="$(find hsrb_bringup)/launch/$(arg robot_name)_bringup.launch" unless="$(arg auto_start)">
+          <arg name="namespace" value="$(arg namespace)" />
+          <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
+          <arg name="align_at_startup" value="false" />
+        </include>
+<group ns="$(arg namespace)">
+	  <!-- base range sensor -->
+  <node pkg="urg_node" type="urg_node" name="urg_node">
+    <remap from="scan" to="base_scan" />
+  </node>
+
+  <!-- laser-odometry -->
+ <group if="$(arg use_laser_odom)">
+   <node pkg="laser_scan_matcher" type="laser_scan_matcher_node" name="laser_scan_matcher_node">
+      <remap from="scan" to="$(arg namespace)/base_scan"/>
+      <remap from="pose_stamped" to="base_pose"/>
+    </node>
+ </group>
+</group>
+
+
+<!-- Manipulation -->
+    <remap from="/joint_states" to="$(arg namespace)/joint_states" />
+
+<include file="$(find hsrb_common_launch)/launch/include/$(arg robot_name)_manipulation.xml">
+    <arg name="namespace" value="$(arg namespace)"/>
+    <arg name="sim" value="false"/>
+    <arg name="robot_name" value="$(arg robot_name)"/>
+  </include>
+
 
 	<!-- align at start-->
   <group unless="$(arg auto_start)">
