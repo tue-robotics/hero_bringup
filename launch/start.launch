@@ -3,7 +3,7 @@
 
     <arg name="debug" default="false" />
 
-	<!--Toyota parameters -->
+<!--Toyota parameters -->
     <arg name="namespace" default="/hsrb"/>
     <arg name="use_hand_camera" default="true" />
     <arg name="use_head_center_camera" default="true" />
@@ -21,105 +21,159 @@
 
     <group ns="$(arg namespace)">
 
-		<remap from="robot_description" to="/robot_description" />
+        <!-- PARAMETERS: desciption, joint groups and specific skills -->
+<!--        <param name="robot_description" textfile="$(find hero_description)/urdf/hero.urdf" /> -->
+        <!--rosparam file="$(find hero_description)/custom/joint_groups.yaml" command="load" />
+        <rosparam file="$(find hero_description)/custom/skills.yaml" command="load" /-->
 
-		<!-- joint_statesを閉じ込めるためのネームスペース -->
-    	<group ns="robot_state">
-      		<!-- joint state publisher(0.9.4以降のjoint_state_controllerで不要になる) -->
-	      	<node name="joint_state_pub" pkg="joint_state_publisher" type="joint_state_publisher">
-	        	<param name="publish_default_velocities" value="true" />
-	        	<param name="publish_default_efforts" value="true" />
-	        	<param name="rate" value="50" />
-	        	<rosparam subst_value="true">
-	          		source_list:
-	          		- $(arg namespace)/joint_states
-	        	</rosparam>
-	      	</node>
+        <!-- Robot state publisher -->
+<!--        <include file="$(find robot_launch_files)/launch/essentials/robot_state_publisher.launch">
+            <arg name="machine" value="hsrb" />
+        </include> -->
 
-	      	<!-- robot state publisher -->
-	      	<node name="robot_state_pub" pkg="robot_state_publisher" type="robot_state_publisher">
-	        	<param name="publish_frequency" value="50.0" />
-	        	<param name="use_tf_static" value="true" />
-	      	</node>
-    	</group>
+<remap from="robot_description" to="/robot_description" />
 
-    	<!-- base range sensor -->
-  		<node pkg="urg_node" type="urg_node" name="urg_node">
-    		<remap from="scan" to="base_scan" />
-  		</node>
+<!-- joint_statesを閉じ込めるためのネームスペース -->
+    <group ns="robot_state">
+      <!-- joint state publisher(0.9.4以降のjoint_state_controllerで不要になる) -->
+      <node name="joint_state_pub" pkg="joint_state_publisher" type="joint_state_publisher">
+        <param name="publish_default_velocities" value="true" />
+        <param name="publish_default_efforts" value="true" />
+        <param name="rate" value="50" />
+        <rosparam subst_value="true">
+          source_list:
+          - $(arg namespace)/joint_states
+        </rosparam>
+      </node>
 
-  		<!-- laser-odometry -->
- 		<group if="$(arg use_laser_odom)">
-   			<node pkg="laser_scan_matcher" type="laser_scan_matcher_node" name="laser_scan_matcher_node">
-      			<remap from="scan" to="$(arg namespace)/base_scan"/>
-      			<remap from="pose_stamped" to="base_pose"/>
-    		</node>
- 		</group>
-
+      <!-- robot state publisher -->
+      <node name="robot_state_pub" pkg="robot_state_publisher" type="robot_state_publisher">
+        <param name="publish_frequency" value="50.0" />
+        <param name="use_tf_static" value="true" />
+      </node>
     </group>
+
+
+        <!-- Phone UI -->
+        <!--include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch">
+            <arg name="machine" value="hsrb" />
+        </include-->
+
+       <!-- <group if="$(optenv ROBOT_REAL false)">-->
+            <!-- OROCOS HARDWARE -->
+		<!-- COPY from AMIGO bringup-->
+
+            <!-- SENSORS -->
+<!--            <include file="$(find robot_launch_files)/launch/hardware/sensors/kinect.launch">
+                <arg name="name" value="top_kinect"/>
+                <arg name="machine" value="hsrb"/>
+                <arg name="gdb" value="true"/>
+            </include>
+            <include file="$(find robot_launch_files)/launch/hardware/sensors/laser.launch">
+                <arg name="name" value="base_laser"/>
+                <arg name="machine" value="hsrb"/>
+            </include> -->
+        </group>
+
+        <!-- Launch simulator if we are not on a real robot -->
+        <!--group unless="$(optenv ROBOT_REAL false)"> -->
+
+            <!-- Simulator -->
+            <!--include file="$(find robot_launch_files)/launch/simulator/simulator.launch" />
+
+        </group-->
+        <!-- ros to rgbd -->
+     <!--   <include file="$(find robot_launch_files)/launch/essentials/ros_to_rgbd.launch">
+            <arg name="name" value="top_kinect"/>
+            <arg name="machine" value="hsrb"/>
+        </include> -->
+		
+        <!-- rgbd to ros -->
+     <!--   <include file="$(find robot_launch_files)/launch/essentials/rgbd_to_ros.launch">
+            <arg name="name" value="top_kinect"/>
+            <arg name="machine" value="hsrb"/>
+        </include> -->
+
+        <!-- SPEECH RECOGNITION -->
+    <!--    <include file="$(find robot_launch_files)/launch/interaction/speech_recognition.launch">
+            <arg name="machine" value="hsrb"/>
+        </include> -->
+
+        <!-- TEXT TO SPEECH -->
+       <!--  <include file="$(find robot_launch_files)/launch/interaction/text_to_speech.launch">
+            <arg name="machine-tts" value="hsrb"/>
+            <arg name="machine-play" value="hsrb"/>
+        </include> -->
+
+        <!-- DIAGNOSTICS -->
+      <!--  <include file="$(find robot_launch_files)/launch/diagnostics/diagnostics.launch" >
+            <arg name="machine" value="hsrb" />
+        </include> -->
+
+		<!-- MANIPULATION -->
+	<!--	<include file="$(find robot_launch_files)/launch/manipulation/moveit.launch">
+			<arg name="machine" value="hsrb"/>
+		</include>
+		<include file="$(find robot_launch_files)/launch/manipulation/arm.launch">
+			<arg name="name" value="left_arm"/>
+			<arg name="machine" value="hsrb"/>
+		</include>
+		<include file="$(find robot_launch_files)/launch/manipulation/arm.launch">
+			<arg name="name" value="right_arm"/>
+			<arg name="machine" value="hsrb"/>
+		</include>
+		<include file="$(find robot_launch_files)/launch/manipulation/head.launch">
+			<arg name="machine" value="hsrb"/>
+		</include> -->
+
+    <!--</group>--> 
 
     <!-- TF Server: advertises services for looking up transformations -->
     <include file="$(find robot_launch_files)/launch/essentials/tf_server.launch" >
         <arg name="machine" value="hsrb" />
     </include> 
 
-    <!-- MANAGERS: includes diagnostics -->
-    <include file="$(find hsrb_bringup)/launch/$(arg robot_name)_monitor.launch" if="$(arg monitor)">
-         <arg name="namespace" value="$(arg namespace)" />
-    </include>
+            <!-- MANAGERS -->
+            <include file="$(find hsrb_bringup)/launch/$(arg robot_name)_monitor.launch" if="$(arg monitor)">
+                 <arg name="namespace" value="$(arg namespace)" />
+            </include>
 
-    <!--Hero hardware startup -->
-    <include file="$(find hsrb_bringup)/launch/$(arg robot_name)_bringup.launch" unless="$(arg auto_start)">
-      <arg name="namespace" value="$(arg namespace)" />
-      <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
-      <arg name="align_at_startup" value="false" />
-    </include>
+        <!--Hero hardware startup -->
+        <include file="$(find hsrb_bringup)/launch/$(arg robot_name)_bringup.launch" unless="$(arg auto_start)">
+          <arg name="namespace" value="$(arg namespace)" />
+          <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
+          <arg name="align_at_startup" value="false" />
+        </include>
+<group ns="$(arg namespace)">
+	  <!-- base range sensor -->
+  <node pkg="urg_node" type="urg_node" name="urg_node">
+    <remap from="scan" to="base_scan" />
+  </node>
 
-	<!-- Manipulation -->
+  <!-- laser-odometry -->
+ <group if="$(arg use_laser_odom)">
+   <node pkg="laser_scan_matcher" type="laser_scan_matcher_node" name="laser_scan_matcher_node">
+      <remap from="scan" to="$(arg namespace)/base_scan"/>
+      <remap from="pose_stamped" to="base_pose"/>
+    </node>
+ </group>
+</group>
+
+
+<!-- Manipulation -->
     <remap from="/joint_states" to="$(arg namespace)/joint_states" />
 
-	<include file="$(find hsrb_common_launch)/launch/include/$(arg robot_name)_manipulation.xml">
-    	<arg name="namespace" value="$(arg namespace)"/>
-    	<arg name="sim" value="false"/>
-    	<arg name="robot_name" value="$(arg robot_name)"/>
-  	</include>
+<include file="$(find hsrb_common_launch)/launch/include/$(arg robot_name)_manipulation.xml">
+    <arg name="namespace" value="$(arg namespace)"/>
+    <arg name="sim" value="false"/>
+    <arg name="robot_name" value="$(arg robot_name)"/>
+  </include>
+
 
 	<!-- align at start-->
-  	<group unless="$(arg auto_start)">
-    	<node if="$(arg align_at_startup)"
-        	pkg="hsrb_bringup" type="hsrb_align" name="hsrb_align" />
-  	</group>
-
-<!--
-  	<group ns="hero">
-	    <!-- Phone UI -->
-<!-- 	    <include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch">
-	    	<arg name="machine" value="hsrb" />
-	    </include> -->
-
-	    <!-- Launch simulator if we are not on a real robot -->
-      	<!-- <group unless="$(optenv ROBOT_REAL false)">  -->
-		    <!-- Simulator -->
-<!-- 		    <include file="$(find robot_launch_files)/launch/simulator/simulator.launch" />
-		</group> -->
-
-	    <!-- ros to rgbd -->
-<!-- 	    <include file="$(find robot_launch_files)/launch/essentials/ros_to_rgbd.launch">
-	        <arg name="name" value="top_kinect"/>
-	        <arg name="machine" value="hsrb"/>
-	    </include> -->
-			
-	    <!-- rgbd to ros -->
-<!-- 	    <include file="$(find robot_launch_files)/launch/essentials/rgbd_to_ros.launch">
-	    	<arg name="name" value="top_kinect"/>
-	        <arg name="machine" value="hsrb"/>
-	    </include> -->
-
-	    <!-- TEXT TO SPEECH -->
-<!-- 	    <include file="$(find robot_launch_files)/launch/interaction/text_to_speech.launch">
-	    	<arg name="machine-tts" value="hsrb"/>
-	        <arg name="machine-play" value="hsrb"/>
-	    </include>
-	</group>  -->
+  <group unless="$(arg auto_start)">
+    <node if="$(arg align_at_startup)"
+        pkg="hsrb_bringup" type="hsrb_align" name="hsrb_align" />
+  </group>
 
  </launch>
