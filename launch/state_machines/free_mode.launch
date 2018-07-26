@@ -4,28 +4,46 @@
 
 <launch>
 
-    <group ns="amigo">
+	<arg name="robot_name" value="hero"/>
+
+    <group ns="$(arg robot_name)">
 
         <!-- NAVIGATION -->
-        <include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
-            <arg name="machine" value="amigo2"/>
-        </include>
+<node pkg="move_base" type="move_base" name="move_base_node">
+  <rosparam file="$(find hsrb_rosnav_config)/config/move_base.yaml" command="load" />
+  <rosparam file="/home/administrator/tue-hsr/parameters/costmap_common.yaml" command="load" ns="global_costmap" />
+  <rosparam file="/home/administrator/tue-hsr/parameters/costmap_common.yaml" command="load" ns="local_costmap" />
+  <rosparam file="/home/administrator/tue-hsr/parameters/global_costmap_params.yaml" command="load" />
+  <rosparam file="/home/administrator/tue-hsr/parameters/local_costmap_params.yaml" command="load" />
+
+  <rosparam file="/home/administrator/tue-hsr/parameters/local_planner.yaml" command="load" />
+  <rosparam file="/home/administrator/tue-hsr/parameters/move_base.yaml" command="load" />
+
+  <param name="base_global_planner" type="string" value="navfn/NavfnROS" />
+  <param name="base_local_planner" type="string" value="dwa_local_planner/DWAPlannerROS" />
+
+  <remap from="map" to="ed/navigation/map"/>
+
+  <remap from="cmd_vel" to="/hsrb/command_velocity" />
+  <remap from="odom" to="/hsrb/wheel_odom" />
+
+</node>
 
         <!-- WORLD MODEL -->
-        <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
-            <arg name="machine" value="amigo2"/>
-        </include>
+
+<node pkg="ed" type="ed" name="ed" args="/home/administrator/tue-hsr/parameters/world_model.yaml"/>
+
 
         <!-- Joke -->
-        <include file="$(find robot_launch_files)/launch/essentials/joke.launch" >
+<!--        <include file="$(find robot_launch_files)/launch/essentials/joke.launch" >
             <arg name="machine" value="amigo2" />
-        </include>
+        </include> -->
 
     </group>
 
     <!-- Action server state machine -->
-    <node name="state_machine" pkg="action_server" type="main.py" output="log" required="true" >
+<!--    <node name="state_machine" pkg="action_server" type="main.py" output="log" required="true" >
         <param name="robot_name" value="amigo"/>
-    </node>
+    </node> -->
 
 </launch>
