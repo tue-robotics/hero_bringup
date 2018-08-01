@@ -9,7 +9,7 @@
     <arg name="use_head_center_camera" default="true" />
     <arg name="use_head_stereo_camera" default="true"/>
     <arg name="use_head_rgbd_sensor" default="true"/>
-    <arg name="use_laser_odom" default="true" />
+    <arg name="use_laser_odom" default="true"/>
     <arg name="use_blackfly" default="false" />
     <arg name="monitor" default="false" />
     <arg name="param_file" default="$(env HOME)/.ros/params.yaml" />
@@ -18,10 +18,14 @@
     <arg name="robot_name" default="hsrb" />
     <arg name="enable_emergency_stop" default="true" />
 
+    <!-- robot desctription -->
+    <include file="$(find hsrb_description)/robots/upload_hsrb.launch" />
+
 
     <group ns="$(arg namespace)">
 
-		<remap from="robot_description" to="/robot_description" />
+	<remap from="robot_description" to="/robot_description" />
+	<remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
 
 		<!-- joint_statesを閉じ込めるためのネームスペース -->
     	<group ns="robot_state">
@@ -46,7 +50,7 @@
     	<!-- base range sensor -->
   		<node pkg="urg_node" type="urg_node" name="urg_node">
     		<remap from="scan" to="base_scan" />
-  		</node>
+  		</node> 
 
   		<!-- laser-odometry -->
  		<group if="$(arg use_laser_odom)">
@@ -55,8 +59,15 @@
       			<remap from="pose_stamped" to="base_pose"/>
     		</node>
  		</group>
+	<!-- head rgbd sensor -->
+	<include file="$(find hero_bringup)/launch/head_rgbd_sensor.launch">
+        	<arg name="namespace" value="$(arg namespace)"/>
+        </include>
 
     </group>
+
+	<!-- ros to rgbd -->
+    <include file="$(find tue_hsr)/launch/ros_to_rgbd.launch"/>
 
     <!-- TF Server: advertises services for looking up transformations -->
     <include file="$(find robot_launch_files)/launch/essentials/tf_server.launch" >
@@ -90,8 +101,8 @@
         	pkg="hsrb_bringup" type="hsrb_align" name="hsrb_align" />
   	</group>
 
-<!--
-  	<group ns="hero"-->
+
+ <!-- 	<group ns="hero"> -->
 	    <!-- Phone UI -->
 <!-- 	    <include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch">
 	    	<arg name="machine" value="hsrb" />
@@ -120,6 +131,14 @@
 	    	<arg name="machine-tts" value="hsrb"/>
 	        <arg name="machine-play" value="hsrb"/>
 	    </include>
-	</group>  -->
+	</group>--> 
+<group ns="hero/object_recognition">
+        <node name="object_recognition" pkg="tensorflow_ros" type="object_recognition_node" output="log" machine="hsrb">
+                <param name="graph_path" value="~/tue-hsr/object_recognition/output_graph.pb" />
+                <param name="labels_path" value="~/tue-hsr/object_recognition/output_labels_old.txt" />
+                <param name="save_images" value="true" />
+                <param name="save_images_folder" value="~/tue-hsr/object_recognition/training_data" />
+        </node>
+</group>
 
  </launch>

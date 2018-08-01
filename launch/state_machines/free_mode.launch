@@ -3,7 +3,6 @@
 <!-- Checkout README.md to see when to use this launch file -->
 
 <launch>
-
 	<arg name="robot_name" value="hero"/>
 
     <group ns="$(arg robot_name)">
@@ -39,11 +38,18 @@
             <arg name="machine" value="amigo2" />
         </include> -->
 
-    </group>
+</group>
 
     <!-- Action server state machine -->
 <!--    <node name="state_machine" pkg="action_server" type="main.py" output="log" required="true" >
         <param name="robot_name" value="amigo"/>
     </node> -->
-
+<!--<group ns="object_recognition">
+	<node name="object_recognition" pkg="tensorflow_ros" type="object_recognition_node" output="log" machine="hsrb">
+		<param name="graph_path" value="~/tue-hsr/object_recognition/output_graph.pb" />
+		<param name="labels_path" value="~/tue-hsr/object_recognition/output_labels_old.txt" />
+		<param name="save_images" value="false" />
+		<param name="save_images_folder" value="~/tue-hsr/object_recognition/training_data" />
+	</node>
+</group> -->
 </launch>

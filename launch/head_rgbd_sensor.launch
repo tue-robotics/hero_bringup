@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<launch>
+<!-- head rgbd sensor -->
+    <arg name="config_dir" default="/etc/opt/tmc/robot/conf.d" />
+    <arg name="calib_dir" default="$(arg config_dir)/calib_results" />
+    <arg name="namespace" default="/hsrb"/>
+
+    <rosparam command="load" file="$(find hsrb_common_config)/params/hsrb_sensor_config.yaml" />
+
+  <node pkg="tmc_calibration_util" type="static_transform_publisher2" name="camera_frame_tf_publisher">
+    <rosparam command="load" file="$(arg calib_dir)/head_l_stereo_camera_link_to_head_l_stereo_camera_frame.yaml" />
+  </node> 
+
+    <node pkg="tmc_calibration_util" type="static_transform_publisher2" name="rgbd_sensor_rgb_frame_tf_publisher">
+    	<rosparam command="load" file="$(arg calib_dir)/head_l_stereo_camera_frame_to_head_rgbd_sensor_rgb_frame.yaml" />
+    </node>
+
+
+    <arg name="head_rgbd_sensor" value="head_rgbd_sensor" />
+    <!-- the tag will be deleted when openni becomes deprecated -->
+    <arg name="use_openni2" value="$(optenv USE_OPENNI2 true)" />
+    <!-- the tag will be deleted when openni becomes deprecated -->
+    <include file="$(find tmc_openni_launch)/launch/openni.launch" unless="$(arg use_openni2)">
+      <arg name="camera" value="$(arg head_rgbd_sensor)" />
+      <arg name="rgb_frame_id" value="head_rgbd_sensor_rgb_frame" />
+      <arg name="depth_frame_id" value="head_rgbd_sensor_depth_frame" />
+      <arg name="rgb_camera_info_url" value="file://$(arg calib_dir)/rgbd_sensor_rgb_camera_params.yaml" />
+      <arg name="depth_camera_info_url" value="file://$(arg calib_dir)/rgbd_sensor_depth_camera_params.yaml" />
+      <arg name="depth_registration" value="true" />
+    </include>
+    <!-- "if" attribute in the tag will be deleted when openni becomes deprecated -->
+    <include file="$(find tmc_openni2_launch)/launch/openni2.launch" if="$(arg use_openni2)">
+      <arg name="camera" value="$(arg head_rgbd_sensor)" />
+      <arg name="rgb_frame_id" value="head_rgbd_sensor_rgb_frame" />
+      <arg name="depth_frame_id" value="head_rgbd_sensor_depth_frame" />
+      <arg name="rgb_camera_info_url" value="file://$(arg calib_dir)/rgbd_sensor_rgb_camera_params.yaml" />
+      <arg name="depth_camera_info_url" value="file://$(arg calib_dir)/rgbd_sensor_depth_camera_params.yaml" />
+      <arg name="depth_registration" value="true" />
+    </include>
+
+    <include file="$(find tmc_depth_calibration)/launch/depth_rectifier_nodelet.launch">
+      <arg name="camera" value="$(arg head_rgbd_sensor)" />
+      <arg name="depth" value="depth_registered" />
+      <arg name="respawn" value="true" />
+    </include>
+
+    <arg name="rgb_image_topic_name" value="rgb/image_rect_color" />
+    <arg name="depth_image_topic_name" value="depth_registered/image_raw" />
+    <arg name="points_topic_name" value="depth_registered/rectified_points" />
+    <include file="$(find tmc_camera_diag_updater)/launch/xtion_diag_nodelet.launch" >
+      <arg name="camera" value="$(arg head_rgbd_sensor)" />
+      <arg name="rgb_image_topic_name" value="$(arg rgb_image_topic_name)" />
+      <arg name="depth_image_topic_name" value="$(arg depth_image_topic_name)" />
+      <arg name="points_topic_name" value="$(arg points_topic_name)" />
+    </include>
+
+    <node pkg="tmc_camera_respawner" type="respawner_node" name="$(arg head_rgbd_sensor)_respawner"
+          output="screen">
+      <rosparam param="check_hardware_id_list" subst_value="true">
+        [$(arg rgb_image_topic_name), $(arg depth_image_topic_name), $(arg points_topic_name)]
+      </rosparam>
+      <param name="manager_name" value="$(arg namespace)/$(arg head_rgbd_sensor)/$(arg head_rgbd_sensor)_nodelet_manager" />
+    </node>
+</launch>
