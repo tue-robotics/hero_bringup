@@ -4,7 +4,8 @@
     <arg name="debug" default="false" />
 
 	<!--Toyota parameters -->
-    <arg name="namespace" default="/hsrb"/>
+    <arg name="namespace" default="/hero"/>
+    <arg name="toyota_namespace" default="/hsrb"/>
     <arg name="use_hand_camera" default="true" />
     <arg name="use_head_center_camera" default="true" />
     <arg name="use_head_stereo_camera" default="true"/>
@@ -20,31 +21,31 @@
 
     <!-- robot desctription -->
     <include file="$(find hsrb_description)/robots/upload_hsrb.launch" />
-    <group ns="/hero">
+    <group ns="$(arg namespace)">
         <rosparam file="$(find hero_description)/custom/joint_groups.yaml" command="load" />
         <rosparam file="$(find hero_description)/custom/skills.yaml" command="load" />
     </group> 
 
-    <group ns="$(arg namespace)">
+    <group ns="$(arg toyota_namespace)">
 
 	<remap from="robot_description" to="/robot_description" />
-	<remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
+	<remap from="/diagnostics" to="$(arg toyota_namespace)/diagnostics" />
 
 		<!-- joint_statesを閉じ込めるためのネームスペース -->
     	<group ns="robot_state">
       		<!-- joint state publisher(0.9.4以降のjoint_state_controllerで不要になる) -->
-	      	<node name="joint_state_pub" pkg="joint_state_publisher" type="joint_state_publisher">
+	     	<node name="joint_state_pub" pkg="joint_state_publisher" type="joint_state_publisher">
 	        	<param name="publish_default_velocities" value="true" />
 	        	<param name="publish_default_efforts" value="true" />
 	        	<param name="rate" value="50" />
         <rosparam subst_value="true">
           source_list:
-          - $(arg namespace)/joint_states
+          - $(arg toyota_namespace)/joint_states
         </rosparam>
 	      	</node>
 
 	      	<!-- robot state publisher -->
-	      	<node name="robot_state_pub" pkg="robot_state_publisher" type="robot_state_publisher">
+	  -   	<node name="robot_state_pub" pkg="robot_state_publisher" type="robot_state_publisher">
 	        	<param name="publish_frequency" value="50.0" />
 	        	<param name="use_tf_static" value="true" />
 	      	</node>
@@ -58,13 +59,13 @@
   		<!-- laser-odometry -->
  		<group if="$(arg use_laser_odom)">
    			<node pkg="laser_scan_matcher" type="laser_scan_matcher_node" name="laser_scan_matcher_node">
-      			<remap from="scan" to="$(arg namespace)/base_scan"/>
+      			<remap from="scan" to="$(arg toyota_namespace)/base_scan"/>
       			<remap from="pose_stamped" to="base_pose"/>
     		</node>
  		</group>
 	<!-- head rgbd sensor -->
 	<include file="$(find hero_bringup)/launch/head_rgbd_sensor.launch">
-        	<arg name="namespace" value="$(arg namespace)"/>
+        	<arg name="namespace" value="$(arg toyota_namespace)"/>
         </include>
 
     </group>
@@ -79,21 +80,21 @@
 
     <!-- MANAGERS: includes diagnostics -->
     <include file="$(find hsrb_bringup)/launch/$(arg robot_name)_monitor.launch" if="$(arg monitor)">
-         <arg name="namespace" value="$(arg namespace)" />
+         <arg name="namespace" value="$(arg toyota_namespace)" />
     </include>
 
     <!--Hero hardware startup -->
     <include file="$(find hsrb_bringup)/launch/$(arg robot_name)_bringup.launch" unless="$(arg auto_start)">
-      <arg name="namespace" value="$(arg namespace)" />
+      <arg name="namespace" value="$(arg toyota_namespace)" />
       <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
       <arg name="align_at_startup" value="false" />
     </include>
 
 	<!-- Manipulation -->
-    <remap from="/joint_states" to="$(arg namespace)/joint_states" />
+    <remap from="/joint_states" to="$(arg toyota_namespace)/joint_states" />
 
 	<include file="$(find hsrb_common_launch)/launch/include/$(arg robot_name)_manipulation.xml">
-    	<arg name="namespace" value="$(arg namespace)"/>
+    	<arg name="namespace" value="$(arg toyota_namespace)"/>
     	<arg name="sim" value="false"/>
     	<arg name="robot_name" value="$(arg robot_name)"/>
   	</include>
@@ -105,7 +106,7 @@
   	</group>
 
 
- <!-- 	<group ns="hero"> -->
+ 	<group ns="$(arg namespace)">
 	    <!-- Phone UI -->
 <!-- 	    <include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch">
 	    	<arg name="machine" value="hsrb" />
@@ -135,13 +136,14 @@
 	        <arg name="machine-play" value="hsrb"/>
 	    </include>
 	</group>--> 
-<group ns="hero/object_recognition">
-        <node name="object_recognition" pkg="tensorflow_ros" type="object_recognition_node" output="log" machine="hsrb">
-                <param name="graph_path" value="~/tue-hsr/object_recognition/output_graph.pb" />
-                <param name="labels_path" value="~/tue-hsr/object_recognition/output_labels_old.txt" />
-                <param name="save_images" value="true" />
-                <param name="save_images_folder" value="~/tue-hsr/object_recognition/training_data" />
-        </node>
+        	<group ns="object_recognition">
+        		<node name="object_recognition" pkg="tensorflow_ros" type="object_recognition_node" output="log" machine="hsrb">
+               		 <param name="graph_path" value="~/tue-hsr/object_recognition/output_graph.pb" />
+                	<param name="labels_path" value="~/tue-hsr/object_recognition/output_labels_old.txt" />
+                	<param name="save_images" value="true" />
+                	<param name="save_images_folder" value="~/tue-hsr/object_recognition/training_data" />
+        		</node>
+		</group>
 </group>
 
  </launch>
