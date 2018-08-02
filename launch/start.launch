@@ -20,7 +20,10 @@
 
     <!-- robot desctription -->
     <include file="$(find hsrb_description)/robots/upload_hsrb.launch" />
-
+    <group ns="/hero">
+        <rosparam file="$(find hero_description)/custom/joint_groups.yaml" command="load" />
+        <rosparam file="$(find hero_description)/custom/skills.yaml" command="load" />
+    </group> 
 
     <group ns="$(arg namespace)">
 
