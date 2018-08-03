@@ -33,6 +33,9 @@
 <node pkg="ed" type="ed" name="ed" args="/home/administrator/tue-hsr/parameters/world_model.yaml"/>
 
 
+<!-- Bridges to the toyota software -->
+<node pkg="hero_bridge" type="speech.py" name="text_to_speech"/>
+
         <!-- Joke -->
 <!--        <include file="$(find robot_launch_files)/launch/essentials/joke.launch" >
             <arg name="machine" value="amigo2" />
