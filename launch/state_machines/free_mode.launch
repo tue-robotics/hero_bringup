@@ -35,13 +35,15 @@
 
 <!-- Bridges to the toyota software -->
 <node pkg="hero_bridge" type="speech.py" name="text_to_speech"/>
+<node pkg="hero_bridge" type="joint_trajectory.py" name="joint_trajectory_action"/>
+<node pkg="hero_bridge" type="gripper_controller.py" name="gripper_controller"/>
 
         <!-- Joke -->
 <!--        <include file="$(find robot_launch_files)/launch/essentials/joke.launch" >
-            <arg name="machine" value="amigo2" />
-        </include> -->
+            <arg name="machine" value="hsrb" />
+        </include>  -->
 
-</group>
+</group> 
 
     <!-- Action server state machine -->
 <!--    <node name="state_machine" pkg="action_server" type="main.py" output="log" required="true" >

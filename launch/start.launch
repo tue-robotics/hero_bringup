@@ -135,7 +135,12 @@
 	    	<arg name="machine-tts" value="hsrb"/>
 	        <arg name="machine-play" value="hsrb"/>
 	    </include>
-	</group>--> 
+	</group>-->
+
+	<include file="$(find robot_launch_files)/launch/manipulation/head.launch">
+            <arg name="machine" value="hsrb"/>
+        </include>
+ 
         	<group ns="object_recognition">
         		<node name="object_recognition" pkg="tensorflow_ros" type="object_recognition_node" output="log" machine="hsrb">
                		 <param name="graph_path" value="~/tue-hsr/object_recognition/output_graph.pb" />
