@@ -1,4 +1,4 @@
 tf_prefix: hero
 default_pan: 0
-default_tilt: 1.0
+default_tilt: 0.0
 float_topics: false

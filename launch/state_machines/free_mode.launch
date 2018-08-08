@@ -35,15 +35,30 @@
 
 <!-- Bridges to the toyota software -->
 <node pkg="hero_bridge" type="speech.py" name="text_to_speech"/>
-<node pkg="hero_bridge" type="joint_trajectory.py" name="joint_trajectory_action"/>
-<node pkg="hero_bridge" type="gripper_controller.py" name="gripper_controller"/>
+<node pkg="hero_bridge" type="joint_trajectory.py" name="arm_bridge"/>
+<node pkg="hero_bridge" type="gripper_controller.py" name="gripper_bridge"/>
+<node pkg="hero_bridge" type="tf_ghost.py" name="tf_ghost"/>
+<node pkg="hero_bridge" type="head_controller.py" name="head_bridge"/>
 
         <!-- Joke -->
-<!--        <include file="$(find robot_launch_files)/launch/essentials/joke.launch" >
+        <include file="$(find robot_launch_files)/launch/essentials/joke.launch" >
             <arg name="machine" value="hsrb" />
-        </include>  -->
+        </include>  
 
 </group> 
+
+<group>
+ <remap from="/move_base" to="$(arg robot_name)/move_base"/>
+<!-- teleop -->
+  <include file="$(find hsrb_common_launch)/launch/include/hsrb_teleop.xml">
+    <arg name="namespace" value="/hsrb"/>
+  </include>
+  <!-- web -->
+  <include file="$(find hsrb_common_launch)/launch/include/hsrb_web.xml">
+    <arg name="robot_name" value="hsrb" />
+    <arg name="sim" value="false" />
+  </include>
+</group>
 
     <!-- Action server state machine -->
 <!--    <node name="state_machine" pkg="action_server" type="main.py" output="log" required="true" >
