@@ -39,6 +39,7 @@
 <node pkg="hero_bridge" type="gripper_controller.py" name="gripper_bridge"/>
 <node pkg="hero_bridge" type="tf_ghost.py" name="tf_ghost"/>
 <node pkg="hero_bridge" type="head_controller.py" name="head_bridge"/>
+<node pkg="hero_bridge" type="manipulation_bridge.py" name="manipulation_bridge"/>
 
         <!-- Joke -->
         <include file="$(find robot_launch_files)/launch/essentials/joke.launch" >
@@ -61,9 +62,9 @@
 </group>
 
     <!-- Action server state machine -->
-<!--    <node name="state_machine" pkg="action_server" type="main.py" output="log" required="true" >
-        <param name="robot_name" value="amigo"/>
-    </node> -->
+    <node name="state_machine" pkg="action_server" type="main.py" output="log" required="true" >
+        <param name="robot_name" value="hero"/>
+    </node>
 <!--<group ns="object_recognition">
 	<node name="object_recognition" pkg="tensorflow_ros" type="object_recognition_node" output="log" machine="hsrb">
 		<param name="graph_path" value="~/tue-hsr/object_recognition/output_graph.pb" />
