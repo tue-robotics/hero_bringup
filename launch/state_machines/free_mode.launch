@@ -6,9 +6,13 @@
 	<arg name="robot_name" value="hero"/>
 
     <group ns="$(arg robot_name)">
-
+       
         <!-- NAVIGATION -->
-<node pkg="move_base" type="move_base" name="move_base_node">
+
+        <include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
+            <arg name="machine" value="hsrb"/>
+        </include>
+<!-- <node pkg="move_base" type="move_base" name="move_base_node">
   <rosparam file="$(find hsrb_rosnav_config)/config/move_base.yaml" command="load" />
   <rosparam file="/home/administrator/tue-hsr/parameters/costmap_common.yaml" command="load" ns="global_costmap" />
   <rosparam file="/home/administrator/tue-hsr/parameters/costmap_common.yaml" command="load" ns="local_costmap" />
@@ -26,7 +30,7 @@
   <remap from="cmd_vel" to="/hsrb/command_velocity" />
   <remap from="odom" to="/hsrb/wheel_odom" />
 
-</node>
+</node> -->
 
         <!-- WORLD MODEL -->
 
@@ -47,19 +51,6 @@
         </include>  
 
 </group> 
-
-<group>
- <remap from="/move_base" to="$(arg robot_name)/move_base"/>
-<!-- teleop -->
-  <include file="$(find hsrb_common_launch)/launch/include/hsrb_teleop.xml">
-    <arg name="namespace" value="/hsrb"/>
-  </include>
-  <!-- web -->
-  <include file="$(find hsrb_common_launch)/launch/include/hsrb_web.xml">
-    <arg name="robot_name" value="hsrb" />
-    <arg name="sim" value="false" />
-  </include>
-</group>
 
     <!-- Action server state machine -->
     <node name="state_machine" pkg="action_server" type="main.py" output="log" required="true" >
