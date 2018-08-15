@@ -67,7 +67,8 @@
 	<include file="$(find hero_bringup)/launch/head_rgbd_sensor.launch">
         	<arg name="namespace" value="$(arg toyota_namespace)"/>
         </include>
-
+        <!-- hand force sensor -->
+        <include file = "$(find hsrb_bringup)/launch/include/sensors/dynpick.xml"/>
     </group>
 
 	<!-- ros to rgbd -->
