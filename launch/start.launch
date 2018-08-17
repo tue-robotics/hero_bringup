@@ -145,7 +145,7 @@
         	<group ns="object_recognition">
         		<node name="object_recognition" pkg="tensorflow_ros" type="object_recognition_node" output="log" machine="hsrb">
                		 <param name="graph_path" value="~/tue-hsr/object_recognition/output_graph.pb" />
-                	<param name="labels_path" value="~/tue-hsr/object_recognition/output_labels_old.txt" />
+                	<param name="labels_path" value="~/tue-hsr/object_recognition/output_labels.txt" />
                 	<param name="save_images" value="true" />
                 	<param name="save_images_folder" value="~/tue-hsr/object_recognition/training_data" />
         		</node>
