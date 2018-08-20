@@ -1,6 +1,6 @@
 #world_name: $(env ROBOT_ENV)
 
-world_name: robotics_testlab
+world_name: robotics_testlabs
 
 # -----------------------------------------------------------------------------------------------------------------------------
 

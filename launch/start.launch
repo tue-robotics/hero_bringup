@@ -109,10 +109,8 @@
 
  	<group ns="$(arg namespace)">
 	    <!-- Phone UI -->
- 	    <include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch">
-	    	<arg name="machine" value="hsrb" />
-	    </include>
-
+ 	    <include file="$(find tue_mobile_ui)/launch/hero.launch"/>
+	    
 	    <!-- Launch simulator if we are not on a real robot -->
       	<!-- <group unless="$(optenv ROBOT_REAL false)">  -->
 		    <!-- Simulator -->

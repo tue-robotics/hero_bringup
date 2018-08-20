@@ -16,7 +16,7 @@ plugins:
 - name: gui_server
   lib: libed_gui_server_plugin.so
   parameters:
-      robot_name: amigo
+      robot_name: hero
 
 - name: navigation
   lib: libed_navigation_plugin.so
