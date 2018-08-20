@@ -1,5 +1,5 @@
-odom_frame: "/amigo/odom"
-base_frame: "/amigo/base_link"
+odom_frame: "odom"
+base_frame: "base_link"
 delta: 0.025
 
 # Initial map size

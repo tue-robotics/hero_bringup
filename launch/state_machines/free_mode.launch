@@ -15,24 +15,11 @@
 
 <arg name="config" default="world_modeling/world_model.yaml"/>
 
-        <!-- WORLD MODEL -->
-
-<node pkg="ed" type="ed" name="ed"/>
-<!-- Configure world model -->
-	<node name="ed_configure" pkg="ed" type="configure" args="$(env ROBOT_BRINGUP_PATH)/parameters/$(arg config)" output="log"/>
-
-<!-- mobile ui -->
-<include file="$(find tue_mobile_ui)/launch/hero.launch"/>
-
-
-<!-- Bridges to the toyota software -->
-<node pkg="hero_bridge" type="speech.py" name="text_to_speech"/>
-<node pkg="hero_bridge" type="joint_trajectory.py" name="arm_bridge"/>
-<node pkg="hero_bridge" type="gripper_controller.py" name="gripper_bridge"/>
-<node pkg="hero_bridge" type="tf_ghost.py" name="tf_ghost"/>
-<node pkg="hero_bridge" type="head_controller.py" name="head_bridge"/>
-<node pkg="hero_bridge" type="manipulation_bridge.py" name="manipulation_bridge"/>
-<node pkg="hero_bridge" type="handover_detection.py" name="handoverdetector"/>
+<!-- WORLD MODEL -->
+        <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
+            <arg name="machine" value="hsrb"/>
+            <arg name="config" value="world_modeling/world_model_demo_intern.yaml"/>
+        </include>
 
         <!-- Joke -->
         <include file="$(find robot_launch_files)/launch/essentials/joke.launch" >
