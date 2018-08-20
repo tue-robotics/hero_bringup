@@ -6,8 +6,18 @@ world_name: robotics_testlab
 
 plugins:
 
+#- name: robot_plugin
+#  lib: libed_robot_plugin.so
+#  parameters:
+#      robot_name: hero
+#      urdf_rosparam: /robot_description
+#      joint_topics:
+#        - topic: /hsrb/joint_states
+
 - name: gui_server
   lib: libed_gui_server_plugin.so
+  parameters:
+      robot_name: hero
 
 - name: navigation
   lib: libed_navigation_plugin.so
@@ -23,7 +33,7 @@ plugins:
   lib: libed_localization_plugin.so
   enabled: 1
   parameters:
-      robot_name: hsr
+      robot_name: hero
       initial_pose_topic: /initialpose
       num_particles: 500
       initial_pose:
@@ -74,3 +84,13 @@ plugins:
   enabled: 1
   parameters:
       topic: /hsrb/head_rgbd_sensor/rgbd
+
+- name: perception
+  #lib: libed_perception_plugin.so
+  lib: libed_perception_plugin_image_recognition.so
+
+- name: tf_publisher
+  lib: libed_tf_publisher_plugin.so
+  parameters:
+      root_frame_id: /map
+      exclude: 

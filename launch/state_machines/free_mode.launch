@@ -13,9 +13,16 @@
             <arg name="machine" value="hsrb"/>
         </include>
 
+<arg name="config" default="world_modeling/world_model.yaml"/>
+
         <!-- WORLD MODEL -->
 
-<node pkg="ed" type="ed" name="ed" args="/home/administrator/tue-hsr/parameters/world_model.yaml"/>
+<node pkg="ed" type="ed" name="ed"/>
+<!-- Configure world model -->
+	<node name="ed_configure" pkg="ed" type="configure" args="$(env ROBOT_BRINGUP_PATH)/parameters/$(arg config)" output="log"/>
+
+<!-- mobile ui -->
+<include file="$(find tue_mobile_ui)/launch/hero.launch"/>
 
 
 <!-- Bridges to the toyota software -->
