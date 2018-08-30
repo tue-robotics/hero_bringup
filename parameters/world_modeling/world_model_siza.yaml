@@ -85,6 +85,46 @@ plugins:
   parameters:
       topic: /hsrb/head_rgbd_sensor/rgbd
 
+- name: robocup
+  lib: libed_robocup_plugin.so
+  parameters:
+    map_topic_in: /hero/gmapping/map
+    map_topic_out: /map
+    wall_height: 1.7
+    map_filter_padding: 0.3
+    rgbd_topic: /hsrb/head_rgbd_sensor/rgbd
+    nav_goal_topic: /hero/local_planner/action_server/goal
+    head_goal_topic: /hero/head_ref/action_server/goal
+    models:
+    - id: hallway_table
+      type: ddw/couch
+      image: $(rospkg challenge_demo)/images/robotics_testlabs/ddw.couch.jpg
+    - id: couch_table
+      type: ddw/salon
+      image: $(rospkg challenge_demo)/images/robotics_testlabs/ddw.salon.jpg
+    - id: bar
+      type: ddw/table
+      image: $(rospkg challenge_demo)/images/robotics_testlabs/ddw.table.jpg
+    - id: plant
+      type: robotics_testlabs/plant
+      image: $(rospkg challenge_demo)/images/robotics_testlabs/plant.jpg
+    - id: bed
+      type: robotics_testlab_B/bed
+      image: $(rospkg challenge_demo)/images/robotics_testlabs/robotics_testlab_B.bed.jpg
+    - id: nightstand
+      type: robotics_testlab_B/bed_cabinet
+      image: $(rospkg challenge_demo)/images/robotics_testlabs/robotics_testlab_B.bed_cabinet.jpg
+    - id: cabinet
+      type: robotics_testlab_B/corridor_cabinet
+      image: $(rospkg challenge_demo)/images/robotics_testlabs/robotics_testlab_B.corridor_cabinet.jpg
+    - id: bookcase
+      type: robotics_testlabs/plastic_cabinet
+      image: $(rospkg challenge_demo)/images/robotics_testlabs/robotics_testlab_B.plastic_cabinet.jpg
+    - id: dinner_table
+      type: table_120x80x76
+      image: $(rospkg challenge_demo)/images/robotics_testlabs/table_120x80x76.jpg
+
+
 - name: perception
   #lib: libed_perception_plugin.so
   lib: libed_perception_plugin_image_recognition.so
