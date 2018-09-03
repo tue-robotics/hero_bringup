@@ -22,9 +22,9 @@
         </include>
 
         <!-- Joke -->
-        <include file="$(find robot_launch_files)/launch/essentials/joke.launch" >
+<!--        <include file="$(find robot_launch_files)/launch/essentials/joke.launch" >
             <arg name="machine" value="hsrb" />
-        </include>
+        </include> -->
 
 
         <!-- Telegram interface -->
