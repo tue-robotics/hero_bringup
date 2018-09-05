@@ -158,6 +158,18 @@
                 	<param name="save_images_folder" value="~/tue-hsr/object_recognition/training_data" />
         		</node>
 		</group>-->
+
+<!-- <include file="$(find robot_launch_files)/launch/essentials/rgbd_to_ros.launch">
+	<arg name="name" value="top_kinect"/>
+	<remap from="/hero/top_kinect/rgbd" to="hsrb/head_rgbd_sensor/rgbd"/>
+</include>-->
+</group>
+
+<group ns="hero">
+	<remap from="/hero/top_kinect/rgbd" to="/hsrb/head_rgbd_sensor/rgbd"/>
+	<include file="$(find robot_launch_files)/launch/essentials/rgbd_to_ros.launch">
+        	<arg name="name" value="top_kinect"/>
+	</include>
 </group>
 
  </launch>
