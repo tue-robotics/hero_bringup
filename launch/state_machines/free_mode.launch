@@ -18,7 +18,7 @@
 <!-- WORLD MODEL -->
         <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
             <arg name="machine" value="hsrb"/>
-            <arg name="config" value="world_modeling/world_model_siza.yaml"/>
+            <arg name="config" value="world_modeling/world_model.yaml"/>
         </include>
 
         <!-- Joke -->
