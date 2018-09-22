@@ -52,17 +52,17 @@
     	</group>
 
     	<!-- base range sensor -->
-  		<node pkg="urg_node" type="urg_node" name="urg_node">
+	<node pkg="urg_node" type="urg_node" name="urg_node">
     		<remap from="scan" to="base_scan" />
-  		</node> 
+  	</node> 
 
-  		<!-- laser-odometry -->
- 		<group if="$(arg use_laser_odom)">
-   			<node pkg="laser_scan_matcher" type="laser_scan_matcher_node" name="laser_scan_matcher_node">
+  	<!-- laser-odometry -->
+ 	<group if="$(arg use_laser_odom)">
+   		<node pkg="laser_scan_matcher" type="laser_scan_matcher_node" name="laser_scan_matcher_node">
       			<remap from="scan" to="$(arg toyota_namespace)/base_scan"/>
       			<remap from="pose_stamped" to="base_pose"/>
     		</node>
- 		</group>
+ 	</group>
 	<!-- head rgbd sensor -->
 	<include file="$(find hero_bringup)/launch/head_rgbd_sensor.launch">
         	<arg name="namespace" value="$(arg toyota_namespace)"/>
@@ -94,51 +94,26 @@
 	<!-- Manipulation -->
     <remap from="/joint_states" to="$(arg toyota_namespace)/joint_states" />
 
-	<include file="$(find hsrb_common_launch)/launch/include/$(arg robot_name)_manipulation.xml">
+    <include file="$(find hsrb_common_launch)/launch/include/$(arg robot_name)_manipulation.xml">
     	<arg name="namespace" value="$(arg toyota_namespace)"/>
     	<arg name="sim" value="false"/>
     	<arg name="robot_name" value="$(arg robot_name)"/>
-  	</include>
+    </include>
 
-	<!-- align at start-->
-  	<group unless="$(arg auto_start)">
+    <!-- align at start-->
+    <group unless="$(arg auto_start)">
     	<node if="$(arg align_at_startup)"
         	pkg="hsrb_bringup" type="hsrb_align" name="hsrb_align" />
-  	</group>
+    </group>
 
 
- 	<group ns="$(arg namespace)">
-	    <!-- Phone UI -->
- 	    <include file="$(find tue_mobile_ui)/launch/hero.launch"/>
+    <group ns="$(arg namespace)">
+   	 <!-- Phone UI -->
+ 	 <include file="$(find tue_mobile_ui)/launch/hero.launch"/>
 	    
-	    <!-- Launch simulator if we are not on a real robot -->
-      	<!-- <group unless="$(optenv ROBOT_REAL false)">  -->
-		    <!-- Simulator -->
-<!-- 		    <include file="$(find robot_launch_files)/launch/simulator/simulator.launch" />
-		</group> -->
-
-	    <!-- ros to rgbd -->
-<!-- 	    <include file="$(find robot_launch_files)/launch/essentials/ros_to_rgbd.launch">
-	        <arg name="name" value="top_kinect"/>
-	        <arg name="machine" value="hsrb"/>
-	    </include> -->
-			
-	    <!-- rgbd to ros -->
-<!-- 	    <include file="$(find robot_launch_files)/launch/essentials/rgbd_to_ros.launch">
-	    	<arg name="name" value="top_kinect"/>
-	        <arg name="machine" value="hsrb"/>
-	    </include> -->
-
-	    <!-- TEXT TO SPEECH -->
-<!-- 	    <include file="$(find robot_launch_files)/launch/interaction/text_to_speech.launch">
-	    	<arg name="machine-tts" value="hsrb"/>
-	        <arg name="machine-play" value="hsrb"/>
-	    </include>
-	</group>-->
-
-	<include file="$(find robot_launch_files)/launch/manipulation/head.launch">
-            <arg name="machine" value="hsrb"/>
-        </include>
+	 <include file="$(find robot_launch_files)/launch/manipulation/head.launch">
+         	 <arg name="machine" value="hsrb"/>	
+	 </include>
 
 	<!-- bridge nodes-->
 	<node pkg="hero_bridge" type="speech.py" name="text_to_speech"/>
@@ -150,19 +125,7 @@
 	<node pkg="hero_bridge" type="handover_detection.py" name="handoverdetector"/>
 
 	<include file="$(find hero_bringup)/launch/speech_recognition.launch"/>
-<!--        	<group ns="object_recognition">
-        		<node name="object_recognition" pkg="tensorflow_ros" type="object_recognition_node" output="log" machine="hsrb">
-               		 <param name="graph_path" value="~/tue-hsr/object_recognition/output_graph.pb" />
-                	<param name="labels_path" value="~/tue-hsr/object_recognition/output_labels.txt" />
-                	<param name="save_images" value="true" />
-                	<param name="save_images_folder" value="~/tue-hsr/object_recognition/training_data" />
-        		</node>
-		</group>-->
 
-<!-- <include file="$(find robot_launch_files)/launch/essentials/rgbd_to_ros.launch">
-	<arg name="name" value="top_kinect"/>
-	<remap from="/hero/top_kinect/rgbd" to="hsrb/head_rgbd_sensor/rgbd"/>
-</include>-->
 </group>
 
 <group ns="hero">
