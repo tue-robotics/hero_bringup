@@ -25,6 +25,9 @@
 <!--        <include file="$(find robot_launch_files)/launch/essentials/joke.launch" >
             <arg name="machine" value="hsrb" />
         </include> -->
+	<include file="$(find robot_launch_files)/launch/manipulation/head.launch">
+            <arg name="machine" value="hsrb"/>
+        </include>
 
 
         <!-- Telegram interface -->
