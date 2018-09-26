@@ -76,7 +76,7 @@
 
     <!-- TF Server: advertises services for looking up transformations -->
     <include file="$(find robot_launch_files)/launch/essentials/tf_server.launch" >
-        <arg name="machine" value="hsrb" />
+       <!-- <arg name="machine" value="hsrb" />    Commented for use in the docker-->
     </include> 
 
     <!-- MANAGERS: includes diagnostics -->
@@ -111,9 +111,10 @@
    	 <!-- Phone UI -->
  	 <include file="$(find tue_mobile_ui)/launch/hero.launch"/>
 	    
+<!-- Commented TO BE USED IN THE DOCKER
 	 <include file="$(find robot_launch_files)/launch/manipulation/head.launch">
          	 <arg name="machine" value="hsrb"/>	
-	 </include>
+	 </include> -->
 
 	<!-- bridge nodes-->
 	<node pkg="hero_bridge" type="speech.py" name="text_to_speech"/>
