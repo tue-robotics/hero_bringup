@@ -76,12 +76,9 @@ plugins:
     - id: plant
       type: robotics_testlabs/plant
       image: $(rospkg challenge_demo)/images/robotics_testlabs/plant.jpg
-    - id: bed
-      type: robotics_testlab_B/bed
-      image: $(rospkg challenge_demo)/images/robotics_testlabs/robotics_testlab_B.bed.jpg
-    - id: nightstand
-      type: robotics_testlab_B/bed_cabinet
-      image: $(rospkg challenge_demo)/images/robotics_testlabs/robotics_testlab_B.bed_cabinet.jpg
+    - id: trashbin
+      type: trashbin_siza
+      image: $(rospkg challenge_demo)/images/robotics_testlabs/siza.trashbin_siza.jpg
     - id: cabinet
       type: robotics_testlab_B/corridor_cabinet
       image: $(rospkg challenge_demo)/images/robotics_testlabs/robotics_testlab_B.corridor_cabinet.jpg
