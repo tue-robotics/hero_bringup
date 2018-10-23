@@ -100,6 +100,10 @@
     	<arg name="robot_name" value="$(arg robot_name)"/>
     </include>
 
+    <include file="$(find hsrb_moveit_config)/launch/move_group.launch">
+        <arg name="joint_states_topic" value="$(arg toyota_namespace)/joint_states"/>
+    </include>
+
     <!-- align at start-->
     <group unless="$(arg auto_start)">
     	<node if="$(arg align_at_startup)"

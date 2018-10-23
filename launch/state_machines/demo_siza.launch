@@ -14,7 +14,8 @@
         <include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
             <arg name="machine" value="hsrb"/>
         </include>
-
+	
+	<remap from="/hero/planning_scene_world" to="/planning_scene_world"/>
         <!-- WORLD MODEL -->
         <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
             <arg name="machine" value="hsrb"/>

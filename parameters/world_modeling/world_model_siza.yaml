@@ -14,6 +14,10 @@ plugins:
 #      joint_topics:
 #        - topic: /hsrb/joint_states
 
+
+- name: ed_moveit
+  lib: libed_moveit_plugin.so
+
 - name: gui_server
   lib: libed_gui_server_plugin.so
   parameters:
