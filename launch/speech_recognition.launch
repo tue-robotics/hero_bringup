@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <launch>
+<group ns="/hero">
 <!-- launch julius speech recognition -->
 <include file="$(find tmc_rosjulius)/launch/speech_recognition.launch"/>
 
@@ -29,5 +30,5 @@
 		</group>
 
 	</group> <!-- ns="hmi" -->
-
+</group>
 </launch>
