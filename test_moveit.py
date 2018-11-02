@@ -159,12 +159,15 @@ class MoveGroupPythonIntefaceTutorial(object):
     ## thing we want to do is move it to a slightly better configuration.
     # We can get the joint values from the group and adjust some of the values:
     joint_goal = group.get_current_joint_values()
-    joint_goal[0] = 0
-    joint_goal[1] = 0
-    joint_goal[2] = 0
+    #joint_goal[0] = 0
+    #joint_goal[1] = 0
+    #joint_goal[2] = 0
     joint_goal[3] = 0
     joint_goal[4] = 0
     joint_goal[5] = 0
+    joint_goal[6] = 0
+    joint_goal[7] = 0
+    joint_goal[8] = 0
 
     # The go command can be called with joint values, poses, or without any
     # parameters if you have already set the pose or joint target for the group
@@ -193,11 +196,13 @@ class MoveGroupPythonIntefaceTutorial(object):
     ## ^^^^^^^^^^^^^^^^^^^^^^^
     ## We can plan a motion for this group to a desired pose for the
     ## end-effector:
+    joint_states = group.get_current_joint_values()
+
     pose_goal = geometry_msgs.msg.Pose()
     pose_goal.orientation.w = 1.0
-    pose_goal.position.x = 0.4
-    pose_goal.position.y = 0.1
-    pose_goal.position.z = 0.5
+    pose_goal.position.x = joint_states[0] + 0.5
+    pose_goal.position.y = joint_states[1] + 0.2
+    pose_goal.position.z = 1.0
     group.set_pose_target(pose_goal)
 
     ## Now, we call the planner to compute the plan and execute it.
