@@ -148,10 +148,24 @@
     <node pkg="hero_bridge" type="handover_detection.py" name="handoverdetector"/>
     -->
 
-<!--    <include file="$(find hero_bringup)/launch/speech_recognition.launch"/>  -->
+    <!--    <include file="$(find hero_bringup)/launch/speech_recognition.launch"/>  -->
 
-</group>
+    </group>
 
-
+    <!-- Launch simulator if we are not on a real robot -->
+    <group unless="$(optenv ROBOT_REAL false)">
+    
+        <!-- Start gazebo with correct environment -->
+        <include file="$(find hero_bringup)/launch/simulation/hsrb.launch" />
+         
+        <!-- Spawn HERO -->
+        
+        <!-- Start simulated controllers??? -->
+        
+        <!-- Start simulated sensors??? -->
+        
+        <!-- ??? -->
+    
+    </group><!-- End of simulator group -->
 
  </launch>
