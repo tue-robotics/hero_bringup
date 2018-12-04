@@ -14,22 +14,17 @@
     <arg name="use_web" default="true" />
     <arg name="use_laser_odom" default="false" />
     <arg name="paused" default="false" />
-    <arg name="fast_physics" default="false" />
+    <arg name="fast_physics" default="true" />
     <arg name="robot_name" default="hsrb" />
     <arg name="param_file" default="$(env HOME)/.ros/params.yaml" />
     
     <arg unless="$(arg fast_physics)" name="world_suffix" value=""/>
     <arg     if="$(arg fast_physics)" name="world_suffix" value="_fast"/>
     
+    <!-- ToDo: Change to robotics testlab -->
     <arg name="map" default="$(find tmc_potential_maps)/maps/white_space/map.yaml" />
     <arg name="world_name" default="$(find tmc_gazebo_worlds)/worlds/empty$(arg world_suffix).world"/>
     <arg name="robot_pos" default="-x 0 -y 0 -z 0 -Y 0" />
-    
-
-    <!-- From hsrb_gazebo_common.xml -->
-    
-    <!-- prepare params.yaml(param command hack) -->
-    <param name="/tmp" command="rosrun tmc_roslaunch_tools symboliclink $(arg param_file) $(find hsrb_common_launch)/params/empty_params.yaml" />
 
     <!-- gazebo ; From hsrb_empty_world in hsrb_gazebo_bringup-->
     <param name="/use_sim_time" value="true"/>
@@ -62,58 +57,8 @@
 
     <node name="talk_action_simulator" pkg="tmc_talk_action_simulator" type="talk_request_server"/>
     
-    
-    <!-- common --> <!-- From hsrb_common.launch Nodig voor rviz, dus kan niet verwijderen -->
-    <arg name="sim" default="true" />
-    <arg name="use_geometry" default="$(optenv USE_GEOMETRY true)" />
-    
     <!-- common remapping -->
     <remap from="/joint_states" to="$(arg namespace)/joint_states" />
 
-    <!-- manipulation -->
-    <include file="$(find hsrb_common_launch)/launch/include/$(arg robot_name)_manipulation.xml"
-           if="$(arg use_manipulation)">
-        <arg name="namespace" value="$(arg namespace)"/>
-        <arg name="sim" value="$(arg sim)"/>
-        <arg name="robot_name" value="$(arg robot_name)"/>
-    </include>
-    <!-- navigation -->
-    <include file="$(find hsrb_common_launch)/launch/include/hsrb_navigation.xml"
-            if="$(arg use_navigation)">
-        <arg name="namespace" value="$(arg namespace)"/>
-        <arg name="sim" value="$(arg sim)"/>
-        <arg name="map" value="$(arg map)"/>
-    </include>
-    <!-- perception -->
-    <include file="$(find hsrb_common_launch)/launch/include/hsrb_perception.xml"
-            if="$(arg use_perception)">
-        <arg name="namespace" value="$(arg namespace)"/>
-    </include>
-    <!-- task -->
-    <include file="$(find hsrb_common_launch)/launch/include/hsrb_task.xml"
-           if="$(arg use_task)">
-        <arg name="sim" value="$(arg sim)"/>
-    </include>
-    <!-- teleop -->
-    <include file="$(find hsrb_common_launch)/launch/include/hsrb_teleop.xml"
-           if="$(arg use_teleop)">
-        <arg name="namespace" value="$(arg namespace)"/>
-    </include>
-    <!-- web -->
-    <include file="$(find hsrb_common_launch)/launch/include/hsrb_web.xml"
-           if="$(arg use_web)">
-        <arg name="robot_name" value="$(arg robot_name)" />
-        <arg name="sim" value="$(arg sim)" />
-    </include>
-    <!-- geometry -->
-    <include file="$(find hsrb_common_launch)/launch/include/hsrb_geometry.xml"
-           if="$(arg use_geometry)" >
-    </include>
-
-    <!-- rviz-->
-    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find hsrb_common_launch)/config/hsrb_display_full_$(arg robot_name).rviz" if="$(arg rviz)"/>
-
-    <!-- load override parameters-->
-    <rosparam command="load" file="$(arg param_file)" />
 </launch>
 
