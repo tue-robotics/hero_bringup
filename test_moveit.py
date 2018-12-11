@@ -52,6 +52,8 @@ import geometry_msgs.msg
 from math import pi
 from std_msgs.msg import String
 from moveit_commander.conversions import pose_to_list
+
+from tf.transformations import quaternion_from_euler,
 ## END_SUB_TUTORIAL
 
 def all_close(goal, actual, tolerance):
@@ -194,10 +196,16 @@ class MoveGroupPythonIntefaceTutorial(object):
     ## We can plan a motion for this group to a desired pose for the
     ## end-effector:
     pose_goal = geometry_msgs.msg.Pose()
-    pose_goal.orientation.w = 1.0
     pose_goal.position.x = 0.4
     pose_goal.position.y = 0.1
-    pose_goal.position.z = 0.5
+    pose_goal.position.z = 1.0
+
+    quaternion = quaternion_from_euler(3.14159265359, -1.57079632679, 0)
+    pose_goal.orientation.x = quaternion[0]
+    pose_goal.orientation.y = quaternion[1]
+    pose_goal.orientation.z = quaternion[2]
+    pose_goal.orientation.w = quaternion[3]
+
     group.set_pose_target(pose_goal)
 
     ## Now, we call the planner to compute the plan and execute it.
