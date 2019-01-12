@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<launch>
+    <arg name="robot_name" value="hero" />
+
+    <group ns="$(arg robot_name)">
+
+        <!-- NAVIGATION -->
+        <include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
+            <arg name="machine" value="hsrb"/>
+        </include>
+
+        <!-- WORLD MODEL -->
+        <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
+            <arg name="machine" value="hsrb"/>
+        </include>
+
+	<include file="$(find robot_launch_files)/launch/manipulation/head.launch">
+            <arg name="machine" value="hsrb"/>
+        </include>
+
+    </group>
+
+    <!-- Start the challenge -->
+    <node pkg="challenge_rips" type="rips.py" name="state_machine" args="hero" output="screen" required="true"/>
+
+</launch>
