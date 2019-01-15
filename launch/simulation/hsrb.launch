@@ -3,7 +3,8 @@
 
     <arg name="namespace" default="/hsrb"/>
     <arg name="debug" default="false"/>
-    <arg name="gui" default="true" />
+    <!--<arg name="gui" default="true" />-->
+    <arg name="gui" default="false" />
     <arg name="rviz" default="true"/>
     <arg name="gazebo_visualization" default="false" />
     <arg name="use_manipulation" default="true" />
