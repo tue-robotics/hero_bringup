@@ -80,7 +80,9 @@
     </group> <!-- End of Toyota namespace group -->
 
     <!-- ros to rgbd -->
+<!--
     <include file="$(find tue_hsr)/launch/ros_to_rgbd.launch"/>
+-->
     <!-- ToDo: add tue_hsr as a dependency somewhere to make sure everyone has this, i.e., at least if this is required on laptops as well -->
     <!-- Alternative: get rid of tue_hsr altogether (is not consistent with amigo_bringup etc.) -->
     
