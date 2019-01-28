@@ -34,12 +34,12 @@ plugins:
   enabled: 1
   parameters:
       robot_name: hero
-      initial_pose_topic: /initialpose
+      initial_pose_topic: /hero/initialpose
       num_particles: 500
       initial_pose:
           x: 0.586
           y: 4.259
-          rz: 0  
+          rz: 0
       laser_model:
           topic: /hsrb/base_scan
           num_beams: 100
@@ -93,4 +93,4 @@ plugins:
   lib: libed_tf_publisher_plugin.so
   parameters:
       root_frame_id: /map
-      exclude: 
+      exclude:
