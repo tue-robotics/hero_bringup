@@ -18,10 +18,10 @@
     <arg name="fast_physics" default="true" />
     <arg name="robot_name" default="hsrb" />
     <arg name="param_file" default="$(env HOME)/.ros/params.yaml" />
-    
+
     <arg unless="$(arg fast_physics)" name="world_suffix" value=""/>
     <arg     if="$(arg fast_physics)" name="world_suffix" value="_fast"/>
-    
+
     <!-- ToDo: Change to robotics testlab -->
 <!--
     <arg name="map" default="$(find tmc_potential_maps)/maps/white_space/map.yaml" />
@@ -31,13 +31,15 @@
     <arg name="robot_pos" default="-x 0 -y 0 -z 0 -Y 0" />
 
     <!-- gazebo ; From hsrb_empty_world in hsrb_gazebo_bringup-->
-    <param name="/use_sim_time" value="true"/>
+    <arg name="use_sim_time" default="true"/>
+    <param name="/use_sim_time" value="$(arg use_sim_time)" />
+
 
     <group>
       <remap from="$(arg namespace)/command_velocity" to="$(arg namespace)/opt_command_velocity" />
       <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <arg name="paused" value="$(arg paused)"/>
-        <arg name="use_sim_time" value="true"/>
+        <arg name="use_sim_time" value="$(arg use_sim_time)"/>
         <arg name="gui" value="$(arg gui)"/>
         <arg name="debug" value="$(arg debug)"/>
         <arg name="world_name" value="$(arg world_name)"/>
@@ -60,7 +62,7 @@
     </group>
 
     <node name="talk_action_simulator" pkg="tmc_talk_action_simulator" type="talk_request_server"/>
-    
+
     <!-- common remapping -->
     <remap from="/joint_states" to="$(arg namespace)/joint_states" />
 
