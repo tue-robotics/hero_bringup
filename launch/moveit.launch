@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+    <include file="$(find hsrb_moveit_config)/launch/move_group.launch">
+        <arg name="joint_states_topic" value="hsrb/joint_states"/>
+    </include>
+</launch>
