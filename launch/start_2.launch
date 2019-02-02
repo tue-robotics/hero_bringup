@@ -26,9 +26,6 @@
         <rosparam file="$(find hero_description)/custom/skills.yaml" command="load" />
     </group>
 
-        <!-- ros to rgbd -->
-    <include file="$(find tue_hsr)/launch/ros_to_rgbd.launch"/>
-
     <group ns="$(arg namespace)">
             <!-- Phone UI -->
             <include file="$(find tue_mobile_ui)/launch/hero.launch"/>
