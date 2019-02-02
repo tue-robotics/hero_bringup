@@ -6,7 +6,7 @@
     <arg name="fast_physics" default="false" />
     <arg name="robot_name" default="hsrb" />
 
-    <include file="$(find hero_bringup)/launch/include/hsrb_no_controllers.xml" pass_all_args="true" />
+    <include file="$(find hero_bringup)/hsrb_gazebo_bringup/launch/include/hsrb_no_controllers.xml" pass_all_args="true" />
     <include file="$(find hsrb_gazebo_bringup)/launch/include/hsrb_default_controllers.xml" >
         <arg name="namespace" value="$(arg namespace)" />
         <arg name="use_laser_odom" value="$(arg use_laser_odom)" />

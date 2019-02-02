@@ -47,7 +47,7 @@
     </group>
 
     <!-- launch hsr -->
-    <include file="$(find hero_bringup)/launch/include/hsrb.xml">
+    <include file="$(find hero_bringup)/hsrb_gazebo_bringup/launch/include/hsrb.xml">
         <arg name="namespace" value="$(arg namespace)" />
         <arg name="robot_pos" value="$(arg robot_pos)" />
         <arg name="gazebo_visualization" value="$(arg gazebo_visualization)" />
