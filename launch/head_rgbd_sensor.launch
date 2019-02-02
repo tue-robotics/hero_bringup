@@ -7,12 +7,12 @@
 
     <rosparam command="load" file="$(find hsrb_common_config)/params/hsrb_sensor_config.yaml" />
 
-  <node pkg="tmc_calibration_util" type="static_transform_publisher2" name="camera_frame_tf_publisher">
-    <rosparam command="load" file="$(arg calib_dir)/head_l_stereo_camera_link_to_head_l_stereo_camera_frame.yaml" />
-  </node> 
+    <node pkg="tmc_calibration_util" type="static_transform_publisher2" name="camera_frame_tf_publisher">
+      <rosparam command="load" file="$(arg calib_dir)/head_l_stereo_camera_link_to_head_l_stereo_camera_frame.yaml" />
+    </node>
 
     <node pkg="tmc_calibration_util" type="static_transform_publisher2" name="rgbd_sensor_rgb_frame_tf_publisher">
-    	<rosparam command="load" file="$(arg calib_dir)/head_l_stereo_camera_frame_to_head_rgbd_sensor_rgb_frame.yaml" />
+      <rosparam command="load" file="$(arg calib_dir)/head_l_stereo_camera_frame_to_head_rgbd_sensor_rgb_frame.yaml" />
     </node>
 
 
