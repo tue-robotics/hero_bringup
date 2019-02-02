@@ -1,4 +1,5 @@
-frame_id: /amigo/base_laser
-angle_min: -2.0
-angle_max: 2.0
-serial_port: /dev/sensors/hokuyo_busid_3-14
+ip_address: 10.255.255.2
+frame_id: base_range_sensor_link
+# angle range 250[deg]
+angle_min: -2.1
+angle_max: 2.1
