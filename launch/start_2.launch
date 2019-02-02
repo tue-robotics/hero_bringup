@@ -29,36 +29,30 @@
         <!-- ros to rgbd -->
     <include file="$(find tue_hsr)/launch/ros_to_rgbd.launch"/>
 
-    <!-- TF Server: advertises services for looking up transformations -->
-    <include file="$(find robot_launch_files)/launch/essentials/tf_server.launch" >
-        <arg name="machine" value="hsrb" />
-    </include>
-
-       <group ns="$(arg namespace)">
+    <group ns="$(arg namespace)">
             <!-- Phone UI -->
             <include file="$(find tue_mobile_ui)/launch/hero.launch"/>
 
-<include file="$(find robot_launch_files)/launch/manipulation/head.launch">
-            <arg name="machine" value="hsrb"/>
-        </include>
+            <include file="$(find robot_launch_files)/launch/manipulation/head.launch">
+                <arg name="machine" value="hsrb"/>
+            </include>
 
- <!-- bridge nodes-->
-        <node pkg="hero_bridge" type="speech.py" name="text_to_speech"/>
-        <node pkg="hero_bridge" type="joint_trajectory.py" name="arm_bridge"/>
-        <node pkg="hero_bridge" type="gripper_controller.py" name="gripper_bridge"/>
-        <node pkg="hero_bridge" type="tf_ghost.py" name="tf_ghost"/>
-        <node pkg="hero_bridge" type="head_controller.py" name="head_bridge"/>
-        <node pkg="hero_bridge" type="manipulation_bridge.py" name="manipulation_bridge"/>
-        <node pkg="hero_bridge" type="handover_detection.py" name="handoverdetector"/>
+            <!-- bridge nodes-->
+            <node pkg="hero_bridge" type="speech.py" name="text_to_speech"/>
+            <node pkg="hero_bridge" type="joint_trajectory.py" name="arm_bridge"/>
+            <node pkg="hero_bridge" type="gripper_controller.py" name="gripper_bridge"/>
+            <node pkg="hero_bridge" type="tf_ghost.py" name="tf_ghost"/>
+            <node pkg="hero_bridge" type="head_controller.py" name="head_bridge"/>
+            <node pkg="hero_bridge" type="manipulation_bridge.py" name="manipulation_bridge"/>
+            <node pkg="hero_bridge" type="handover_detection.py" name="handoverdetector"/>
 
-</group>
+    </group>
 
-<group ns="hero">
+    <group ns="hero">
         <remap from="/hero/top_kinect/rgbd" to="/hsrb/head_rgbd_sensor/rgbd"/>
         <include file="$(find robot_launch_files)/launch/essentials/rgbd_to_ros.launch">
                 <arg name="name" value="top_kinect"/>
         </include>
-</group>
-
+    </group>
 
 </launch>

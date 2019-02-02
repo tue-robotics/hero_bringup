@@ -24,16 +24,16 @@
     <group ns="$(arg namespace)">
         <rosparam file="$(find hero_description)/custom/joint_groups.yaml" command="load" />
         <rosparam file="$(find hero_description)/custom/skills.yaml" command="load" />
-    </group> 
+    </group>
 
     <group ns="$(arg toyota_namespace)">
 
     <remap from="robot_description" to="/robot_description" />
     <remap from="/diagnostics" to="$(arg toyota_namespace)/diagnostics" />
 
-        <!-- joint_statesを閉じ込めるためのネームスペース -->
+        <!-- joint_states -->
         <group ns="robot_state">
-            <!-- joint state publisher(0.9.4以降のjoint_state_controllerで不要になる) -->
+            <!-- joint state publisher(0.9.4 joint_state_controller) -->
             <node name="joint_state_pub" pkg="joint_state_publisher" type="joint_state_publisher">
                 <param name="publish_default_velocities" value="true" />
                 <param name="publish_default_efforts" value="true" />
@@ -53,50 +53,30 @@
 
         <!-- Real sensors -->
         <group if="$(optenv ROBOT_REAL false)">
-            
+
             <!-- base range sensor -->
             <node pkg="urg_node" type="urg_node" name="urg_node">
                 <remap from="scan" to="base_scan" />
-            </node> 
+            </node>
 
-            <!-- laser-odometry -->
-            <group if="$(arg use_laser_odom)"> <!-- ToDo: do we need this in the simulator???-->
-                <node pkg="laser_scan_matcher" type="laser_scan_matcher_node" name="laser_scan_matcher_node">
-                    <remap from="scan" to="$(arg toyota_namespace)/base_scan"/>
-                    <remap from="pose_stamped" to="base_pose"/>
-                </node>
-            </group>
-            
             <!-- head rgbd sensor -->
             <include file="$(find hero_bringup)/launch/head_rgbd_sensor.launch">
                 <arg name="namespace" value="$(arg toyota_namespace)"/>
             </include>
-            
+
             <!-- hand force sensor -->
             <include file = "$(find hsrb_bringup)/launch/include/sensors/dynpick.xml"/>
-            
+
         </group> <!-- End of real sensors group -->
-        
+
     </group> <!-- End of Toyota namespace group -->
 
-    <!-- ros to rgbd -->
-<!--
-    <include file="$(find tue_hsr)/launch/ros_to_rgbd.launch"/>
--->
-    <!-- ToDo: add tue_hsr as a dependency somewhere to make sure everyone has this, i.e., at least if this is required on laptops as well -->
-    <!-- Alternative: get rid of tue_hsr altogether (is not consistent with amigo_bringup etc.) -->
-    
     <group ns="hero">
         <remap from="/hero/top_kinect/rgbd" to="/hsrb/head_rgbd_sensor/rgbd"/>
         <include file="$(find robot_launch_files)/launch/essentials/rgbd_to_ros.launch">
             <arg name="name" value="top_kinect"/>
         </include>
     </group>
-
-    <!-- TF Server: advertises services for looking up transformations -->
-    <include file="$(find robot_launch_files)/launch/essentials/tf_server.launch" >
-       <!-- <arg name="machine" value="hsrb" />    Commented for use in the docker-->
-    </include> 
 
     <!-- Real hardware -->
     <group if="$(optenv ROBOT_REAL false)">
@@ -126,13 +106,13 @@
             <node if="$(arg align_at_startup)"
                 pkg="hsrb_bringup" type="hsrb_align" name="hsrb_align" />
         </group>
-        
+
     </group><!-- End of real hardware -->
 
     <group ns="$(arg namespace)">
      <!-- Phone UI -->
-     <!--<include file="$(find tue_mobile_ui)/launch/hero.launch"/>--><!--ToDo: enable -->
-        
+     <!--<include file="$(find tue_mobile_ui)/launch/hero.launch"/>--><!--ToDo: enable --><!--ToDo: NO LAUNCH FILES SHOULD BE IN TUE_MOBILE_UI -->
+
 <!-- Commented TO BE USED IN THE DOCKER -->
 
     <!--    <include file="$(find hero_bringup)/launch/speech_recognition.launch"/>  -->
@@ -141,35 +121,37 @@
 
     <!-- Launch simulator if we are not on a real robot -->
     <group unless="$(optenv ROBOT_REAL false)">
-    
+
         <!-- Start gazebo with correct environment -->
-        <include file="$(find hero_bringup)/launch/simulation/hsrb.launch" />
-         
+        <include file="$(find hero_bringup)/launch/simulation/hsrb.launch" >
+            <arg name="namespace" value="$(arg namespace)" />
+        </include>
+
         <!-- Spawn HERO -->
-        
+
         <!-- Start simulated controllers??? -->
-        
+
         <!-- Start simulated sensors??? -->
-        
+
         <!-- ??? -->
-    
+
     </group><!-- End of simulator group -->
-    
-	 <include file="$(find robot_launch_files)/launch/manipulation/head.launch">
-         	 <arg name="machine" value="hsrb"/>	
-	 </include>
 
-	<!-- bridge nodes-->
-	<node pkg="hero_bridge" type="speech.py" name="text_to_speech"/>
-	<node pkg="hero_bridge" type="joint_trajectory.py" name="arm_bridge"/>
-	<node pkg="hero_bridge" type="gripper_controller.py" name="gripper_bridge"/>
-	<node pkg="hero_bridge" type="tf_ghost.py" name="tf_ghost"/>
-	<node pkg="hero_bridge" type="head_controller.py" name="head_bridge"/>
-	<node pkg="hero_bridge" type="manipulation_bridge.py" name="manipulation_bridge"/>
-	<node pkg="hero_bridge" type="handover_detection.py" name="handoverdetector"/>
-	<node pkg="hero_bridge" type="light_bridge.py" name="light_bridge"/>
+    <include file="$(find robot_launch_files)/launch/manipulation/head.launch">
+        <arg name="machine" value="hsrb"/>
+    </include>
+
+    <!-- bridge nodes-->
+    <node pkg="hero_bridge" type="speech.py" name="text_to_speech"/>
+    <node pkg="hero_bridge" type="joint_trajectory.py" name="arm_bridge"/>
+    <node pkg="hero_bridge" type="gripper_controller.py" name="gripper_bridge"/>
+    <node pkg="hero_bridge" type="tf_ghost.py" name="tf_ghost"/>
+    <node pkg="hero_bridge" type="head_controller.py" name="head_bridge"/>
+    <node pkg="hero_bridge" type="manipulation_bridge.py" name="manipulation_bridge"/>
+    <node pkg="hero_bridge" type="handover_detection.py" name="handoverdetector"/>
+    <node pkg="hero_bridge" type="light_bridge.py" name="light_bridge"/>
 
 
-<!--	<include file="$(find hero_bringup)/launch/speech_recognition.launch"/>  -->
+<!--    <include file="$(find hero_bringup)/launch/speech_recognition.launch"/>  -->
 
  </launch>
