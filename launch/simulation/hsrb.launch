@@ -47,13 +47,16 @@
     </group>
 
     <!-- launch hsr -->
-    <include file="$(find hsrb_gazebo_bringup)/launch/include/hsrb.xml">
+    <include file="$(find hero_bringup)/launch/include/hsrb.xml">
+        <arg name="namespace" value="$(arg namespace)" />
         <arg name="robot_pos" value="$(arg robot_pos)" />
         <arg name="gazebo_visualization" value="$(arg gazebo_visualization)" />
         <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
         <arg name="fast_physics" value="$(arg fast_physics)" />
         <arg name="robot_name" value="$(arg robot_name)" />
+<!--
         <remap from="command_velocity" to="base/references" />
+-->
     </include>
 
     <group>

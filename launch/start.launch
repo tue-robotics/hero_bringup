@@ -5,7 +5,7 @@
 
     <!--Toyota parameters -->
     <arg name="namespace" default="/hero"/>
-    <arg name="toyota_namespace" default="/hsrb"/>
+    <arg name="toyota_namespace" default="/hero"/>
     <arg name="use_hand_camera" default="true" />
     <arg name="use_head_center_camera" default="true" />
     <arg name="use_head_stereo_camera" default="true"/>
