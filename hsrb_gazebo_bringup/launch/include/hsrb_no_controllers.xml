@@ -1,4 +1,5 @@
 <launch>
+    <!-- Modified version of hsrb_gazebo_bringup/launch/include/hsrb_no_controllers.xml -->
     <arg name="namespace" default="/hsrb" />
     <arg name="robot_pos" default=""/>
     <arg name="gazebo_visualization" default="true" />
@@ -17,7 +18,12 @@
         <arg name="implicit_damping" value="$(arg implicit_damping)" />
     </include>
 
-    <rosparam file="$(find hsrb_gazebo_bringup)/params/hsrb_pid_gains$(arg gains_suffix).yaml" command="load" />
+    <group ns="$(arg namespace)" >
+        <rosparam file="$(find hero_bringup)/hsrb_gazebo_bringup/params/hsrb_pid_gains_hsrb$(arg gains_suffix).yaml" command="load" />
+    </group>
+    <group ns="/gazebo_ros_control" >
+        <rosparam file="$(find hero_bringup)/hsrb_gazebo_bringup/params/hsrb_pid_gains_gazebo_ros_control$(arg gains_suffix).yaml" command="load" />
+    </group>
 
     <node name="spawn_hsrb_model" pkg="gazebo_ros" type="spawn_model"
           args="-urdf -param robot_description -model hsrb $(arg robot_pos) -J arm_lift_joint 0.05 -J arm_flex_joint 0.0 -J arm_roll_joint -1.57 -J wrist_flex_joint -1.57 -J wrist_roll_joint 0.0 -J head_pan_joint 0.0 -J head_tilt_joint 0.0 -J hand_motor_joint 1.2"

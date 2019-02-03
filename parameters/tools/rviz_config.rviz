@@ -28,7 +28,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: ""
+    SyncSource: LRF - Base
 Visualization Manager:
   Class: ""
   Displays:
@@ -360,7 +360,7 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.0250000004
       Style: Flat Squares
-      Topic: /hsrb/base_scan
+      Topic: /hero/base_laser/scan
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -680,25 +680,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 13.3421812
+      Distance: 10.1834011
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 3.91798544
-        Y: 2.71468449
+        X: 0.277092993
+        Y: 3.92989063
         Z: 3.21336955e-07
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.680398285
+      Pitch: 0.580398381
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 6.18857813
+      Yaw: 2.22039318
     Saved:
       - Angle: 0
         Class: rviz/TopDownOrtho

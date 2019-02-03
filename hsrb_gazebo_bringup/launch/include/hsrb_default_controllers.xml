@@ -1,0 +1,28 @@
+<launch>
+  <!-- Modified version of hsrb_gazebo_bringup/launch/include/hsrb_default_controllers.xml -->
+    <arg name="use_laser_odom" default="true" />
+    <arg name="namespace" default="/hsrb" />
+    <group ns="$(arg namespace)">
+      <rosparam command="load" file="$(find hero_bringup)/hsrb_common_config/params/hsrb_controller_config.yaml"/>
+      <rosparam command="load" file="$(find hsrb_gazebo_bringup)/params/hsrb_controller_config.yaml"/>
+      <param name="omni_base_controller/use_laser_odom" value="$(arg use_laser_odom)" />
+      <node name="controller_spawner"
+            pkg="controller_manager"
+            type="spawner"
+            respawn="false"
+            output="screen"
+            args="joint_state_controller
+                  arm_trajectory_controller
+                  head_trajectory_controller
+                  omni_base_controller
+                  --timeout 60" />
+
+      <!-- omnibase velocity filter -->
+      <node pkg="hsrb_omnibase_filter" name="omnibase_filter" type="hsrb_omnibase_filter_node" output="screen">
+        <!-- To adapt unstable behavior of omnibase in simulator -->
+        <remap from="/ref_command_velocity" to="base/references" />
+        <remap from="/opt_command_velocity" to="opt_command_velocity" />
+        <remap from="/joint_states" to="joint_states" />
+      </node>
+    </group>
+</launch>

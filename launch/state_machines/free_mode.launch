@@ -3,19 +3,18 @@
 <!-- Checkout README.md to see when to use this launch file -->
 
 <launch>
-	<arg name="robot_name" value="hero"/>
+    <arg name="robot_name" value="hero"/>
 
     <group ns="$(arg robot_name)">
-       
-        <!-- NAVIGATION -->
 
+        <!-- NAVIGATION -->
         <include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
             <arg name="machine" value="hsrb"/>
         </include>
 
-<arg name="config" default="world_modeling/world_model.yaml"/>
+        <arg name="config" default="world_modeling/world_model.yaml"/>
 
-<!-- WORLD MODEL -->
+        <!-- WORLD MODEL -->
         <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
             <arg name="machine" value="hsrb"/>
             <arg name="config" value="world_modeling/world_model.yaml"/>
@@ -24,20 +23,13 @@
         <!-- Joke -->
         <include file="$(find robot_launch_files)/launch/essentials/joke.launch" >
             <arg name="machine" value="hsrb" />
-        </include>  
+        </include>
 
-</group> 
+    </group>
 
     <!-- Action server state machine -->
     <node name="state_machine" pkg="action_server" type="main.py" output="log" required="true" >
         <param name="robot_name" value="hero"/>
     </node>
-<!--<group ns="object_recognition">
-	<node name="object_recognition" pkg="tensorflow_ros" type="object_recognition_node" output="log" machine="hsrb">
-		<param name="graph_path" value="~/tue-hsr/object_recognition/output_graph.pb" />
-		<param name="labels_path" value="~/tue-hsr/object_recognition/output_labels_old.txt" />
-		<param name="save_images" value="false" />
-		<param name="save_images_folder" value="~/tue-hsr/object_recognition/training_data" />
-	</node>
-</group> -->
+
 </launch>
