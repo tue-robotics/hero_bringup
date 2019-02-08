@@ -19,18 +19,24 @@
     <arg name="robot_name" default="hsrb" />
     <arg name="enable_emergency_stop" default="true" />
 
-    <!-- robot desctription -->
-    <include file="$(find hsrb_description)/robots/upload_hsrb.launch" />
-
     <group ns="$(arg namespace)">
+        <!-- robot desctription -->
+        <include file="$(find hsrb_description)/robots/upload_hsrb.launch" />
+
         <!-- TUe custom description -->
         <rosparam file="$(find hero_description)/custom/joint_groups.yaml" command="load" />
         <rosparam file="$(find hero_description)/custom/skills.yaml" command="load" />
+
+        <!-- Phone UI -->
+        <include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch">
+            <arg name="machine" value="hsrb" />
+        </include>
+
     </group>
 
     <group ns="$(arg toyota_namespace)">
 
-        <remap from="robot_description" to="/robot_description" />
+        <remap from="robot_description" to="$(arg toyota_namespace)/robot_description" />
         <remap from="/diagnostics" to="$(arg toyota_namespace)/diagnostics" />
 
         <!-- Real sensors -->
@@ -123,18 +129,28 @@
 
     <!-- TU/e namespace group -->
     <group ns="$(arg namespace)">
+
+        <!-- HEAD CONTROL -->
         <include file="$(find robot_launch_files)/launch/manipulation/head.launch">
             <arg name="machine" value="hsrb"/>
         </include>
+
+        <!-- ROS to RGBD -->
         <group ns="head_rgbd_sensor">
             <node pkg="rgbd" type="rgbd_server" name="ros_to_rgbd">
                 <remap from="output" to="rgbd" />
                 <remap from="rgb_image" to="rgb/image_color" />
                 <remap from="cam_info" to="rgb/camera_info" />
                 <remap from="depth_image" to="depth_registered/image" />
-
             </node>
         </group>
+
+        <!-- MoveIt -->
+        <include file="$(find hero_bringup)/hsrb_moveit_config/launch/move_group.launch">
+            <arg name="joint_states_topic" value="$(arg toyota_namespace)/joint_states"/>
+            <arg name="moveit_octomap_sensor_params_file" value="$(find hero_bringup)/hsrb_moveit_config/config/sensors_xtion.yaml" />
+        </include>
+
     </group><!-- End of TU/e namespace group -->
 
     <!-- bridge nodes-->

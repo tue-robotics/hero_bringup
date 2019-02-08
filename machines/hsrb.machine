@@ -1,8 +1,8 @@
 <launch>
-	<group if="$(optenv ROBOT_REAL false)">
-		<machine name="hsrb" address="hsrb.local" default="never" user="administrator" env-loader="/home/amigo/.ros-bash-and-run.sh"/>
-	</group>
-	<group unless="$(optenv ROBOT_REAL false)">
-		<machine name="hsrb" address="localhost"/>
-	</group>
+        <group if="$(optenv ROBOT_REAL false)">
+                <machine name="hsrb" address="hsrb.local" default="never" user="administrator" env-loader="/home/amigo/.ros-bash-and-run.sh"/>
+        </group>
+        <group unless="$(optenv ROBOT_REAL false)">
+                <machine name="hsrb" address="localhost"/>
+        </group>
 </launch>

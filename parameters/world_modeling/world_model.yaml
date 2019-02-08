@@ -6,18 +6,18 @@ world_name: robotics_testlabs
 
 plugins:
 
-#- name: robot_plugin
-#  lib: libed_robot_plugin.so
-#  parameters:
-#      robot_name: hero
-#      urdf_rosparam: /robot_description
-#      joint_topics:
-#        - topic: /hsrb/joint_states
+- name: robot_plugin
+  lib: libed_robot_plugin.so
+  parameters:
+      robot_name: hsrb
+      urdf_rosparam: /hero/robot_description
+      joint_topics:
+        - topic: /hero/joint_states
 
 - name: gui_server
   lib: libed_gui_server_plugin.so
   parameters:
-      robot_name: hero
+      robot_name: hsrb
 
 - name: navigation
   lib: libed_navigation_plugin.so
@@ -34,7 +34,7 @@ plugins:
   frequency: 40
   enabled: 1
   parameters:
-      robot_name: hero
+      robot_name: hsrb
       initial_pose_topic: /hero/initialpose
       num_particles: 500
       initial_pose:
@@ -56,7 +56,7 @@ plugins:
       odom_model:
           map_frame: map
           odom_frame: odom
-          base_link_frame: base_link
+          base_link_frame: base_footprint
           alpha1: 0.05   # rot -> trans + strafe
           alpha2: 0.5    # trans -> rot
           alpha3: 0.5    # trans -> trans
