@@ -29,7 +29,7 @@
 
         <!-- Phone UI -->
         <include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch">
-            <arg name="machine" value="hsrb" />
+            <arg name="machine" value="hero1" />
         </include>
 
     </group>
@@ -63,7 +63,7 @@
             <!-- base range sensor -->
             <include file="$(find robot_launch_files)/launch/hardware/sensors/laser.launch">
                 <arg name="name" value="base_laser"/>
-                <arg name="machine" value="hsrb"/>
+                <arg name="machine" value="hero1"/>
             </include>
 
             <!-- head rgbd sensor -->
@@ -132,7 +132,7 @@
 
         <!-- HEAD CONTROL -->
         <include file="$(find robot_launch_files)/launch/manipulation/head.launch">
-            <arg name="machine" value="hsrb"/>
+            <arg name="machine" value="hero1"/>
         </include>
 
         <!-- ROS to RGBD -->

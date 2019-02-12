@@ -1,0 +1,8 @@
+<launch>
+        <group if="$(optenv ROBOT_REAL false)">
+                <machine name="hero1" address="hero1.local" default="never" user="administrator" env-loader="/home/administrator/.ros-bash-and-run.sh"/>
+        </group>
+        <group unless="$(optenv ROBOT_REAL false)">
+                <machine name="hero1" address="localhost"/>
+        </group>
+</launch>
