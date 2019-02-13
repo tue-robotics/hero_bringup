@@ -30,8 +30,6 @@
 
     <!-- joint_statesを閉じ込めるためのネームスペース -->
     <group ns="robot_state">
-      <remap from="robot_description" to="$(arg namespace)/robot_description" />
-      <remap from="joint_states" to="$(arg namespace)/joint_states" />
       <!-- joint state publisher(0.9.4以降のjoint_state_controllerで不要になる) -->
       <node name="joint_state_pub" pkg="joint_state_publisher" type="joint_state_publisher">
         <param name="publish_default_velocities" value="true" />

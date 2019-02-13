@@ -19,6 +19,15 @@
     <arg name="robot_name" default="hsrb" />
     <arg name="enable_emergency_stop" default="true" />
 
+    <remap from="/joint_states" to="$(arg toyota_namespace)/joint_states" />
+    <remap from="joint_states" to="$(arg toyota_namespace)/joint_states" />
+
+    <remap from="/robot_description" to="$(arg toyota_namespace)/robot_description" />
+    <remap from="robot_description" to="$(arg toyota_namespace)/robot_description" />
+
+    <remap from="/diagnostics" to="$(arg toyota_namespace)/diagnostics" />
+    <remap from="diagnostics" to="$(arg toyota_namespace)/diagnostics" />
+
     <group ns="$(arg namespace)">
         <!-- TUe custom description -->
         <rosparam file="$(find hero_description)/custom/joint_groups.yaml" command="load" />
@@ -32,11 +41,6 @@
     </group>
 
     <group ns="$(arg toyota_namespace)">
-
-<!--
-        <remap from="robot_description" to="$(arg toyota_namespace)/robot_description" />
-        <remap from="/diagnostics" to="$(arg toyota_namespace)/diagnostics" />
--->
 
         <!-- Real sensors -->
         <group if="$(optenv ROBOT_REAL false)">
@@ -90,7 +94,6 @@
     <!-- Real hardware -->
     <group if="$(optenv ROBOT_REAL false)">
 
-        <remap from="/joint_states" to="$(arg toyota_namespace)/joint_states" />
         <!-- MANAGERS: includes diagnostics -->
 <!--
         <include file="$(find hsrb_bringup)/launch/$(arg robot_name)_monitor.launch" if="$(arg monitor)">
