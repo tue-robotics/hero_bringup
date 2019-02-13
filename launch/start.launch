@@ -6,9 +6,9 @@
     <!--Toyota parameters -->
     <arg name="namespace" default="/hero"/>
     <arg name="toyota_namespace" default="/hero"/>
-    <arg name="use_hand_camera" default="true" />
-    <arg name="use_head_center_camera" default="true" />
-    <arg name="use_head_stereo_camera" default="true"/>
+    <arg name="use_hand_camera" default="false" />
+    <arg name="use_head_center_camera" default="false" />
+    <arg name="use_head_stereo_camera" default="false"/>
     <arg name="use_head_rgbd_sensor" default="true"/>
     <arg name="use_laser_odom" default="false"/>
     <arg name="use_blackfly" default="false" />
@@ -20,9 +20,6 @@
     <arg name="enable_emergency_stop" default="true" />
 
     <group ns="$(arg namespace)">
-        <!-- robot desctription -->
-        <include file="$(find hsrb_description)/robots/upload_hsrb.launch" />
-
         <!-- TUe custom description -->
         <rosparam file="$(find hero_description)/custom/joint_groups.yaml" command="load" />
         <rosparam file="$(find hero_description)/custom/skills.yaml" command="load" />
@@ -36,14 +33,17 @@
 
     <group ns="$(arg toyota_namespace)">
 
+<!--
         <remap from="robot_description" to="$(arg toyota_namespace)/robot_description" />
         <remap from="/diagnostics" to="$(arg toyota_namespace)/diagnostics" />
+-->
 
         <!-- Real sensors -->
         <group if="$(optenv ROBOT_REAL false)">
 
             <!-- joint_states -->
             <!-- joint state publisher(0.9.4 joint_state_controller) -->
+<!--
             <node name="joint_state_pub" pkg="joint_state_publisher" type="joint_state_publisher">
                 <param name="publish_default_velocities" value="true" />
                 <param name="publish_default_efforts" value="true" />
@@ -53,26 +53,35 @@
                         - $(arg toyota_namespace)/joint_states
                 </rosparam>
             </node>
+-->
 
             <!-- robot state publisher -->
+<!--
             <node name="robot_state_pub" pkg="robot_state_publisher" type="robot_state_publisher">
                 <param name="publish_frequency" value="50.0" />
                 <param name="use_tf_static" value="true" />
             </node>
+-->
 
             <!-- base range sensor -->
+<!--
             <include file="$(find robot_launch_files)/launch/hardware/sensors/laser.launch">
                 <arg name="name" value="base_laser"/>
                 <arg name="machine" value="hero1"/>
             </include>
+-->
 
             <!-- head rgbd sensor -->
+<!--
             <include file="$(find hero_bringup)/launch/head_rgbd_sensor.launch">
                 <arg name="namespace" value="$(arg toyota_namespace)"/>
             </include>
+-->
 
             <!-- hand force sensor -->
-            <include file = "$(find hsrb_bringup)/launch/include/sensors/dynpick.xml"/>
+<!--
+            <include file="$(find hsrb_bringup)/launch/include/sensors/dynpick.xml" />
+-->
 
         </group> <!-- End of real sensors group -->
 
@@ -80,10 +89,14 @@
 
     <!-- Real hardware -->
     <group if="$(optenv ROBOT_REAL false)">
+
+        <remap from="/joint_states" to="$(arg toyota_namespace)/joint_states" />
         <!-- MANAGERS: includes diagnostics -->
+<!--
         <include file="$(find hsrb_bringup)/launch/$(arg robot_name)_monitor.launch" if="$(arg monitor)">
              <arg name="namespace" value="$(arg toyota_namespace)" />
         </include>
+-->
 
         <!--Hero hardware startup -->
         <include file="$(find hsrb_bringup)/launch/$(arg robot_name)_bringup.launch" unless="$(arg auto_start)">
@@ -92,14 +105,32 @@
           <arg name="align_at_startup" value="false" />
         </include>
 
-        <!-- Manipulation -->
-        <remap from="/joint_states" to="$(arg toyota_namespace)/joint_states" />
+        <include file="$(find hero_bringup)/hsrb_bringup/launch/hsrb_bringup_common.launch">
+            <arg name="namespace" value="$(arg namespace)" />
+            <arg name="use_hand_camera" value="$(arg use_hand_camera)" />
+            <arg name="use_head_center_camera" value="$(arg use_head_center_camera)" />
+            <arg name="use_head_stereo_camera" value="$(arg use_head_stereo_camera)"/>
+            <arg name="use_head_rgbd_sensor" value="$(arg use_head_rgbd_sensor)"/>
+            <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
+            <arg name="use_blackfly" value="$(arg use_blackfly)" />
+            <arg name="enable_emergency_stop" value="$(arg enable_emergency_stop)" />
+        </include>
 
+        <!-- Manipulation -->
+<!--
         <include file="$(find hsrb_common_launch)/launch/include/$(arg robot_name)_manipulation.xml">
             <arg name="namespace" value="$(arg toyota_namespace)"/>
             <arg name="sim" value="false"/>
             <arg name="robot_name" value="$(arg robot_name)"/>
         </include>
+-->
+        <group ns="$(arg namespace)">
+            <node pkg="laser_filters" type="scan_to_scan_filter_chain" name="laser_scan_to_scan_filter_chain" >
+                <rosparam command="load" file="$(find hero_bringup)/parameters/hardware/sensors/base_laser_filters_parameters.yaml" />
+                <remap from="scan" to="base_scan" />
+                <remap from="scan_filtered" to="base_laser/scan" />
+            </node>
+        </group>
 
         <!-- align at start-->
         <group unless="$(arg auto_start)">
@@ -110,6 +141,11 @@
 
     <!-- Launch simulator if we are not on a real robot -->
     <group unless="$(optenv ROBOT_REAL false)">
+
+        <group ns="$(arg toyota_namespace)">
+            <!-- robot desctription -->
+            <include file="$(find hsrb_description)/robots/upload_hsrb.launch" />
+        </group>
 
         <!-- Start gazebo with correct environment -->
         <include file="$(find hero_bringup)/launch/simulation/simulation.launch" >
