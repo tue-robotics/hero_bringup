@@ -1,0 +1,10 @@
+[Unit]
+Description=HERO start.launch
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+User=administrator
+Restart=on-abort
+ExecStart=/bin/bash -c 'source /home/administrator/.tue/setup.bash && roslaunch hero_bringup start.launch --wait'

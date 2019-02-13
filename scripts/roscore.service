@@ -5,6 +5,6 @@ Description=ROSCORE
 WantedBy=multi-user.target
 
 [Service]
-User=amigo
+User=administrator
 Restart=on-abort
 ExecStart=/bin/bash -c 'source /home/amigo/.tue/setup.bash && roscore'

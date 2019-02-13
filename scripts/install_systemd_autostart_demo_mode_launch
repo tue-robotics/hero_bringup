@@ -6,8 +6,8 @@ sudo cp $DIR/*.service /etc/systemd/system/
 
 # Reload and enable
 sudo systemctl daemon-reload
-sudo systemctl start amigo-demo-mode.service
-sudo systemctl enable amigo-demo-mode.service
+sudo systemctl start hero-demo-mode.service
+sudo systemctl enable hero-demo-mode.service
 
 echo "Check the journal for the log"
-echo "sudo journalctl -fu [job_name, e.g. amigo-demo-mode.service]"
+echo "sudo journalctl -fu [job_name, e.g. hero-demo-mode.service]"
