@@ -1,0 +1,11 @@
+[Unit]
+Description=Launch file hsrb_monitor.launch of package hero_bringup.git for user administrator
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+User=administrator
+Restart=on-abort
+ExecStart=/bin/bash -c 'source /home/administrator/.tue/setup.bash && roslaunch hero_bringup hsrb_monitor.launch namespace:=/hero --wait'
+

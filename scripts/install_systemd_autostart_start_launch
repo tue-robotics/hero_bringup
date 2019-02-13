@@ -7,11 +7,11 @@ sudo cp $DIR/*.service /etc/systemd/system/
 # Reload and enable
 sudo systemctl daemon-reload
 sudo systemctl start ntpdate.service
-#sudo systemctl start roscore.service
+sudo systemctl start hero-monitor.service
 sudo systemctl start hero-start.service
 sudo systemctl enable ntpdate.service
-#sudo systemctl enable roscore.service
+sudo systemctl enable hero-monitor.service
 sudo systemctl enable hero-start.service
 
 echo "Check the journal for the log"
-echo "sudo journalctl -fu [job_name, e.g. roscore, hero-start]"
+echo "sudo journalctl -fu [job_name, e.g. hero-monitor, hero-start]"
