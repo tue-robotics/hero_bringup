@@ -1,5 +1,7 @@
 [Unit]
 Description=Launch file hsrb_monitor.launch of package hero_bringup.git for user administrator
+After=docker.hsrb.roscore.hero.service
+Requires=docker.hsrb.roscore.hero.service
 
 [Install]
 WantedBy=multi-user.target
