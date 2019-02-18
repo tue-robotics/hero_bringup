@@ -7,9 +7,11 @@ sudo cp $DIR/*.service /etc/systemd/system/
 # Reload and enable
 sudo systemctl daemon-reload
 sudo systemctl start ntpdate.service
+sudo systemctl start hero-roscore.service
 sudo systemctl start hero-monitor.service
 sudo systemctl start hero-start.service
 sudo systemctl enable ntpdate.service
+sudo systemctl enable hero-roscore.service
 sudo systemctl enable hero-monitor.service
 sudo systemctl enable hero-start.service
 

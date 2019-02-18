@@ -2,7 +2,7 @@
 Description=NTPDATE
 
 [Install]
-WantedBy=docker.hsrb.roscore.hero.service
+WantedBy=hero-roscore.service
 
 [Service]
 Restart=on-abort
