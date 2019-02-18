@@ -1,0 +1,56 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+# Copyright (C) 2018 Toyota Motor Corporation
+# 2019-02-14 Matthijs van der Burgh
+import argparse
+import os
+import signal
+import sys
+import time
+
+from hero_bringup.robot_service import RobotService
+import rospy
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--launch-monitor', action='store_true',
+                        help='Launch monitor nodes')
+    parser.add_argument('--force-screen', action='store_true',
+                        help='Output to screen even if ROS_LOG_DIR is set')
+    parser.add_argument('--keep', type=int, default=10,
+                        help='Time[minutes] to keep ROS nodes alive')
+    parser.add_argument('--fast-restart', action='store_true',
+                        help='Allow fast restart by dis/enabling 2 times in 3 seconds')
+    no_remap_args = rospy.myargv(argv=sys.argv)
+    args = parser.parse_args(no_remap_args[1:])
+    remap_args = [arg for arg in sys.argv if arg not in no_remap_args]
+
+    if os.environ['LANG'] == 'ja_JP.UTF-8':
+        lang = 'ja'
+    else:
+        lang = 'en'
+
+    # Get and set robot version
+    robot_version = os.environ.get("ROBOT_VERSION")
+    robot_name = robot_version.replace('"', '').split('-')[0].lower()
+    if robot_name not in ('hsrb', 'hsrc'):
+        raise Exception("Invalid ROBOT_VERSION:{0}".format(robot_version))
+
+    rospy.init_node('robot_service', disable_signals=True)
+
+    service = RobotService(critical_nodes=['/hero/robot_hardware'],
+                           all_nodes_pkg='hero_bringup',
+                           all_nodes_launch_file='hero_bringup.launch',
+                           hardware_pkg='hero_bringup',
+                           hardware_launch_file='{}_bringup.launch'.format(robot_name),
+                           remap_args=remap_args,
+                           launch_monitor=args.launch_monitor,
+                           keep_nodes_time=args.keep,
+                           force_screen=args.force_screen,
+                           use_fast_restart=args.fast_restart,
+                           lang=lang)
+    service.run()
+    os.kill(os.getpid(), signal.SIGTERM)
+    while True:
+        time.sleep(1)

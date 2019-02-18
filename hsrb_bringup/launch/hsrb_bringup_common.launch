@@ -14,7 +14,7 @@
 
   <!-- include PHASE info -->
   <include file="$(find hsrb_bringup)/launch/include/hsrb_bringup_common_$(optenv ROBOT_VERSION HSRB-PHASE5).xml">
-    <arg name="namespace" value="$(arg namespace)" />
+    <arg name="namespace" value="$(arg namespace)" /> <!-- TUe Added -->
     <arg name="use_hand_camera" default="$(arg use_hand_camera)"/>
     <arg name="use_head_center_camera" default="$(arg use_head_center_camera)"/>
     <arg name="use_head_stereo_camera" default="$(arg use_head_stereo_camera)"/>
@@ -26,11 +26,14 @@
   <group ns="$(arg namespace)">
 
     <!-- <remap from="robot_description" to="/robot_description" /> -->
-    <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
+    <remap from="robot_description" to="$(arg namespace)/robot_description" />
+    <remap from="/robot_description" to="$(arg namespace)/robot_description" />
+    <!-- <remap from="/diagnostics" to="$(arg namespace)/diagnostics" /> -->
 
     <!-- joint_statesを閉じ込めるためのネームスペース -->
     <group ns="robot_state">
-      <!-- joint state publisher(0.9.4以降のjoint_state_controllerで不要になる) -->
+        <remap from="joint_states" to="joint_states" />
+    <!-- joint state publisher(0.9.4以降のjoint_state_controllerで不要になる) -->
       <node name="joint_state_pub" pkg="joint_state_publisher" type="joint_state_publisher">
         <param name="publish_default_velocities" value="true" />
         <param name="publish_default_efforts" value="true" />
