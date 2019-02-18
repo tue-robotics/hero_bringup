@@ -12,12 +12,12 @@
 
         <!-- NAVIGATION GMAPPING -->
         <include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
-            <arg name="machine" value="hsrb"/>
+            <arg name="machine" value="hero1"/>
         </include>
 
         <!-- WORLD MODEL -->
         <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
-            <arg name="machine" value="hsrb"/>
+            <arg name="machine" value="hero1"/>
             <arg name="config" value="world_modeling/world_model_siza.yaml"/>
         </include>
 
@@ -26,14 +26,14 @@
             <arg name="machine" value="hsrb" />
         </include> -->
 	<include file="$(find robot_launch_files)/launch/manipulation/head.launch">
-            <arg name="machine" value="hsrb"/>
+            <arg name="machine" value="hero1"/>
         </include>
 
 
         <!-- Telegram interface -->
         <include file="$(find robot_launch_files)/launch/interaction/telegram.launch">
              <arg name="robot_name" value="hero"/>
-             <arg name="machine" value="hsrb"/>
+             <arg name="machine" value="hero1"/>
         </include>
 
 
