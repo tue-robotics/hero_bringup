@@ -1,5 +1,7 @@
 [Unit]
 Description=NTPDATE
+After=network-online.target
+Wants=network-online.target
 
 [Install]
 WantedBy=hero-roscore.service
