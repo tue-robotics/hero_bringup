@@ -25,10 +25,8 @@
 
   <group ns="$(arg namespace)">
 
-    <!-- <remap from="robot_description" to="/robot_description" /> -->
     <remap from="robot_description" to="$(arg namespace)/robot_description" />
-    <remap from="/robot_description" to="$(arg namespace)/robot_description" />
-    <!-- <remap from="/diagnostics" to="$(arg namespace)/diagnostics" /> -->
+    <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
 
     <!-- joint_statesを閉じ込めるためのネームスペース -->
     <group ns="robot_state">

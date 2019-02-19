@@ -34,21 +34,12 @@
     <arg name="map" default="$(optenv ROS_HOME ~/.ros)/map/map.yaml" />
 
     <!-- General remapping -->
-    <remap from="/hsrb/joint_states" to="$(arg namespace)/joint_states" />
-    <remap from="/joint_states" to="$(arg namespace)/joint_states" />
-    <remap from="joint_states" to="$(arg namespace)/joint_states" />
-
     <remap from="/robot_description" to="$(arg namespace)/robot_description" />
     <remap from="robot_description" to="$(arg namespace)/robot_description" />
 
     <remap from="/hsrb/diagnostics" to="$(arg namespace)/diagnostics" />
     <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
     <remap from="diagnostics" to="$(arg namespace)/diagnostics" />
-
-    <remap from="odom" to="$(arg namespace)/base/references" />
-    <remap from="/hsrb/odom" to="$(arg namespace)/base/references" />
-
-    <remap from="/hsrb/omni_base_controller/command" to="$(arg namespace)/omni_base_controller/command" />
 
     <!-- Start with hardware manager -->
     <node name="robot_service" pkg="hero_bringup" type="hero_robot_service" if="$(optenv ROBOT_REAL false)"
@@ -74,6 +65,8 @@
           use_web:=$(arg use_web)
           use_geometry:=$(arg use_geometry)
           map:=$(arg map)
+
+          --fast-restart
 
           runstop_button:=$(arg namespace)/runstop_button
           ">

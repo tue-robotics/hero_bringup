@@ -4,10 +4,8 @@
   <arg name="use_laser_odom" default="true" />
   <group ns="$(arg namespace)">
 
-<!--
-    <remap from="robot_description" to="/robot_description" />
-    <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
--->
+  <remap from="robot_description" to="$(arg namespace)/robot_description" />
+  <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
 
     <!-- realtime loop -->
     <node name="robot_hardware" pkg="hsrb_robot_hardware" type="hsrb_robot_hardware_main"

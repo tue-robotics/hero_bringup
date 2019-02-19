@@ -9,6 +9,12 @@
   <!-- prepare params.yaml -->
   <param name="/tmp" command="rosrun tmc_roslaunch_tools symboliclink -f $(arg param_file) /etc/opt/tmc/robot/params.yaml $(find hsrb_common_launch)/params/empty_params.yaml" />
 
+  <remap from="odom" to="$(arg namespace)/base/measurements" />
+  <remap from="/hsrb/odom" to="$(arg namespace)/base/measurements" />
+  <remap from="wheel_odom" to="$(arg namespace)/base/measurements_wheel" />
+  <remap from="/hsrb/wheel_odom" to="$(arg namespace)/base/measurements_wheel" />
+  <remap from="command_velocity" to="$(arg namespace)/base/references" />
+
   <include file="$(find hsrb_bringup)/launch/include/hsrb_controller_common.xml">
     <arg name="namespace" value="$(arg namespace)" />
     <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
@@ -22,7 +28,7 @@
   <node if="$(arg align_at_startup)" pkg="hsrb_bringup" type="hsrb_align" name="hsrb_align" >
     <remap from="/hsrb/joint_states" to="$(arg namespace)/joint_states" />
     <remap from="/hsrb/align_angle_sensors" to="$(arg namespace)/align_angle_sensors" />
-    <remap from="/hsrb/align_angle_sensors/safe_pose_changer/change_joint" to="$(arg namespace)/safe_pose_changer/change_joint" />
+    <remap from="/safe_pose_changer/change_joint" to="$(arg namespace)/safe_pose_changer/change_joint" />
     <remap from="/hsrb/controller_manager" to="$(arg namespace)/controller_manager" />
     <remap from="/hsrb/controller_manager/list_controllers" to="$(arg namespace)/controller_manager/list_controllers" />
   </node>
@@ -31,7 +37,7 @@
   <rosparam command="load" file="$(arg param_file)" />
 
   <!-- joint impedance control server -->
-<!--
+  <remap from="/hsrb/servo_parameter_reader/access" to="$(arg namespace)/servo_parameter_reader/access" />
+  <remap from="/hsrb/servo_parameter_writer/access" to="$(arg namespace)/servo_parameter_writer/access" />
   <include file="$(find hsrb_joint_impedance_control)/launch/joint_impedance_control_server.launch" ns="$(arg namespace)" />
--->
 </launch>

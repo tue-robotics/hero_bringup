@@ -5,9 +5,6 @@
 
     <!--Toyota parameters -->
     <arg name="namespace" default="/hero"/>
-<!--
-    <arg name="toyota_namespace" default="/hero"/>
--->
     <arg name="use_hand_camera" default="false" />
     <arg name="use_head_center_camera" default="false" />
     <arg name="use_head_stereo_camera" default="false"/>
@@ -34,21 +31,12 @@
     <arg name="map" default="$(optenv ROS_HOME ~/.ros)/map/map.yaml" />
 
     <!-- General remapping -->
-    <remap from="/hsrb/joint_states" to="$(arg namespace)/joint_states" />
-    <remap from="/joint_states" to="$(arg namespace)/joint_states" />
-    <remap from="joint_states" to="$(arg namespace)/joint_states" />
-
     <remap from="/robot_description" to="$(arg namespace)/robot_description" />
     <remap from="robot_description" to="$(arg namespace)/robot_description" />
 
     <remap from="/hsrb/diagnostics" to="$(arg namespace)/diagnostics" />
     <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
     <remap from="diagnostics" to="$(arg namespace)/diagnostics" />
-
-    <remap from="odom" to="$(arg namespace)/base/references" />
-    <remap from="/hsrb/odom" to="$(arg namespace)/base/references" />
-
-    <remap from="/hsrb/omni_base_controller/command" to="$(arg namespace)/omni_base_controller/command" />
 
     <group ns="$(arg namespace)">
         <!-- TUe custom description -->
@@ -64,7 +52,7 @@
 
 
     <!-- Real hardware -->
-    <group if="$(optenv ROBOT_REAL false)">
+    <group if="$(optenv ROBOT_REAL false)" >
 
         <!--Hero hardware startup -->
         <include file="$(find hero_bringup)/hsrb_bringup/launch/$(arg robot_name)_bringup.launch" unless="$(arg auto_start)">
@@ -100,7 +88,7 @@
     </group><!-- End of real hardware -->
 
     <!-- Launch simulator if we are not on a real robot -->
-    <group unless="$(optenv ROBOT_REAL false)">
+    <group unless="$(optenv ROBOT_REAL false)" >
 
         <group ns="$(arg namespace)">
             <!-- robot desctription -->
@@ -160,17 +148,25 @@
         <!-- MANIPULATION -->
         <group>
             <!-- Attitude transition -->
-            <remap from="/hsrb/head_trajectory_controller/command" to="$(arg namespace)/head_trajectory_controller/command" />
-            <include file="$(find hero_bringup)/hsrb_manipulation_launch/launch/safe_pose_changer.launch" />
+            <include file="$(find hero_bringup)/hsrb_manipulation_launch/launch/safe_pose_changer.launch" >
+                <arg name="namespace" value="$(arg namespace)" />
+            </include>
+
+            <!-- trajectory filter -->
+            <include file="$(find hsrb_trajectory_filter)/launch/trajectory_filter.launch">
+                <arg name="robot_name" value="$(arg robot_name)"/>
+            </include>
+
 
             <!-- Finger impedance control in whole body -->
-<!--
-            <include file="$(find hsrb_impedance_control)/launch/impedance_control_node.launch"
-            ns="$(arg namespace)"/>
--->
+            <remap from="/hsrb/joint_states" to="$(arg namespace)/joint_states" />
+            <remap from="/hsrb/odom" to="$(arg namespace)/base/measurements" />
+            <remap from="/hsrb/arm_trajectory_controller/command" to="$(arg namespace)/arm_trajectory_controller/command" />
+            <remap from="/hsrb/omni_base_controller/command" to="$(arg namespace)/omni_base_controller/command" />
+            <include file="$(find hsrb_impedance_control)/launch/impedance_control_node.launch" ns="$(arg namespace)" if="$(optenv ROBOT_REAL false)" />
 
-            <arg name="analytic_ik_plugin" default="hsrb_analytic_ik::HsrbIKSolver" />
             <!-- Move the planner -->
+            <arg name="analytic_ik_plugin" default="hsrb_analytic_ik::HsrbIKSolver" />
             <include file="$(find hsrb_manipulation_launch)/launch/planner.launch">
                 <arg name="analytic_ik_plugin" value="$(arg analytic_ik_plugin)" />
             </include>
@@ -182,12 +178,10 @@
         </group>
 
         <!-- MoveIt -->
-<!--
         <include file="$(find hero_bringup)/hsrb_moveit_config/launch/move_group.launch">
-            <arg name="joint_states_topic" value="$(arg namespace)/joint_states"/>
+            <arg name="joint_states_topic" value="$(arg namespace)/robot_state/joint_states"/>
             <arg name="moveit_octomap_sensor_params_file" value="$(find hero_bringup)/hsrb_moveit_config/config/sensors_xtion.yaml" />
         </include>
--->
 
         <!-- bridge nodes-->
         <node pkg="hero_bridge" type="speech.py" name="text_to_speech"/>

@@ -201,7 +201,7 @@ class RobotService(object):
         self.diag_pub = None
         self.button_off_count = 0
         self.previous_button_status = True
-        self.lock = threading.Lock()
+        self.lock = threading.RLock()
         self.use_fast_restart = use_fast_restart
 
     def __del__(self):

@@ -21,7 +21,7 @@ if __name__ == '__main__':
     parser.add_argument('--keep', type=int, default=10,
                         help='Time[minutes] to keep ROS nodes alive')
     parser.add_argument('--fast-restart', action='store_true',
-                        help='Allow fast restart by dis/enabling 2 times in 3 seconds')
+                        help='Allow fast restart by dis/enabling 2 times in 2 seconds')
     no_remap_args = rospy.myargv(argv=sys.argv)
     args = parser.parse_args(no_remap_args[1:])
     remap_args = [arg for arg in sys.argv if arg not in no_remap_args]
