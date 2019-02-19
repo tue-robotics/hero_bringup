@@ -12,7 +12,7 @@ plugins:
       robot_name: hsrb
       urdf_rosparam: /hero/robot_description
       joint_topics:
-        - topic: /hero/joint_states
+        - topic: /hero/robot_state/joint_states
 
 - name: gui_server
   lib: libed_gui_server_plugin.so
