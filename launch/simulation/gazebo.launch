@@ -17,7 +17,7 @@
 
     <!-- Base -->
     <remap from="/hsrb/odom" to="$(arg namespace)/base/measurements" />
-    <remap from="/hsrb/wheel_odom" to="$(arg namespace)/wheel_odom" /> <!-- Gazebo publishes this topic, exact function unknown -->
+    <remap from="/hsrb/wheel_odom" to="$(arg namespace)/base/measurements_odom" /> <!-- Gazebo publishes this topic, exact function unknown -->
     <remap from="/hsrb/odom_ground_truth" to="$(arg namespace)/odom_ground_truth" /> <!-- Gazebo publishes this topic, exact function unknown -->
 
     <!-- Sensors -->
