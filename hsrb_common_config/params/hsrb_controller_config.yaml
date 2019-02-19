@@ -1,6 +1,5 @@
 # Modified version of hsrb_commong_config/params/hsrb_controller_config.yaml
-# Because of wrong wheel_odom_base_frame (base_footprint_wheel instead of base_footprint) #36
-# And because of typo's (ture instead of true)
+# Because of typo's (ture instead of true)
 hardware:
   publish_rate: 100
 
