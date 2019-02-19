@@ -33,7 +33,7 @@ omni_base_controller:
   stop_trajectory_duration: 1.0
   use_laser_odom: true
   wheel_odom_map_frame: odom
-  wheel_odom_base_frame: base_footprint
+  wheel_odom_base_frame: base_footprint_wheel
 
   # these are described in hsrb_base_controllers/README.md
   steer_joint: base_roll_joint
