@@ -8,20 +8,37 @@
     <rosparam file="$(find hsrb_common_config)/params/hsrb_sensor_config.yaml" command="load" />
   </group>
   <rosparam file="$(find hsrb_gazebo_bringup)/params/hsrb_sensor_config.yaml" command="load" />
-  <remap from="joint_states" to="$(arg namespace)/joint_states" />
-<!--<remap from="joint_states" to="$(arg namespace)/robot_state/joint_states" />-->
+<!--
+  <remap from="joint_states" to="/hsrb/robot_state/joint_states" />
+-->
 
   <!-- convert joint states to TF transforms for rviz, etc -->
+<!--
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
         respawn="false" output="screen" />
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"
         respawn="false" output="screen" >
-        <rosparam subst_value="true">
-            source_list:
-                - $(arg namespace)/joint_states
-        </rosparam>
-<!--<rosparam param="source_list">["/hsrb/joint_states"]</rosparam>-->
+    <rosparam param="source_list">["/hsrb/joint_states"]</rosparam>
   </node>
+-->
+  <group ns="$(arg namespace)/robot_state">
+    <remap from="joint_states" to="joint_states" />
+    <node name="joint_state_pub" pkg="joint_state_publisher" type="joint_state_publisher">
+      <param name="publish_default_velocities" value="true" />
+      <param name="publish_default_efforts" value="true" />
+      <param name="rate" value="50" />
+      <rosparam subst_value="true">
+        source_list:
+          - $(arg namespace)/joint_states
+      </rosparam>
+    </node>
+
+    <!-- robot state publisher -->
+    <node name="robot_state_pub" pkg="robot_state_publisher" type="robot_state_publisher">
+      <param name="publish_frequency" value="50.0" />
+      <param name="use_tf_static" value="true" />
+    </node>
+  </group>
 
   <!-- laser-odometry -->
   <group ns="$(arg namespace)" if="$(arg use_laser_odom)">
