@@ -15,7 +15,7 @@
   <remap from="/hsrb/wheel_odom" to="$(arg namespace)/base/measurements_wheel" />
   <remap from="command_velocity" to="$(arg namespace)/base/references" />
 
-  <include file="$(find hsrb_bringup)/launch/include/hsrb_controller_common.xml">
+  <include file="$(find hero_bringup)/hsrb_bringup/launch/include/hsrb_controller_common.xml">
     <arg name="namespace" value="$(arg namespace)" />
     <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
   </include>
@@ -37,7 +37,9 @@
   <rosparam command="load" file="$(arg param_file)" />
 
   <!-- joint impedance control server -->
+<!--
   <remap from="/hsrb/servo_parameter_reader/access" to="$(arg namespace)/servo_parameter_reader/access" />
   <remap from="/hsrb/servo_parameter_writer/access" to="$(arg namespace)/servo_parameter_writer/access" />
   <include file="$(find hsrb_joint_impedance_control)/launch/joint_impedance_control_server.launch" ns="$(arg namespace)" />
+-->
 </launch>

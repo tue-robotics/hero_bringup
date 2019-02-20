@@ -123,7 +123,7 @@
         <group ns="head_rgbd_sensor">
             <node pkg="rgbd" type="rgbd_server" name="ros_to_rgbd">
                 <remap from="output" to="rgbd" />
-				<remap from="rgb_image" to="rgb/image_rect_color" />
+                <remap from="rgb_image" to="rgb/image_rect_color" />
                 <remap from="cam_info" to="rgb/camera_info" />
                 <remap from="depth_image" to="depth_registered/image" />
             </node>
