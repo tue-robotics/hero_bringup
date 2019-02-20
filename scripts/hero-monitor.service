@@ -7,6 +7,7 @@ Requires=hero-roscore.service
 WantedBy=multi-user.target
 
 [Service]
+EnvironmentFile=-/etc/opt/tmc/robot/version
 User=administrator
 Restart=on-abort
 ExecStart=/bin/bash -c 'source /home/administrator/.tue/setup.bash && roslaunch hero_bringup hsrb_monitor.launch namespace:=/hero --wait'

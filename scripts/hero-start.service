@@ -5,6 +5,7 @@ Description=HERO start.launch
 WantedBy=multi-user.target
 
 [Service]
+EnvironmentFile=-/etc/opt/tmc/robot/version
 User=administrator
 Restart=on-abort
 ExecStart=/bin/bash -c 'source /home/administrator/.tue/setup.bash && roslaunch hero_bringup start.launch --wait'
