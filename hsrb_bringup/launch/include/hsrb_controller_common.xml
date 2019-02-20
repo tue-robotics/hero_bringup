@@ -10,6 +10,8 @@
   <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
   <remap from="/hsrb/diagnostics" to="$(arg namespace)/diagnostics" />
 
+  <remap from="joint_states" to="$(arg namespace)/joint_states_hardware" />
+  <remap from="/joint_states" to="$(arg namespace)/joint_states_hardware" />
     <!-- realtime loop -->
     <node name="robot_hardware" pkg="hsrb_robot_hardware" type="hsrb_robot_hardware_main"
           respawn="false"

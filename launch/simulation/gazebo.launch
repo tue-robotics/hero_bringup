@@ -11,7 +11,7 @@
     <arg name="world_name" default="$(optenv ROBOT_ENV robotics_testlabs)/model-1_6.sdf"/>
 
     <!-- General -->
-    <remap from="/hsrb/joint_states" to="$(arg namespace)/joint_states" />
+    <remap from="/hsrb/joint_states" to="$(arg namespace)/joint_states_hardware" />
     <remap from="/hsrb/base_pose" to="$(arg namespace)/base_pose" /> <!-- Gazebo listens to this topic, function unknown -->
     <remap from="/hsrb/pressure_sensor" to="$(arg namespace)/pressure_sensor" /> <!-- Gazebo publishes this topic, maybe this is related to the suction. Exact function unknown -->
 

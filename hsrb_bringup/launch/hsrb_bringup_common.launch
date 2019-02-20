@@ -27,10 +27,11 @@
 
     <remap from="robot_description" to="$(arg namespace)/robot_description" />
     <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
+    <remap from="joint_states" to ="$(arg namespace)/joint_states" />
+    <remap from="/joint_states" to ="$(arg namespace)/joint_states" />
 
     <!-- joint_statesを閉じ込めるためのネームスペース -->
     <group ns="robot_state">
-        <remap from="joint_states" to="joint_states" />
     <!-- joint state publisher(0.9.4以降のjoint_state_controllerで不要になる) -->
       <node name="joint_state_pub" pkg="joint_state_publisher" type="joint_state_publisher">
         <param name="publish_default_velocities" value="true" />
@@ -38,7 +39,7 @@
         <param name="rate" value="50" />
         <rosparam subst_value="true">
           source_list:
-          - $(arg namespace)/joint_states
+          - $(arg namespace)/joint_states_hardware
         </rosparam>
       </node>
 
