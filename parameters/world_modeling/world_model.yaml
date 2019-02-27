@@ -9,7 +9,7 @@ plugins:
 - name: robot_plugin
   lib: libed_robot_plugin.so
   parameters:
-      robot_name: hsrb
+      robot_name: hero
       urdf_rosparam: /hero/robot_description
       joint_topics:
         - topic: /hero/joint_states
@@ -17,7 +17,7 @@ plugins:
 - name: gui_server
   lib: libed_gui_server_plugin.so
   parameters:
-      robot_name: hsrb
+      robot_name: hero
 
 - name: navigation
   lib: libed_navigation_plugin.so
@@ -34,7 +34,7 @@ plugins:
   frequency: 40
   enabled: 1
   parameters:
-      robot_name: hsrb
+      robot_name: hero
       initial_pose_topic: /hero/initialpose
       num_particles: 500
       initial_pose:
@@ -67,7 +67,7 @@ plugins:
 #  lib: libed_laser_plugin.so
 #  frequency: 40
 #  parameters:
-#      laser_topic: /hsrb/base_scan
+#      laser_topic: /hero/base_laser/scan
 #      min_segment_size_pixels: 10
 #      world_association_distance: 0.4
 #      segment_depth_threshold: 0.2
