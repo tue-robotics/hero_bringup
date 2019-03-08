@@ -3,8 +3,6 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 sudo cp $DIR/*.service /etc/systemd/system/
-sudo cp $DIR/*.bash /usr/local/bin/
-sudo chmod +x /usr/local/bin/*.bash
 
 # Reload and enable
 sudo systemctl daemon-reload
