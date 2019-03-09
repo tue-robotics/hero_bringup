@@ -6,18 +6,18 @@
 
         <!-- LOCALIZATION GMAPPING -->
         <include file="$(find robot_launch_files)/launch/localization/gmapping.launch">
-            <arg name="machine" value="amigo2"/>
+            <arg name="machine" value="hero2"/>
             <arg name="sensor" value="base_laser"/>
         </include>
 
         <!-- NAVIGATION GMAPPING -->
         <include file="$(find robot_launch_files)/launch/navigation/navigation_gmapping.launch">
-            <arg name="machine" value="amigo2"/>
+            <arg name="machine" value="hero2"/>
         </include>
 
         <!-- WORLD MODEL -->
         <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
-            <arg name="machine" value="amigo2"/>
+            <arg name="machine" value="hero2"/>
             <arg name="config" value="world_modeling/world_model_gmapping.yaml"/>
         </include>
 
