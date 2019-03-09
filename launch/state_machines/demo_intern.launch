@@ -10,11 +10,6 @@
 
     <group ns="$(arg robot_name)">
 
-        <!-- HEAD REF (hack fix for launching from docker)-->
-        <include file="$(find robot_launch_files)/launch/manipulation/head.launch">
-            <arg name="machine" value="hero1"/>
-        </include>
-
         <!-- LOCALIZATION GMAPPING -->
         <include file="$(find robot_launch_files)/launch/localization/gmapping.launch">
             <arg name="machine" value="hero1"/>

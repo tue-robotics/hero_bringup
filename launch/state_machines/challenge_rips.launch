@@ -15,10 +15,6 @@
             <arg name="machine" value="hero1"/>
         </include>
 
-	<include file="$(find robot_launch_files)/launch/manipulation/head.launch">
-            <arg name="machine" value="hero1"/>
-        </include>
-
     </group>
 
     <!-- Start the challenge -->

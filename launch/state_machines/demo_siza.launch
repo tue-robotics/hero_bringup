@@ -19,14 +19,6 @@
             <arg name="config" value="world_modeling/world_model_siza.yaml"/>
         </include>
 
-        <!-- Joke -->
-<!--        <include file="$(find robot_launch_files)/launch/essentials/joke.launch" >
-            <arg name="machine" value="hsrb" />
-        </include> -->
-	<include file="$(find robot_launch_files)/launch/manipulation/head.launch">
-        </include>
-
-
         <!-- Telegram interface -->
         <include file="$(find robot_launch_files)/launch/interaction/telegram.launch">
              <arg name="robot_name" value="hero"/>
