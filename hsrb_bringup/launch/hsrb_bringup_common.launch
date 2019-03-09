@@ -64,5 +64,21 @@
     <!-- led color control -->
     <node name="status_led_node" pkg="hsrb_status_led" type="status_led_node" />
 
+    <!-- bumper action -->
+    <node name="hsrb_bumper" pkg="hsrb_bumper" type="hsrb_bumper_node" >
+      <param name="enable_emergency_stop" value="$(arg enable_emergency_stop)" />
+    </node>
+    <node unless="$(arg enable_emergency_stop)" name="hsrb_bumper_back" pkg="hsrb_bumper" type="hsrb_bumper_back_node" >
+      <param name="temp_object_radius" value="0.03" />
+      <param name="temp_object_point_num" value="20" />
+      <param name="temp_object_delete_timer" value="30" />
+      <param name="head_move_cancel" value="true" />
+      <param name="arm_move_cancel" value="true" />
+      <param name="gripper_grasp_cancel" value="true" />
+      <param name="crescent_moon_object" value="false" />
+      <param name="bumper_binarization" value="false" />
+      <param name="to_temp_object_distance" value="0.7" />
+    </node>
+
   </group>
 </launch>
