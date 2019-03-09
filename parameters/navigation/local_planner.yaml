@@ -1,6 +1,6 @@
 local_planner : dwa_local_planner/DWAPlannerROS
 controller_frequency: 10.0
-robot_base_frame: /base_link
+robot_base_frame: /base_footprint
 global_frame: /map
 
 # Specific local planner parameters
@@ -14,10 +14,10 @@ DWAPlannerROS:
 
     max_vel_x: 0.7
     min_vel_x: -0.1
-   
+
     max_vel_y: 0.2
     min_vel_y: -0.2
-    
+
     max_rot_vel: 1.0
     min_rot_vel: 0.1
 
@@ -61,7 +61,7 @@ DWAPlannerROS:
     switch_plan_distance: 0.5
     switch_yaw_error: 1.6
 
-    # Cost functions    
+    # Cost functions
     align_align_scale: 1.0
     align_plan_scale: 1.0
     align_goal_scale: 0.0
@@ -83,14 +83,14 @@ DWAPlannerROS:
     align_cmd_ny:  0.0
     align_cmd_pth: 0.0
     align_cmd_nth: 0.0
-    
+
     default_cmd_px:  0.0
     default_cmd_nx:  100.0
     default_cmd_py:  25.0
     default_cmd_ny:  25.0
     default_cmd_pth: 0.0
     default_cmd_nth: 0.0
-    
+
     arrive_cmd_px:  0.0
     arrive_cmd_nx:  0.0
     arrive_cmd_py:  0.0

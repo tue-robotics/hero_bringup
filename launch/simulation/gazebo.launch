@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!-- This launch file shouldn't be included in a namespace -->
+    <arg name="namespace" default="/hsrb"/>
+    <arg name="debug" default="false"/>
+    <arg name="gui" default="false" />
+    <arg name="paused" default="false" />
+
+    <arg name="use_sim_time" default="true"/>
+    <arg name="world_name" default="$(optenv ROBOT_ENV robotics_testlabs)/model-1_6.sdf"/>
+
+    <!-- General -->
+    <remap from="/hsrb/joint_states" to="$(arg namespace)/joint_states_hardware" />
+    <remap from="/hsrb/base_pose" to="$(arg namespace)/base_pose" /> <!-- Gazebo listens to this topic, function unknown -->
+    <remap from="/hsrb/pressure_sensor" to="$(arg namespace)/pressure_sensor" /> <!-- Gazebo publishes this topic, maybe this is related to the suction. Exact function unknown -->
+
+    <!-- Base -->
+    <remap from="/hsrb/odom" to="$(arg namespace)/base/measurements" />
+    <remap from="/hsrb/wheel_odom" to="$(arg namespace)/base/measurements_odom" /> <!-- Gazebo publishes this topic, exact function unknown -->
+    <remap from="/hsrb/odom_ground_truth" to="$(arg namespace)/odom_ground_truth" /> <!-- Gazebo publishes this topic, exact function unknown -->
+
+    <!-- Sensors -->
+    <remap from="/hsrb/base_scan" to="$(arg namespace)/base_laser/scan" />
+    <remap from="/hsrb/base_imu/data" to="$(arg namespace)/base_imu/data" />
+
+    <!-- Cameras -->
+    <remap from="/head_rgbd_sensor" to="$(arg namespace)/head_rgbd_sensor" />
+    <remap from="/hsrb/head_rgbd_sensor/depth_registered/camera_info" to="$(arg namespace)/head_rgbd_sensor/depth_registered/camera_info" />
+    <remap from="/hsrb/head_rgbd_sensor/depth_registered/image_rect_raw" to="$(arg namespace)/head_rgbd_sensor/depth_registered/image_rect_raw" />
+    <remap from="/hsrb/head_rgbd_sensor/depth_registered/rectified_points" to="$(arg namespace)/head_rgbd_sensor/depth_registered/rectified_points" />
+    <remap from="/hsrb/head_rgbd_sensor/rgb/camera_info" to="$(arg namespace)/head_rgbd_sensor/rgb/camera_info" />
+    <remap from="/hsrb/head_rgbd_sensor/rgb/image_rect_color" to="$(arg namespace)/head_rgbd_sensor/rgb/image_rect_color" />
+    <remap from="/hsrb/hand_camera" to="$(arg namespace)/hand_camera" />
+    <remap from="/hsrb/head_center_camera" to="$(arg namespace)/head_center_camera" />
+    <remap from="/hsrb/head_l_stereo_camera" to="$(arg namespace)/head_l_stereo_camera" />
+    <remap from="/hsrb/head_r_stereo_camera" to="$(arg namespace)/head_r_stereo_camera" />
+
+    <!-- General controllers -->
+    <remap from="/hsrb/controller_manager" to="$(arg namespace)/controller_manager" />
+    <remap from="/hsrb/arm_trajectory_controller" to="$(arg namespace)/arm_trajectory_controller" />
+    <remap from="/hsrb/gripper_controller" to="$(arg namespace)/gripper_controller" />
+    <remap from="/hsrb/head_trajectory_controller" to="$(arg namespace)/head_trajectory_controller" />
+    <remap from="/hsrb/impedance_control" to="$(arg namespace)/impedance_control" />
+    <remap from="/hsrb/joint_state_controller" to="$(arg namespace)/joint_state_controller" />
+    <remap from="/hsrb/omni_base_controller" to="$(arg namespace)/omni_base_controller" />
+
+    <!-- Gripper controller -->
+    <remap from="/hsrb/gripper_controller/command" to="$(arg namespace)/gripper_controller/command" />
+    <remap from="/hsrb/gripper_controller/apply_force" to="$(arg namespace)/gripper_controller/apply_force" />
+    <remap from="/hsrb/gripper_controller/follow_joint_trajectory" to="$(arg namespace)/gripper_controller/follow_joint_trajectory" />
+    <remap from="/hsrb/gripper_controller/grasp" to="$(arg namespace)/gripper_controller/grasp" />
+    <remap from="/hsrb/gripper_controller/pid_gains/hand_l_distal_joint" to="$(arg namespace)/gripper_controller/pid_gains/hand_l_distal_joint" />
+    <remap from="/hsrb/gripper_controller/pid_gains/hand_l_proximal_joint" to="$(arg namespace)/gripper_controller/pid_gains/hand_l_proximal_joint" />
+    <remap from="/hsrb/gripper_controller/pid_gains/hand_l_spring_proximal_joint" to="$(arg namespace)/gripper_controller/pid_gains/hand_l_spring_proximal_joint" />
+    <remap from="/hsrb/gripper_controller/pid_gains/hand_r_distal_joint" to="$(arg namespace)/gripper_controller/pid_gains/hand_r_distal_joint" />
+    <remap from="/hsrb/gripper_controller/pid_gains/hand_r_proximal_joint" to="$(arg namespace)/gripper_controller/pid_gains/hand_r_proximal_joint" />
+    <remap from="/hsrb/gripper_controller/pid_gains/hand_r_spring_proximal_joint" to="$(arg namespace)/gripper_controller/pid_gains/hand_r_spring_proximal_joint" />
+
+    <!-- Suction controller -->
+    <remap from="/hsrb/suction_control" to="$(arg namespace)/suction_control" />
+    <remap from="/hsrb/command_suction" to="$(arg namespace)/command_suction" />
+
+    <!-- Torso controller -->
+    <!-- This should be remapped, but the topics/services disappear when doing it
+    <remap from="/hsrb/mimic_controller/pid_gains/torso_lift_joint" to="$(arg namespace)/mimic_controller/pid_gains/torso_lift_joint" />
+    -->
+
+    <!-- Wrist -->
+    <remap from="/hsrb/wrist_wrench/raw" to="$(arg namespace)/wrist_wrench/raw" />
+
+    <!-- Filtered command velocity -->
+    <remap from="/hsrb/command_velocity" to="$(arg namespace)/opt_command_velocity" />
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="gui" value="$(arg gui)"/>
+        <arg name="debug" value="$(arg debug)"/>
+        <arg name="world_name" value="$(arg world_name)"/>
+    </include>
+
+</launch>

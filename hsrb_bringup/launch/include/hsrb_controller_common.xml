@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="namespace" default="/hsrb" />
+  <arg name="use_laser_odom" default="true" />
+  <group ns="$(arg namespace)">
+
+  <remap from="robot_description" to="$(arg namespace)/robot_description" />
+  <remap from="/robot_description" to="$(arg namespace)/robot_description" />
+  <remap from="diagnostics" to="$(arg namespace)/diagnostics" />
+  <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
+  <remap from="/hsrb/diagnostics" to="$(arg namespace)/diagnostics" />
+
+  <remap from="joint_states" to="$(arg namespace)/joint_states_hardware" />
+  <remap from="/joint_states" to="$(arg namespace)/joint_states_hardware" />
+    <!-- realtime loop -->
+    <node name="robot_hardware" pkg="hsrb_robot_hardware" type="hsrb_robot_hardware_main"
+          respawn="false"
+          output="screen" />
+
+    <rosparam command="load" file="$(find hero_bringup)/hsrb_common_config/params/hsrb_controller_config.yaml"/>
+    <param name="omni_base_controller/use_laser_odom" value="$(arg use_laser_odom)"/>
+
+    <rosparam ns="hw_config/motor_settings"
+              command="load" file="/etc/opt/tmc/robot/conf.d/calib_results/joint_position_offset.yaml" />
+
+  </group>
+</launch>

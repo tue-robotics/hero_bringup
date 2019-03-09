@@ -42,356 +42,225 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        amigo/base:
+        arm_flex_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/base_laser:
+        arm_lift_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        amigo/base_plate:
+        arm_roll_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/clavicles:
+        base_b_bumper_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/elbow_extra_block2_left:
+        base_f_bumper_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/elbow_extra_block2_right:
+        base_footprint:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        base_imu_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        base_l_drive_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/elbow_extra_block_left:
+        base_l_passive_wheel_x_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        base_l_passive_wheel_y_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        base_l_passive_wheel_z_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/elbow_extra_block_right:
+        base_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/elbow_link4_left:
+        base_r_drive_wheel_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/elbow_link4_right:
+        base_r_passive_wheel_x_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        base_r_passive_wheel_y_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        base_r_passive_wheel_z_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/finger1_left:
+        base_range_sensor_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/finger1_phalanx_left:
+        base_roll_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        hand_camera_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        hand_camera_gazebo_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        hand_l_distal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/finger1_phalanx_right:
+        hand_l_finger_tip_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        hand_l_finger_vacuum_frame:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/finger1_right:
+        hand_l_mimic_distal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        hand_l_proximal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        hand_l_spring_proximal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/finger1_tip_left:
+        hand_motor_dummy_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        hand_palm_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/finger1_tip_phalanx_left:
+        hand_r_distal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/finger1_tip_phalanx_right:
+        hand_r_finger_tip_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        hand_r_mimic_distal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        hand_r_proximal_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        hand_r_spring_proximal_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/finger1_tip_right:
+        head_center_camera_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        head_center_camera_gazebo_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        head_l_stereo_camera_gazebo_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        head_l_stereo_camera_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/finger2_left:
+        head_pan_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/finger2_phalanx_left:
+        head_r_stereo_camera_gazebo_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        head_r_stereo_camera_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/finger2_phalanx_right:
+        head_rgbd_sensor_gazebo_frame:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        head_rgbd_sensor_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/finger2_right:
+        head_tilt_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/finger2_tip_left:
+        torso_lift_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/finger2_tip_phalanx_left:
+        wrist_flex_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
-        amigo/finger2_tip_phalanx_right:
+        wrist_ft_sensor_frame:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-          Value: true
-        amigo/finger2_tip_right:
+        wrist_ft_sensor_mount_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-          Value: true
-        amigo/fore_arm_left:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/fore_arm_right:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/fore_arm_top_left:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/fore_arm_top_right:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/grippoint_left:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/grippoint_right:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/hand_left:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/hand_right:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/head:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/head_mount:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        amigo/lasertop:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/logo:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/matrix:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        amigo/neck_pan:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/neck_tilt:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/shoulder_link1_left:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/shoulder_link1_right:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/shoulder_link2_left:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/shoulder_link2_right:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/shoulder_mount_left:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/shoulder_mount_right:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/top_kinect/openni_camera:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/top_kinect/openni_depth_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        amigo/top_kinect/openni_depth_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        amigo/top_kinect/openni_rgb_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        amigo/top_kinect/openni_rgb_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        amigo/torso:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/torso_assist_slider_back:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/torso_assist_slider_left:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/torso_assist_slider_right:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/torso_dummy:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/torso_laser:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/torso_lasertop:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/torso_slider:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/upper_arm_left:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/upper_arm_right:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/upper_arm_top_left:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/upper_arm_top_right:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/wrist_link6_left:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/wrist_link6_right:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/wrist_to_hand_block_left:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/wrist_to_hand_block_right:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/wrist_visual_left:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        amigo/wrist_visual_right:
+        wrist_roll_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
       Name: RobotModel
-      Robot Description: amigo/robot_description
+      Robot Description: /hero/robot_description
       TF Prefix: ""
       Update Interval: 0
       Value: true
@@ -453,14 +322,14 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.00999999978
       Style: Flat Squares
-      Topic: /amigo/depth/points
+      Topic: /hero/depth/points
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
       Value: false
     - Class: rviz/Marker
       Enabled: true
-      Marker Topic: /amigo/head_ref/head_target_marker
+      Marker Topic: /hero/head_ref/head_target_marker
       Name: Cam - Head Target
       Namespaces:
         {}
@@ -491,48 +360,18 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.0250000004
       Style: Flat Squares
-      Topic: /amigo/base_laser/scan
+      Topic: /hero/base_laser/scan
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
-    - Alpha: 1
-      Autocompute Intensity Bounds: true
-      Autocompute Value Bounds:
-        Max Value: 10
-        Min Value: -10
-        Value: true
-      Axis: Z
-      Channel Name: intensity
-      Class: rviz/LaserScan
-      Color: 85; 255; 0
-      Color Transformer: FlatColor
-      Decay Time: 0
-      Enabled: false
-      Invert Rainbow: false
-      Max Color: 255; 255; 255
-      Max Intensity: 101
-      Min Color: 0; 0; 0
-      Min Intensity: 101
-      Name: LRF - Torso
-      Position Transformer: XYZ
-      Queue Size: 10
-      Selectable: true
-      Size (Pixels): 3
-      Size (m): 0.00999999978
-      Style: Flat Squares
-      Topic: /amigo/torso_laser/scan
-      Unreliable: false
-      Use Fixed Frame: true
-      Use rainbow: true
-      Value: false
     - Alpha: 0.699999988
       Class: rviz/Map
       Color Scheme: map
       Draw Behind: false
       Enabled: false
       Name: ED - Map
-      Topic: /amigo/ed/navigation/map
+      Topic: /hero/ed/navigation/map
       Unreliable: false
       Use Timestamp: false
       Value: false
@@ -555,7 +394,7 @@ Visualization Manager:
       Value: false
     - Class: rviz/MarkerArray
       Enabled: true
-      Marker Topic: /amigo/world_model
+      Marker Topic: /hero/world_model
       Name: ED
       Namespaces:
         {}
@@ -563,7 +402,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/Marker
       Enabled: true
-      Marker Topic: /amigo/global_planner/visualization/markers/goal_positions
+      Marker Topic: /hero/global_planner/visualization/markers/goal_positions
       Name: Global Planner - Goal Area
       Namespaces:
         {}
@@ -571,7 +410,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/Marker
       Enabled: true
-      Marker Topic: /amigo/global_planner/visualization/markers/global_plan
+      Marker Topic: /hero/global_planner/visualization/markers/global_plan
       Name: Global Planner - Plan
       Namespaces:
         {}
@@ -597,12 +436,12 @@ Visualization Manager:
       Radius: 0.0299999993
       Shaft Diameter: 0.100000001
       Shaft Length: 0.100000001
-      Topic: /amigo/local_planner/DWAPlannerROS/local_traj
+      Topic: /hero/local_planner/DWAPlannerROS/local_traj
       Unreliable: false
       Value: true
     - Class: rviz/Marker
       Enabled: false
-      Marker Topic: /amigo/local_planner/visualization/markers/desired_orientation_marker
+      Marker Topic: /hero/local_planner/visualization/markers/desired_orientation_marker
       Name: Local Planner - Desired Orientation
       Namespaces:
         {}
@@ -633,7 +472,7 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.00999999978
       Style: Flat Squares
-      Topic: /amigo/local_planner/dwa_planner/cost_cloud
+      Topic: /hero/local_planner/dwa_planner/cost_cloud
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -643,7 +482,7 @@ Visualization Manager:
       Color: 25; 255; 0
       Enabled: true
       Name: Local Planner - Footprint
-      Topic: /amigo/local_planner/local_costmap/robot_footprint/footprint_stamped
+      Topic: /hero/local_planner/local_costmap/robot_footprint/footprint_stamped
       Unreliable: false
       Value: true
     - Alpha: 1
@@ -671,7 +510,7 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.00999999978
       Style: Flat Squares
-      Topic: /amigo/local_planner/visualization/trajectory_cloud
+      Topic: /hero/local_planner/visualization/trajectory_cloud
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -696,7 +535,7 @@ Visualization Manager:
       Radius: 0.0299999993
       Shaft Diameter: 0.100000001
       Shaft Length: 0.100000001
-      Topic: /amigo/local_planner/DWAPlannerROS/local_plan
+      Topic: /hero/local_planner/DWAPlannerROS/local_plan
       Unreliable: false
       Value: true
     - Alpha: 0.699999988
@@ -705,7 +544,7 @@ Visualization Manager:
       Draw Behind: false
       Enabled: false
       Name: Global Planner - Costmap
-      Topic: /amigo/global_planner/global_costmap/costmap
+      Topic: /hero/global_planner/global_costmap/costmap
       Unreliable: false
       Use Timestamp: false
       Value: false
@@ -715,13 +554,13 @@ Visualization Manager:
       Draw Behind: false
       Enabled: false
       Name: Local Planner - Costmap
-      Topic: /amigo/local_planner/local_costmap/costmap
+      Topic: /hero/local_planner/local_costmap/costmap
       Unreliable: false
       Use Timestamp: false
       Value: false
     - Class: rviz/Marker
       Enabled: true
-      Marker Topic: /amigo/left_arm/grasp_target
+      Marker Topic: /hero/left_arm/grasp_target
       Name: Grasp target left (green = corrected)
       Namespaces:
         {}
@@ -729,7 +568,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/Marker
       Enabled: true
-      Marker Topic: /amigo/right_arm/grasp_target
+      Marker Topic: /hero/right_arm/grasp_target
       Name: Grasp target right (green = corrected)
       Namespaces:
         {}
@@ -740,9 +579,9 @@ Visualization Manager:
       Entity Area label opacity: 0.400000006
       Entity Area opacity: 0.200000003
       Entity label opacity: 1
-      Mesh query service name: /amigo/ed/gui/query_meshes
+      Mesh query service name: /hero/ed/gui/query_meshes
       Name: WorldModel
-      Topic: /amigo/ed/gui/entities
+      Topic: /hero/ed/gui/entities
       Unreliable: false
       Value: true
     - Alpha: 1
@@ -770,14 +609,14 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.0399999991
       Style: Spheres
-      Topic: /amigo/ed/navigation/cloud
+      Topic: /hero/ed/navigation/cloud
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
       Value: true
     - Class: rviz/Marker
       Enabled: true
-      Marker Topic: /amigo/ed/ray_trace_visualization
+      Marker Topic: /hero/ed/ray_trace_visualization
       Name: ray_trace_visualization
       Namespaces:
         {}
@@ -785,7 +624,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/MarkerArray
       Enabled: true
-      Marker Topic: /amigo/people_detector/viz
+      Marker Topic: /hero/people_detector/viz
       Name: skeletons
       Namespaces:
         {}
@@ -803,7 +642,7 @@ Visualization Manager:
       Shaft Length: 0.5
       Shaft Radius: 0.0299999993
       Shape: Arrow
-      Topic: /amigo/ssl/direction_of_arrival
+      Topic: /hero/ssl/direction_of_arrival
       Unreliable: false
       Value: true
     - Alpha: 0.699999988
@@ -812,13 +651,14 @@ Visualization Manager:
       Draw Behind: false
       Enabled: false
       Name: GMapping - Map
-      Topic: /amigo/gmapping/map
+      Topic: /hero/gmapping/map
       Unreliable: false
       Use Timestamp: false
       Value: false
   Enabled: true
   Global Options:
     Background Color: 0; 0; 0
+    Default Light: true
     Fixed Frame: map
     Frame Rate: 30
   Name: root
@@ -830,7 +670,7 @@ Visualization Manager:
     - Class: rviz/FocusCamera
     - Class: rviz/Measure
     - Class: rviz/SetInitialPose
-      Topic: /amigo/initialpose
+      Topic: /hero/initialpose
     - Class: rviz/SetGoal
       Topic: /move_base_simple/goal
     - Class: rviz/PublishPoint
@@ -840,25 +680,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 6.81472015
+      Distance: 10.1834011
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -1.06160569
-        Y: 4.02014446
-        Z: 0
+        X: 0.277092993
+        Y: 3.92989063
+        Z: 3.21336955e-07
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.860398173
+      Pitch: 0.580398381
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 2.47539592
+      Yaw: 2.22039318
     Saved:
       - Angle: 0
         Class: rviz/TopDownOrtho
@@ -911,7 +751,7 @@ Window Geometry:
   Height: 1056
   Hide Left Dock: false
   Hide Right Dock: true
-  QMainWindow State: 000000ff00000000fd00000004000000000000019d00000348fc020000000bfb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006400fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000004100000348000000dd00fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000001c00430061006d0020002d002000480065006100640020005200470042020000028200000111000002e900000273fb0000002000430061006d0020002d0020004800650061006400200044006500700074006802000001cc000000ce0000032900000276fb0000002c005700690072006500320020002d0020004b0069006e00650063007400200055006e006b006e006f0077006e0000000255000000800000000000000000000000010000010f00000396fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000002800000396000000b000fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000007410000003efc0100000002fb0000000800540069006d00650100000000000007410000030000fffffffb0000000800540069006d006501000000000000045000000000000000000000059e0000034800000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000019d00000396fc020000000bfb0000001200530065006c0065006300740069006f006e00000001e10000009b0000005e00fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000002800000396000000d000fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261fb0000001c00430061006d0020002d002000480065006100640020005200470042020000028200000111000002e900000273fb0000002000430061006d0020002d0020004800650061006400200044006500700074006802000001cc000000ce0000032900000276fb0000002c005700690072006500320020002d0020004b0069006e00650063007400200055006e006b006e006f0077006e0000000255000000800000000000000000000000010000010f00000396fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073000000002800000396000000a900fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e10000019700000003000007410000003efc0100000002fb0000000800540069006d00650100000000000007410000030000fffffffb0000000800540069006d006501000000000000045000000000000000000000059e0000039600000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:

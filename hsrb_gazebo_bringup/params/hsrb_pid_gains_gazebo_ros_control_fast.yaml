@@ -1,0 +1,13 @@
+# PID parameters when gazebo max_step_size is 0.003
+# Copied from hsrb_gazebo_bringup/params/hsrb_pid_gains_fast.yaml
+pid_gains:
+  base_roll_joint: {p: 450, i: 100.0, d: 50.0, i_clamp: 200.0}
+  base_l_drive_wheel_joint: {p: 16, i: 0.2, d: 0.00, i_clamp_min: -3.0, i_clamp_max: 3.0}
+  base_r_drive_wheel_joint: {p: 16, i: 0.2, d: 0.00, i_clamp_min: -3.0, i_clamp_max: 3.0}
+  arm_lift_joint: {p: 450.0, d: 50, i: 100, i_clamp: 200.0}
+  arm_flex_joint: {p: 1000.0, d: 10, i: 5, i_clamp: 200.0}
+  arm_roll_joint: {p: 500.0, d: 1, i: 5, i_clamp: 200.0}
+  wrist_flex_joint: {p: 450.0, d: 0, i: 0, i_clamp: 200.0}
+  wrist_roll_joint: {p: 450.0, d: 0, i: 0, i_clamp: 200.0}
+  head_pan_joint: {p: 450.0, d: 5, i: 0, i_clamp: 200.0}
+  head_tilt_joint: {p: 450.0, d: 5, i: 0, i_clamp: 200.0}

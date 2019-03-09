@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="namespace" default="/hsrb"/>
+    <arg name="debug" default="false"/>
+    <arg name="gui" default="false" />
+    <arg name="gazebo_visualization" default="false" />
+    <arg name="use_laser_odom" default="false" />
+    <arg name="paused" default="false" />
+    <arg name="fast_physics" default="true" />
+    <arg name="robot_name" default="hsrb" />
+    <arg name="param_file" default="$(env HOME)/.ros/params.yaml" />
+
+    <arg name="use_sim_time" default="true"/>
+    <param name="/use_sim_time" value="$(arg use_sim_time)" />
+
+    <!-- Environment and Initial Pose -->
+    <arg name="world_name" value="$(optenv ROBOT_ENV robotics_testlabs)/model-1_6.sdf"/> <!-- note: the world_name is with respect to gazebo_resource_path environmental variable -->
+    <arg name="robot_pos" default="-x $(optenv ROBOT_INIT_X 0) -y $(optenv ROBOT_INIT_Y 0) -z 0 -Y $(optenv ROBOT_INIT_PHI 0)" />
+
+    <!-- Gazebo -->
+     <include file="$(find hero_bringup)/launch/simulation/gazebo.launch" >
+         <arg name="namespace" value="$(arg namespace)" />
+         <arg name="debug" value="$(arg debug)" />
+         <arg name="gui" value="$(arg gui)" />
+         <arg name="paused" value="$(arg paused)" />
+         <arg name="use_sim_time" value="$(arg use_sim_time)" />
+         <arg name="world_name" value="$(arg world_name)" />
+    </include>
+
+    <!-- Launch HSR -->
+    <include file="$(find hero_bringup)/hsrb_gazebo_bringup/launch/include/hsrb.xml">
+        <arg name="namespace" value="$(arg namespace)" />
+        <arg name="robot_pos" value="$(arg robot_pos)" />
+        <arg name="gazebo_visualization" value="$(arg gazebo_visualization)" />
+        <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
+        <arg name="fast_physics" value="$(arg fast_physics)" />
+        <arg name="robot_name" value="$(arg robot_name)" />
+    </include>
+
+    <include file="$(find hsrb_gazebo_bringup)/launch/include/hsrb_sensor.xml" >
+    <arg name="namespace" value="$(arg namespace)" />
+    </include>
+
+    <node name="talk_action_simulator" pkg="tmc_talk_action_simulator" type="talk_request_server"/>
+
+    <!-- common remapping -->
+    <remap from="/joint_states" to="$(arg namespace)/joint_states" />
+
+</launch>
+

@@ -1,0 +1,14 @@
+[Unit]
+Description=Launch file hsrb_monitor.launch of package hero_bringup.git for user administrator
+After=hero-roscore.service
+Requires=hero-roscore.service
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+EnvironmentFile=-/etc/opt/tmc/robot/version
+User=administrator
+Restart=on-abort
+ExecStart=/bin/bash -c 'source /home/administrator/.tue/setup.bash && roslaunch hero_bringup hsrb_monitor.launch namespace:=/hero --wait'
+

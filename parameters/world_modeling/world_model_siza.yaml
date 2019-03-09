@@ -12,7 +12,7 @@ plugins:
 #      robot_name: hero
 #      urdf_rosparam: /robot_description
 #      joint_topics:
-#        - topic: /hsrb/joint_states
+#        - topic: /hero/joint_states
 
 - name: gui_server
   lib: libed_gui_server_plugin.so
@@ -39,9 +39,9 @@ plugins:
       initial_pose:
           x: 0.586
           y: 4.259
-          rz: 0  
+          rz: 0
       laser_model:
-          topic: /hsrb/base_scan
+          topic: /hero/base_laser/scan
           num_beams: 100
           z_hit: 0.95
           sigma_hit: 0.2
@@ -66,7 +66,7 @@ plugins:
   lib: libed_laser_plugin.so
   frequency: 40
   parameters:
-      laser_topic: /hsrb/base_scan
+      laser_topic: /hero/base_laser/scan
       min_segment_size_pixels: 10
       world_association_distance: 0.4
       segment_depth_threshold: 0.2
@@ -83,7 +83,7 @@ plugins:
   lib: libed_kinect_plugin.so
   enabled: 1
   parameters:
-      topic: /hsrb/head_rgbd_sensor/rgbd
+      topic: /hero/head_rgbd_sensor/rgbd
 
 - name: robocup
   lib: libed_robocup_plugin.so
@@ -92,7 +92,7 @@ plugins:
     map_topic_out: /map
     wall_height: 1.7
     map_filter_padding: 0.3
-    rgbd_topic: /hsrb/head_rgbd_sensor/rgbd
+    rgbd_topic: /hero/head_rgbd_sensor/rgbd
     nav_goal_topic: /hero/local_planner/action_server/goal
     head_goal_topic: /hero/head_ref/action_server/goal
     models:
@@ -133,4 +133,4 @@ plugins:
   lib: libed_tf_publisher_plugin.so
   parameters:
       root_frame_id: /map
-      exclude: 
+      exclude:

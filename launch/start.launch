@@ -3,139 +3,77 @@
 
     <arg name="debug" default="false" />
 
-	<!--Toyota parameters -->
+    <!--Toyota parameters -->
     <arg name="namespace" default="/hero"/>
-    <arg name="toyota_namespace" default="/hsrb"/>
-    <arg name="use_hand_camera" default="true" />
-    <arg name="use_head_center_camera" default="true" />
-    <arg name="use_head_stereo_camera" default="true"/>
+<!--
+    <arg name="toyota_namespace" default="/hero"/>
+-->
+    <arg name="use_hand_camera" default="false" />
+    <arg name="use_head_center_camera" default="false" />
+    <arg name="use_head_stereo_camera" default="false"/>
     <arg name="use_head_rgbd_sensor" default="true"/>
-    <arg name="use_laser_odom" default="true"/>
+    <arg name="use_laser_odom" default="false"/>
     <arg name="use_blackfly" default="false" />
     <arg name="monitor" default="false" />
     <arg name="param_file" default="$(env HOME)/.ros/params.yaml" />
     <arg name="align_at_startup" default="true" />
-    <arg name="auto_start" default="false" />
+    <arg name="auto_start" default="false" /> <!-- Don't pass on to robot_service node -->
     <arg name="robot_name" default="hsrb" />
-    <arg name="enable_emergency_stop" default="true" />
+    <arg name="enable_emergency_stop" default="false" />
 
-    <!-- robot desctription -->
-    <include file="$(find hsrb_description)/robots/upload_hsrb.launch" />
-    <group ns="$(arg namespace)">
-        <rosparam file="$(find hero_description)/custom/joint_groups.yaml" command="load" />
-        <rosparam file="$(find hero_description)/custom/skills.yaml" command="load" />
-    </group> 
+    <arg name="sim" value="true" if="$(optenv ROBOT_REAL false)" />
+    <arg name="sim" value="false" unless="$(optenv ROBOT_REAL false)" />
 
-    <group ns="$(arg toyota_namespace)">
+    <arg name="use_manipulation" default="$(optenv USE_MANIPULATION false)" />
+    <arg name="use_navigation" default="$(optenv USE_NAVIGATION false)" />
+    <arg name="use_perception" default="$(optenv USE_PERCEPTION false)" />
+    <arg name="use_task" default="$(optenv USE_TASK false)" />
+    <arg name="use_teleop" default="$(optenv USE_TELEOP false)" />
+    <arg name="use_web" default="$(optenv USE_WEB false)" />
+    <arg name="use_geometry" default="$(optenv USE_GEOMETRY false)" />
+    <arg name="map" default="$(optenv ROS_HOME ~/.ros)/map/map.yaml" />
 
-	<remap from="robot_description" to="/robot_description" />
-	<remap from="/diagnostics" to="$(arg toyota_namespace)/diagnostics" />
+    <!-- General remapping -->
+    <remap from="/robot_description" to="$(arg namespace)/robot_description" />
+    <remap from="robot_description" to="$(arg namespace)/robot_description" />
 
-		<!-- joint_statesを閉じ込めるためのネームスペース -->
-    	<group ns="robot_state">
-      		<!-- joint state publisher(0.9.4以降のjoint_state_controllerで不要になる) -->
-	     	<node name="joint_state_pub" pkg="joint_state_publisher" type="joint_state_publisher">
-	        	<param name="publish_default_velocities" value="true" />
-	        	<param name="publish_default_efforts" value="true" />
-	        	<param name="rate" value="50" />
-        <rosparam subst_value="true">
-          source_list:
-          - $(arg toyota_namespace)/joint_states
-        </rosparam>
-	      	</node>
+    <remap from="/hsrb/diagnostics" to="$(arg namespace)/diagnostics" />
+    <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
+    <remap from="diagnostics" to="$(arg namespace)/diagnostics" />
 
-	      	<!-- robot state publisher -->
-	  -   	<node name="robot_state_pub" pkg="robot_state_publisher" type="robot_state_publisher">
-	        	<param name="publish_frequency" value="50.0" />
-	        	<param name="use_tf_static" value="true" />
-	      	</node>
-    	</group>
+    <!-- Start with hardware manager -->
+    <node name="robot_service" pkg="hero_bringup" type="hero_robot_service" if="$(optenv ROBOT_REAL false)"
+    args="namespace:=$(arg namespace)
+          use_hand_camera:=$(arg use_hand_camera)
+          use_head_center_camera:=$(arg use_head_center_camera)
+          use_head_stereo_camera:=$(arg use_head_stereo_camera)
+          use_head_rgbd_sensor=:=$(arg use_head_rgbd_sensor)
+          use_laser_odom:=$(arg use_laser_odom)
+          use_blackfly:=$(arg use_blackfly)
+          monitor:=$(arg monitor)
+          param_file:=$(arg param_file)
+          align_at_startup:=$(arg align_at_startup)
 
-    	<!-- base range sensor -->
-	<node pkg="urg_node" type="urg_node" name="urg_node">
-    		<remap from="scan" to="base_scan" />
-  	</node> 
+          robot_name:=$(arg robot_name)
+          enable_emergency_stop:=$(arg enable_emergency_stop)
 
-  	<!-- laser-odometry -->
- 	<group if="$(arg use_laser_odom)">
-   		<node pkg="laser_scan_matcher" type="laser_scan_matcher_node" name="laser_scan_matcher_node">
-      			<remap from="scan" to="$(arg toyota_namespace)/base_scan"/>
-      			<remap from="pose_stamped" to="base_pose"/>
-    		</node>
- 	</group>
-	<!-- head rgbd sensor -->
-	<include file="$(find hero_bringup)/launch/head_rgbd_sensor.launch">
-        	<arg name="namespace" value="$(arg toyota_namespace)"/>
-        </include>
-        <!-- hand force sensor -->
-        <include file = "$(find hsrb_bringup)/launch/include/sensors/dynpick.xml"/>
-    </group>
+          use_manipulation:=$(arg use_manipulation)
+          use_navigation:=$(arg use_navigation)
+          use_perception:=$(arg use_perception)
+          use_task:=$(arg use_task)
+          use_teleop:=$(arg use_teleop)
+          use_web:=$(arg use_web)
+          use_geometry:=$(arg use_geometry)
+          map:=$(arg map)
 
-	<!-- ros to rgbd -->
-    <include file="$(find tue_hsr)/launch/ros_to_rgbd.launch"/>
+          --fast-restart
 
-    <!-- TF Server: advertises services for looking up transformations -->
-    <include file="$(find robot_launch_files)/launch/essentials/tf_server.launch" >
-       <!-- <arg name="machine" value="hsrb" />    Commented for use in the docker-->
-    </include> 
+          runstop_button:=$(arg namespace)/runstop_button
+          ">
 
-    <!-- MANAGERS: includes diagnostics -->
-    <include file="$(find hsrb_bringup)/launch/$(arg robot_name)_monitor.launch" if="$(arg monitor)">
-         <arg name="namespace" value="$(arg toyota_namespace)" />
-    </include>
+    </node>
 
-    <!--Hero hardware startup -->
-    <include file="$(find hsrb_bringup)/launch/$(arg robot_name)_bringup.launch" unless="$(arg auto_start)">
-      <arg name="namespace" value="$(arg toyota_namespace)" />
-      <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
-      <arg name="align_at_startup" value="false" />
-    </include>
-
-	<!-- Manipulation -->
-    <remap from="/joint_states" to="$(arg toyota_namespace)/joint_states" />
-
-    <include file="$(find hsrb_common_launch)/launch/include/$(arg robot_name)_manipulation.xml">
-    	<arg name="namespace" value="$(arg toyota_namespace)"/>
-    	<arg name="sim" value="false"/>
-    	<arg name="robot_name" value="$(arg robot_name)"/>
-    </include>
-
-    <!-- align at start-->
-    <group unless="$(arg auto_start)">
-    	<node if="$(arg align_at_startup)"
-        	pkg="hsrb_bringup" type="hsrb_align" name="hsrb_align" />
-    </group>
-
-
-    <group ns="$(arg namespace)">
-   	 <!-- Phone UI -->
- 	 <include file="$(find tue_mobile_ui)/launch/hero.launch"/>
-	    
-<!-- Commented TO BE USED IN THE DOCKER
-	 <include file="$(find robot_launch_files)/launch/manipulation/head.launch">
-         	 <arg name="machine" value="hsrb"/>	
-	 </include> -->
-
-	<!-- bridge nodes-->
-	<node pkg="hero_bridge" type="speech.py" name="text_to_speech"/>
-	<node pkg="hero_bridge" type="joint_trajectory.py" name="arm_bridge"/>
-	<node pkg="hero_bridge" type="gripper_controller.py" name="gripper_bridge"/>
-	<node pkg="hero_bridge" type="tf_ghost.py" name="tf_ghost"/>
-	<node pkg="hero_bridge" type="head_controller.py" name="head_bridge"/>
-	<node pkg="hero_bridge" type="manipulation_bridge.py" name="manipulation_bridge"/>
-	<node pkg="hero_bridge" type="handover_detection.py" name="handoverdetector"/>>
-	<node pkg="hero_bridge" type="light_bridge.py" name="light_bridge"/>
-
-
-<!--	<include file="$(find hero_bringup)/launch/speech_recognition.launch"/>  -->
-
-</group>
-
-<group ns="hero">
-	<remap from="/hero/top_kinect/rgbd" to="/hsrb/head_rgbd_sensor/rgbd"/>
-	<include file="$(find robot_launch_files)/launch/essentials/rgbd_to_ros.launch">
-        	<arg name="name" value="top_kinect"/>
-	</include>
-</group>
+    <!-- Include file in simulation -->
+    <include file="$(find hero_bringup)/launch/hero_bringup.launch" unless="$(optenv ROBOT_REAL false)" pass_all_args="true" />
 
  </launch>

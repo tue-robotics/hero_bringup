@@ -1,2 +1,0 @@
-frame_id: /amigo/torso_laser
-serial_port: /dev/sensors/hokuyo_busid_3-5

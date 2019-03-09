@@ -1,0 +1,13 @@
+[Unit]
+Description=HERO start.launch
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+EnvironmentFile=-/etc/opt/tmc/robot/version
+User=administrator
+LimitMEMLOCK=10240000000
+LimitRTPRIO=51
+Restart=on-abort
+ExecStart=/bin/bash -c 'source /home/administrator/.tue/setup.bash && roslaunch hero_bringup start.launch --wait'
