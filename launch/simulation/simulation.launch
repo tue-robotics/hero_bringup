@@ -14,6 +14,9 @@
     <arg name="use_sim_time" default="true"/>
     <param name="/use_sim_time" value="$(arg use_sim_time)" />
 
+    <!-- common remapping -->
+    <remap from="/joint_states" to="$(arg namespace)/joint_states" />
+
     <!-- Environment and Initial Pose -->
     <arg name="world_name" value="$(optenv ROBOT_ENV robotics_testlabs)/model-1_6.sdf"/> <!-- note: the world_name is with respect to gazebo_resource_path environmental variable -->
     <arg name="robot_pos" default="-x $(optenv ROBOT_INIT_X 0) -y $(optenv ROBOT_INIT_Y 0) -z 0 -Y $(optenv ROBOT_INIT_PHI 0)" />
@@ -39,13 +42,12 @@
     </include>
 
     <include file="$(find hsrb_gazebo_bringup)/launch/include/hsrb_sensor.xml" >
-    <arg name="namespace" value="$(arg namespace)" />
+        <arg name="namespace" value="$(arg namespace)" />
     </include>
 
     <node name="talk_action_simulator" pkg="tmc_talk_action_simulator" type="talk_request_server"/>
 
-    <!-- common remapping -->
-    <remap from="/joint_states" to="$(arg namespace)/joint_states" />
+    <node name="gazebo_object_spawner" pkg="ed_object_models" type="spawn_sdf_in_gazebo.py" args="$(find fast_simulator_data)/worlds/$(optenv ROBOT_ENV robotics_testlabs)/objects_sdf.yaml" />
 
 </launch>
 
