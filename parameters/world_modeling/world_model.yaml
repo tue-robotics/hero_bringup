@@ -94,4 +94,4 @@ plugins:
   lib: libed_tf_publisher_plugin.so
   parameters:
       root_frame_id: /map
-      exclude:
+      exclude: hero
