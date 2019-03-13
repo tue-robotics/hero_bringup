@@ -18,7 +18,7 @@
     <remap from="/joint_states" to="$(arg namespace)/joint_states" />
 
     <!-- Environment and Initial Pose -->
-    <arg name="world_name" value="$(optenv ROBOT_ENV robotics_testlabs)/model-1_6.sdf"/> <!-- note: the world_name is with respect to gazebo_resource_path environmental variable -->
+    <arg name="world_name" value="$(optenv ROBOT_ENV robotics_testlabs)/model.sdf"/> <!-- note: the world_name is with respect to gazebo_resource_path environmental variable -->
     <arg name="robot_pos" default="-x $(optenv ROBOT_INIT_X 0) -y $(optenv ROBOT_INIT_Y 0) -z 0 -Y $(optenv ROBOT_INIT_PHI 0)" />
 
     <!-- Gazebo -->
