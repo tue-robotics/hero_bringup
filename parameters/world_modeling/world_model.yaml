@@ -1,6 +1,4 @@
-#world_name: $(env ROBOT_ENV)
-
-world_name: robotics_testlabs
+world_name: $(env ROBOT_ENV)
 
 # -----------------------------------------------------------------------------------------------------------------------------
 
@@ -38,9 +36,9 @@ plugins:
       initial_pose_topic: /hero/initialpose
       num_particles: 500
       initial_pose:
-          x: 0.586
-          y: 4.259
-          rz: 0
+          x: $(env ROBOT_INIT_X 0.0)
+          y: $(env ROBOT_INIT_Y 0.0)
+          rz: $(env ROBOT_INIT_PHI 0.0)
       laser_model:
           topic: /hero/base_laser/scan
           num_beams: 100
@@ -94,4 +92,4 @@ plugins:
   lib: libed_tf_publisher_plugin.so
   parameters:
       root_frame_id: /map
-      exclude:
+      exclude: hero
