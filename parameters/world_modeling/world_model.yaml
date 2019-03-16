@@ -16,6 +16,7 @@ plugins:
   lib: libed_gui_server_plugin.so
   parameters:
       robot_name: hero
+      urdf_rosparam: /hero/robot_description
 
 - name: navigation
   lib: libed_navigation_plugin.so
