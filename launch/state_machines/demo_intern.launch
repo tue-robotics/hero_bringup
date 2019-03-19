@@ -13,7 +13,7 @@
         <!-- LOCALIZATION GMAPPING -->
         <include file="$(find robot_launch_files)/launch/localization/gmapping.launch">
             <arg name="machine" value="hero2"/>
-            <arg name="sensor" value="base_scan"/>
+            <arg name="sensor" value="base_laser"/>
         </include>
 
         <!-- NAVIGATION GMAPPING -->
