@@ -173,7 +173,9 @@
             <remap from="/hsrb/odom" to="$(arg namespace)/base/measurements" />
             <remap from="/hsrb/arm_trajectory_controller/command" to="$(arg namespace)/arm_trajectory_controller/command" />
             <remap from="/hsrb/omni_base_controller/command" to="$(arg namespace)/omni_base_controller/command" />
-            <include file="$(find hsrb_impedance_control)/launch/impedance_control_node.launch" ns="$(arg namespace)" if="$(optenv ROBOT_REAL false)" />
+            <include file="$(find hero_bringup)/hsrb_impedance_control/launch/impedance_control_node.launch" ns="$(arg namespace)" if="$(optenv ROBOT_REAL false)" >
+                <arg name="namespace" value="$(arg namespace)" />
+            </include>
 
             <!-- Move the planner -->
             <arg name="analytic_ik_plugin" default="hsrb_analytic_ik::HsrbIKSolver" />
