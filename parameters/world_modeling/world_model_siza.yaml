@@ -56,7 +56,7 @@ plugins:
       odom_model:
           map_frame: map
           odom_frame: odom
-          base_link_frame: base_link
+          base_link_frame: base_footprint_wheel
           alpha1: 0.05   # rot -> trans + strafe
           alpha2: 0.5    # trans -> rot
           alpha3: 0.5    # trans -> trans
