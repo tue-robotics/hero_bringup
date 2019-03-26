@@ -11,9 +11,9 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <run_depend>gazebo_msgs</run_depend>
-  <run_depend>geometry_msgs</run_depend>
-  <run_depend>hero_bridge</run_depend>
-  <run_depend>robot_launch_files</run_depend>
+  <exec_depend>gazebo_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>hero_bridge</exec_depend>
+  <exec_depend>robot_launch_files</exec_depend>
 
 </package>
