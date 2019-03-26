@@ -17,6 +17,7 @@ plugins:
   parameters:
       robot_name: hero
       urdf_rosparam: /hero/robot_description
+      tf_prefix: ""
 
 - name: navigation
   lib: libed_navigation_plugin.so
