@@ -8,7 +8,20 @@ import rospy
 
 
 class GazeboPoseSetter(object):
+    """
+    Listens to a PoseWithCovarianceStamped topic and sets that pose to a model in Gazebo via SetModelState service.
+    """
     def __init__(self, robot_name, pose_topic, gazebo_service):
+        # type: (str, str, str) -> None
+        """
+        Constructor
+        :param robot_name: name of the model which is set in Gazebo
+        :type robot_name: st
+        :param pose_topic: topic name of the Pose topic
+        :type pose_topic: str
+        :param gazebo_service: service name of the gazebo service
+        :type gazebo_service: str
+        """
         self._robot_name = robot_name
 
         self.pose_sub = rospy.Subscriber(pose_topic, PoseWithCovarianceStamped, self.pose_callback)
@@ -18,6 +31,11 @@ class GazeboPoseSetter(object):
 
     def pose_callback(self, msg):
         # type: (PoseWithCovarianceStamped) -> None
+        """
+        Callback which ports the incomming pose msg to call the gazebo service.
+        :param msg: incomming msg
+        :type msg: PoseWithCovarianceStamped
+        """
         req = SetModelStateRequest()
         req.model_state.model_name = self._robot_name
         req.model_state.pose = msg.pose.pose
@@ -45,4 +63,3 @@ if __name__ == "__main__":
     gazebo_pose_setter = GazeboPoseSetter(args.robot_name[0], args.pose_topic, args.gazebo_service)
 
     rospy.spin()
-
