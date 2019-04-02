@@ -40,7 +40,7 @@
         <param name="time_limit" value="$(arg time_limit)" />
     </node>
 
-    <node name="conversation_engine" pkg="conversation_engine" type="engine" output="log" required="true" args="--robot amigo">
+    <node name="conversation_engine" pkg="conversation_engine" type="engine" output="log" required="true" args="--robot hero">
         <param name="robot" value="hero" />
         <param name="challenge" value="challenge_demo" />
 		<remap from="robot_to_user" to="/hero/message_from_ros" />
