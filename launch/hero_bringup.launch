@@ -133,6 +133,7 @@
         <include file="$(find robot_launch_files)/launch/interaction/speech_recognition.launch">
             <arg name="machine" value="hero1"/>
             <arg name="dragonfly" value="false" />
+            <arg name="kaldi" value="true" />
         </include>
 
 
