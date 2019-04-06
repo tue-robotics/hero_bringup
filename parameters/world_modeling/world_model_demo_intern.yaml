@@ -86,6 +86,9 @@ plugins:
     - id: dinner_table
       type: table_120x80x76
       image: $(rospkg challenge_demo)/images/robotics_testlabs/table_120x80x76.jpg
+    - id: paperbin
+      type: paperbin
+      image: $(rospkg challenge_demo)/images/robotics_testlabs/paperbin.jpg
 
 #- name: laser_integration
 #  lib: libed_laser_plugin.so
