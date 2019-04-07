@@ -10,10 +10,12 @@ sudo systemctl start ntpdate.service
 sudo systemctl start hero-roscore.service
 sudo systemctl start hero-monitor.service
 sudo systemctl start hero-start.service
+sudo systemctl start hero-windows-speech.service
 sudo systemctl enable ntpdate.service
 sudo systemctl enable hero-roscore.service
 sudo systemctl enable hero-monitor.service
 sudo systemctl enable hero-start.service
+sudo systemctl enable hero-windows-speech.service
 
 echo "Check the journal for the log"
 echo "sudo journalctl -fu [job_name, e.g. hero-monitor, hero-start]"

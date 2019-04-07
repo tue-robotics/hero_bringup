@@ -1,0 +1,14 @@
+[Unit]
+Description=Windows Speech VM service
+After=network.target vboxdrv.service
+Before=runlevel2.target shutdown.target
+
+[Service]
+User=administrator
+Group=vboxusers
+Restart=always
+ExecStart=/usr/bin/vboxheadless -s Windows
+ExecStop=/usr/bin/vboxmanage controlvm Windows acpipowerbutton
+
+[Install]
+WantedBy=multi-user.target
