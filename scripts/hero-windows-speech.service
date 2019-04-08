@@ -7,8 +7,8 @@ Before=runlevel2.target shutdown.target
 User=administrator
 Group=vboxusers
 Restart=always
-ExecStart=/usr/bin/vboxheadless -s Windows
-ExecStop=/usr/bin/vboxmanage controlvm Windows acpipowerbutton
+ExecStart=/usr/bin/vboxheadless -s windows
+ExecStop=/usr/bin/vboxmanage controlvm windows acpipowerbutton
 
 [Install]
 WantedBy=multi-user.target
