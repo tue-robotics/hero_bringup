@@ -6,6 +6,15 @@ sudo cp $DIR/*.service /etc/systemd/system/
 
 # Reload and enable
 sudo systemctl daemon-reload
+
+sudo systemctl stop docker.hsrb.robot.service
+sudo systemctl stop docker.hsrb.monitor.service
+sudo systemctl stop docker.hsrb.roscore.service
+
+sudo systemctl disable docker.hsrb.robot.service
+sudo systemctl disable docker.hsrb.monitor.service
+sudo systemctl disable docker.hsrb.roscore.service
+
 sudo systemctl start ntpdate.service
 sudo systemctl start hero-roscore.service
 sudo systemctl start hero-monitor.service
