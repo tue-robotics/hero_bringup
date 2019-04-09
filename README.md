@@ -1,2 +1,62 @@
 # hero_bringup
 Launch, machine and parameter files required to bringup the HERO robot
+
+## (Re-)install HERO
+# Before clean install
+- Upload calibration files: `hsrb_command upload_robot_config` (as root/administrator)
+- Back-Up of virtualbox image which are located in `~/vbox_images`:
+    - Stop systemd service: `sudo systemctl stop hero-windows-speech.service`
+    - Actual back-up i.e.: `scp -r ~/vbox_images/* amigo@hero2.local:~/vbox_images_backup`
+
+# Clean install
+- Required items:
+    - USB DVD drive
+    - Install disk (17.10 works)
+    - keyboard
+- Insert keyboard into robot
+- Connect DVD drive to a laptop to be able to open the drive.
+- Insert disk in DVD drive.
+- Make sure robot is powered-off.
+- Connect DVD drive to robot. Place the DVD drive on the head.
+- Power-on the robot.
+- Wait till disk is ejected automatically. (Screen can turn off and on during installation)
+- Disconnect DVD drive.
+- Press enter to reboot the robot.
+
+# After clean install
+- Fix the wireless network directly on the robot:
+    - `wpa_gui`(as root/administrator) to add wifi network. Make sure to select the `wlp3so` interface
+    
+The following steps can be done via SSH or directly on the robot (SSH: `ssh administrator@hsrb.local`)
+- (Run apt-get update): `sudo apt-get update` (as root/administrator)
+- Update hsrb_command: `hsrb_command upgrade` (as root/administrator)
+- Update dockers: `hsrb_command update_release XX.XX` (as root/administrator)
+- Restore calibration files: `hsrb_command restore` (as root/administrator)
+- Change passwords of the accounts (hsr-hmi, hsr-user, administrator): `sudo password XX`
+- Fix the owner of the following folders: `/home/administrator/.cache` and `/home/administrator/.config` by:
+`sudo chown -R administrator:administrator /home/administrator/.cache` and `sudo chown -R administrator:administrator /home/administrator/.config`
+- Change hostname to `hero1`:
+    - `sudo vim /etc/hostname`
+    - `sudo vim /etc/hosts`
+    - reboot: `sudo reboot` (Use `ssh administrator@hero1.local` after this step)
+- Set static IP:
+    - Make a back-up of the config: `sudo cp /etc/network/interfaces.wlan /etc/network/interfaces.wlan.bk`
+    - Open the file: `sudo vim /etc/network/interfaces.wlan`
+    - Look for the following line: `iface wlp3so inet dhcp`. Change it to: `iface wlp3so inet static`
+    - Add the following lines directly after the previous changed line:
+        ```
+        address 192.168.44.51
+        netmask 255.255.255.0
+        gateway 192.168.44.1
+        dns-nameservers 192.168.44.1 8.8.8.8 8.8.4.4  
+        ```
+    - reboot: `sudo reboot`
+- restore virtualbox image to `~/vbox_images`. (Path of the files should be like: `~/vbox_images/windows/windows.XX`)
+- Install virtualbox debian from https://www.virtualbox.org/wiki/Downloads:
+    -  `sudo dpkg -i "XX.deb"`
+    - (`sudo apt-get install -f` to fix missing dependencies)
+- Open virtualbox ON the robot and add the windows image.
+- Install tue-env (https://github.com/tue-robotics/tue-env) and install hero1 target: `tue-get install hero1`
+- Build the software: `tue-make` 
+- Go to `hero_bringup` package. Execute the following to stop the Toyota service and start ours: `./scripts/install_systemd_autostart_start_launch`
+- Reboot and ready to go!
