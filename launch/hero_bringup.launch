@@ -127,6 +127,9 @@
                 <remap from="cam_info" to="rgb/camera_info" />
                 <remap from="depth_image" to="depth_registered/image" />
             </node>
+
+            <!-- Expose interface to query 3d points -->
+            <node pkg="rgbd" type="get_3d_point_from_image_roi_node" name="project_3d_point_from_image_roi" respawn="true" />
         </group>
 
          <!-- SPEECH RECOGNITION -->
