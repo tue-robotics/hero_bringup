@@ -45,8 +45,13 @@
         <arg name="namespace" value="$(arg namespace)" />
     </include>
 
+    <!-- Toyota talk simulation, probably not needed -->
     <node name="talk_action_simulator" pkg="tmc_talk_action_simulator" type="talk_request_server"/>
 
+    <!-- Pose setter -->
+    <node name="gazebo_pose_setter" pkg="hero_bringup" type="gazebo_pose_setter" args="$(arg robot_name)" ns="$(arg namespace)" />
+
+    <!-- Object Spawner -->
     <node name="gazebo_object_spawner" pkg="ed_object_models" type="spawn_sdf_in_gazebo.py" args="$(find hero_bringup)/parameters/simulator/worlds/$(optenv ROBOT_ENV robotics_testlabs)/objects_sdf.yaml" />
 
 </launch>

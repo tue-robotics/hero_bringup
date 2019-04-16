@@ -1,0 +1,16 @@
+<launch>
+
+  <arg name="namespace" default="/hsrb" />
+
+  <node pkg="hsrb_impedance_control"
+        name="impedance_control"
+        type="hsrb_impedance_control_node">
+    <remap from="/wrench_state" to="$(arg namespace)/wrist_wrench/compensated"/>
+    <remap from="~configuration_names" to="~config_names"/>
+    <param name="control_rate" value="50.0"/>
+    <param name="command_duration" value="0.3"/>
+    <rosparam command="load"
+              file="$(find hsrb_impedance_control)/launch/configurations.yaml"/>
+  </node>
+</launch>
+

@@ -1,0 +1,65 @@
+#!/usr/bin/python
+
+import argparse
+
+from gazebo_msgs.srv import SetModelState, SetModelStateRequest
+from geometry_msgs.msg import PoseWithCovarianceStamped
+import rospy
+
+
+class GazeboPoseSetter(object):
+    """
+    Listens to a PoseWithCovarianceStamped topic and sets that pose to a model in Gazebo via SetModelState service.
+    """
+    def __init__(self, robot_name, pose_topic, gazebo_service):
+        # type: (str, str, str) -> None
+        """
+        Constructor
+        :param robot_name: name of the model which is set in Gazebo
+        :type robot_name: st
+        :param pose_topic: topic name of the Pose topic
+        :type pose_topic: str
+        :param gazebo_service: service name of the gazebo service
+        :type gazebo_service: str
+        """
+        self._robot_name = robot_name
+
+        self.pose_sub = rospy.Subscriber(pose_topic, PoseWithCovarianceStamped, self.pose_callback)
+        self.gazebo_proxy = rospy.ServiceProxy(gazebo_service, SetModelState)
+
+        self.gazebo_proxy.wait_for_service(timeout=20)
+
+    def pose_callback(self, msg):
+        # type: (PoseWithCovarianceStamped) -> None
+        """
+        Callback which ports the incomming pose msg to call the gazebo service.
+        :param msg: incomming msg
+        :type msg: PoseWithCovarianceStamped
+        """
+        req = SetModelStateRequest()
+        req.model_state.model_name = self._robot_name
+        req.model_state.pose = msg.pose.pose
+        req.model_state.reference_frame = msg.header.frame_id
+
+        resp = self.gazebo_proxy.call(req)
+
+        if not resp.success:
+            rospy.logerr(resp.status_message)
+
+
+if __name__ == "__main__":
+    myargs = rospy.myargv()
+
+    parser = argparse.ArgumentParser(description="Gazebo pose setter")
+    parser.add_argument("robot_name", nargs=1)
+    parser.add_argument("--pose_topic", required=False, default="initialpose")
+    parser.add_argument("--gazebo_service", required=False, default="/gazebo/set_model_state")
+
+    parser.add_argument("cmds", nargs=argparse.REMAINDER, type=str)
+    args = parser.parse_args(myargs[1:])
+
+    rospy.init_node("gazebo_pose_setter")
+
+    gazebo_pose_setter = GazeboPoseSetter(args.robot_name[0], args.pose_topic, args.gazebo_service)
+
+    rospy.spin()
