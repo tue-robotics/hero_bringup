@@ -1,0 +1,14 @@
+#! /usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+sudo cp $DIR/openpose.service /etc/systemd/system/
+
+# Reload and enable
+sudo systemctl daemon-reload
+
+sudo systemctl start openpose.service
+sudo systemctl enable openpose.service
+
+echo "Check the journal for the log"
+echo "sudo journalctl -fu openpose"
