@@ -120,7 +120,7 @@
 
         <!-- ROS to RGBD -->
         <group ns="head_rgbd_sensor">
-            <node pkg="rgbd" type="rgbd_server" name="ros_to_rgbd">
+            <node pkg="rgbd" type="rgbd_server" name="ros_to_rgbd" output="log">
                 <remap from="output" to="rgbd" />
                 <remap from="rgb_image" to="rgb/image_rect_color" />
                 <remap from="cam_info" to="rgb/camera_info" />
@@ -198,15 +198,15 @@
         </include>
 
         <!-- bridge nodes-->
-        <node pkg="hero_bridge" type="speech.py" name="text_to_speech"/>
-        <node pkg="hero_bridge" type="joint_trajectory.py" name="arm_bridge"/>
-        <node pkg="hero_bridge" type="gripper_controller.py" name="gripper_bridge"/>
-        <node pkg="hero_bridge" type="tf_ghost.py" name="tf_ghost"/>
-        <node pkg="hero_bridge" type="head_controller.py" name="head_bridge"/>
-        <node pkg="hero_bridge" type="handover_detection.py" name="handoverdetector"/>
+        <node pkg="hero_bridge" type="speech.py" name="text_to_speech" if="$(optenv ROBOT_REAL false)" output="log" />
+        <node pkg="hero_bridge" type="joint_trajectory.py" name="arm_bridge" output="log" />
+        <node pkg="hero_bridge" type="gripper_controller.py" name="gripper_bridge" output="log" />
+        <node pkg="hero_bridge" type="tf_ghost.py" name="tf_ghost" output="log" />
+        <node pkg="hero_bridge" type="head_controller.py" name="head_bridge" output="log" />
+        <node pkg="hero_bridge" type="handover_detection.py" name="handoverdetector" output="log" />
 
         <group if="$(optenv ROBOT_REAL false)">
-            <node pkg="hero_bridge" type="light_bridge.py" name="light_bridge"/>
+            <node pkg="hero_bridge" type="light_bridge.py" name="light_bridge" output="log" />
         </group>
 
         <include file="$(find hero_bridge)/launch/manipulation_bridge.launch" />
