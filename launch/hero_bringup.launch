@@ -90,10 +90,8 @@
     <!-- Launch simulator if we are not on a real robot -->
     <group unless="$(optenv ROBOT_REAL false)" >
 
-        <group ns="$(arg namespace)">
-            <!-- robot desctription -->
-            <include file="$(find hsrb_description)/robots/upload_hsrb.launch" />
-        </group>
+        <!-- robot desctription -->
+        <include file="$(find hsrb_description)/robots/upload_hsrb.launch" ns="$(arg namespace)"/>
 
         <!-- Start gazebo with correct environment -->
         <include file="$(find hero_bringup)/launch/simulation/simulation.launch" >
@@ -104,10 +102,11 @@
             <arg name="param_file" value="$(arg param_file)" />
         </include>
 
+        <!-- TEXT TO SPEECH -->
+        <include file="$(find robot_launch_files)/launch/interaction/text_to_speech.launch" ns="$(arg namespace)" />
+
         <!-- Needed by manipulation bridge, because it uses the Toyota Robot_object -->
-        <group ns="$(arg namespace)/impedance_control">
-            <rosparam file="$(find hsrb_impedance_control)/launch/configurations.yaml" command="load" />
-        </group>
+        <rosparam file="$(find hsrb_impedance_control)/launch/configurations.yaml" command="load" ns="$(arg namespace)/impedance_control" />
 
     </group><!-- End of simulator group -->
 
