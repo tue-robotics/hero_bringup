@@ -138,23 +138,6 @@
             <arg name="kaldi" value="false" />
         </include>
 
-
-        <!-- common -->
-<!--
-        <include file="$(find hsrb_common_launch)/launch/hsrb_common.launch">
-            <arg name="namespace" value="$(arg namespace)" />
-            <arg name="sim" value="$(arg sim)" />
-            <arg name="use_manipulation" default="$(arg use_manipulation)" />
-            <arg name="use_navigation" default="$(arg use_navigation)" />
-            <arg name="use_perception" default="$(arg use_perception)" />
-            <arg name="use_task" default="$(arg use_task)" />
-            <arg name="use_teleop" default="$(arg use_teleop)" />
-            <arg name="use_web" default="$(arg use_web)" />
-            <arg name="use_geometry" default="$(arg use_geometry)" />
-            <arg name="map" default="$(arg map)" />
-            <arg name="robot_name" value="$(arg robot_name)" />
-        </include>
--->
         <!-- MANIPULATION -->
         <group>
             <!-- Attitude transition -->
