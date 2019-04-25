@@ -206,7 +206,7 @@
         <node pkg="hero_bridge" type="head_controller.py" name="head_bridge"/>
         <node pkg="hero_bridge" type="handover_detection.py" name="handoverdetector"/>
 
-        <group unless="$(optenv ROBOT_REAL false)">
+        <group if="$(optenv ROBOT_REAL false)">
             <node pkg="hero_bridge" type="light_bridge.py" name="light_bridge"/>
         </group>
 
