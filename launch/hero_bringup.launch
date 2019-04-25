@@ -192,5 +192,11 @@
 
         <include file="$(find hero_bridge)/launch/manipulation_bridge.launch" />
 
+        <!-- Odometer -->
+        <node name="odometer" type="odometer.py" pkg="test_tools" if="$(optenv ROBOT_REAL false)" output="log" >
+            <rosparam command="load" file="$(find hero_bringup)/parameters/diagnostics/odometer.yaml" />
+            <remap from="odom" to="base/measurements" />
+        </node>
+
     </group> <!-- End of TU/e namespace group -->
 </launch>
