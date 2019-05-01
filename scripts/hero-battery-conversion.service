@@ -1,0 +1,13 @@
+[Unit]
+Description=running battery_conversion_node
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+User=administrator
+Restart=on-abort
+ExecStart=/bin/bash -c 'source /home/administrator/.tue/setup.bash && \
+                        rosrun hero_bringup battery_conversion_node \
+                        __ns:=/hero \
+                        battery_state:=battery_state/hero1'

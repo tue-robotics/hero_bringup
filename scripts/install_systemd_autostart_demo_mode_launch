@@ -1,8 +1,8 @@
-#!/bin/bash
+#! /usr/bin/env bash
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-sudo cp $DIR/*.service /etc/systemd/system/
+sudo cp $DIR/hero-demo-mode.service /etc/systemd/system/
 
 # Reload and enable
 sudo systemctl daemon-reload

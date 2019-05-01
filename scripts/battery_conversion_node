@@ -1,0 +1,66 @@
+#! /usr/bin/env python
+
+import sys
+
+import rospy
+from sensor_msgs.msg import BatteryState
+from tmc_sanyo_battery.msg import SanyoBatteryInfo
+
+
+class SanyoBatteryInfoToBatteryState(object):
+    def __init__(self, input_topic=None, output_topic=None):
+        # type: (Union[str, None], Union[str, None]) -> None
+        """
+        If parameter isn't provided. The ROS parameter server is checked (private params). Otherwise the default value
+        is used.
+        :param input_topic:
+        :type input_topic: str
+        :param output_topic:
+        :type output_topic: str
+        """
+        if input_topic is None:
+            input_topic = rospy.get_param("~input_topic", "battery_info")
+        if output_topic is None:
+            output_topic = rospy.get_param("~output_topic", "battery_state")
+        
+        self.input_sub = rospy.Subscriber(input_topic, SanyoBatteryInfo, self._battery_cb, queue_size=1)
+        self.output_pub = rospy.Publisher(output_topic, BatteryState, queue_size=1)
+    
+    def _battery_cb(self, in_msg):
+        # type: (SanyoBatteryInfo) -> BatteryState
+        out_msg = BatteryState()
+        out_msg.header = in_msg.header
+        out_msg.voltage = in_msg.voltage
+        out_msg.current = -in_msg.electric_current
+        out_msg.charge = in_msg.remaining_charge
+        out_msg.capacity = in_msg.full_charge_capacity
+        out_msg.design_capacity = in_msg.full_charge_capacity
+
+        percentage = in_msg.remaining_charge/max(in_msg.full_charge_capacity, 1)
+        percentage = max(min(percentage, 1.0), 0.0)
+        out_msg.percentage = percentage
+
+        out_msg.power_supply_status = BatteryState.POWER_SUPPLY_STATUS_UNKNOWN
+        if in_msg.full_charge:
+            out_msg.power_supply_status = BatteryState.POWER_SUPPLY_STATUS_FULL
+        elif in_msg.charge_enabled:
+            out_msg.power_supply_status = BatteryState.POWER_SUPPLY_STATUS_CHARGING
+        elif in_msg.discharge_enabled:
+            out_msg.power_supply_status = BatteryState.POWER_SUPPLY_STATUS_DISCHARGING
+
+        out_msg.power_supply_health = BatteryState.POWER_SUPPLY_HEALTH_UNKNOWN
+        if in_msg.over_charge or in_msg.over_discharge:
+            out_msg.power_supply_health = BatteryState.POWER_SUPPLY_HEALTH_OVERVOLTAGE
+
+        out_msg.power_supply_technology = BatteryState.POWER_SUPPLY_TECHNOLOGY_UNKNOWN
+        out_msg.present = True
+        out_msg.location = ""
+        out_msg.serial_number = ""
+
+        self.output_pub.publish(out_msg)
+
+
+if __name__ == "__main__":
+    rospy.init_node("battery_conversion")
+    ConversionNode = SanyoBatteryInfoToBatteryState()
+    sys.exit(rospy.spin())
