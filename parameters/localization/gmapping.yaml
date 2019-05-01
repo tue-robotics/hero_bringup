@@ -1,5 +1,5 @@
 odom_frame: "odom"
-base_frame: "base_footprint_wheel"
+base_frame: "base_footprint"
 delta: 0.025
 
 # Initial map size
