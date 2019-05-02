@@ -36,7 +36,7 @@ plugins:
   parameters:
       constraint_service:
           default_offset: 0.7
-          room_offset: 0.3
+          room_offset: -0.3
       occupancy_grid_publisher:
           resolution: 0.05
           frame_id: map
