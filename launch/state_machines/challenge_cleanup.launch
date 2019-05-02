@@ -19,8 +19,7 @@
 
     <!-- Start the challenge -->
     <node pkg="challenge_cleanup" type="cleanup.py" name="state_machine" args="hero" output="screen" required="true">
-    	<arg name="robot" value="hero"/>
-    	<arg name="skip" value="True"/>
+    	<param name='robot_name' value='hero'/>
     </node>
 
 </launch>
