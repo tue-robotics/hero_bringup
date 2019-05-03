@@ -123,7 +123,7 @@ plugins:
 - name: people_detector
   lib: libed_people_detector_plugin.so
   parameters:
-      people_detector_3d_service: /hero/detect_people
+      people_detector_3d_service: /hero/people_detection/detect_people_3d
 
 - name: tf_publisher
   lib: libed_tf_publisher_plugin.so

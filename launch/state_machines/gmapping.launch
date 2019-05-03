@@ -21,6 +21,12 @@
             <arg name="config" value="world_modeling/world_model_gmapping.yaml"/>
         </include>
 
+        <!-- IMAGE RECOGNITION -->
+        <include file="$(find robot_launch_files)/launch/world_modeling/image_recognition.launch">
+            <arg name="machine" value="hero2"/>
+            <arg name="robot_name" value="$(arg robot_name)" />
+        </include>
+
     </group>
 
 </launch>
