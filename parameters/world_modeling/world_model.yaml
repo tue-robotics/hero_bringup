@@ -99,6 +99,11 @@ plugins:
   #lib: libed_perception_plugin.so
   lib: libed_perception_plugin_image_recognition.so
 
+- name: people_detector
+  lib: libed_people_detector_plugin.so
+  parameters:
+      people_detector_3d_service: /hero/detect_people
+
 - name: tf_publisher
   lib: libed_tf_publisher_plugin.so
   parameters:
