@@ -40,17 +40,17 @@ plugins:
           min_z: 0.025
           max_z: 1.8
 
-- name: laser_integration
-  lib: libed_laser_plugin.so
-  frequency: 40
-  parameters:
-      laser_topic: /hero/base_laser/scan
-      min_segment_size_pixels: 5
-      world_association_distance: 0.4
-      segment_depth_threshold: 0.2
-      min_cluster_size: 0.2
-      max_cluster_size: 1.0
-      max_gap_size: 15
+#- name: laser_integration
+  #lib: libed_laser_plugin.so
+  #frequency: 40
+  #parameters:
+      #laser_topic: /hero/base_laser/scan
+      #min_segment_size_pixels: 5
+      #world_association_distance: 0.4
+      #segment_depth_threshold: 0.2
+      #min_cluster_size: 0.2
+      #max_cluster_size: 1.0
+      #max_gap_size: 15
 
 - name: rgbd_integration # Kinect integration
   lib: libed_kinect_plugin.so
