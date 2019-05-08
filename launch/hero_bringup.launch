@@ -173,13 +173,16 @@
             <include file="$(find hsrb_manipulation_launch)/launch/interactive_grasp_planner.launch">
                 <arg name="robot_name" value="$(arg robot_name)"/>
             </include>
+-->
         </group>
 
         <!-- MoveIt -->
+<!--
         <include file="$(find hero_bringup)/hsrb_moveit_config/launch/move_group.launch">
             <arg name="joint_states_topic" value="$(arg namespace)/joint_states"/>
             <arg name="moveit_octomap_sensor_params_file" value="$(find hero_bringup)/hsrb_moveit_config/config/sensors_xtion.yaml" />
         </include>
+-->
 
         <!-- bridge nodes-->
         <node pkg="hero_bridge" type="speech.py" name="text_to_speech" if="$(optenv ROBOT_REAL false)" output="log" />
