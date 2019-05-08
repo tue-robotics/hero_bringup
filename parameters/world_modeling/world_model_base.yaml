@@ -1,0 +1,47 @@
+plugins:
+- name: robot_plugin
+  lib: libed_robot_plugin.so
+  parameters:
+      robot_name: hero
+      urdf_rosparam: /hero/robot_description
+      joint_topics:
+        - topic: /hero/joint_states
+
+- name: gui_server
+  lib: libed_gui_server_plugin.so
+  parameters:
+      robot_name: hero
+      urdf_rosparam: /hero/robot_description
+      tf_prefix: ""
+
+- name: navigation
+  lib: libed_navigation_plugin.so
+  parameters:
+      constraint_service:
+          default_offset: 0.7
+          room_offset: -0.3
+      occupancy_grid_publisher:
+          resolution: 0.05
+          frame_id: map
+          min_z: 0.025
+          max_z: 1.8
+
+- name: rgbd_integration # Kinect integration
+  lib: libed_kinect_plugin.so
+  enabled: 1
+  parameters:
+      topic: /hero/head_rgbd_sensor/rgbd
+
+- name: perception
+  lib: libed_perception_plugin_image_recognition.so
+
+- name: people_detector
+  lib: libed_people_detector_plugin.so
+  parameters:
+      people_detector_3d_service: /hero/people_detection/detect_people_3d
+
+- name: tf_publisher
+  lib: libed_tf_publisher_plugin.so
+  parameters:
+      root_frame_id: /map
+      exclude: hero
