@@ -169,6 +169,7 @@
             </include>
 
             <!-- perspective transformer -->
+<!--
             <include file="$(find hsrb_manipulation_launch)/launch/interactive_grasp_planner.launch">
                 <arg name="robot_name" value="$(arg robot_name)"/>
             </include>
