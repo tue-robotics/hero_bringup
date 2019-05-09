@@ -14,7 +14,7 @@
   <arg name="enable_emergency_stop" default="true" />
 
   <!-- include PHASE info -->
-  <include file="$(find hsrb_bringup)/launch/include/hsrb_bringup_common_$(optenv ROBOT_VERSION HSRB-PHASE5).xml">
+  <include file="$(find hero_bringup)/hsrb_bringup/launch/include/hsrb_bringup_common_$(optenv ROBOT_VERSION HSRB-PHASE5).xml">
     <arg name="namespace" value="$(arg namespace)" /> <!-- TUe Added -->
     <arg name="use_hand_camera" value="$(arg use_hand_camera)"/>
     <arg name="use_head_center_camera" value="$(arg use_head_center_camera)"/>
