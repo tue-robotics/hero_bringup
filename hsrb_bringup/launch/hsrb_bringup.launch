@@ -17,7 +17,6 @@
 
   <include file="$(find hero_bringup)/hsrb_bringup/launch/include/hsrb_controller_common.xml">
     <arg name="namespace" value="$(arg namespace)" />
-    <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
   </include>
 
   <include file="$(find hero_bringup)/hsrb_bringup/launch/include/hsrb_controller_$(arg robot_name).xml">
