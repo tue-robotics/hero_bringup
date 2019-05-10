@@ -33,6 +33,6 @@
     </group>
 
     <!-- Start the challenge -->
-    <node pkg="challenge_receptionist" type="challenge_receptionist" name="state_machine" args="hero" output="screen" required="false"/>
+    <node pkg="challenge_receptionist" type="challenge_receptionist" name="state_machine" args="hero" output="screen" required="true"/>
 
 </launch>
