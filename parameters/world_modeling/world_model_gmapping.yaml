@@ -1,4 +1,4 @@
-extend: world_model_gmapping_sim.yaml
+include: world_model_gmapping_sim.yaml
 
 # ----------------------------------------------------------------------
 

@@ -1,4 +1,4 @@
-extend: world_model_demo_intern_sim.yaml
+include: world_model_demo_intern_sim.yaml
 
 # ----------------------------------------------------------------------
 
