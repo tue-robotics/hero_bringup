@@ -25,6 +25,6 @@
     </group>
 
     <!-- Start the challenge -->
-    <node pkg="challenge_serving_drinks" type="challenge_serving_drinks" name="state_machine" args="hero" output="screen" required="false"/>
+    <node pkg="challenge_serving_drinks" type="challenge_serving_drinks" name="state_machine" args="hero" output="screen" required="true"/>
 
 </launch>
