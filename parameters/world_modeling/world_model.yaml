@@ -20,6 +20,7 @@ plugins:
       tf_prefix: ""
 
 - name: rgbd_navigation
+  enabled: $(env ROBOT_REAL false)
   lib: libed_kinect_navigation_plugin.so
   parameters:
       depth_sensor_integration:
