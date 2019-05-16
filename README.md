@@ -61,6 +61,6 @@ The following steps can be done via SSH or directly on the robot (SSH: `ssh admi
 - Set correct network adapter for the virtualbox. Depending on the use of internal of external Wi-Fi.
 - Install tue-env (https://github.com/tue-robotics/tue-env) and install hero1 target: `tue-get install hero1`
 - Build the software: `tue-make`
-- Go to `hero_bringup` package. Execute the following to stop the Toyota service and start ours: `./scripts/install_systemd_autostart_start_launch`
+- Go to `hero_bringup` package. Execute the following to stop the Toyota and VirtualBox services and start ours: `./scripts/install_systemd_autostart_hero1`
 - (Fix timezone: `tue-robocup-set-timezone-home`)
 - Reboot and ready to go!
