@@ -59,7 +59,6 @@
         <include file="$(find hero_bringup)/hsrb_bringup/launch/$(arg robot_name)_bringup.launch" unless="$(arg auto_start)">
             <arg name="namespace" value="$(arg namespace)" />
             <arg name="param_file" default="$(arg param_file)" />
-            <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
             <arg name="align_at_startup" value="$(arg align_at_startup)" />
             <arg name="robot_name" value="$(arg robot_name)" />
         </include>
