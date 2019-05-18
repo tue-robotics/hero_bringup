@@ -29,10 +29,10 @@
             <arg name="image" value="/hero/head_rgbd_sensor/rgb/image_raw"/>
         </include>
 
-		<rosparam command="load" file="$(find challenge_receptionist)/param/vizbox.yaml"/>
+        <rosparam command="load" file="$(find challenge_receptionist)/param/vizbox.yaml"/>
     </group>
 
     <!-- Start the challenge -->
-    <node pkg="challenge_receptionist" type="challenge_receptionist" name="state_machine" args="hero" output="screen" required="false"/>
+    <node pkg="challenge_receptionist" type="challenge_receptionist" name="state_machine" args="hero" output="screen" required="true"/>
 
 </launch>

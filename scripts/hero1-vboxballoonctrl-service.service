@@ -1,0 +1,20 @@
+[Unit]
+SourcePath=/usr/lib/virtualbox/vboxballoonctrl-service.sh
+Description=
+Before=shutdown.target
+After=vboxdrv.service
+Conflicts=shutdown.target
+
+[Service]
+Type=forking
+Restart=no
+TimeoutSec=5min
+IgnoreSIGPIPE=no
+KillMode=process
+GuessMainPID=no
+RemainAfterExit=yes
+ExecStart=/usr/lib/virtualbox/vboxballoonctrl-service.sh start
+ExecStop=/usr/lib/virtualbox/vboxballoonctrl-service.sh stop
+
+[Install]
+WantedBy=hero1-windows-speech.service

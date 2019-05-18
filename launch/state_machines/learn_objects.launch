@@ -21,6 +21,6 @@
 
     <node pkg="hero_bringup" type="stationary_broadcaster.py" name="stationary_broadcaster"/>
     <!-- Start the challenge -->
-    <node pkg="challenge_test" type="learn_objects.py" name="state_machine" args="hero" output="screen" required="true"/>
+    <node pkg="test_tools" type="learn_objects.py" name="state_machine" args="hero" output="screen" required="true"/>
 
 </launch>

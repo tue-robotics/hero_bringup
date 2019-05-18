@@ -8,77 +8,25 @@
   <arg name="use_head_center_camera" default="true"/>
   <arg name="use_head_stereo_camera" default="true"/>
   <arg name="use_head_rgbd_sensor" default="true"/>
+  <arg name="use_base_range_sensor" default="true" />
   <arg name="use_laser_odom" default="true" />
   <arg name="use_blackfly" default="false" />
   <arg name="enable_emergency_stop" default="true" />
 
   <!-- include PHASE info -->
-  <include file="$(find hsrb_bringup)/launch/include/hsrb_bringup_common_$(optenv ROBOT_VERSION HSRB-PHASE5).xml">
+  <include file="$(find hero_bringup)/hsrb_bringup/launch/include/hsrb_bringup_common_$(optenv ROBOT_VERSION HSRB-PHASE5).xml">
     <arg name="namespace" value="$(arg namespace)" /> <!-- TUe Added -->
-    <arg name="use_hand_camera" default="$(arg use_hand_camera)"/>
-    <arg name="use_head_center_camera" default="$(arg use_head_center_camera)"/>
-    <arg name="use_head_stereo_camera" default="$(arg use_head_stereo_camera)"/>
-    <arg name="use_head_rgbd_sensor" default="$(arg use_head_rgbd_sensor)"/>
-    <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
-    <arg name="use_blackfly" default="$(arg use_blackfly)" />
+    <arg name="use_hand_camera" value="$(arg use_hand_camera)"/>
+    <arg name="use_head_center_camera" value="$(arg use_head_center_camera)"/>
+    <arg name="use_head_stereo_camera" value="$(arg use_head_stereo_camera)"/>
+    <arg name="use_head_rgbd_sensor" value="$(arg use_head_rgbd_sensor)"/>
+    <arg name="use_base_range_sensor" value="$(arg use_base_range_sensor)" />
+    <arg name="use_blackfly" value="$(arg use_blackfly)" />
   </include>
 
-  <group ns="$(arg namespace)">
-
-    <remap from="robot_description" to="$(arg namespace)/robot_description" />
-    <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
-    <remap from="joint_states" to ="$(arg namespace)/joint_states" />
-    <remap from="/joint_states" to ="$(arg namespace)/joint_states" />
-
-    <!-- joint_statesを閉じ込めるためのネームスペース -->
-    <group ns="robot_state">
-    <!-- joint state publisher(0.9.4以降のjoint_state_controllerで不要になる) -->
-      <node name="joint_state_pub" pkg="joint_state_publisher" type="joint_state_publisher">
-        <param name="publish_default_velocities" value="true" />
-        <param name="publish_default_efforts" value="true" />
-        <param name="rate" value="50" />
-        <rosparam subst_value="true">
-          source_list:
-          - $(arg namespace)/joint_states_hardware
-        </rosparam>
-      </node>
-
-      <!-- robot state publisher -->
-      <node name="robot_state_pub" pkg="robot_state_publisher" type="robot_state_publisher">
-        <param name="publish_frequency" value="50.0" />
-        <param name="use_tf_static" value="true" />
-      </node>
-    </group>
-
-    <!-- angle_sensors_alignment -->
-    <node name="angle_sensors_alignment_node" pkg="hsrb_angle_sensors_alignment" type="angle_sensors_alignment_node"
-          respawn="false"
-          output="screen" />
-
-    <!-- suction action -->
-    <node name="suction_server" pkg="tmc_suction" type="suction_server" >
-      <remap from="suction_on" to="command_suction" />
-      <remap from="pressure_sensor_on" to="pressure_sensor" />
-    </node>
-
-    <!-- led color control -->
-    <node name="status_led_node" pkg="hsrb_status_led" type="status_led_node" />
-
-    <!-- bumper action -->
-    <node name="hsrb_bumper" pkg="hsrb_bumper" type="hsrb_bumper_node" >
-      <param name="enable_emergency_stop" value="$(arg enable_emergency_stop)" />
-    </node>
-    <node unless="$(arg enable_emergency_stop)" name="hsrb_bumper_back" pkg="hsrb_bumper" type="hsrb_bumper_back_node" >
-      <param name="temp_object_radius" value="0.03" />
-      <param name="temp_object_point_num" value="20" />
-      <param name="temp_object_delete_timer" value="30" />
-      <param name="head_move_cancel" value="true" />
-      <param name="arm_move_cancel" value="true" />
-      <param name="gripper_grasp_cancel" value="true" />
-      <param name="crescent_moon_object" value="false" />
-      <param name="bumper_binarization" value="false" />
-      <param name="to_temp_object_distance" value="0.7" />
-    </node>
-
-  </group>
+  <include file="$(find hero_bringup)/hsrb_bringup/launch/include/hsrb_bringup_common.xml">
+    <arg name="namespace" value="$(arg namespace)" />
+    <arg name="enable_emergency_stop" value="$(arg enable_emergency_stop)" />
+    <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
+  </include>
 </launch>
