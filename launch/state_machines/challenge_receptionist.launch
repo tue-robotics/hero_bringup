@@ -29,7 +29,7 @@
             <arg name="image" value="/hero/head_rgbd_sensor/rgb/image_raw"/>
         </include>
 
-		<rosparam command="load" file="$(find challenge_receptionist)/param/vizbox.yaml"/>
+        <rosparam command="load" file="$(find challenge_receptionist)/param/vizbox.yaml"/>
     </group>
 
     <!-- Start the challenge -->
