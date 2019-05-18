@@ -1,16 +1,41 @@
-include: world_model_demo_intern_sim.yaml
+include: world_model_base.yaml
+world_name: empty
 
 # ----------------------------------------------------------------------
 
 plugins:
-- name: rgbd_navigation
-  lib: libed_kinect_navigation_plugin.so
+- name: robocup
+  lib: libed_robocup_plugin.so
   parameters:
-      depth_sensor_integration:
-          frame_id: /map
-          topic: /hero/head_rgbd_sensor/rgbd
-          num_samples: 640
-          slope_threshold: 1
-          slope_window_size: 30
-          min_distance: 0.4
-          max_distance: 2.0
+    map_topic_in: /hero/gmapping/map
+    map_topic_out: /map
+    wall_height: 1.7
+    map_filter_padding: 0.3
+    rgbd_topic: /hero/head_rgbd_sensor/rgbd
+    nav_goal_topic: /hero/local_planner/action_server/goal
+    head_goal_topic: /hero/head_ref/action_server/goal
+    models:
+    - id: hallway_table
+      type: ddw/couch
+      image: $(rospkg challenge_demo)/images/robotics_testlabs/ddw.couch.jpg
+    - id: couch_table
+      type: ddw/salon
+      image: $(rospkg challenge_demo)/images/robotics_testlabs/ddw.salon.jpg
+    - id: bar
+      type: ddw/table
+      image: $(rospkg challenge_demo)/images/robotics_testlabs/ddw.table.jpg
+    - id: plant
+      type: robotics_testlabs/plant
+      image: $(rospkg challenge_demo)/images/robotics_testlabs/plant.jpg
+    - id: cabinet
+      type: robotics_testlab_B/corridor_cabinet
+      image: $(rospkg challenge_demo)/images/robotics_testlabs/robotics_testlab_B.corridor_cabinet.jpg
+    - id: bookcase
+      type: robotics_testlabs/plastic_cabinet
+      image: $(rospkg challenge_demo)/images/robotics_testlabs/robotics_testlab_B.plastic_cabinet.jpg
+    - id: dinner_table
+      type: table_120x80x76
+      image: $(rospkg challenge_demo)/images/robotics_testlabs/table_120x80x76.jpg
+    - id: paperbin
+      type: paperbin
+      image: $(rospkg challenge_demo)/images/robotics_testlabs/paperbin.jpg

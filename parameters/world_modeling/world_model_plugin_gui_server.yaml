@@ -1,0 +1,6 @@
+name: gui_server
+lib: libed_gui_server_plugin.so
+parameters:
+    robot_name: hero
+    urdf_rosparam: /hero/robot_description
+    tf_prefix: ""

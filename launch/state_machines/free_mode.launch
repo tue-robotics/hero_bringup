@@ -16,7 +16,6 @@
         <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
             <arg name="machine" value="hero2"/>
             <arg name="config" value="world_modeling/world_model.yaml"/>
-            <arg name="config_sim" value="world_modeling/world_model_sim.yaml"/>
         </include>
 
         <!-- IMAGE RECOGNITION -->
