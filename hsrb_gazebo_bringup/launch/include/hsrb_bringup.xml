@@ -47,7 +47,7 @@
 
     <!-- pose_to_odom -->
     <node name="pose_stamped_to_odometry" pkg="topic_tools" type="transform"
-          args="$(arg namespace)/base_pose $(arg namespace)/laser_odom nav_msgs/Odometry
+          args="$(arg namespace)/base_pose $(arg namespace)/base/measurements_laser nav_msgs/Odometry
     'nav_msgs.msg.Odometry(header=m.header, pose=geometry_msgs.msg.PoseWithCovariance(pose=m.pose))'
     --import nav_msgs geometry_msgs --wait-for-start" />
   </group>
