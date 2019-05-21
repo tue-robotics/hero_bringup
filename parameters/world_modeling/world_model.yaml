@@ -1,5 +1,5 @@
 include: world_model_base.yaml
-world_name: empty
+world_name: $(env ROBOT_ENV)
 
 # ----------------------------------------------------------------------
 
