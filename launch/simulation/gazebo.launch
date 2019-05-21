@@ -17,12 +17,14 @@
 
     <!-- Base -->
     <remap from="/hsrb/odom" to="$(arg namespace)/base/measurements" />
-    <remap from="/hsrb/wheel_odom" to="$(arg namespace)/base/measurements_odom" /> <!-- Gazebo publishes this topic, exact function unknown -->
-    <remap from="/hsrb/odom_ground_truth" to="$(arg namespace)/odom_ground_truth" /> <!-- Gazebo publishes this topic, exact function unknown -->
+    <remap from="/hsrb/wheel_odom" to="$(arg namespace)/base/measurements_wheel" /> <!-- Gazebo publishes this topic, exact function unknown -->
+    <remap from="/hsrb/odom_ground_truth" to="$(arg namespace)/measurements_ground_truth" /> <!-- Gazebo publishes this topic, exact function unknown -->
 
     <!-- Sensors -->
     <remap from="/hsrb/base_scan" to="$(arg namespace)/base_laser/scan" />
     <remap from="/hsrb/base_imu/data" to="$(arg namespace)/base_imu/data" />
+    <remap from="/hsrb/base_b_bumper_sensor" to="$(arg namespace)/base_b_bumper_sensor" />
+    <remap from="/hsrb/base_f_bumper_sensor" to="$(arg namespace)/base_f_bumper_sensor" />
 
     <!-- Cameras -->
     <remap from="/head_rgbd_sensor" to="$(arg namespace)/head_rgbd_sensor" />
