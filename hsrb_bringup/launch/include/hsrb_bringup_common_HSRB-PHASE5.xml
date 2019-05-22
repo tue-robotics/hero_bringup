@@ -15,6 +15,10 @@
   <arg name="enable_usb_hub_reset" default="false" />
 
   <group ns="$(arg namespace)">
+    <!-- TU/e added: for laser_scan_matcher_node; This should be fixes in
+    common.xml itself; Not related to HERO setup -->
+    <remap from="imu/data" to= "base_imu/data" />
+
     <include file="$(find hsrb_bringup)/launch/include/sensors/common.xml">
       <arg name="namespace" value="$(arg namespace)" />
       <arg name="config_dir" value="$(arg config_dir)" />
