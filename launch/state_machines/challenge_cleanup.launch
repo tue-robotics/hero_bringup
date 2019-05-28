@@ -19,17 +19,13 @@
         <!-- IMAGE RECOGNITION -->
         <include file="$(find robot_launch_files)/launch/world_modeling/image_recognition.launch">
             <arg name="machine" value="hero2"/>
-        </include>
-
-        <!-- PEOPLE RECOGNITION -->
-        <include file="$(find robot_launch_files)/launch/world_modeling/people_recognition.launch">
-            <arg name="machine" value="hero2"/>
             <arg name="robot_name" value="$(arg robot_name)" />
         </include>
+
 
     </group>
 
     <!-- Start the challenge -->
-    <node pkg="challenge_cleanup" type="cleanup_without_roomselection.py" name="state_machine" args="hero" output="screen" required="true">
+    <node pkg="challenge_cleanup" type="cleanup_without_roomselection.py" name="state_machine" args="hero" output="screen" required="true" />
 
 </launch>
