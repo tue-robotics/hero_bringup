@@ -12,12 +12,11 @@
 
     <!-- General -->
     <remap from="/hsrb/joint_states" to="$(arg namespace)/joint_states_hardware" />
-    <remap from="/hsrb/base_pose" to="$(arg namespace)/base_pose" /> <!-- Gazebo listens to this topic, function unknown -->
     <remap from="/hsrb/pressure_sensor" to="$(arg namespace)/pressure_sensor" /> <!-- Gazebo publishes this topic, maybe this is related to the suction. Exact function unknown -->
 
     <!-- Base -->
-    <remap from="/hsrb/odom" to="$(arg namespace)/base/measurements" />
-    <remap from="/hsrb/wheel_odom" to="$(arg namespace)/base/measurements_wheel" /> <!-- Gazebo publishes this topic, exact function unknown -->
+    <remap from="/hsrb/odom" to="$(arg namespace)/base/measurements" /> <!-- Gazebo listens to this topic, which is published by the odometry switcher -->
+    <remap from="/hsrb/wheel_odom" to="$(arg namespace)/base/measurements_wheel" />
     <remap from="/hsrb/odom_ground_truth" to="$(arg namespace)/measurements_ground_truth" /> <!-- Gazebo publishes this topic, exact function unknown -->
 
     <!-- Sensors -->
