@@ -32,7 +32,7 @@
             <arg name="robot_name" value="$(arg robot_name)" />
         </include>
 
-        <!-- Start the action server -->
+        <!-- ACTION SERVER -->
         <node pkg="action_server" type="main.py" name="action_server" output="screen" respawn="true">
             <param name="robot_name" value="$(arg robot_name)" />
         </node>
