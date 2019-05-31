@@ -13,7 +13,6 @@
         <!-- WORLD MODEL -->
         <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
             <arg name="machine" value="hero2"/>
-            <arg name="config" value="world_modeling/world_model.yaml"/>
         </include>
 
         <!-- IMAGE RECOGNITION -->
@@ -38,6 +37,6 @@
     </group>
 
     <!-- Start the challenge -->
-    <node pkg="challenge_receptionist" type="challenge_receptionist" name="state_machine" args="hero" output="screen" required="true"/>
+    <node pkg="challenge_receptionist" type="challenge_receptionist" name="state_machine" args="$(arg robot_name)" output="screen" required="true"/>
 
 </launch>
