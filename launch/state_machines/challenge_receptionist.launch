@@ -31,9 +31,8 @@
             <arg name="machine" value="hero2"/>
             <arg name="robot_name" value="$(arg robot_name)"/>
             <arg name="image" value="/hero/head_rgbd_sensor/rgb/image_raw"/>
-        </include>
-
-        <rosparam command="load" file="$(find challenge_receptionist)/param/vizbox.yaml"/>
+			<arg name="param_file" value="$(find challenge_receptionist)/param/vizbox.yaml"/>
+		</include>
     </group>
 
     <!-- Start the challenge -->
