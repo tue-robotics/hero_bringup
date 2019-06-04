@@ -4,12 +4,13 @@
     <arg name="debug" default="false" />
 
     <!--Toyota parameters -->
-    <arg name="namespace" default="/hero"/>
+    <arg name="namespace" default="/hero" />
     <arg name="use_hand_camera" default="false" />
     <arg name="use_head_center_camera" default="false" />
-    <arg name="use_head_stereo_camera" default="false"/>
-    <arg name="use_head_rgbd_sensor" default="true"/>
-    <arg name="use_laser_odom" default="false"/>
+    <arg name="use_head_stereo_camera" default="false" />
+    <arg name="use_head_rgbd_sensor" default="true" />
+    <arg name="use_base_range_sensor" default="true" />
+    <arg name="use_laser_odom" default="false" />
     <arg name="use_blackfly" default="false" />
     <arg name="monitor" default="false" />
     <arg name="param_file" default="$(env HOME)/.ros/params.yaml" />
@@ -58,7 +59,6 @@
         <include file="$(find hero_bringup)/hsrb_bringup/launch/$(arg robot_name)_bringup.launch" unless="$(arg auto_start)">
             <arg name="namespace" value="$(arg namespace)" />
             <arg name="param_file" default="$(arg param_file)" />
-            <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
             <arg name="align_at_startup" value="$(arg align_at_startup)" />
             <arg name="robot_name" value="$(arg robot_name)" />
         </include>
@@ -69,6 +69,7 @@
             <arg name="use_head_center_camera" value="$(arg use_head_center_camera)" />
             <arg name="use_head_stereo_camera" value="$(arg use_head_stereo_camera)"/>
             <arg name="use_head_rgbd_sensor" value="$(arg use_head_rgbd_sensor)"/>
+            <arg name="use_base_range_sensor" value="$(arg use_base_range_sensor)" />
             <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
             <arg name="use_blackfly" value="$(arg use_blackfly)" />
             <arg name="enable_emergency_stop" value="$(arg enable_emergency_stop)" />
@@ -90,10 +91,8 @@
     <!-- Launch simulator if we are not on a real robot -->
     <group unless="$(optenv ROBOT_REAL false)" >
 
-        <group ns="$(arg namespace)">
-            <!-- robot desctription -->
-            <include file="$(find hsrb_description)/robots/upload_hsrb.launch" />
-        </group>
+        <!-- robot desctription -->
+        <include file="$(find hsrb_description)/robots/upload_hsrb.launch" ns="$(arg namespace)"/>
 
         <!-- Start gazebo with correct environment -->
         <include file="$(find hero_bringup)/launch/simulation/simulation.launch" >
@@ -104,10 +103,11 @@
             <arg name="param_file" value="$(arg param_file)" />
         </include>
 
+        <!-- TEXT TO SPEECH -->
+        <include file="$(find robot_launch_files)/launch/interaction/text_to_speech.launch" ns="$(arg namespace)" />
+
         <!-- Needed by manipulation bridge, because it uses the Toyota Robot_object -->
-        <group ns="$(arg namespace)/impedance_control">
-            <rosparam file="$(find hsrb_impedance_control)/launch/configurations.yaml" command="load" />
-        </group>
+        <rosparam file="$(find hsrb_impedance_control)/launch/configurations.yaml" command="load" ns="$(arg namespace)/impedance_control" />
 
     </group><!-- End of simulator group -->
 
@@ -121,7 +121,7 @@
 
         <!-- ROS to RGBD -->
         <group ns="head_rgbd_sensor">
-            <node pkg="rgbd" type="rgbd_server" name="ros_to_rgbd">
+            <node pkg="rgbd" type="rgbd_server" name="ros_to_rgbd" output="log">
                 <remap from="output" to="rgbd" />
                 <remap from="rgb_image" to="rgb/image_rect_color" />
                 <remap from="cam_info" to="rgb/camera_info" />
@@ -139,23 +139,6 @@
             <arg name="kaldi" value="false" />
         </include>
 
-
-        <!-- common -->
-<!--
-        <include file="$(find hsrb_common_launch)/launch/hsrb_common.launch">
-            <arg name="namespace" value="$(arg namespace)" />
-            <arg name="sim" value="$(arg sim)" />
-            <arg name="use_manipulation" default="$(arg use_manipulation)" />
-            <arg name="use_navigation" default="$(arg use_navigation)" />
-            <arg name="use_perception" default="$(arg use_perception)" />
-            <arg name="use_task" default="$(arg use_task)" />
-            <arg name="use_teleop" default="$(arg use_teleop)" />
-            <arg name="use_web" default="$(arg use_web)" />
-            <arg name="use_geometry" default="$(arg use_geometry)" />
-            <arg name="map" default="$(arg map)" />
-            <arg name="robot_name" value="$(arg robot_name)" />
-        </include>
--->
         <!-- MANIPULATION -->
         <group>
             <!-- Attitude transition -->
@@ -168,9 +151,8 @@
                 <arg name="robot_name" value="$(arg robot_name)"/>
             </include>
 
-			<!-- whole timeopt filter -->
-			<include file="$(find hsrb_timeopt_ros)/launch/hsrb_timeopt_filter.launch">
-		    </include>
+            <!-- whole timeopt filter -->
+            <include file="$(find hsrb_timeopt_ros)/launch/hsrb_timeopt_filter.launch" />
 
             <!-- Finger impedance control in whole body -->
             <remap from="/hsrb/joint_states" to="$(arg namespace)/joint_states" />
@@ -188,30 +170,38 @@
             </include>
 
             <!-- perspective transformer -->
+<!--
             <include file="$(find hsrb_manipulation_launch)/launch/interactive_grasp_planner.launch">
                 <arg name="robot_name" value="$(arg robot_name)"/>
             </include>
+-->
         </group>
 
         <!-- MoveIt -->
+<!--
         <include file="$(find hero_bringup)/hsrb_moveit_config/launch/move_group.launch">
             <arg name="joint_states_topic" value="$(arg namespace)/joint_states"/>
             <arg name="moveit_octomap_sensor_params_file" value="$(find hero_bringup)/hsrb_moveit_config/config/sensors_xtion.yaml" />
         </include>
+-->
 
         <!-- bridge nodes-->
-        <node pkg="hero_bridge" type="speech.py" name="text_to_speech"/>
-        <node pkg="hero_bridge" type="joint_trajectory.py" name="arm_bridge"/>
-        <node pkg="hero_bridge" type="gripper_controller.py" name="gripper_bridge"/>
-        <node pkg="hero_bridge" type="tf_ghost.py" name="tf_ghost"/>
-        <node pkg="hero_bridge" type="head_controller.py" name="head_bridge"/>
-        <node pkg="hero_bridge" type="handover_detection.py" name="handoverdetector"/>
+        <node pkg="hero_bridge" type="speech.py" name="text_to_speech" if="$(optenv ROBOT_REAL false)" output="log" />
+        <node pkg="hero_bridge" type="light_bridge.py" name="light_bridge" if="$(optenv ROBOT_REAL false)" output="log" />
 
-        <group unless="$(optenv ROBOT_REAL false)">
-            <node pkg="hero_bridge" type="light_bridge.py" name="light_bridge"/>
-        </group>
+        <node pkg="hero_bridge" type="joint_trajectory.py" name="arm_bridge" output="log" />
+        <node pkg="hero_bridge" type="gripper_controller.py" name="gripper_bridge" output="log" />
+        <node pkg="hero_bridge" type="tf_ghost.py" name="tf_ghost" output="log" />
+        <node pkg="hero_bridge" type="head_controller.py" name="head_bridge" output="log" />
+        <node pkg="hero_bridge" type="handover_detection.py" name="handoverdetector" output="log" />
 
         <include file="$(find hero_bridge)/launch/manipulation_bridge.launch" />
+
+        <!-- Odometer -->
+        <node name="odometer" type="odometer.py" pkg="test_tools" if="$(optenv ROBOT_REAL false)" output="log" >
+            <rosparam command="load" file="$(find hero_bringup)/parameters/diagnostics/odometer.yaml" />
+            <remap from="odom" to="base/measurements" />
+        </node>
 
     </group> <!-- End of TU/e namespace group -->
 </launch>

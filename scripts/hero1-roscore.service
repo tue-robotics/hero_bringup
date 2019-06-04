@@ -1,7 +1,7 @@
 [Unit]
 Description=ROSCORE
 After=network-online.target
-Wants=network-online.target
+Requires=network-online.target
 
 [Install]
 WantedBy=multi-user.target
@@ -9,5 +9,5 @@ WantedBy=multi-user.target
 [Service]
 EnvironmentFile=-/etc/opt/tmc/robot/version
 User=administrator
-Restart=on-abort
+Restart=on-failure
 ExecStart=/bin/bash -c 'source /home/administrator/.tue/setup.bash && rosrun hsrb_bringup hsrb_roscore_service namespace:=/hero --screen'

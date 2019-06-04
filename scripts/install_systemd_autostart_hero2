@@ -1,0 +1,19 @@
+#! /usr/bin/env bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+sudo cp $DIR/hero2-openpose.service /etc/systemd/system/
+sudo cp $DIR/hero2-upower-ros.service /etc/systemd/system/
+
+
+# Reload and enable
+sudo systemctl daemon-reload
+
+sudo systemctl start hero2-openpose.service
+sudo systemctl start hero2-upower-ros.service
+
+sudo systemctl enable hero2-openpose.service
+sudo systemctl enable hero2-upower-ros.service
+
+echo "Check the journal for the log"
+echo "sudo journalctl -fu hero2-openpose/hero2-upower-ros"

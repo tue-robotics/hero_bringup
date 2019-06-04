@@ -15,16 +15,27 @@
             <arg name="machine" value="hero2"/>
         </include>
 
+        <!-- IMAGE RECOGNITION -->
+        <include file="$(find robot_launch_files)/launch/world_modeling/image_recognition.launch">
+            <arg name="machine" value="hero2"/>
+        </include>
+
+        <!-- PEOPLE RECOGNITION -->
+        <include file="$(find robot_launch_files)/launch/world_modeling/people_recognition.launch">
+            <arg name="machine" value="hero2"/>
+            <arg name="robot_name" value="$(arg robot_name)" />
+        </include>
+
         <!-- VIZ -->
         <include file="$(find robot_launch_files)/launch/interaction/vizbox.launch">
             <arg name="machine" value="hero2"/>
             <arg name="robot_name" value="$(arg robot_name)"/>
             <arg name="image" value="/hero/head_rgbd_sensor/rgb/image_raw"/>
-        </include>
-
+			<arg name="param_file" value="$(find challenge_receptionist)/param/vizbox.yaml"/>
+		</include>
     </group>
 
     <!-- Start the challenge -->
-    <node pkg="challenge_receptionist" type="challenge_receptionist" name="state_machine" args="$(arg robot_name)" output="screen" required="false"/>
+    <node pkg="challenge_receptionist" type="challenge_receptionist" name="state_machine" args="$(arg robot_name)" output="screen" required="true"/>
 
 </launch>

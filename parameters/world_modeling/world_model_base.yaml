@@ -1,0 +1,16 @@
+plugins:
+- include: world_model_plugin_robot.yaml
+
+- include: world_model_plugin_gui_server.yaml
+
+- include: world_model_plugin_navigation.yaml
+
+- include: world_model_plugin_rgbd.yaml
+
+- include: world_model_plugin_perception.yaml
+
+- include: world_model_plugin_people_recognition.yaml
+
+- include: world_model_plugin_tf.yaml
+
+- include: world_model_plugin_rgbd_navigation.yaml

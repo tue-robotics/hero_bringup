@@ -1,0 +1,5 @@
+name: tf_publisher
+lib: libed_tf_publisher_plugin.so
+parameters:
+    root_frame_id: /map
+    exclude: hero

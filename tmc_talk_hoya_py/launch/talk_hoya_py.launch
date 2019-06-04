@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="respawn" default="false"/>
+  <node pkg="tmc_talk_hoya_py" name="text_to_speech" type="text_to_speech"
+        respawn="$(arg respawn)">
+    <param name="root_path" type="string" value="/opt/tmc" />
+    <param name="pitch" type="int" value="-1" />
+    <param name="speed" type="int" value="90" />
+    <param name="volume" type="int" value="-1" />
+    <param name="pause" type="int" value="-1" />
+    <rosparam param="jpn_voice">["haruka"]</rosparam>
+    <rosparam param="eng_voice">["julie", "bridget"]</rosparam>
+  </node>
+</launch>

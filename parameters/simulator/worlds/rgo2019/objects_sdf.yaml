@@ -1,0 +1,4 @@
+- {id: coke-1, type: coke_can, x: 7.2, y: 2.1, z: 0.75}
+- {id: apple-1, type: apple, x: 7.2, y: 2.7, z: 0.75}
+- {id: person-1, type: person_standing, x: 7.5, y: -1.5, z: 0.0, yaw: -1.571}
+

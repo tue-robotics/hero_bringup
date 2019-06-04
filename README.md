@@ -26,7 +26,7 @@ Launch, machine and parameter files required to bringup the HERO robot
 # After clean install
 - Fix the wireless network directly on the robot:
     - `wpa_gui`(as root/administrator) to add wifi network. Make sure to select the `wlp3so` interface
-    
+
 The following steps can be done via SSH or directly on the robot (SSH: `ssh administrator@hsrb.local`)
 - (Run apt-get update): `sudo apt-get update` (as root/administrator)
 - Update hsrb_command: `hsrb_command upgrade` (as root/administrator)
@@ -39,7 +39,7 @@ The following steps can be done via SSH or directly on the robot (SSH: `ssh admi
     - `sudo vim /etc/hostname`
     - `sudo vim /etc/hosts`
     - reboot: `sudo reboot` (Use `ssh administrator@hero1.local` after this step)
-- Set static IP:
+- Set static IP (when using internal Wi-Fi):
     - Make a back-up of the config: `sudo cp /etc/network/interfaces.wlan /etc/network/interfaces.wlan.bk`
     - Open the file: `sudo vim /etc/network/interfaces.wlan`
     - Look for the following line: `iface wlp3so inet dhcp`. Change it to: `iface wlp3so inet static`
@@ -48,16 +48,19 @@ The following steps can be done via SSH or directly on the robot (SSH: `ssh admi
         address 192.168.44.51
         netmask 255.255.255.0
         gateway 192.168.44.1
-        dns-nameservers 192.168.44.1 8.8.8.8 8.8.4.4  
+        dns-nameservers 192.168.44.1 8.8.8.8 8.8.4.4
         ```
     - reboot: `sudo reboot`
+- Set ethernet (when using external router for Wi-Fi):
+    - Set symbolic link to use ethernet: `sudo ln -sf /etc/network/interfaces.eth /etc/network/interfaces`
 - restore virtualbox image to `~/vbox_images`. (Path of the files should be like: `~/vbox_images/windows/windows.XX`)
 - Install virtualbox debian from https://www.virtualbox.org/wiki/Downloads:
     -  `sudo dpkg -i "XX.deb"`
     - (`sudo apt-get install -f` to fix missing dependencies)
 - Open virtualbox ON the robot and add the windows image.
+- Set correct network adapter for the virtualbox. Depending on the use of internal of external Wi-Fi.
 - Install tue-env (https://github.com/tue-robotics/tue-env) and install hero1 target: `tue-get install hero1`
-- Build the software: `tue-make` 
-- Go to `hero_bringup` package. Execute the following to stop the Toyota service and start ours: `./scripts/install_systemd_autostart_start_launch`
+- Build the software: `tue-make`
+- Go to `hero_bringup` package. Execute the following to stop the Toyota and VirtualBox services and start ours: `./scripts/install_systemd_autostart_hero1`
 - (Fix timezone: `tue-robocup-set-timezone-home`)
 - Reboot and ready to go!

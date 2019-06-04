@@ -16,12 +16,24 @@
 
         <!-- WORLD MODEL -->
         <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
+            <arg name="machine" value="hero2"/>
             <arg name="config" value="world_modeling/world_model.yaml"/>
+        </include>
+
+        <!-- IMAGE RECOGNITION -->
+        <include file="$(find robot_launch_files)/launch/world_modeling/image_recognition.launch">
+            <arg name="machine" value="hero2"/>
+        </include>
+
+        <!-- PEOPLE RECOGNITION -->
+        <include file="$(find robot_launch_files)/launch/world_modeling/people_recognition.launch">
+            <arg name="machine" value="hero2"/>
+            <arg name="robot_name" value="$(arg robot_name)" />
         </include>
 
         <!-- Telegram interface -->
         <include file="$(find robot_launch_files)/launch/interaction/telegram.launch">
-             <arg name="robot_name" value="hero"/>
+             <arg name="robot_name" value="$(arg robot_name)" />
         </include>
 
 
@@ -43,7 +55,7 @@
     <node name="conversation_engine" pkg="conversation_engine" type="engine" output="log" required="true" args="--robot hero">
         <param name="robot" value="hero" />
         <param name="challenge" value="challenge_demo" />
-		<remap from="robot_to_user" to="/hero/message_from_ros" />
-		<remap from="user_to_robot" to="/hero/message_to_ros" />
-	</node>
+        <remap from="robot_to_user" to="/hero/message_from_ros" />
+        <remap from="user_to_robot" to="/hero/message_to_ros" />
+    </node>
 </launch>

@@ -1,4 +1,4 @@
 rate: 0.0166666667 # 1/60
 buffer_length: 1
-path: ~/MEGA/odometer
-filename: odometer
+path: ~/odometer
+filename: hero_odometer

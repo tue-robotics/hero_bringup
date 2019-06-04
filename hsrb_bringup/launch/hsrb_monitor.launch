@@ -33,7 +33,7 @@
   </group>
 
   <!-- voice text -->
-  <include file="$(find tmc_talk_hoya_py)/launch/talk_hoya_py.launch"
+  <include file="$(find hero_bringup)/tmc_talk_hoya_py/launch/talk_hoya_py.launch"
            if="$(arg use_talk_hoya)">
     <arg name="respawn" value="true"/>
   </include>

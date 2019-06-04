@@ -1,10 +1,10 @@
 [Unit]
 Description=NTPDATE
 After=network-online.target
-Wants=network-online.target
+Requires=network-online.target
 
 [Install]
-WantedBy=hero-roscore.service
+WantedBy=hero1-roscore.service
 
 [Service]
 Restart=on-abort

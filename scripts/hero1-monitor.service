@@ -1,7 +1,7 @@
 [Unit]
 Description=Launch file hsrb_monitor.launch of package hero_bringup.git for user administrator
-After=hero-roscore.service
-Requires=hero-roscore.service
+After=hero1-roscore.service
+Requires=hero1-roscore.service
 
 [Install]
 WantedBy=multi-user.target

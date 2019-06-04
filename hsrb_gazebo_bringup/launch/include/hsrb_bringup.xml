@@ -44,6 +44,12 @@
       <remap from="scan" to="$(arg namespace)/base_scan"/>
       <remap from="pose_stamped" to="$(arg namespace)/base_pose"/>
     </node>
+
+    <!-- pose_to_odom -->
+    <node name="pose_stamped_to_odometry" pkg="topic_tools" type="transform"
+          args="$(arg namespace)/base_pose $(arg namespace)/base/measurements_laser nav_msgs/Odometry
+    'nav_msgs.msg.Odometry(header=m.header, pose=geometry_msgs.msg.PoseWithCovariance(pose=m.pose))'
+    --import nav_msgs geometry_msgs --wait-for-start" />
   </group>
 
   <node name="head_l_stereo_camera_frame_pub" pkg="tf" type="static_transform_publisher"
@@ -61,4 +67,23 @@
   <include file="$(find hsrb_gazebo_bringup)/launch/include/hsrb_relay_topics.xml">
     <arg name="namespace" value="$(arg namespace)" />
   </include>
+
+  <!-- odometry_switcher -->
+  <group ns="$(arg namespace)">
+    <arg name="odometry_config" default="$(find hsrb_common_config)/params/hsrb_odometry_config.yaml" />
+    <node name="odometry_switcher" pkg="tmc_odometry_switcher" type="odometry_switcher_node">
+      <!--
+      <remap from="switched_odom" to="odom"/>
+      -->
+      <!-- TUe added 3x -->
+      <remap from="switched_odom" to="base/measurements"/>
+      <remap from="wheel_odom" to="base/measurements_wheel"/>
+      <remap from="laser_odom" to="base/measurements_laser"/>
+
+      <rosparam command="load" file="$(arg odometry_config)"/>
+      <param name="initial_odom" value="laser_odom" if="$(arg use_laser_odom)"/>
+      <param name="initial_odom" value="wheel_odom" unless="$(arg use_laser_odom)"/>
+    </node>
+  </group>
+
 </launch>
