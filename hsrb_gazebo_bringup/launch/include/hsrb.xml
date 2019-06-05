@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <launch>
     <!-- Modified version of hsrb_gazebo_bringup/launch/include/hsrb.xml -->
     <arg name="namespace" default="/hsrb" />
