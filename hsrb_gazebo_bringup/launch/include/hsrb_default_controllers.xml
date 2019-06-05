@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <launch>
   <!-- Modified version of hsrb_gazebo_bringup/launch/include/hsrb_default_controllers.xml -->
     <arg name="use_laser_odom" default="true" />
