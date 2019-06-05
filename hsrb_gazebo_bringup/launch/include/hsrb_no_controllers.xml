@@ -13,7 +13,7 @@
     <arg unless="$(arg fast_physics)" name="gains_suffix" value=""/>
     <arg     if="$(arg fast_physics)" name="gains_suffix" value="_fast"/>
 
-    <include file="$(find hsrb_gazebo_bringup)/launch/include/upload_urdf_$(arg robot_name).xml">
+    <include file="$(find hsrb_gazebo_bringup)/launch/include/upload_urdf_$(arg robot_name).xml" ns="$(arg namespace)" >
         <arg name="visualization" value="$(arg gazebo_visualization)" />
         <arg name="implicit_damping" value="$(arg implicit_damping)" />
     </include>
