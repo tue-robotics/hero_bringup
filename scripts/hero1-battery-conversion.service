@@ -11,5 +11,6 @@ User=administrator
 Restart=on-abort
 ExecStart=/bin/bash -c 'source /home/administrator/.tue/setup.bash && \
                         rosrun hero_bringup battery_conversion_node \
+                        __name:=hero1_battery_conversion
                         __ns:=/hero \
                         battery_state:=battery_state/hero1'
