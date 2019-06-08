@@ -71,7 +71,7 @@
     <remap from="/hsrb/wrist_wrench/raw" to="$(arg namespace)/wrist_wrench/raw" />
 
     <!-- Filtered command velocity -->
-    <remap from="/hsrb/command_velocity" to="$(arg namespace)/opt_command_velocity" />
+    <remap from="/hsrb/command_velocity" to="$(arg namespace)/base/references" />
 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <arg name="paused" value="$(arg paused)"/>

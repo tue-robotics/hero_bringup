@@ -35,8 +35,13 @@
     <arg name="map" default="$(optenv ROS_HOME ~/.ros)/map/map.yaml" />
 
     <!-- General remapping -->
+    <remap from="/hsrb/robot_description" to="$(arg namespace)/robot_description" />
     <remap from="/robot_description" to="$(arg namespace)/robot_description" />
     <remap from="robot_description" to="$(arg namespace)/robot_description" />
+
+    <remap from="/hsrb/robot_collision_pair" to="$(arg namespace)/robot_collision_pair" />
+    <remap from="/robot_collision_pair" to="$(arg namespace)/robot_collision_pair" />
+    <remap from="robot_collision_pair" to="$(arg namespace)/robot_collision_pair" />
 
     <remap from="/hsrb/diagnostics" to="$(arg namespace)/diagnostics" />
     <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
