@@ -1,0 +1,10 @@
+[Unit]
+Description=Head display on Hero's head
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+User=amigo
+Restart=on-abort
+ExecStart=/usr/bin/hero-display_0.0.1.AppImage
