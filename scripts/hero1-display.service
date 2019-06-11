@@ -5,6 +5,7 @@ Description=Head display on Hero's head
 WantedBy=multi-user.target
 
 [Service]
-User=amigo
+User=hsr-hmi
 Restart=on-abort
-ExecStart=/usr/bin/hero-display_0.0.1.AppImage
+# Put a symlink from /usr/bin/hero-display.AppImage to wherever the real .AppImage is
+ExecStart=/usr/bin/hero-display.AppImage
