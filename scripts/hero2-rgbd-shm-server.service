@@ -1,0 +1,13 @@
+[Unit]
+Description=running rgbd rgbd_to_shm
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+User=amigo
+Restart=on-abort
+ExecStart=/bin/bash -c 'source /home/amigo/.tue/setup.bash && \
+                        rosrun rgbd rgbd_to_shm \
+                        __name:=hero2_shm_server \
+                        __ns:=/hero/head_rgbd_sensor'
