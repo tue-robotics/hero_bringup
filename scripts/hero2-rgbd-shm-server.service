@@ -6,7 +6,7 @@ WantedBy=multi-user.target
 
 [Service]
 User=amigo
-Restart=on-abort
+Restart=on-failure
 ExecStart=/bin/bash -c 'source /home/amigo/.tue/setup.bash && \
                         rosrun rgbd rgbd_to_shm \
                         __name:=hero2_shm_server \
