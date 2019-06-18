@@ -1,5 +1,7 @@
 [Unit]
 Description=Head display on Hero's head
+After=graphical.target
+Wants=graphical.target
 
 [Install]
 WantedBy=multi-user.target
