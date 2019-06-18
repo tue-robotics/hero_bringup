@@ -11,5 +11,5 @@ EnvironmentFile=-/etc/opt/tmc/robot/version
 User=administrator
 LimitMEMLOCK=10240000000
 LimitRTPRIO=51
-Restart=on-abort
+Restart=on-failure
 ExecStart=/bin/bash -c 'source /home/administrator/.tue/setup.bash && roslaunch hero_bringup start.launch --wait'

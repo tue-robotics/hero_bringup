@@ -9,6 +9,5 @@ WantedBy=multi-user.target
 [Service]
 EnvironmentFile=-/etc/opt/tmc/robot/version
 User=administrator
-Restart=on-abort
+Restart=on-failure
 ExecStart=/bin/bash -c 'source /home/administrator/.tue/setup.bash && roslaunch hero_bringup hsrb_monitor.launch namespace:=/hero --wait'
-
