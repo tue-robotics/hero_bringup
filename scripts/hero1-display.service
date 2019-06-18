@@ -1,10 +1,10 @@
 [Unit]
 Description=Head display on Hero's head
-After=graphical.target
-Wants=graphical.target
+After=display-manager.service
+Wants=display-manager.service
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=graphical.target
 
 [Service]
 User=hsr-hmi
