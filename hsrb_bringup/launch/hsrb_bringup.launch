@@ -13,6 +13,7 @@
   <remap from="wheel_odom" to="$(arg namespace)/base/measurements_wheel" />
   <remap from="/hsrb/wheel_odom" to="$(arg namespace)/base/measurements_wheel" />
   <remap from="command_velocity" to="$(arg namespace)/base/references" />
+  <remap from="$(arg namespace)/arm_trajectory_controller/follow_joint_trajectory" to="$(arg namespace)/body/joint_trajectory_action" />
 
   <include file="$(find hero_bringup)/hsrb_bringup/launch/include/hsrb_controller_common.xml">
     <arg name="namespace" value="$(arg namespace)" />
