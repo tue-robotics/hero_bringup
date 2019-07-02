@@ -44,8 +44,6 @@
     <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
     <remap from="diagnostics" to="$(arg namespace)/diagnostics" />
 
-    <remap from="$(arg namespace)/arm_trajectory_controller/follow_joint_trajectory" to="$(arg namespace)/body/joint_trajectory_action" />
-
     <group ns="$(arg namespace)">
         <!-- TUe custom description -->
         <rosparam file="$(find hero_description)/custom/joint_groups.yaml" command="load" />
