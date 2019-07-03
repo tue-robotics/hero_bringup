@@ -64,9 +64,12 @@
     <remap from="/hsrb/command_suction" to="$(arg namespace)/command_suction" />
 
     <!-- Torso controller -->
+<!--
     <remap from="/hsrb/mimic_controller/pid_gains/torso_lift_joint/parameter_descriptions" to="$(arg namespace)/mimic_controller/pid_gains/torso_lift_joint/parameter_descriptions" />
     <remap from="/hsrb/mimic_controller/pid_gains/torso_lift_joint/parameter_updates" to="$(arg namespace)/mimic_controller/pid_gains/torso_lift_joint/parameter_updates" />
     <remap from="/hsrb/mimic_controller/pid_gains/torso_lift_joint/set_parameters" to="$(arg namespace)/mimic_controller/pid_gains/torso_lift_joint/set_parameters" />
+-->
+    <remap from="/hsrb/mimic_controller/pid_gains/torso_lift_joint" to="$(arg namespace)/mimic_controller/pid_gains/torso_lift_joint" />
 
     <!-- Wrist -->
     <remap from="/hsrb/wrist_wrench/raw" to="$(arg namespace)/wrist_wrench/raw" />
