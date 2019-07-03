@@ -1,8 +1,31 @@
 # Desk
 - {id: coke-1, type: coke_can, x: 2.2, y: -0.95, z: 0.8}
 - {id: coke-2, type: coke_can, x: 2.4, y: -0.95, z: 0.8}
-
-#  x: 2.15881180763
-#  y: -0.879814982414
-#  z: 0.740009307861
-
+# Shoe rack
+- {id: coke-3, type: coke_can, x: 0.9, y: -0.8, z: 0.8}
+# Safe
+- {id: coke-4, type: coke_can, x: 0.9, y: 0.6, z: 0.8}
+# Bedroom chest
+- {id: coke-5, type: coke_can, x: 3.4, y: 2.0, z: 0.8}
+# Sidetable
+- {id: coke-6, type: coke_can, x: 3.4, y: 4.0, z: 0.8}
+# Bed
+- {id: coke-7, type: coke_can, x: 1.0, y: 4.4, z: 0.8}
+# Shelf
+- {id: coke-8, type: coke_can, x: 3.6, y: 5.2, z: 0.8}
+# Coffee table
+- {id: coke-9, type: coke_can, x: 5.8, y: 0.13, z: 0.6}
+# Arm chair
+- {id: coke-10, type: coke_can, x: 7.6, y: 0.25, z: 0.6}
+# Display cabinet
+- {id: coke-11, type: coke_can, x: 6.4, y: 2.2, z: 0.8}
+- {id: coke-12, type: coke_can, x: 7.6, y: 1.8, z: 0.8}
+# Kitchen table
+- {id: coke-13, type: coke_can, x: 6.3, y: 3.3, z: 0.8}
+- {id: coke-14, type: coke_can, x: 6.2, y: 3.9, z: 0.8}
+# Island
+- {id: coke-15, type: coke_can, x: 5.9, y: 5.4, z: 0.8}
+# Sink
+- {id: coke-16, type: coke_can, x: 4.4, y: 3.7, z: 0.8}
+# Kitchen cabinet
+- {id: coke-17, type: coke_can, x: 7.9, y: 5.0, z: 0.8}
