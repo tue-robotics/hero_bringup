@@ -29,7 +29,5 @@
 
     </group>
 
-    <!-- Start the challenge -->
-    <node pkg="challenge_find_my_mates" type="find_my_mates.py" name="state_machine" args="hero" output="screen" required="true"/>
-
+    <!-- Don't start the challenge, launch in different terminal so that we can verify the deps are working before challenge -->
 </launch>
