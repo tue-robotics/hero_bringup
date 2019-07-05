@@ -2,7 +2,7 @@ name: navigation
 lib: libed_navigation_plugin.so
 parameters:
     constraint_service:
-        default_offset: 0.7
+        default_offset: 0.55
         room_offset: -0.3
     occupancy_grid_publisher:
         resolution: 0.05
