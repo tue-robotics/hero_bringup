@@ -25,7 +25,6 @@
         <include file="$(find robot_launch_files)/launch/world_modeling/people_recognition.launch">
             <arg name="machine" value="hero2"/>
 			<arg name="robot_name" value="$(arg robot_name)" />
-			<arg name="enable_topic_mode" value="True" />
         </include>
 
     </group>
