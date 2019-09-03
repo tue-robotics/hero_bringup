@@ -29,6 +29,4 @@
 
     <!-- Start the challenge -->
     <node pkg="challenge_set_the_table" type="challenge_set_the_table" name="state_machine" args="hero" output="screen" required="true" />
-
-    <include file="$(find hero_bringup)/launch/hero2_festival_tts.launch" />
 </launch>

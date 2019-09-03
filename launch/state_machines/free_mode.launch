@@ -41,5 +41,4 @@
         <param name="robot_name" value="hero"/>
     </node>
 
-    <include file="$(find hero_bringup)/launch/hero2_festival_tts.launch" />
 </launch>
