@@ -50,11 +50,10 @@
         <rosparam file="$(find hero_description)/custom/skills.yaml" command="load" />
 
         <!-- Phone UI -->
-        <group unless="$(optenv ROBOT_REAL false)" >
-			<include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch">
-				<arg name="machine" value="hero1" />
-			</include>
-	    </group>
+        <include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch">
+            <arg name="machine" value="hero1" />
+        </include>
+
     </group>
 
 
