@@ -54,7 +54,7 @@
 			<include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch">
 				<arg name="machine" value="hero1" />
 			</include>
-		<\group>
+		</group>
 
     </group>
 
