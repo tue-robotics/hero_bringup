@@ -50,10 +50,11 @@
         <rosparam file="$(find hero_description)/custom/skills.yaml" command="load" />
 
         <!-- Phone UI -->
-        <include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch">
-            <arg name="machine" value="hero1" />
-        </include>
-
+        <group unless="$(optenv ROBOT_REAL false)" >
+            <include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch">
+                <arg name="machine" value="hero1" />
+            </include>
+        </group>
     </group>
 
 
@@ -190,8 +191,6 @@
         <!-- bridge nodes-->
         <node pkg="hero_bridge" type="speech.py" name="text_to_speech" if="$(optenv ROBOT_REAL false)" output="log" />
         <node pkg="hero_bridge" type="light_bridge.py" name="light_bridge" if="$(optenv ROBOT_REAL false)" output="log" />
-
-        <node pkg="hero_bridge" type="joint_trajectory.py" name="arm_bridge" output="log" />
         <node pkg="hero_bridge" type="gripper_controller.py" name="gripper_bridge" output="log" />
         <node pkg="hero_bridge" type="tf_ghost.py" name="tf_ghost" output="log" />
         <node pkg="hero_bridge" type="head_controller.py" name="head_bridge" output="log" />
@@ -206,4 +205,5 @@
         </node>
 
     </group> <!-- End of TU/e namespace group -->
+
 </launch>

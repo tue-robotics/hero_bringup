@@ -40,6 +40,7 @@
     <!-- General controllers -->
     <remap from="/hsrb/controller_manager" to="$(arg namespace)/controller_manager" />
     <remap from="/hsrb/arm_trajectory_controller" to="$(arg namespace)/arm_trajectory_controller" />
+    <remap from="$(arg namespace)/arm_trajectory_controller/follow_joint_trajectory" to="$(arg namespace)/body/joint_trajectory_action" />
     <remap from="/hsrb/gripper_controller" to="$(arg namespace)/gripper_controller" />
     <remap from="/hsrb/head_trajectory_controller" to="$(arg namespace)/head_trajectory_controller" />
     <remap from="/hsrb/impedance_control" to="$(arg namespace)/impedance_control" />
@@ -63,9 +64,7 @@
     <remap from="/hsrb/command_suction" to="$(arg namespace)/command_suction" />
 
     <!-- Torso controller -->
-    <remap from="/hsrb/mimic_controller/pid_gains/torso_lift_joint/parameter_descriptions" to="$(arg namespace)/mimic_controller/pid_gains/torso_lift_joint/parameter_descriptions" />
-    <remap from="/hsrb/mimic_controller/pid_gains/torso_lift_joint/parameter_updates" to="$(arg namespace)/mimic_controller/pid_gains/torso_lift_joint/parameter_updates" />
-    <remap from="/hsrb/mimic_controller/pid_gains/torso_lift_joint/set_parameters" to="$(arg namespace)/mimic_controller/pid_gains/torso_lift_joint/set_parameters" />
+    <remap from="/hsrb/mimic_controller/pid_gains/torso_lift_joint" to="$(arg namespace)/mimic_controller/pid_gains/torso_lift_joint" />
 
     <!-- Wrist -->
     <remap from="/hsrb/wrist_wrench/raw" to="$(arg namespace)/wrist_wrench/raw" />
@@ -79,6 +78,7 @@
         <arg name="gui" value="$(arg gui)"/>
         <arg name="debug" value="$(arg debug)"/>
         <arg name="world_name" value="$(arg world_name)"/>
+        <arg name="output" value="log" />
     </include>
 
 </launch>

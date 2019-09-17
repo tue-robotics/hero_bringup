@@ -1,0 +1,2 @@
+rosservice call /gazebo/set_model_configuration -- "{model_name: 'hsrb', joint_names: ['base_roll_joint'], joint_positions: [0]}"
+

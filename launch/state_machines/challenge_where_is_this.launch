@@ -29,5 +29,7 @@
 
     </group>
 
-    <!-- Don't start the challenge, launch in different terminal so that we can verify the deps are working before challenge -->
+    <!-- Start the challenge -->
+    <node pkg="challenge_where_is_this" type="challenge_where_is_this" name="state_machine" args="hero" output="screen" required="true"/>
+
 </launch>

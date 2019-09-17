@@ -4,7 +4,6 @@
     <arg name="robot_name" value="hero" />
 
     <group ns="$(arg robot_name)">
-
         <!-- NAVIGATION -->
         <include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
             <arg name="machine" value="hero2"/>
@@ -26,8 +25,8 @@
             <arg name="machine" value="hero2"/>
             <arg name="robot_name" value="$(arg robot_name)" />
         </include>
-
     </group>
 
-    <!-- Don't start the challenge, launch in different terminal so that we can verify the deps are working before challenge -->
+    <!-- Start the challenge -->
+    <node pkg="challenge_set_the_table" type="challenge_set_the_table" name="state_machine" args="hero" output="screen" required="true" />
 </launch>

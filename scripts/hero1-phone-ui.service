@@ -1,0 +1,12 @@
+[Unit]
+Description=HERO phone ui
+After=hero1-roscore.service
+Requires=hero1-roscore.service
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+User=administrator
+Restart=on-abort
+ExecStart=/bin/bash -c 'source /home/administrator/.tue/setup.bash && roslaunch hero_bringup phone_ui.launch --wait'

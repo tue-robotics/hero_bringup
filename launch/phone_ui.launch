@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="namespace" default="/hero" />
+
+    <group ns="$(arg namespace)">
+		<include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch">
+			<arg name="machine" value="hero1" />
+		</include>
+    </group>
+</launch>
