@@ -7,6 +7,7 @@ sudo cp $DIR/hero1-roscore.service /etc/systemd/system/
 
 sudo cp $DIR/hero1-battery-conversion.service /etc/systemd/system/
 sudo cp $DIR/hero1-monitor.service /etc/systemd/system/
+sudo cp $DIR/hero1-phone-ui.service /etc/systemd/system/
 sudo cp $DIR/hero1-start.service /etc/systemd/system/
 sudo cp $DIR/hero1-windows-speech.service /etc/systemd/system/
 
@@ -31,6 +32,7 @@ sudo systemctl start hero1-roscore.service
 
 sudo systemctl start hero1-battery-conversion.service
 sudo systemctl start hero1-monitor.service
+sudo systemctl start hero1-phone-ui.service
 # sudo systemctl start hero1-start.service
 
 sudo systemctl enable ntpdate.service
@@ -38,6 +40,7 @@ sudo systemctl enable hero1-roscore.service
 
 sudo systemctl enable hero1-battery-conversion.service
 sudo systemctl enable hero1-monitor.service
+sudo systemctl enable hero1-phone-ui.service
 # sudo systemctl enable hero1-start.service
 
 sudo systemctl disable vbox*
