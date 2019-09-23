@@ -625,7 +625,7 @@ Visualization Manager:
       Value: true
     - Class: rviz/MarkerArray
       Enabled: true
-      Marker Topic: /hero/people_detector/viz
+      Marker Topic: /hero/people_recognition/people_recognition_3d_node/viz
       Name: skeletons
       Namespaces:
         {}
