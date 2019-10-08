@@ -22,10 +22,10 @@ class SanyoBatteryInfoToBatteryState(object):
             input_topic = rospy.get_param("~input_topic", "battery_info")
         if output_topic is None:
             output_topic = rospy.get_param("~output_topic", "battery_state")
-        
+
         self.input_sub = rospy.Subscriber(input_topic, SanyoBatteryInfo, self._battery_cb, queue_size=1)
         self.output_pub = rospy.Publisher(output_topic, BatteryState, queue_size=1)
-    
+
     def _battery_cb(self, in_msg):
         # type: (SanyoBatteryInfo) -> BatteryState
         out_msg = BatteryState()
@@ -54,7 +54,7 @@ class SanyoBatteryInfoToBatteryState(object):
 
         out_msg.power_supply_technology = BatteryState.POWER_SUPPLY_TECHNOLOGY_UNKNOWN
         out_msg.present = True
-        out_msg.location = ""
+        out_msg.location = "robot"
         out_msg.serial_number = ""
 
         self.output_pub.publish(out_msg)
