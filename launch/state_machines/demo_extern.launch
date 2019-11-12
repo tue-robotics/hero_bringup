@@ -5,7 +5,7 @@
 <launch>
     <arg name="robot_name" value="hero" />
     <arg name="skip" default="true" />
-    <arg name="number_of_tasks" default="15" />
+    <arg name="number_of_tasks" default="0" />
     <arg name="time_limit" default="999" />
 
     <group ns="$(arg robot_name)">
