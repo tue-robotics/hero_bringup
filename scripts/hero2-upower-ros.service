@@ -13,4 +13,4 @@ ExecStart=/bin/bash -c 'source /home/amigo/.tue/setup.bash && \
                         __ns:=/hero \
                         _battery_topic:=battery_state/hero2 \
                         _upower_path:=/org/freedesktop/UPower/devices/battery_BAT1\
-                        _location=laptop'
+                        _location=hero2'
