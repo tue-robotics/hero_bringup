@@ -54,7 +54,7 @@ class SanyoBatteryInfoToBatteryState(object):
 
         out_msg.power_supply_technology = BatteryState.POWER_SUPPLY_TECHNOLOGY_UNKNOWN
         out_msg.present = True
-        out_msg.location = "robot"
+        out_msg.location = "hero1"
         out_msg.serial_number = ""
 
         self.output_pub.publish(out_msg)
