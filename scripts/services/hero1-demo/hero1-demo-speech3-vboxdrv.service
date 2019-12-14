@@ -17,4 +17,4 @@ ExecStart=/usr/lib/virtualbox/vboxdrv.sh start
 ExecStop=/usr/lib/virtualbox/vboxdrv.sh stop
 
 [Install]
-WantedBy=hero1-demo-windows-speech.service
+WantedBy=hero1-demo-speech5-windows-speech.service
