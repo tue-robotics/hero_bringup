@@ -2,7 +2,7 @@
 SourcePath=/usr/lib/virtualbox/vboxballoonctrl-service.sh
 Description=
 Before=shutdown.target
-After=vboxdrv.service
+After=hero1-speech3-vboxdrv.service
 Conflicts=shutdown.target
 
 [Service]
@@ -17,4 +17,4 @@ ExecStart=/usr/lib/virtualbox/vboxballoonctrl-service.sh start
 ExecStop=/usr/lib/virtualbox/vboxballoonctrl-service.sh stop
 
 [Install]
-WantedBy=hero1-windows-speech.service
+WantedBy=hero1-speech5-windows-speech.service

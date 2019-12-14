@@ -1,0 +1,127 @@
+#! /usr/bin/env bash
+
+function install_and_disable_systemd
+{
+    if [ -z "$1" ]
+    then
+        # shellcheck disable=SC1078,SC1079
+        echo """Usage: source install_and_disable_systemd PATH [NAMES]
+
+    Installs all services from the paths in PATH(colon seperated) and disables and removes
+    all services which matches the names in NAMES (colon seperated).
+
+    The sevices to be disabled are disable before the new ones are installed.
+    """
+    return 0
+    fi
+
+    local srv_search_paths names
+    srv_search_paths=$(echo "$1" | tr : " ")
+    names=$(echo "$2" | tr : " ")
+
+    # Getting service files to disable and remove
+    local disable_srv_paths disable_srv_files
+    disable_srv_paths=""
+    disable_srv_files=""
+    for name in $names
+    do
+        local service_files
+        service_files=$(find /etc/systemd/system -maxdepth 1 -type f -name "$name*" | sort -r)
+        if [ -n "$service_files" ]
+        then
+            for service_file in $service_files
+            do
+                disable_srv_paths=${disable_srv_paths:+${disable_srv_paths} }$service_file
+                disable_srv_files=${disable_srv_files:+${disable_srv_files} }$(basename -- "$service_file")
+            done
+        fi
+    done
+    disable_srv_files=$(echo "$disable_srv_files" | uniq | sort -r)
+
+    # Disabling and removing services
+    if [ -n "$disable_srv_files" ]
+    then
+        echo -e "Disabling services: '$disable_srv_files'"
+
+        for disable_service in $disable_srv_files
+        do
+            sudo systemctl stop "$disable_service"
+        done
+        for disable_service in $disable_srv_files
+        do
+            sudo systemctl disable "$disable_service"
+        done
+
+        if [ -n "$disable_srv_paths" ]
+        then
+            # shellcheck disable=SC2086
+            sudo rm $disable_srv_paths
+            sudo systemctl daemon-reload
+        fi
+    else
+        echo -e "No matching services files found to disable"
+    fi
+
+    # Getting service files to install
+    local srv_paths srv_files srv_names
+    for search_path in $srv_search_paths
+    do
+        local service_files
+        service_files=$(find "$search_path" -name "*.service" 2>/dev/null | sort)
+        if [ -n "$service_files" ]
+        then
+            for service_file in $service_files
+            do
+                srv_paths=${srv_paths:+${srv_paths} }$service_file
+                srv_files=${srv_files:+${srv_files} }$(basename -- "$service_file")
+            done
+        fi
+    done
+
+    srv_files=$(echo "$srv_files" | uniq | sort)
+
+    # Installing, starting and enabling
+    if [ -n "$srv_files" ]
+    then
+        echo -e "Installing services: $srv_files"
+    else
+        echo -e "No service files to enable found in: '$1'"
+        return 0
+    fi
+
+    srv_names=""
+    for srv_file in $srv_files
+    do
+        local srv_name
+        srv_name="${srv_file%.*}"
+        srv_names=${srv_names:+${srv_names}/}$srv_name
+    done
+
+    if [ -n "$srv_paths" ]
+    then
+        # shellcheck disable=SC2086
+        sudo cp $srv_paths /etc/systemd/system/
+        sudo systemctl daemon-reload
+    fi
+
+    # Reload and enable
+    echo -e "daemon-reload"
+    sudo systemctl daemon-reload
+
+    for srv_file in $srv_files
+    do
+        echo -e "sudo systemctl start $srv_file"
+        sudo systemctl start "$srv_file"
+    done
+
+    for srv_file in $srv_files
+    do
+         echo -e "sudo systemctl enable $srv_file"
+        sudo systemctl enable "$srv_file"
+    done
+
+    echo -e "Check the journal for the log"
+    echo -e "sudo journalctl -fu $srv_names"
+}
+
+install_and_disable_systemd "$@"
