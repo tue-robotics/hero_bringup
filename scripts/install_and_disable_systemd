@@ -41,7 +41,7 @@ function install_and_disable_systemd
     # Disabling and removing services
     if [ -n "$disable_srv_files" ]
     then
-        echo -e "Disabling services: '$disable_srv_files'"
+        echo -e "Disabling services: '$disable_srv_files'\n"
 
         for disable_service in $disable_srv_files
         do
@@ -56,7 +56,6 @@ function install_and_disable_systemd
         then
             # shellcheck disable=SC2086
             sudo rm $disable_srv_paths
-            sudo systemctl daemon-reload
         fi
     else
         echo -e "No matching services files found to disable"
@@ -101,7 +100,6 @@ function install_and_disable_systemd
     then
         # shellcheck disable=SC2086
         sudo cp $srv_paths /etc/systemd/system/
-        sudo systemctl daemon-reload
     fi
 
     # Reload and enable
