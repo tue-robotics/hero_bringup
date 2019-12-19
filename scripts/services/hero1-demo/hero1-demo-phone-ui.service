@@ -1,6 +1,6 @@
 [Unit]
 Description=HERO phone ui
-After=hero1-roscore.service
+After=hero1-demo-roscore.service
 Requires=hero1-demo-roscore.service
 
 [Install]
