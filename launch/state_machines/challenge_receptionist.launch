@@ -6,33 +6,25 @@
     <group ns="$(arg robot_name)">
 
         <!-- NAVIGATION -->
-        <include file="$(find robot_launch_files)/launch/navigation/navigation.launch">
-            <arg name="machine" value="hero2"/>
-        </include>
+        <include file="$(find robot_launch_files)/launch/navigation/navigation.launch"/>
 
         <!-- WORLD MODEL -->
-        <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
-            <arg name="machine" value="hero2"/>
-        </include>
+        <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch"/>
 
         <!-- IMAGE RECOGNITION -->
-        <include file="$(find robot_launch_files)/launch/world_modeling/image_recognition.launch">
-            <arg name="machine" value="hero2"/>
-        </include>
+        <include file="$(find robot_launch_files)/launch/world_modeling/image_recognition.launch"/>
 
         <!-- PEOPLE RECOGNITION -->
         <include file="$(find robot_launch_files)/launch/world_modeling/people_recognition.launch">
-            <arg name="machine" value="hero2"/>
             <arg name="robot_name" value="$(arg robot_name)" />
         </include>
 
         <!-- VIZ -->
         <include file="$(find robot_launch_files)/launch/interaction/vizbox.launch">
-            <arg name="machine" value="hero2"/>
             <arg name="robot_name" value="$(arg robot_name)"/>
             <arg name="image" value="/hero/head_rgbd_sensor/rgb/image_raw"/>
-			<arg name="param_file" value="$(find challenge_receptionist)/param/vizbox.yaml"/>
-		</include>
+            <arg name="param_file" value="$(find challenge_receptionist)/param/vizbox.yaml"/>
+        </include>
     </group>
 
     <!-- Start the challenge -->
