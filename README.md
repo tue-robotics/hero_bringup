@@ -2,13 +2,13 @@
 Launch, machine and parameter files required to bringup the HERO robot
 
 ## (Re-)install HERO
-# Before clean install
+### Before clean install
 - Upload calibration files: `hsrb_command upload_robot_config` (as root/administrator)
 - Back-Up of virtualbox image which are located in `~/vbox_images`:
     - Stop systemd service: `sudo systemctl stop hero-windows-speech.service`
     - Actual back-up i.e.: `scp -r ~/vbox_images/* amigo@hero2.local:~/vbox_images_backup`
 
-# Clean install
+### Clean install
 - Required items:
     - USB DVD drive
     - Install disk (17.10 works)
@@ -23,7 +23,7 @@ Launch, machine and parameter files required to bringup the HERO robot
 - Disconnect DVD drive.
 - Press enter to reboot the robot.
 
-# After clean install
+### After clean install
 - Fix the wireless network directly on the robot:
     - `wpa_gui`(as root/administrator) to add wifi network. Make sure to select the `wlp3so` interface
 
