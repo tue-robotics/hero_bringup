@@ -64,3 +64,15 @@ The following steps can be done via SSH or directly on the robot (SSH: `ssh admi
 - Go to `hero_bringup` package. Execute the following to stop the Toyota and VirtualBox services and start ours: `./scripts/install_systemd_autostart_hero1`
 - (Fix timezone: `tue-robocup-set-timezone-home`)
 - Reboot and ready to go!
+
+## HERO display
+### First install
+1. Download the latest `hero-display.AppImage` from https://github.com/tue-robotics/hero-display/releases
+2. Move the file to `/opt/tue/bin/hero-display.AppImage`
+3. Make sure all users have all rights: `(sudo) chmod a+rwx /opt/tue/bin/hero-display.AppImage`
+4. On HERO (hsr-hmi user) go to **Startup Applications** and add a new item with `/opt/tue/bin/hero-display.AppImage` as command.
+5. Run it once manually or reboot HERO
+
+### Update
+1. Close the current hero-display session
+2. Repeat step 2-5 from [First install](#First-install)
