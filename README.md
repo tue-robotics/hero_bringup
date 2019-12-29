@@ -75,4 +75,4 @@ The following steps can be done via SSH or directly on the robot (SSH: `ssh admi
 
 ### Update
 1. Close the current hero-display session
-2. Repeat step 2-5 from [First install](#first-install)
+2. Repeat steps 1-3 & 5 from [First install](#first-install)
