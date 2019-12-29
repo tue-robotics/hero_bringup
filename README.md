@@ -76,3 +76,12 @@ The following steps can be done via SSH or directly on the robot (SSH: `ssh admi
 ### Update
 1. Close the current hero-display session
 2. Repeat steps 1-3 & 5 from [First install](#first-install)
+
+## HERO2
+### Power settings
+To prevent HERO2 to shutdown on unplugging the power supply, some power settings need to be changed. (https://unix.stackexchange.com/questions/85251/my-laptop-shuts-down-every-time-i-unplug-it)
+
+```bash
+gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type nothing
+gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type nothing
+```
