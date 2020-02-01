@@ -118,6 +118,7 @@
     <group ns="$(arg namespace)">
 
         <!-- HEAD CONTROL -->
+        <remap from="neck/measurements" to="joint_states"/>
         <include file="$(find robot_launch_files)/launch/manipulation/head.launch">
             <arg name="machine" value="hero1"/>
         </include>
