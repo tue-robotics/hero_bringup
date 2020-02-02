@@ -8,7 +8,6 @@ wave_threshold: 0.2
 vert_threshold: 0.7
 hor_threshold: 0.4
 padding: 5
-enable_topic_mode: false
 
 camera_info_depth: "/hero/head_rgbd_sensor/depth_registered/camera_info"
 image_depth: "/hero/head_rgbd_sensor/depth_registered/image"
