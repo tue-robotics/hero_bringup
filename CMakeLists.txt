@@ -5,13 +5,13 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
 )
 
+include_directories(${catkin_INCLUDE_DIRS})
+
 catkin_add_env_hooks(99.hero_functions SHELLS bash DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/env-hooks)
 
 catkin_python_setup()
 
-catkin_package(
-  CATKIN_DEPENDS sensor_msgs
-)
+catkin_package()
 
 ###########
 ## Build ##
