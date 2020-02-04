@@ -1,0 +1,15 @@
+[Unit]
+Description=running battery_manager_laptop
+After=hero1-roscore.service
+Requires=hero1-roscore.service
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+User=administrator
+Restart=on-failure
+ExecStart=/bin/bash -c 'source /home/administrator/.tue/setup.bash && \
+                        rosrun hero_bringup battery_manager_laptop \
+                        __name:=hero1_battery_manager_laptop \
+                        __ns:=/hero'
