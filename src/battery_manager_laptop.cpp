@@ -2,13 +2,13 @@
 #include <sensor_msgs/BatteryState.h>
 #include <std_msgs/String.h>
 
-
-double capacity;
-double charge;
 int percentage;
 
 void batteryCallback(const sensor_msgs::BatteryState::ConstPtr& msg)
 {
+    double capacity;
+    double charge;
+
     if (msg->location == "hero2")
     {
         capacity = msg->capacity;
@@ -16,7 +16,6 @@ void batteryCallback(const sensor_msgs::BatteryState::ConstPtr& msg)
         percentage = (charge/capacity)*100;
     }
 }
-
 
 int main(int argc, char **argv)
 {
@@ -48,7 +47,7 @@ int main(int argc, char **argv)
         }
         else if (percentage < middle)
         {
-            message = "The laptop battery is halfway empty, charge me if possible.";
+            message = "The laptop battery is below half empty, charge me if possible.";
         }
 
         // publish voice message
