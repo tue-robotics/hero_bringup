@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8.3)
 project(hero_bringup)
 
 find_package(catkin REQUIRED COMPONENTS
+  roscpp
   sensor_msgs
 )
 
