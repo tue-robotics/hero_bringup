@@ -7,7 +7,6 @@ double capacity;
 double charge;
 int percentage;
 
-
 void batteryCallback(const sensor_msgs::BatteryState::ConstPtr& msg)
 {
     if (msg->location == "hero2")
@@ -37,6 +36,7 @@ int main(int argc, char **argv)
 
     while(gn.ok())
     {
+        ros::spinOnce();
         // check battery status
         if (percentage < empty)
         {
