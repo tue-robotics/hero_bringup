@@ -2,52 +2,35 @@
 #include <sensor_msgs/BatteryState.h>
 #include <std_msgs/String.h>
 
-int percentage;
+std::string old_message = "";
 
 void batteryCallback(const sensor_msgs::BatteryState::ConstPtr& msg)
 {
-    double capacity;
-    double charge;
-
-    if (msg->location == "hero2")
-    {
-        capacity = msg->capacity;
-        charge = msg->charge;
-        percentage = (charge/capacity)*100;
-    }
-}
-
-int main(int argc, char **argv)
-{
-    ros::init(argc, argv, "Battery_manager_laptop");
-    ros::NodeHandle gn;
-
     int middle = 50;
     int low = 20;
     int empty = 10;
     std::string message = "";
-    std::string old_message = "";
+    std::string location = "";
+    int percentage;
 
-    ros::Subscriber battery_sub = gn.subscribe("battery", 1, batteryCallback);
-    ros::Publisher speech_pub = gn.advertise<std_msgs::String>("text_to_speech/input", 10);
-
-    ros::Rate loop_rate(1.0);
-
-    while(gn.ok())
+    if (msg->location == "hero2")
     {
-        ros::spinOnce();
+        percentage = msg->percentage;
+        location = msg->location
+        ROS_INFO(percentage)
+
         // check battery status
         if (percentage < empty)
         {
-            message = "The laptop battery is empty, I need power now!";
+            message = "The battery on " + location + " is at " std::to_string(percentage) + "percent. Charge me now!";
         }
         else if (percentage < low)
         {
-            message = "The laptop battery is almost empty, give me power.";
+            message = "The battery on " + location + " is at " std::to_string(percentage) + "percent. Charge me as soon as possible";
         }
         else if (percentage < middle)
         {
-            message = "The laptop battery is below half empty, charge me if possible.";
+            message = "The battery on " + location + " is at " std::to_string(percentage) + "percent. Keep an eye on the battery";
         }
 
         // publish voice message
@@ -58,8 +41,23 @@ int main(int argc, char **argv)
             speech_pub.publish(speech_msg);
             old_message = message;
         }
+    }
+}
 
-    loop_rate.sleep();
+int main(int argc, char **argv)
+{
+    ros::init(argc, argv, "Battery_manager_laptop");
+    ros::NodeHandle gn;
+
+    ros::Publisher speech_pub = gn.advertise<std_msgs::String>("text_to_speech/input", 10);
+    ros::Subscriber battery_sub = gn.subscribe("battery", 1, batteryCallback);
+
+    ros::Rate loop_rate(1.0);
+
+    while(gn.ok())
+    {
+        ros::spinOnce();
+        loop_rate.sleep();
     }
     return 0;
 }
