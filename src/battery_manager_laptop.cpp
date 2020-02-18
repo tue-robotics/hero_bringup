@@ -1,6 +1,8 @@
 #include <ros/ros.h>
 #include <sensor_msgs/BatteryState.h>
 #include <std_msgs/String.h>
+#include <string>
+#include <sstream>
 
 
 std::string old_message = "";
@@ -8,12 +10,14 @@ ros::Publisher speech_pub;
 
 void batteryCallback(const sensor_msgs::BatteryState::ConstPtr& msg)
 {
+    int percentage;
     int middle = 50;
     int low = 20;
     int empty = 10;
     std::string message = "";
     std::string location = "";
-    int percentage;
+    std::ostringstream string_message;
+
 
     if (msg->location == "hero2")
     {
@@ -24,16 +28,23 @@ void batteryCallback(const sensor_msgs::BatteryState::ConstPtr& msg)
         // check battery status
         if (percentage < empty)
         {
-            message = "The battery on " + location + " is below 10 percent. Charge me now!";
+            string_message << "The battery on" << location <<  " is at"  << percentage << " percent. Charge me now!";
         }
         else if (percentage < low)
         {
-            message = "The battery on " + location + " is below 20 percent. Charge me as soon as possible";
+            string_message << "The battery on" << location <<  " is at"  << percentage << " percent. Don't forget to charge me";
         }
         else if (percentage < middle)
         {
-            message = "The battery on " + location + " is below 50 percent. Keep an eye on the battery";
+            string_message << "The battery on" << location <<  " is at"  << percentage << " percent. Keep an I on the batteries";
         }
+        else if (percentage < 60)
+        {
+            string_message << "battery percentage is " << percentage;
+        }
+
+        message = string_message.str();
+
 
         // publish voice message
         if (old_message != message && message != "")
