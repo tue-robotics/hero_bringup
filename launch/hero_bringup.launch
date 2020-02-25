@@ -109,9 +109,6 @@
         <!-- TEXT TO SPEECH -->
         <include file="$(find robot_launch_files)/launch/interaction/text_to_speech.launch" ns="$(arg namespace)" />
 
-        <!-- Needed by manipulation bridge, because it uses the Toyota Robot_object -->
-        <rosparam file="$(find hsrb_impedance_control)/launch/configurations.yaml" command="load" ns="$(arg namespace)/impedance_control" />
-
     </group><!-- End of simulator group -->
 
     <!-- TU/e namespace group -->
@@ -163,7 +160,7 @@
             <remap from="/hsrb/odom" to="$(arg namespace)/base/measurements" />
             <remap from="/hsrb/arm_trajectory_controller/command" to="$(arg namespace)/arm_trajectory_controller/command" />
             <remap from="/hsrb/omni_base_controller/command" to="$(arg namespace)/omni_base_controller/command" />
-            <include file="$(find hero_bringup)/hsrb_impedance_control/launch/impedance_control_node.launch" ns="$(arg namespace)" if="$(optenv ROBOT_REAL false)" >
+			<include file="$(find hero_bringup)/hsrb_impedance_control/launch/impedance_control_node.launch">
                 <arg name="namespace" value="$(arg namespace)" />
             </include>
 
