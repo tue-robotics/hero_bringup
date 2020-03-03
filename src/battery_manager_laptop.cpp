@@ -11,19 +11,20 @@ ros::Publisher speech_pub;
 void batteryCallback(const sensor_msgs::BatteryState::ConstPtr& msg)
 {
     int percentage;
-    int middle = 50;
-    int low = 20;
-    int empty = 10;
+    int middle;
+    int low;
+    int empty;
+    ros::param::get("/battery_middle", middle);
+    ros::param::get("/battery_low", low);
+    ros::param::get("/battery_empty", empty);
     std::string message = "";
     std::string location = "";
     std::ostringstream string_message;
-
 
     if (msg->location == "hero2")
     {
         percentage = (msg->percentage)*100;
         location = msg->location;
-        ROS_INFO("percentage: %i", percentage);
 
         // check battery status
         if (percentage < empty)
@@ -38,13 +39,8 @@ void batteryCallback(const sensor_msgs::BatteryState::ConstPtr& msg)
         {
             string_message << "The battery on" << location <<  " is at"  << percentage << " percent. Keep an I on the batteries";
         }
-        else if (percentage < 60)
-        {
-            string_message << "battery percentage is " << percentage;
-        }
 
         message = string_message.str();
-
 
         // publish voice message
         if (old_message != message && message != "")

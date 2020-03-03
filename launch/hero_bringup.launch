@@ -57,6 +57,8 @@
         </group>
     </group>
 
+    <!-- Battery warning parameters -->
+    <rosparam file="$(find hero_bringup)/parameters/hardware/battery.yaml" command="load" />
 
     <!-- Real hardware -->
     <group if="$(optenv ROBOT_REAL false)" >
