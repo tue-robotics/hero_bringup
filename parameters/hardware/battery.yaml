@@ -1,3 +1,4 @@
+robot_location: "hero2"
 battery_empty: 10
 battery_low: 20
 battery_middle: 50
