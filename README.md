@@ -2,13 +2,13 @@
 Launch, machine and parameter files required to bringup the HERO robot
 
 ## (Re-)install HERO
-# Before clean install
+### Before clean install
 - Upload calibration files: `hsrb_command upload_robot_config` (as root/administrator)
 - Back-Up of virtualbox image which are located in `~/vbox_images`:
     - Stop systemd service: `sudo systemctl stop hero-windows-speech.service`
     - Actual back-up i.e.: `scp -r ~/vbox_images/* amigo@hero2.local:~/vbox_images_backup`
 
-# Clean install
+### Clean install
 - Required items:
     - USB DVD drive
     - Install disk (17.10 works)
@@ -23,7 +23,7 @@ Launch, machine and parameter files required to bringup the HERO robot
 - Disconnect DVD drive.
 - Press enter to reboot the robot.
 
-# After clean install
+### After clean install
 - Fix the wireless network directly on the robot:
     - `wpa_gui`(as root/administrator) to add wifi network. Make sure to select the `wlp3so` interface
 
@@ -64,3 +64,24 @@ The following steps can be done via SSH or directly on the robot (SSH: `ssh admi
 - Go to `hero_bringup` package. Execute the following to stop the Toyota and VirtualBox services and start ours: `./scripts/install_systemd_autostart_hero1`
 - (Fix timezone: `tue-robocup-set-timezone-home`)
 - Reboot and ready to go!
+
+## HERO display
+### First install
+1. Download the latest `hero-display.AppImage` from https://github.com/tue-robotics/hero-display/releases
+2. Move the file to `/opt/tue/bin/hero-display.AppImage`
+3. Make sure all users have all rights: `(sudo) chmod a+rwx /opt/tue/bin/hero-display.AppImage`
+4. On HERO (hsr-hmi user) go to **Startup Applications** and add a new item with `/opt/tue/bin/hero-display.AppImage` as command.
+5. Run it once manually or reboot HERO
+
+### Update
+1. Close the current hero-display session
+2. Repeat steps 1-3 & 5 from [First install](#first-install)
+
+## HERO2
+### Power settings
+To prevent HERO2 to shutdown on unplugging the power supply, some power settings need to be changed. (https://unix.stackexchange.com/questions/85251/my-laptop-shuts-down-every-time-i-unplug-it)
+
+```bash
+gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type nothing
+gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type nothing
+```
