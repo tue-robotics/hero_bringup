@@ -4,24 +4,19 @@
 #include <string>
 #include <sstream>
 
-
+int middle;
+int low;
+int empty;
+std::string robot_location = "";
 std::string old_message = "";
 ros::Publisher speech_pub;
 
 void batteryCallback(const sensor_msgs::BatteryState::ConstPtr& msg)
 {
     int percentage;
-    int middle;
-    int low;
-    int empty;
     std::string message = "";
     std::string location = "";
-    std::string robot_location = "";
     std::ostringstream string_message;
-    ros::param::get("/battery_middle", middle);
-    ros::param::get("/battery_low", low);
-    ros::param::get("/battery_empty", empty);
-    ros::param::get("/robot_location", robot_location);
 
     if (msg->location == robot_location)
     {
@@ -59,6 +54,11 @@ int main(int argc, char **argv)
 {
     ros::init(argc, argv, "Battery_manager_laptop");
     ros::NodeHandle gn;
+
+    ros::param::get("/battery_middle", middle);
+    ros::param::get("/battery_low", low);
+    ros::param::get("/battery_empty", empty);
+    ros::param::get("/robot_location", robot_location);
 
     ros::Subscriber battery_sub = gn.subscribe("battery", 1, batteryCallback);
     speech_pub = gn.advertise<std_msgs::String>("text_to_speech/input", 10);

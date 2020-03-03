@@ -59,9 +59,6 @@
         <include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch" unless="$(optenv ROBOT_REAL false)" />
     </group>
 
-    <!-- Battery warning parameters -->
-    <rosparam file="$(find hero_bringup)/parameters/hardware/battery.yaml" command="load" />
-
     <!-- Real hardware -->
     <group if="$(optenv ROBOT_REAL false)" >
 
