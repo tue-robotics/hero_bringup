@@ -10,6 +10,4 @@ WantedBy=multi-user.target
 User=administrator
 Restart=on-failure
 ExecStart=/bin/bash -c 'source /home/administrator/.tue/setup.bash && \
-                        rosrun hero_bringup battery_manager_laptop \
-                        __name:=hero1_battery_manager_laptop \
-                        __ns:=/hero'
+                        roslaunch hero_bringup battery_manager_laptop

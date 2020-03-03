@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="namespace" default="/hero" />
+
+    <group ns="$(arg namespace)">
+        <!-- Battery warning parameters -->
+        <rosparam file="$(find hero_bringup)/parameters/hardware/battery.yaml" command="load" />
+        <node name="battery_manager_laptop" pkg="hero_bringup" type="battery_manager_laptop" />
+    </group>
+</launch>
