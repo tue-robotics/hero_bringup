@@ -14,14 +14,16 @@ void batteryCallback(const sensor_msgs::BatteryState::ConstPtr& msg)
     int middle;
     int low;
     int empty;
+    std::string message = "";
+    std::string location = "";
+    std::string robot_location = "";
+    std::ostringstream string_message;
     ros::param::get("/battery_middle", middle);
     ros::param::get("/battery_low", low);
     ros::param::get("/battery_empty", empty);
-    std::string message = "";
-    std::string location = "";
-    std::ostringstream string_message;
+    ros::param::get("/robot_location", robot_location);
 
-    if (msg->location == "hero2")
+    if (msg->location == robot_location)
     {
         percentage = (msg->percentage)*100;
         location = msg->location;
