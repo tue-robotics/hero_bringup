@@ -8,4 +8,4 @@ WantedBy=multi-user.target
 User=demo
 Restart=on-failure
 ExecStart=/bin/bash -c 'source /home/demo/.tue/setup.bash && \
-                        roslaunch hero_bringup battery_manager_laptop
+                        roslaunch hero_bringup battery_manager_laptop.launch'
