@@ -5,8 +5,13 @@
   <node pkg="hsrb_impedance_control"
         name="impedance_control"
         type="hsrb_impedance_control_node">
-    <remap from="/wrench_state" to="$(arg namespace)/wrist_wrench/compensated"/>
-    <remap from="~configuration_names" to="~config_names"/>
+    <remap from="~wrench_state" to="$(arg namespace)/wrist_wrench/compensated"/>
+    <!-- 
+    The following remap is included from the original launch file (hsrb_impedance_control package).
+    It is, however, unclear what this should do and is therefore commented.
+    -->  
+    <!--<remap from="~configuration_names" to="~config_names"/>-->
+    <remap from="~robot_description" to="$(arg namespace)/robot_description"/>
     <param name="control_rate" value="50.0"/>
     <param name="command_duration" value="0.3"/>
     <rosparam command="load"

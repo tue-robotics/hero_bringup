@@ -1,7 +1,7 @@
 [Unit]
 Description=Windows Speech VM service
-After=network.target hero1-vboxdrv.service
-Wants=network.target hero1-vboxdrv.service
+After=network.target hero1-demo-speech3-vboxdrv.service
+Wants=network.target hero1-demo-speech3-vboxdrv.service
 Before=shutdown.target
 Conflicts=shutdown.target
 

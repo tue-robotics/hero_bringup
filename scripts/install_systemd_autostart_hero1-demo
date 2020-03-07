@@ -2,5 +2,5 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-srv_path="$DIR"/services/hero1
+srv_path="$DIR"/services/hero1-demo
 source "$DIR"/install_and_disable_systemd $srv_path hero

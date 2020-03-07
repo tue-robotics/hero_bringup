@@ -1,0 +1,11 @@
+[Unit]
+Description=NTPDATE
+After=network-online.target
+Requires=network-online.target
+
+[Install]
+WantedBy=hero1-demo-roscore.service
+
+[Service]
+Restart=on-abort
+ExecStart=/usr/sbin/ntpdate ntp.ubuntu.com

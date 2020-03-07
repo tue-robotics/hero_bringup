@@ -43,10 +43,12 @@ class SanyoBatteryInfoToBatteryState(object):
         out_msg.power_supply_status = BatteryState.POWER_SUPPLY_STATUS_UNKNOWN
         if in_msg.full_charge:
             out_msg.power_supply_status = BatteryState.POWER_SUPPLY_STATUS_FULL
-        elif in_msg.charge_enabled:
-            out_msg.power_supply_status = BatteryState.POWER_SUPPLY_STATUS_CHARGING
-        elif in_msg.discharge_enabled:
-            out_msg.power_supply_status = BatteryState.POWER_SUPPLY_STATUS_DISCHARGING
+        else:
+            # in_msg.charge_enabled is providing wrong info
+            if in_msg.electric_current < 0:
+                out_msg.power_supply_status = BatteryState.POWER_SUPPLY_STATUS_CHARGING
+            else:
+                out_msg.power_supply_status = BatteryState.POWER_SUPPLY_STATUS_DISCHARGING
 
         out_msg.power_supply_health = BatteryState.POWER_SUPPLY_HEALTH_UNKNOWN
         if in_msg.over_charge or in_msg.over_discharge:
