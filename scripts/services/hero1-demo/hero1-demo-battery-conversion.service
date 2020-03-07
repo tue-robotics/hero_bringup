@@ -1,0 +1,16 @@
+[Unit]
+Description=running battery_conversion_node
+After=hero1-roscore.service
+Requires=hero1-demo-roscore.service
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+User=demo
+Restart=on-failure
+ExecStart=/bin/bash -c 'source /home/demo/.tue/setup.bash && \
+                        rosrun hero_bringup battery_conversion_node \
+                        __name:=hero1_battery_conversion \
+                        __ns:=/hero \
+                        battery_state:=battery'

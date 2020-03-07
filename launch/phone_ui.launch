@@ -3,8 +3,6 @@
     <arg name="namespace" default="/hero" />
 
     <group ns="$(arg namespace)">
-		<include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch">
-			<arg name="machine" value="hero1" />
-		</include>
+        <include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch"/>
     </group>
 </launch>
