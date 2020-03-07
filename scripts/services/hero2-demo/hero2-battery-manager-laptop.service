@@ -1,7 +1,5 @@
 [Unit]
 Description=running battery_manager_laptop
-After=hero2-roscore.service
-Requires=hero2-roscore.service
 
 [Install]
 WantedBy=multi-user.target
