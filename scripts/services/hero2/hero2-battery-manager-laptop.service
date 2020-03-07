@@ -7,7 +7,7 @@ Requires=hero1-roscore.service
 WantedBy=multi-user.target
 
 [Service]
-User=administrator
+User=amigo
 Restart=on-failure
 ExecStart=/bin/bash -c 'source /home/administrator/.tue/setup.bash && \
                         roslaunch hero_bringup battery_manager_laptop
