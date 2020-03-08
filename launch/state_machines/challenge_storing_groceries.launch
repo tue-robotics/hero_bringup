@@ -24,6 +24,6 @@
     </group>
 
     <!-- Start the challenge -->
-    <node pkg="challenge_storing_groceries" type="challenge_storing_groceries" name="state_machine" args="hero" output="screen" required="true" />
+    <node pkg="challenge_storing_groceries" type="challenge_storing_groceries" name="state_machine" args="$(arg robot_name)" output="screen" required="true" />
 
 </launch>
