@@ -8,12 +8,12 @@ services:
 before_install:
   - openssl aes-256-cbc -K $encrypted_3959f4b55449_key -iv $encrypted_3959f4b55449_iv
     -in ./deploy_key.enc -out ./deploy_key -d
-  - export SSH_KEY_PRIVATE=$(cat deploy_key)
   - wget https://raw.githubusercontent.com/tue-robotics/tue-env/master/ci/install-package.sh
   - wget https://raw.githubusercontent.com/tue-robotics/tue-env/master/ci/build-package.sh
   - export PACKAGE=${TRAVIS_REPO_SLUG#*/}
 
 install:
+  - SSH_KEY_PRIVATE=$(cat deploy_key)
   - bash install-package.sh --package=$PACKAGE --branch=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH} --commit=$TRAVIS_COMMIT --pullrequest=$TRAVIS_PULL_REQUEST --image="tuerobotics/tue-env" --ssh --ssh-key="$SSH_KEY_PRIVATE"
 
 script:
