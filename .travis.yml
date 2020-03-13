@@ -2,6 +2,10 @@ os: linux
 dist: xenial
 language: cpp
 
+addons:
+  ssh_known_hosts:
+    - gitlab.com
+
 services:
   - docker
 
