@@ -80,7 +80,7 @@ The following steps can be done via SSH or directly on the robot (SSH: `ssh admi
 
 ## HERO1
 ### Services
-The following services are running on HERO1. Normally these are runned from the demo account:
+The following services are running on HERO1. Normally these are ran from the demo account:
 - **hero1-battery-conversion**: Publishing a BatteryState message from the custom Toyota messages
 - **hero1-monitor.service**: HERO version of `hsrb_monitor` from `hsrb_bringup`
 - **hero1-ntpdate.service**: Service to sync time with servers
