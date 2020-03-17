@@ -77,7 +77,29 @@ The following steps can be done via SSH or directly on the robot (SSH: `ssh admi
 1. Close the current hero-display session
 2. Repeat steps 1-3 & 5 from [First install](#first-install)
 
+
+## HERO1
+### Services
+The following services are running on HERO1. Normally these are ran from the demo account:
+- **hero1-battery-conversion**: Publishing a BatteryState message from the custom Toyota messages
+- **hero1-monitor.service**: HERO version of `hsrb_monitor` from `hsrb_bringup`
+- **hero1-ntpdate.service**: Service to sync time with servers
+- **hero1-phone-ui.service**: Service to always have the webserver running to facilitate hero-dashboard, hero-display and other web applications.
+- **hero1-roscore.service**: Service containing the roscore. Runs the Toyota wrapper(`rosrun hsrb_bringup hsrb_roscore_service namespace:=/hero`)
+- **hero1-speech1-vboxautostart-service**: Slightly changed version of vboxautostart
+- **hero1-speech2-vboxballoonctrl-service**: Slightly changed version of vboxballoonctrl
+- **hero1-speech3-vboxdrv**: Slightly changed version of vboxdrv
+- **hero1-speech4-vboxweb-service**: Slightly changed version of vboxweb
+- **hero1-speech5-windows-speech**: Service to start the Windows virtualbox
+
 ## HERO2
+### Services
+The following services are running on HERO2. Normally these are ran from the demo account:
+- **hero2-battery-manager**: Running a battery manager to let the robot speak in case of a low battery level
+- **hero2-openpose**: Running OpenPose
+- **hero2-rgbd-shm-server**: Running a `rgbd` shared memory server, so there is only one RGBD connection from HERO1 to HERO2
+- **hero2-upower-ros**: Running `upower_ros` to publish the battery state of HERO2
+
 ### Power settings
 To prevent HERO2 to shutdown on unplugging the power supply, some power settings need to be changed. (https://unix.stackexchange.com/questions/85251/my-laptop-shuts-down-every-time-i-unplug-it)
 
