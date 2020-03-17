@@ -94,7 +94,7 @@ The following services are running on HERO1. Normally these are runned from the 
 
 ## HERO2
 ### Services
-The following services are running on HERO1. Normally these are runned from the demo account:
+The following services are running on HERO1. Normally these are ran from the demo account:
 - **hero2-battery-manager**: Running a battery manager to let the robot speak in case of a low battery level
 - **hero2-openpose**: Running OpenPose
 - **hero2-rgbd-shm-server**: Running a `rgbd` shared memory server, so there is only one RGBD connection from HERO1 to HERO2
