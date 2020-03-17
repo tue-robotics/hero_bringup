@@ -85,7 +85,7 @@ The following services are running on HERO1. Normally these are runned from the 
 - **hero1-monitor.service**: HERO version of `hsrb_monitor` from `hsrb_bringup`
 - **hero1-ntpdate.service**: Service to sync time with servers
 - **hero1-phone-ui.service**: Service to always have the webserver running to facilitate hero-dashboard, hero-display and other web applications.
-- **hero1-roscore.service**: Service containing the roscore
+- **hero1-roscore.service**: Service containing the roscore. Runs the Toyota wrapper(`rosrun hsrb_bringup hsrb_roscore_service namespace:=/hero`)
 - **hero1-speech1-vboxautostart-service**: Slightly changed version of vboxautostart
 - **hero1-speech2-vboxballoonctrl-service**: Slightly changed version of vboxballoonctrl
 - **hero1-speech3-vboxdrv**: Slightly changed version of vboxdrv
