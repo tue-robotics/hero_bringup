@@ -4,7 +4,7 @@ language: cpp
 
 addons:
   ssh_known_hosts:
-    - gitlab.com
+    - github.com
 
 services:
   - docker
