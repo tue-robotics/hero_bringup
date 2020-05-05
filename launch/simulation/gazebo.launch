@@ -37,6 +37,18 @@
     <remap from="/hsrb/head_l_stereo_camera" to="$(arg namespace)/head_l_stereo_camera" />
     <remap from="/hsrb/head_r_stereo_camera" to="$(arg namespace)/head_r_stereo_camera" />
 
+    <!-- gazebo_ros_control -->
+    <remap from="/hsrb/gazebo_ros_control/pid_gains/base_r_drive_wheel_joint" to="/gazebo_ros_control/pid_gains/base_r_drive_wheel_joint" />
+    <remap from="/hsrb/gazebo_ros_control/pid_gains/base_l_drive_wheel_joint" to="/gazebo_ros_control/pid_gains/base_l_drive_wheel_joint" />
+    <remap from="/hsrb/gazebo_ros_control/pid_gains/base_roll_joint" to="/gazebo_ros_control/pid_gains/base_roll_joint" />
+    <remap from="/hsrb/gazebo_ros_control/pid_gains/head_pan_joint" to="/gazebo_ros_control/pid_gains/head_pan_joint" />
+    <remap from="/hsrb/gazebo_ros_control/pid_gains/head_tilt_joint" to="/gazebo_ros_control/pid_gains/head_tilt_joint" />
+    <remap from="/hsrb/gazebo_ros_control/pid_gains/arm_lift_joint" to="/gazebo_ros_control/pid_gains/arm_lift_joint" />
+    <remap from="/hsrb/gazebo_ros_control/pid_gains/arm_flex_joint" to="/gazebo_ros_control/pid_gains/arm_flex_joint" />
+    <remap from="/hsrb/gazebo_ros_control/pid_gains/arm_roll_joint" to="/gazebo_ros_control/pid_gains/arm_roll_joint" />
+    <remap from="/hsrb/gazebo_ros_control/pid_gains/wrist_flex_joint" to="/gazebo_ros_control/pid_gains/wrist_flex_joint" />
+    <remap from="/hsrb/gazebo_ros_control/pid_gains/wrist_roll_joint" to="/gazebo_ros_control/pid_gains/wrist_roll_joint" />
+
     <!-- General controllers -->
     <remap from="/hsrb/controller_manager" to="$(arg namespace)/controller_manager" />
     <remap from="/hsrb/arm_trajectory_controller" to="$(arg namespace)/arm_trajectory_controller" />
