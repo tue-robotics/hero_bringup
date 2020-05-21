@@ -122,7 +122,7 @@
 
         <!-- ROS to RGBD -->
         <group ns="head_rgbd_sensor">
-            <node pkg="rgbd" type="rgbd_server" name="ros_to_rgbd" output="log">
+            <node pkg="rgbd" type="ros_to_rgbd" name="ros_to_rgbd" output="log">
                 <remap from="output" to="rgbd" />
                 <remap from="rgb_image" to="rgb/image_rect_color" />
                 <remap from="cam_info" to="rgb/camera_info" />
