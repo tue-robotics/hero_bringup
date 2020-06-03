@@ -1,5 +1,5 @@
-odom_frame: "odom"
-base_frame: "base_footprint"
+odom_frame: /hero/odom
+base_frame: /hero/base_footprint
 delta: 0.025
 
 # Initial map size

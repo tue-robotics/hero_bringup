@@ -23,9 +23,9 @@ parameters:
      min_particle_distance: 0.01
      min_particle_rotation_distance: 0.02
  odom_model:
-     map_frame: map
-     odom_frame: odom
-     base_link_frame: base_footprint
+     map_frame: /map
+     odom_frame: /hero/odom
+     base_link_frame: /hero/base_footprint
      alpha1: 0.05   # rot -> trans + strafe
      alpha2: 0.5    # trans -> rot
      alpha3: 0.5    # trans -> trans
