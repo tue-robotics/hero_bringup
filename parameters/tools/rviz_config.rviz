@@ -261,7 +261,7 @@ Visualization Manager:
           Value: true
       Name: RobotModel
       Robot Description: /hero/robot_description
-      TF Prefix: "hero"
+      TF Prefix: ""
       Update Interval: 0
       Value: true
       Visual Enabled: true
