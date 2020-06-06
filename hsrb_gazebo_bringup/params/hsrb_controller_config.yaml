@@ -1,0 +1,25 @@
+omni_base_controller:
+  constraints:
+    odom_x:
+      trajectory: 0.2
+    odom_y:
+      trajectory: 0.2
+    odom_t:
+      trajectory: 0.2
+  stop_velocity_threshold: 0.1
+  wheel_velocity_limit: 13.5    # [rad/s]
+head_trajectory_controller:
+  constraints:
+    goal_time: 3.0
+  state_publish_rate: 100
+  action_monitor_rate: 10
+  stop_trajectory_duration: 0
+arm_trajectory_controller:
+  constraints:
+    goal_time: 3.0
+  state_publish_rate: 100
+  action_monitor_rate: 10
+  stop_trajectory_duration: 0
+gripper_controller:
+  constraints:
+    goal_time: 10.0

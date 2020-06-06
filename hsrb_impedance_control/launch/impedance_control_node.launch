@@ -7,7 +7,7 @@
        if="$(eval namespace == '/' or namespace == '')" />
   <arg name="tf_prefix" value="$(arg namespace)/"
        if="$(eval namespace != '/' and namespace != '')" />
-  <group ns="$(arg robot_name)">
+  <group ns="$(arg namespace)">
     <node pkg="hsrb_impedance_control"
           name="impedance_control"
           type="hsrb_impedance_control_node">
@@ -16,7 +16,7 @@
 -->
       <remap from="~wrench_state" to="wrist_wrench/compensated"/>
       <remap from="~configuration_names" to="~config_names"/>
-      <remap from="~robot_description" to="/$(arg namespace)/robot_description"/>
+      <remap from="~robot_description" to="$(arg namespace)/robot_description"/>
 
       <param name="base_frame_id" value="$(arg tf_prefix)odom"/>
       <param name="robot_frame_id" value="$(arg tf_prefix)base_link"/>

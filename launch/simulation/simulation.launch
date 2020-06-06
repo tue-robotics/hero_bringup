@@ -40,13 +40,13 @@
         <arg name="fast_physics" value="$(arg fast_physics)" />
         <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
         <arg name="robot_pos" value="$(arg robot_pos)" />
-        <arg name="namespace" value="" /><!--This should be empty-->
+        <arg name="namespace" value="$(arg namespace)" />
         <arg name="personal_name" value="$(arg personal_name)" />
         <arg name="robot_name" value="$(arg robot_name)" />
     </include>
 
     <include file="$(find hsrb_gazebo_bringup)/launch/include/hsrb_sensor.xml" >
-        <arg name="namespace" value="" />
+        <arg name="namespace" value="$(arg namespace)" />
         <arg name="personal_name" value="$(arg personal_name)" />
     </include>
 

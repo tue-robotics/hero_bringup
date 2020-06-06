@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="namespace" default="hsrb" />
+  <arg name="personal_name" default="" />
+
+<!--Don't use personal_name
+  <arg if="$(eval personal_name == '')" name="relay_namespace" value="/$(arg namespace)" />
+  <arg if="$(eval personal_name != '')" name="relay_namespace" value="/$(arg personal_name)/$(arg namespace)" />
+
+  <arg name="rgb_topic_prefix" value="$(arg relay_namespace)/head_rgbd_sensor/rgb" />
+  <arg name="depth_topic_prefix" value="$(arg relay_namespace)/head_rgbd_sensor/depth_registered" />
+  <arg name="r_stereo_topic_prefix" value="$(arg relay_namespace)/head_r_stereo_camera" />
+  <arg name="l_stereo_topic_prefix" value="$(arg relay_namespace)/head_l_stereo_camera" />
+-->
+
+  <arg name="rgb_topic_prefix" value="$(arg namespace)/head_rgbd_sensor/rgb" />
+  <arg name="depth_topic_prefix" value="$(arg namespace)/head_rgbd_sensor/depth_registered" />
+  <arg name="r_stereo_topic_prefix" value="$(arg namespace)/head_r_stereo_camera" />
+  <arg name="l_stereo_topic_prefix" value="$(arg namespace)/head_l_stereo_camera" />
+
+  <group ns="$(arg rgb_topic_prefix)">
+    <node pkg="nodelet" type="nodelet" name="nodelet_manager" args="manager" />
+    <node pkg="nodelet" type="nodelet" name="debayer"
+          args="load image_proc/debayer nodelet_manager" />
+  </group>
+
+  <group ns="$(arg namespace)">
+    <!-- xtion rgb -->
+    <node name="rgb_raw_image_pub" pkg="topic_tools" type="relay"
+    args="$(arg rgb_topic_prefix)/image_rect_color $(arg rgb_topic_prefix)/image_raw">
+      <param name="lazy" value="true" />
+    </node>
+    <node name="rgb_rect_mono_image_pub" pkg="topic_tools" type="relay"
+    args="$(arg rgb_topic_prefix)/image_mono $(arg rgb_topic_prefix)/image_rect_mono">
+      <param name="lazy" value="true" />
+    </node>
+    <!-- l_stereo -->
+    <node name="l_stereo_raw_image_pub" pkg="topic_tools" type="relay"
+    args="$(arg l_stereo_topic_prefix)/image_rect_color $(arg l_stereo_topic_prefix)/image_raw" >
+      <param name="lazy" value="true" />
+    </node>
+    <!-- r_stereo -->
+    <node name="r_stereo_raw_image_pub" pkg="topic_tools" type="relay"
+    args="$(arg r_stereo_topic_prefix)/image_rect_color $(arg r_stereo_topic_prefix)/image_raw" >
+      <param name="lazy" value="true" />
+    </node>
+    <!-- xtion depth -->
+    <node name="depth_raw_image_pub" pkg="topic_tools" type="relay"
+    args="$(arg depth_topic_prefix)/image_rect_raw $(arg depth_topic_prefix)/image_raw" >
+      <param name="lazy" value="true" />
+    </node>
+    <node name="depth_hw_float_image_pub" pkg="topic_tools" type="relay"
+    args="$(arg depth_topic_prefix)/image_rect_raw $(arg depth_topic_prefix)/hw_registered/image_float" >
+      <param name="lazy" value="true" />
+    </node>
+    <node name="depth_hw_rect_image_pub" pkg="topic_tools" type="relay"
+    args="$(arg depth_topic_prefix)/image_rect_raw $(arg depth_topic_prefix)/hw_registered/image_rect" >
+      <param name="lazy" value="true" />
+    </node>
+    <node name="depth_hw_rect_raw_image_pub" pkg="topic_tools" type="relay"
+    args="$(arg depth_topic_prefix)/image_rect_raw $(arg depth_topic_prefix)/hw_registered/image_rect_raw" >
+      <param name="lazy" value="true" />
+    </node>
+    <!-- xtion points -->
+    <node name="normal_point_cloud_pub" pkg="topic_tools" type="relay"
+    args="$(arg depth_topic_prefix)/rectified_points $(arg depth_topic_prefix)/points" >
+      <param name="lazy" value="true" />
+    </node>
+  </group>
+</launch>

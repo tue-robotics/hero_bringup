@@ -20,7 +20,7 @@
     <arg name="align_at_startup" default="true" />
     <arg name="auto_start" default="false" /> <!-- Don't pass on to robot_service node -->
     <arg name="robot_name" default="hsrb" />
-    <arg name="personal_name" default="hero" />
+    <arg name="personal_name" default="" />
     <arg name="enable_emergency_stop" default="false" />
 
     <arg name="sim" value="true" if="$(optenv ROBOT_REAL false)" />

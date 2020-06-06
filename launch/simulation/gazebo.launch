@@ -12,44 +12,49 @@
     <arg name="use_sim_time" default="true"/>
     <arg name="world_name" default="$(optenv ROBOT_ENV robotics_testlabs)/model.sdf"/>
 
+    <arg if="$(eval personal_name == '' and robot_name == '')" name="ns" value="/" />
+    <arg if="$(eval personal_name != '' and robot_name == '')" name="ns" value="/$(arg personal_name)/" />
+    <arg if="$(eval personal_name == '' and robot_name != '')" name="ns" value="/$(arg robot_name)/" />
+    <arg if="$(eval personal_name != '' and robot_name != '')" name="ns" value="/$(arg personal_name)/$(arg robot_name)/" />
+
     <!-- General -->
-    <remap from="/$(arg personal_name)/$(arg robot_name)/joint_states" to="$(arg namespace)/joint_states_hardware" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/pressure_sensor" to="$(arg namespace)/pressure_sensor" /> <!-- Gazebo publishes this topic, maybe this is related to the suction. Exact function unknown -->
+    <remap from="$(arg ns)/joint_states" to="$(arg namespace)/joint_states_hardware" />
+    <remap from="$(arg ns)/pressure_sensor" to="$(arg namespace)/pressure_sensor" /> <!-- Gazebo publishes this topic, maybe this is related to the suction. Exact function unknown -->
 
     <!-- Base -->
-    <remap from="/$(arg personal_name)/$(arg robot_name)/odom" to="$(arg namespace)/base/measurements" /> <!-- Gazebo listens to this topic, which is published by the odometry switcher -->
-    <remap from="/$(arg personal_name)/$(arg robot_name)/wheel_odom" to="$(arg namespace)/base/measurements_wheel" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/odom_ground_truth" to="$(arg namespace)/measurements_ground_truth" /> <!-- Gazebo publishes this topic, exact function unknown -->
+    <remap from="$(arg ns)/odom" to="$(arg namespace)/base/measurements" /> <!-- Gazebo listens to this topic, which is published by the odometry switcher -->
+    <remap from="$(arg ns)/wheel_odom" to="$(arg namespace)/base/measurements_wheel" />
+    <remap from="$(arg ns)/odom_ground_truth" to="$(arg namespace)/measurements_ground_truth" /> <!-- Gazebo publishes this topic, exact function unknown -->
 
     <!-- Sensors -->
-    <remap from="/$(arg personal_name)/$(arg robot_name)/base_scan" to="$(arg namespace)/base_laser/scan" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/base_imu/data" to="$(arg namespace)/base_imu/data" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/base_b_bumper_sensor" to="$(arg namespace)/base_b_bumper_sensor" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/base_f_bumper_sensor" to="$(arg namespace)/base_f_bumper_sensor" />
+    <remap from="$(arg namespace)$(arg ns)/base_scan" to="$(arg namespace)/base_laser/scan" />
+    <remap from="$(arg namespace)$(arg ns)/base_imu/data" to="$(arg namespace)/base_imu/data" />
+    <remap from="$(arg ns)/base_b_bumper_sensor" to="$(arg namespace)/base_b_bumper_sensor" />
+    <remap from="$(arg ns)/base_f_bumper_sensor" to="$(arg namespace)/base_f_bumper_sensor" />
 
     <!-- Cameras -->
-    <remap from="/$(arg personal_name)/$(arg robot_name)/head_rgbd_sensor" to="$(arg namespace)/head_rgbd_sensor" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/head_rgbd_sensor/depth_registered/camera_info" to="$(arg namespace)/head_rgbd_sensor/depth_registered/camera_info" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/head_rgbd_sensor/depth_registered/image_rect_raw" to="$(arg namespace)/head_rgbd_sensor/depth_registered/image_rect_raw" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/head_rgbd_sensor/depth_registered/rectified_points" to="$(arg namespace)/head_rgbd_sensor/depth_registered/rectified_points" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/head_rgbd_sensor/rgb/camera_info" to="$(arg namespace)/head_rgbd_sensor/rgb/camera_info" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/head_rgbd_sensor/rgb/image_rect_color" to="$(arg namespace)/head_rgbd_sensor/rgb/image_rect_color" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/hand_camera" to="$(arg namespace)/hand_camera" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/head_center_camera" to="$(arg namespace)/head_center_camera" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/head_l_stereo_camera" to="$(arg namespace)/head_l_stereo_camera" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/head_r_stereo_camera" to="$(arg namespace)/head_r_stereo_camera" />
+    <remap from="$(arg ns)/head_rgbd_sensor" to="$(arg namespace)/head_rgbd_sensor" />
+    <remap from="$(arg ns)/head_rgbd_sensor/depth_registered/camera_info" to="$(arg namespace)/head_rgbd_sensor/depth_registered/camera_info" />
+    <remap from="$(arg ns)/head_rgbd_sensor/depth_registered/image_rect_raw" to="$(arg namespace)/head_rgbd_sensor/depth_registered/image_rect_raw" />
+    <remap from="$(arg ns)/head_rgbd_sensor/depth_registered/rectified_points" to="$(arg namespace)/head_rgbd_sensor/depth_registered/rectified_points" />
+    <remap from="$(arg ns)/head_rgbd_sensor/rgb/camera_info" to="$(arg namespace)/head_rgbd_sensor/rgb/camera_info" />
+    <remap from="$(arg ns)/head_rgbd_sensor/rgb/image_rect_color" to="$(arg namespace)/head_rgbd_sensor/rgb/image_rect_color" />
+    <remap from="$(arg ns)/hand_camera" to="$(arg namespace)/hand_camera" />
+    <remap from="$(arg ns)/head_center_camera" to="$(arg namespace)/head_center_camera" />
+    <remap from="$(arg ns)/head_l_stereo_camera" to="$(arg namespace)/head_l_stereo_camera" />
+    <remap from="$(arg ns)/head_r_stereo_camera" to="$(arg namespace)/head_r_stereo_camera" />
 
     <!-- gazebo_ros_control -->
-    <remap from="/$(arg personal_name)/$(arg robot_name)/gazebo_ros_control/pid_gains/base_r_drive_wheel_joint" to="$(arg namespace)/gazebo_ros_control/pid_gains/base_r_drive_wheel_joint" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/gazebo_ros_control/pid_gains/base_l_drive_wheel_joint" to="$(arg namespace)/gazebo_ros_control/pid_gains/base_l_drive_wheel_joint" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/gazebo_ros_control/pid_gains/base_roll_joint" to="$(arg namespace)/gazebo_ros_control/pid_gains/base_roll_joint" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/gazebo_ros_control/pid_gains/head_pan_joint" to="$(arg namespace)/gazebo_ros_control/pid_gains/head_pan_joint" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/gazebo_ros_control/pid_gains/head_tilt_joint" to="$(arg namespace)/gazebo_ros_control/pid_gains/head_tilt_joint" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/gazebo_ros_control/pid_gains/arm_lift_joint" to="$(arg namespace)/gazebo_ros_control/pid_gains/arm_lift_joint" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/gazebo_ros_control/pid_gains/arm_flex_joint" to="$(arg namespace)/gazebo_ros_control/pid_gains/arm_flex_joint" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/gazebo_ros_control/pid_gains/arm_roll_joint" to="$(arg namespace)/gazebo_ros_control/pid_gains/arm_roll_joint" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/gazebo_ros_control/pid_gains/wrist_flex_joint" to="$(arg namespace)/gazebo_ros_control/pid_gains/wrist_flex_joint" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/gazebo_ros_control/pid_gains/wrist_roll_joint" to="$(arg namespace)/gazebo_ros_control/pid_gains/wrist_roll_joint" />
+    <remap from="$(arg ns)/gazebo_ros_control/pid_gains/base_r_drive_wheel_joint" to="$(arg namespace)/gazebo_ros_control/pid_gains/base_r_drive_wheel_joint" />
+    <remap from="$(arg ns)/gazebo_ros_control/pid_gains/base_l_drive_wheel_joint" to="$(arg namespace)/gazebo_ros_control/pid_gains/base_l_drive_wheel_joint" />
+    <remap from="$(arg ns)/gazebo_ros_control/pid_gains/base_roll_joint" to="$(arg namespace)/gazebo_ros_control/pid_gains/base_roll_joint" />
+    <remap from="$(arg ns)/gazebo_ros_control/pid_gains/head_pan_joint" to="$(arg namespace)/gazebo_ros_control/pid_gains/head_pan_joint" />
+    <remap from="$(arg ns)/gazebo_ros_control/pid_gains/head_tilt_joint" to="$(arg namespace)/gazebo_ros_control/pid_gains/head_tilt_joint" />
+    <remap from="$(arg ns)/gazebo_ros_control/pid_gains/arm_lift_joint" to="$(arg namespace)/gazebo_ros_control/pid_gains/arm_lift_joint" />
+    <remap from="$(arg ns)/gazebo_ros_control/pid_gains/arm_flex_joint" to="$(arg namespace)/gazebo_ros_control/pid_gains/arm_flex_joint" />
+    <remap from="$(arg ns)/gazebo_ros_control/pid_gains/arm_roll_joint" to="$(arg namespace)/gazebo_ros_control/pid_gains/arm_roll_joint" />
+    <remap from="$(arg ns)/gazebo_ros_control/pid_gains/wrist_flex_joint" to="$(arg namespace)/gazebo_ros_control/pid_gains/wrist_flex_joint" />
+    <remap from="$(arg ns)/gazebo_ros_control/pid_gains/wrist_roll_joint" to="$(arg namespace)/gazebo_ros_control/pid_gains/wrist_roll_joint" />
 
     <!-- gazebo_ros_control -->
     <remap from="/hsrb/gazebo_ros_control/pid_gains/base_r_drive_wheel_joint" to="/gazebo_ros_control/pid_gains/base_r_drive_wheel_joint" />
@@ -64,39 +69,46 @@
     <remap from="/hsrb/gazebo_ros_control/pid_gains/wrist_roll_joint" to="/gazebo_ros_control/pid_gains/wrist_roll_joint" />
 
     <!-- General controllers -->
-    <remap from="/$(arg personal_name)/$(arg robot_name)/controller_manager" to="$(arg namespace)/controller_manager" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/arm_trajectory_controller" to="$(arg namespace)/arm_trajectory_controller" />
+    <remap from="$(arg ns)/controller_manager" to="$(arg namespace)/controller_manager" />
+    <remap from="$(arg ns)/arm_trajectory_controller" to="$(arg namespace)/arm_trajectory_controller" />
     <remap from="$(arg namespace)/arm_trajectory_controller/follow_joint_trajectory" to="$(arg namespace)/body/joint_trajectory_action" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/gripper_controller" to="$(arg namespace)/gripper_controller" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/head_trajectory_controller" to="$(arg namespace)/head_trajectory_controller" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/impedance_control" to="$(arg namespace)/impedance_control" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/joint_state_controller" to="$(arg namespace)/joint_state_controller" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/omni_base_controller" to="$(arg namespace)/omni_base_controller" />
+    <remap from="$(arg ns)/gripper_controller" to="$(arg namespace)/gripper_controller" />
+    <remap from="$(arg ns)/head_trajectory_controller" to="$(arg namespace)/head_trajectory_controller" />
+    <remap from="$(arg ns)/impedance_control" to="$(arg namespace)/impedance_control" />
+    <remap from="$(arg ns)/joint_state_controller" to="$(arg namespace)/joint_state_controller" />
+    <remap from="$(arg ns)/omni_base_controller" to="$(arg namespace)/omni_base_controller" />
 
     <!-- Gripper controller -->
-    <remap from="/$(arg personal_name)/$(arg robot_name)/gripper_controller/command" to="$(arg namespace)/gripper_controller/command" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/gripper_controller/apply_force" to="$(arg namespace)/gripper_controller/apply_force" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/gripper_controller/follow_joint_trajectory" to="$(arg namespace)/gripper_controller/follow_joint_trajectory" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/gripper_controller/grasp" to="$(arg namespace)/gripper_controller/grasp" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/gripper_controller/pid_gains/hand_l_distal_joint" to="$(arg namespace)/gripper_controller/pid_gains/hand_l_distal_joint" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/gripper_controller/pid_gains/hand_l_proximal_joint" to="$(arg namespace)/gripper_controller/pid_gains/hand_l_proximal_joint" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/gripper_controller/pid_gains/hand_l_spring_proximal_joint" to="$(arg namespace)/gripper_controller/pid_gains/hand_l_spring_proximal_joint" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/gripper_controller/pid_gains/hand_r_distal_joint" to="$(arg namespace)/gripper_controller/pid_gains/hand_r_distal_joint" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/gripper_controller/pid_gains/hand_r_proximal_joint" to="$(arg namespace)/gripper_controller/pid_gains/hand_r_proximal_joint" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/gripper_controller/pid_gains/hand_r_spring_proximal_joint" to="$(arg namespace)/gripper_controller/pid_gains/hand_r_spring_proximal_joint" />
+    <remap from="$(arg ns)/gripper_controller/command" to="$(arg namespace)/gripper_controller/command" />
+    <remap from="$(arg ns)/gripper_controller/apply_force" to="$(arg namespace)/gripper_controller/apply_force" />
+    <remap from="$(arg ns)/gripper_controller/follow_joint_trajectory" to="$(arg namespace)/gripper_controller/follow_joint_trajectory" />
+    <remap from="$(arg ns)/gripper_controller/grasp" to="$(arg namespace)/gripper_controller/grasp" />
+    <remap from="$(arg ns)/gripper_controller/pid_gains/hand_l_distal_joint" to="$(arg namespace)/gripper_controller/pid_gains/hand_l_distal_joint" />
+    <remap from="$(arg ns)/gripper_controller/pid_gains/hand_l_proximal_joint" to="$(arg namespace)/gripper_controller/pid_gains/hand_l_proximal_joint" />
+    <remap from="$(arg ns)/gripper_controller/pid_gains/hand_l_spring_proximal_joint" to="$(arg namespace)/gripper_controller/pid_gains/hand_l_spring_proximal_joint" />
+    <remap from="$(arg ns)/gripper_controller/pid_gains/hand_r_distal_joint" to="$(arg namespace)/gripper_controller/pid_gains/hand_r_distal_joint" />
+    <remap from="$(arg ns)/gripper_controller/pid_gains/hand_r_proximal_joint" to="$(arg namespace)/gripper_controller/pid_gains/hand_r_proximal_joint" />
+    <remap from="$(arg ns)/gripper_controller/pid_gains/hand_r_spring_proximal_joint" to="$(arg namespace)/gripper_controller/pid_gains/hand_r_spring_proximal_joint" />
 
     <!-- Suction controller -->
-    <remap from="/$(arg personal_name)/$(arg robot_name)/suction_control" to="$(arg namespace)/suction_control" />
-    <remap from="/$(arg personal_name)/$(arg robot_name)/command_suction" to="$(arg namespace)/command_suction" />
+    <remap from="$(arg ns)/suction_control" to="$(arg namespace)/suction_control" />
+    <remap from="$(arg ns)/command_suction" to="$(arg namespace)/command_suction" />
 
     <!-- Torso controller -->
-    <remap from="/$(arg personal_name)/$(arg robot_name)/mimic_controller/pid_gains/torso_lift_joint" to="$(arg namespace)/mimic_controller/pid_gains/torso_lift_joint" />
+    <remap from="$(arg ns)/mimic_controller/pid_gains/torso_lift_joint" to="$(arg namespace)/mimic_controller/pid_gains/torso_lift_joint" />
+    <remap from="/$(arg robot_name)/mimic_controller/pid_gains/torso_lift_joint" to="$(arg namespace)/mimic_controller/pid_gains/torso_lift_joint" />
+
+<!--
+    <remap from="$(arg ns)/mimic_controller/pid_gains/torso_lift_joint/parameter_descriptions" to="$(arg namespace)/mimic_controller/pid_gains/torso_lift_joint/parameter_descriptions" />
+    <remap from="$(arg ns)/mimic_controller/pid_gains/torso_lift_joint/parameter_updates" to="$(arg namespace)/mimic_controller/pid_gains/torso_lift_joint/parameter_updates" />
+    <remap from="$(arg ns)/mimic_controller/pid_gains/torso_lift_joint/set_parameters" to="$(arg namespace)/mimic_controller/pid_gains/torso_lift_joint/set_parameters" />
+-->
 
     <!-- Wrist -->
-    <remap from="/$(arg personal_name)/$(arg robot_name)/wrist_wrench/raw" to="$(arg namespace)/wrist_wrench/raw" />
+    <remap from="$(arg ns)/wrist_wrench/raw" to="$(arg namespace)/wrist_wrench/raw" />
 
     <!-- Filtered command velocity -->
-    <remap from="/$(arg personal_name)/$(arg robot_name)/command_velocity" to="$(arg namespace)/base/references" />
+    <remap from="$(arg ns)/command_velocity" to="$(arg namespace)/base/references" />
 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <arg name="paused" value="$(arg paused)"/>
