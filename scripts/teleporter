@@ -2,7 +2,7 @@
 
 
 import rospy
-from cb_planner_msgs_srvs.msg import LocalPlannerActionGoal
+from cb_base_navigation.msg import LocalPlannerActionGoal
 from geometry_msgs.msg import PoseWithCovarianceStamped, PoseWithCovariance, Pose, Quaternion, Point
 from math import atan2
 from tf.transformations import quaternion_from_euler
