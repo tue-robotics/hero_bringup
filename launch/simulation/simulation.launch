@@ -46,7 +46,7 @@
     </include>
 
     <include file="$(find hsrb_gazebo_bringup)/launch/include/hsrb_sensor.xml" >
-        <arg name="namespace" value="$(arg namespace)" />
+        <arg name="namespace" value="" />
         <arg name="personal_name" value="$(arg personal_name)" />
     </include>
 

@@ -11,7 +11,7 @@
 
     <include file="$(find hero_bringup)/hsrb_gazebo_bringup/launch/include/hsrb_no_controllers.xml" pass_all_args="true" />
     <include file="$(find hsrb_gazebo_bringup)/launch/include/hsrb_default_controllers.xml">
-      <arg name="namespace" value="$(arg namespace)" />
+      <arg name="namespace" value="" />
       <arg name="personal_name" value="$(arg personal_name)" />
     </include>
 </launch>

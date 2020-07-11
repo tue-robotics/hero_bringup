@@ -27,8 +27,8 @@
     <remap from="$(arg ns)/odom_ground_truth" to="$(arg namespace)/measurements_ground_truth" /> <!-- Gazebo publishes this topic, exact function unknown -->
 
     <!-- Sensors -->
-    <remap from="$(arg namespace)$(arg ns)/base_scan" to="$(arg namespace)/base_laser/scan" />
-    <remap from="$(arg namespace)$(arg ns)/base_imu/data" to="$(arg namespace)/base_imu/data" />
+    <remap from="$(arg ns)/base_scan" to="$(arg namespace)/base_laser/scan" />
+    <remap from="$(arg ns)/base_imu/data" to="$(arg namespace)/base_imu/data" />
     <remap from="$(arg ns)/base_b_bumper_sensor" to="$(arg namespace)/base_b_bumper_sensor" />
     <remap from="$(arg ns)/base_f_bumper_sensor" to="$(arg namespace)/base_f_bumper_sensor" />
 

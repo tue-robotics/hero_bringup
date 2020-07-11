@@ -47,6 +47,7 @@
     <node name="robot_state_pub" pkg="robot_state_publisher" type="robot_state_publisher">
       <param name="publish_frequency" value="50.0" />
       <param name="use_tf_static" value="true" />
+      <param name="tf_prefix" value='$(arg personal_name)' />
     </node>
   </group>
 
@@ -98,8 +99,8 @@
       <remap from="laser_odom" to="base/measurements_laser"/>
 
       <rosparam command="load" file="$(arg odometry_config)"/>
-      <param name="odom_frame" value="odom"/>
-      <param name="odom_child_frame" value="base_footprint"/>
+      <param name="odom_frame" value="$(arg personal_name)/odom"/>
+      <param name="odom_child_frame" value="$(arg personal_name)/base_footprint"/>
       <param name="initial_odom" value="laser_odom" if="$(arg use_laser_odom)"/>
       <param name="initial_odom" value="wheel_odom" unless="$(arg use_laser_odom)"/>
     </node>

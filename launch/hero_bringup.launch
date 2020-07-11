@@ -104,7 +104,7 @@
             <arg name="debug" value="$(arg debug)" />
             <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
             <arg name="robot_name" value="$(arg robot_name)" />
-            <arg name="personal_name" value="$(arg personal_name)" />
+            <arg name="personal_name" value="hero" />
             <arg name="param_file" value="$(arg param_file)" />
         </include>
 
