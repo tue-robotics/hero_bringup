@@ -5,7 +5,16 @@ enabled: 1
 parameters:
  robot_name: hero
  initial_pose_topic: /hero/initialpose
- num_particles: 500
+ particle_filter:
+     min_particles: 50
+     max_particles: 500
+     kld_err: 0.02
+     kld_z: 0.98
+     recovery_alpha_slow: 0 #0.001
+     recovery_alpha_fast: 0 #0.1
+     cell_size_x: 0.05
+     cell_size_y: 0.05
+     cell_size_theta: 0.3
  initial_pose:
      x: $(env ROBOT_INIT_X 0.0)
      y: $(env ROBOT_INIT_Y 0.0)
