@@ -1,10 +1,6 @@
 os: linux
-dist: xenial
+dist: bionic
 language: cpp
-
-addons:
-  ssh_known_hosts:
-    - github.com
 
 services:
   - docker
@@ -14,11 +10,15 @@ before_install:
     -in ./deploy_key.enc -out ./deploy_key -d
   - wget https://raw.githubusercontent.com/tue-robotics/tue-env/master/ci/install-package.sh
   - wget https://raw.githubusercontent.com/tue-robotics/tue-env/master/ci/build-package.sh
+  - wget https://raw.githubusercontent.com/tue-robotics/tue-env/master/ci/test-package.sh
   - export PACKAGE=${TRAVIS_REPO_SLUG#*/}
 
 install:
   - SSH_KEY_PRIVATE=$(cat deploy_key)
-  - bash install-package.sh --package=$PACKAGE --branch=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH} --commit=$TRAVIS_COMMIT --pullrequest=$TRAVIS_PULL_REQUEST --image="tuerobotics/tue-env" --ssh --ssh-key="$SSH_KEY_PRIVATE"
+  - bash install-package.sh --package=$PACKAGE --branch=$TRAVIS_BRANCH --commit=$TRAVIS_COMMIT --pullrequest=$TRAVIS_PULL_REQUEST --ssh --ssh-key="$SSH_KEY_PRIVATE"
+
+before_script:
+  - bash build-package.sh --package=$PACKAGE
 
 script:
-  - bash build-package.sh --package=$PACKAGE
+  - bash test-package.sh --package=$PACKAGE
