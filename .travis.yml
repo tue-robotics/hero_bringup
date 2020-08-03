@@ -7,7 +7,7 @@ services:
 
 before_install:
   - openssl aes-256-cbc -K $encrypted_3959f4b55449_key -iv $encrypted_3959f4b55449_iv
-    -in ./.deploy_key.enc -out ./.deploy_key -d
+    -in .deploy_key.enc -out .deploy_key -d
   - wget https://raw.githubusercontent.com/tue-robotics/tue-env/master/ci/install-package.sh
   - wget https://raw.githubusercontent.com/tue-robotics/tue-env/master/ci/build-package.sh
   - wget https://raw.githubusercontent.com/tue-robotics/tue-env/master/ci/test-package.sh
