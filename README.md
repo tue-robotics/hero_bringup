@@ -106,15 +106,70 @@ The following services are running on HERO1. Normally these are ran from the dem
 - **hero1-speech5-windows-speech**: Service to start the Windows virtualbox
 
 ## HERO2
+
+### (Re)-install
+
+#### Before install
+
+- Backup the backup of the virtualbox images: `scp -r amigo@hero2.local:~/vbox_images_backup ~/vbox_images_backup`
+- Backup any other data (I.E. MEGA folder).
+
+#### Install
+
+- Install Ubuntu 18.04 Desktop:
+
+  ```
+  Name: amigo
+  Hostname: hero2
+  Username: amigo
+  ```
+
+- After install go to TTY6(Ctrl+Alt+F6), install nvidia-driver-440(Or the one matching the cuda version used for openpose) and reboot: `sudo apt-get install nvidia-driver-440` and `sudo reboot`
+- Change ethernet configuration to static IP via GUI. Set static IP for ipv4 with the following settings:
+
+  ```
+  Address: 192.168.44.52
+  Netmask: 255.255.255.0
+  Gateway: 192.168.44.1
+  DNS servers: 192.168.44.1, 8.8.8.8, 8.8.4.4
+  ```
+
+- Turn Airplane-mode on, make sure Wi-Fi and Bluetooth is disabled
+- Set `Automatic suspend` to off in Power Settings, both for `Battery Power` and `Plugged in`
+- Keep laptop on with lid closed: `sudo vim /etc/systemd/logind.conf`, add `HandleLidSwitch=ignore` 
+- Install hero2 target `tue-get install hero2`
+- set keyboard shortcut ctrl+alt+T to terminator
+- Install openpose:
+  - Clone openpose: `git clone https://github.com/CMU-Perceptual-Computing-Lab/openpose.git ~/openpose`
+  - Checkout correct version: `git checkout  v1.6.0`
+  - Init all submodules: `git submodule update --init --recursive`
+  - Install matching cuda and cudnn. Install cuda via local debian file. Install cudnn via the tar file.
+  - Install dependencies: `sudo bash ./scripts/ubuntu/install_deps.sh`
+  - (Optional) Install OpenCV: `sudo apt-get install libopencv-dev`
+  - Create build folder: `mkdir build && cd build`
+  - Run CMake: `cmake .. -DBUILD_PYTHON=ON -DPYTHON_EXECUTABLE=/usr/bin/python2.7 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython2.7m.so`
+  - Check for `BUILD_PYTHON` being set to `ON` correctly: `ag -fi BUILD_PYTHON`. If not, edit those files manually.
+  - Make openpose: `make`
+  - Install openpose: `sudo make install`
+- Restore any backuped data
+- Setup MEGA sync via GUI
+- Build the software: `tue-make`
+- Install the background services: `rosrun hero_bringup install_systemd_autostart_hero2`
+- Reboot and ready to go!
+
 ### Services
+
 The following services are running on HERO2. Normally these are ran from the demo account:
+
 - **hero2-battery-manager**: Running a battery manager to let the robot speak in case of a low battery level
 - **hero2-openpose**: Running OpenPose
 - **hero2-rgbd-shm-server**: Running a `rgbd` shared memory server, so there is only one RGBD connection from HERO1 to HERO2
 - **hero2-upower-ros**: Running `upower_ros` to publish the battery state of HERO2
 
 ### Power settings
-To prevent HERO2 to shutdown on unplugging the power supply, some power settings need to be changed. (https://unix.stackexchange.com/questions/85251/my-laptop-shuts-down-every-time-i-unplug-it)
+
+**Probably not needed anymore on Ubuntu 18.04**
+To prevent HERO2 to shutdown on unplugging the power supply, some power settings need to be changed. (<https://unix.stackexchange.com/questions/85251/my-laptop-shuts-down-every-time-i-unplug-it>)
 
 ```bash
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type nothing
