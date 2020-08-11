@@ -1,18 +1,24 @@
 # hero_bringup
+
 Launch, machine and parameter files required to bringup the HERO robot
 
-## (Re-)install HERO
-### Before clean install
+## HERO1
+
+### (Re-)install HERO
+
+#### Before clean install
+
 - Upload calibration files: `hsrb_command upload_robot_config` (as root/administrator)
 - Back-Up of virtualbox image which are located in `~/vbox_images`:
-    - Stop systemd service: `sudo systemctl stop hero-windows-speech.service`
-    - Actual back-up i.e.: `scp -r ~/vbox_images/* amigo@hero2.local:~/vbox_images_backup`
+  - Stop systemd service: `sudo systemctl stop hero-windows-speech.service`
+  - Actual back-up i.e.: `scp -r ~/vbox_images/* amigo@hero2.local:~/vbox_images_backup`
 
-### Clean install
+#### Clean install
+
 - Required items:
-    - USB DVD drive
-    - Install disk (17.10 works)
-    - keyboard
+  - USB DVD drive
+  - Install disk (18.04 works)
+  - keyboard
 - Insert keyboard into robot
 - Connect DVD drive to a laptop to be able to open the drive.
 - Insert disk in DVD drive.
@@ -23,11 +29,13 @@ Launch, machine and parameter files required to bringup the HERO robot
 - Disconnect DVD drive.
 - Press enter to reboot the robot.
 
-### After clean install
+#### After clean install
+
 - Fix the wireless network directly on the robot:
-    - `wpa_gui`(as root/administrator) to add wifi network. Make sure to select the `wlp3so` interface
+  - `wpa_gui`(as root/administrator) to add wifi network. Make sure to select the `wlp3so` interface
 
 The following steps can be done via SSH or directly on the robot (SSH: `ssh administrator@hsrb.local`)
+
 - (Run apt-get update): `sudo apt-get update` (as root/administrator)
 - Update hsrb_command: `hsrb_command upgrade` (as root/administrator)
 - Update dockers: `hsrb_command update_release XX.XX` (as root/administrator)
@@ -36,51 +44,56 @@ The following steps can be done via SSH or directly on the robot (SSH: `ssh admi
 - Fix the owner of the following folders: `/home/administrator/.cache` and `/home/administrator/.config` by:
 `sudo chown -R administrator:administrator /home/administrator/.cache` and `sudo chown -R administrator:administrator /home/administrator/.config`
 - Change hostname to `hero1`:
-    - `sudo vim /etc/hostname`
-    - `sudo vim /etc/hosts`
-    - reboot: `sudo reboot` (Use `ssh administrator@hero1.local` after this step)
+  - `sudo vim /etc/hostname`
+  - `sudo vim /etc/hosts`
+  - reboot: `sudo reboot` (Use `ssh administrator@hero1.local` after this step)
 - Set static IP (when using internal Wi-Fi):
-    - Make a back-up of the config: `sudo cp /etc/network/interfaces.wlan /etc/network/interfaces.wlan.bk`
-    - Open the file: `sudo vim /etc/network/interfaces.wlan`
-    - Look for the following line: `iface wlp3so inet dhcp`. Change it to: `iface wlp3so inet static`
-    - Add the following lines directly after the previous changed line:
-        ```
-        address 192.168.44.51
-        netmask 255.255.255.0
-        gateway 192.168.44.1
-        dns-nameservers 192.168.44.1 8.8.8.8 8.8.4.4
-        ```
-    - reboot: `sudo reboot`
+  - Make a back-up of the config: `sudo cp /etc/network/interfaces.wlan /etc/network/interfaces.wlan.bk`
+  - Open the file: `sudo vim /etc/network/interfaces.wlan`
+  - Look for the following line: `iface wlp3so inet dhcp`. Change it to: `iface wlp3so inet static`
+  - Add the following lines directly after the previous changed line:
+
+    ```
+    address 192.168.44.51
+    netmask 255.255.255.0
+    gateway 192.168.44.1
+    dns-nameservers 192.168.44.1 8.8.8.8 8.8.4.4
+    ```
+
+  - reboot: `sudo reboot`
 - Set ethernet (when using external router for Wi-Fi):
-    - Set symbolic link to use ethernet: `sudo ln -sf /etc/network/interfaces.eth /etc/network/interfaces`
+  - Set symbolic link to use ethernet: `sudo ln -sf /etc/network/interfaces.eth /etc/network/interfaces`
 - restore virtualbox image to `~/vbox_images`. (Path of the files should be like: `~/vbox_images/windows/windows.XX`)
-- Install virtualbox debian from https://www.virtualbox.org/wiki/Downloads:
-    -  `sudo dpkg -i "XX.deb"`
-    - (`sudo apt-get install -f` to fix missing dependencies)
+- Install virtualbox debian from <https://www.virtualbox.org/wiki/Downloads>:
+  - `sudo dpkg -i "XX.deb"`
+  - (`sudo apt-get install -f` to fix missing dependencies)
 - Open virtualbox ON the robot and add the windows image.
 - Set correct network adapter for the virtualbox. Depending on the use of internal of external Wi-Fi.
-- Install tue-env (https://github.com/tue-robotics/tue-env) and install hero1 target: `tue-get install hero1`
+- Install tue-env (<https://github.com/tue-robotics/tue-env>) and install hero1 target: `tue-get install hero1`
 - Build the software: `tue-make`
-- Go to `hero_bringup` package. Execute the following to stop the Toyota and VirtualBox services and start ours: `./scripts/install_systemd_autostart_hero1`
 - (Fix timezone: `tue-robocup-set-timezone-home`)
+- Install the background services: `rosrun hero_bringup install_systemd_autostart_hero1`
 - Reboot and ready to go!
 
-## HERO display
-### First install
-1. Download the latest `hero-display.AppImage` from https://github.com/tue-robotics/hero-display/releases
+### HERO display
+
+#### First install
+
+1. Download the latest `hero-display.AppImage` from <https://github.com/tue-robotics/hero-display/releases>
 2. Move the file to `/opt/tue/bin/hero-display.AppImage`
 3. Make sure all users have all rights: `(sudo) chmod a+rwx /opt/tue/bin/hero-display.AppImage`
 4. On HERO (hsr-hmi user) go to **Startup Applications** and add a new item with `/opt/tue/bin/hero-display.AppImage` as command.
 5. Run it once manually or reboot HERO
 
-### Update
+#### Update
+
 1. Close the current hero-display session
 2. Repeat steps 1-3 & 5 from [First install](#first-install)
 
-
-## HERO1
 ### Services
+
 The following services are running on HERO1. Normally these are ran from the demo account:
+
 - **hero1-battery-conversion**: Publishing a BatteryState message from the custom Toyota messages
 - **hero1-monitor.service**: HERO version of `hsrb_monitor` from `hsrb_bringup`
 - **hero1-ntpdate.service**: Service to sync time with servers
