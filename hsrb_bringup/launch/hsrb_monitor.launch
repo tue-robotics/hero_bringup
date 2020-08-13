@@ -6,6 +6,8 @@
   <arg name="upload_robot_model_launch" default="$(find hsrb_description)/robots/upload_hsrb.launch" />
   <arg name="computer_config_list" default="['$(find hsrb_bringup)/params/hsrb_computer_diag_common.yaml', '$(find hsrb_bringup)/params/hsrb_computer_diag_$(optenv ROBOT_VERSION HSRB-PHASE5).yaml']"/>
   <arg name="use_talk_hoya" default="true" />
+  <arg name="use_battery_notifier" default="$(optenv USE_BATTERY_NOTIFIER true)" />
+  <arg name="use_dualshock4" default="$(optenv USE_DUALSHOCK4 false)" />
 
   <!-- prepare params.yaml -->
   <param name="/tmp" command="rosrun tmc_roslaunch_tools symboliclink -f $(arg param_file) /etc/opt/tmc/robot/params.yaml $(find hsrb_common_launch)/params/empty_params.yaml" />
@@ -14,16 +16,13 @@
   <include file="$(arg upload_robot_model_launch)" ns="$(arg namespace)"/>
 
   <!-- include robot_name config -->
-  <include file="$(find hsrb_bringup)/launch/include/hsrb_monitor_$(arg robot_name).xml" >
+  <include file="$(find hsrb_bringup)/launch/include/hsrb_monitor_$(arg robot_name).xml">
     <arg name="namespace" value="$(arg namespace)" />
+    <arg name="use_battery_notifier" value="$(arg use_battery_notifier)" />
   </include>
 
   <group ns="$(arg namespace)">
     <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
-
-    <!-- io monitor -->
-    <node name="hsrb_io_monitor" pkg="hsrb_io_monitor" type="hsrb_io_monitor_node"
-	  respawn="true" />
 
     <!-- computer monitor -->
     <node pkg="tmc_computer_monitor" name="computer_monitor_node" type="tmc_computer_monitor_node" >
@@ -37,6 +36,10 @@
            if="$(arg use_talk_hoya)">
     <arg name="respawn" value="true"/>
   </include>
+
+  <!-- DualShock4 support -->
+  <include file="$(find tmc_dualshock4_node)/launch/dualshock4_node.launch"
+           if="$(arg use_dualshock4)" />
 
   <!-- load override parameters-->
   <rosparam command="load" file="$(arg param_file)" />
