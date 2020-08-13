@@ -17,7 +17,7 @@
     <arg name="align_at_startup" default="true" />
     <arg name="auto_start" default="false" />
     <arg name="robot_name" default="hsrb" />
-    <arg name="personal_name" default="" />
+    <arg name="personal_name" default="hero" />
     <arg name="enable_emergency_stop" default="false" />
 
     <arg name="sim" value="true" if="$(optenv ROBOT_REAL false)" />
@@ -72,6 +72,7 @@
 
         <include file="$(find hero_bringup)/hsrb_bringup/launch/hsrb_bringup_common.launch">
             <arg name="namespace" value="$(arg namespace)" />
+            <arg name="personal_name" value="$(arg personal_name)" />
             <arg name="use_hand_camera" value="$(arg use_hand_camera)" />
             <arg name="use_head_center_camera" value="$(arg use_head_center_camera)" />
             <arg name="use_head_stereo_camera" value="$(arg use_head_stereo_camera)"/>
@@ -104,7 +105,7 @@
             <arg name="debug" value="$(arg debug)" />
             <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
             <arg name="robot_name" value="$(arg robot_name)" />
-            <arg name="personal_name" value="hero" />
+            <arg name="personal_name" value="$(arg personal_name)" />
             <arg name="param_file" value="$(arg param_file)" />
         </include>
 

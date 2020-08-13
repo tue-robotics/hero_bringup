@@ -1,7 +1,11 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="namespace" default="/hsrb" />
-  <include file="$(find hsrb_description)/robots/upload_hsrb.launch" />
+  <arg name="personal_name" default="" />
+  <include file="$(find hero_bringup)/hsrb_description/robots/upload_hsrb.launch" >
+    <arg name="namespace" value="$(arg namespace)" />
+    <arg name="personal_name" value="$(arg personal_name)" />
+  </include>
 
   <!-- sensor -->
   <arg name="config_dir" default="/etc/opt/tmc/robot/conf.d" />
@@ -23,10 +27,10 @@
       <arg name="namespace" value="$(arg namespace)" />
       <arg name="config_dir" value="$(arg config_dir)" />
       <arg name="calib_dir" value="$(arg calib_dir)" />
-      <arg name="use_hand_camera" value="$(arg use_hand_camera)"/>
-      <arg name="use_head_center_camera" value="$(arg use_head_center_camera)"/>
-      <arg name="use_head_stereo_camera" value="$(arg use_head_stereo_camera)"/>
-      <arg name="use_head_rgbd_sensor" value="$(arg use_head_rgbd_sensor)"/>
+      <arg name="use_hand_camera" default="$(arg use_hand_camera)"/>
+      <arg name="use_head_center_camera" default="$(arg use_head_center_camera)"/>
+      <arg name="use_head_stereo_camera" default="$(arg use_head_stereo_camera)"/>
+      <arg name="use_head_rgbd_sensor" default="$(arg use_head_rgbd_sensor)"/>
       <arg name="use_base_range_sensor" value="$(arg use_base_range_sensor)" />
       <arg name="use_blackfly" value="$(arg use_blackfly)" />
       <arg name="enable_usb_hub_reset" value="$(arg enable_usb_hub_reset)" />
@@ -34,3 +38,4 @@
     <include file="$(find hsrb_bringup)/launch/include/sensors/dynpick.xml"/>
   </group>
 </launch>
+

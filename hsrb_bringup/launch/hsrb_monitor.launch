@@ -3,7 +3,8 @@
   <arg name="namespace" default="/hsrb" />
   <arg name="param_file" default="$(env HOME)/.ros/params.yaml" />
   <arg name="robot_name" default="hsrb" />
-  <arg name="upload_robot_model_launch" default="$(find hsrb_description)/robots/upload_hsrb.launch" />
+  <arg name="personal_name" default="hero" /> <!-- TUe Added -->
+  <arg name="upload_robot_model_launch" default="$(find hero_bringup)/hsrb_description/robots/upload_hsrb.launch" />
   <arg name="computer_config_list" default="['$(find hsrb_bringup)/params/hsrb_computer_diag_common.yaml', '$(find hsrb_bringup)/params/hsrb_computer_diag_$(optenv ROBOT_VERSION HSRB-PHASE5).yaml']"/>
   <arg name="use_talk_hoya" default="true" />
   <arg name="use_battery_notifier" default="$(optenv USE_BATTERY_NOTIFIER true)" />
@@ -13,11 +14,14 @@
   <param name="/tmp" command="rosrun tmc_roslaunch_tools symboliclink -f $(arg param_file) /etc/opt/tmc/robot/params.yaml $(find hsrb_common_launch)/params/empty_params.yaml" />
 
   <!-- upload robot_description -->
-  <include file="$(arg upload_robot_model_launch)" ns="$(arg namespace)"/>
+  <include file="$(arg upload_robot_model_launch)" >
+    <arg name="namespace" value="$(arg namespace)" /> <!-- TUe Added -->
+    <arg name="personal_name" value="$(arg personal_name)" /> <!-- TUe Added -->
+  </include>
 
   <!-- include robot_name config -->
   <include file="$(find hsrb_bringup)/launch/include/hsrb_monitor_$(arg robot_name).xml">
-    <arg name="namespace" value="$(arg namespace)" />
+    <arg name="namespace" value="$(arg namespace)" /> <!-- TUe Added -->
     <arg name="use_battery_notifier" value="$(arg use_battery_notifier)" />
   </include>
 
