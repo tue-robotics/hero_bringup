@@ -3,7 +3,7 @@
   <arg name="namespace" default="/hsrb" />
   <arg name="enable_emergency_stop" default="true" />
   <arg name="use_laser_odom" default="true" />
-  <arg name="odometry_config" default="$(find hsrb_common_config)/params/hsrb_odometry_config.yaml" />
+  <arg name="odometry_config" default="$(find hero_bringup)/hsrb_common_config/params/hsrb_odometry_config.yaml" /> <!-- TU/e changed -->
   <arg name="bumper_mode" default="stop" />
   <arg name="target_controller_list" default="[omni_base_controller, head_trajectory_controller, arm_trajectory_controller, gripper_controller]"/>
 
