@@ -15,7 +15,7 @@ analyzers:
       urg:
         type: diagnostic_aggregator/GenericAnalyzer
         path: Hokuyo
-        find_and_remove_prefix: 'hsrb/urg_node: '
+        find_and_remove_prefix: 'hero/urg_node: '
       io_monitor:
         type: diagnostic_aggregator/GenericAnalyzer
         path: IO
@@ -27,19 +27,19 @@ analyzers:
           head_rgbd_sensor:
             type: diagnostic_aggregator/GenericAnalyzer
             path: HeadRGBDSensor
-            find_and_remove_prefix: 'hsrb/head_rgbd_sensor/head_rgbd_sensor_nodelet_manager: '
-          head_stereo_camera:
-            type: diagnostic_aggregator/GenericAnalyzer
-            path: HeadStereoCamera
-            find_and_remove_prefix: 'hsrb/stereo_camera_nodelet_manager: '
-          head_center_camera:
-            type: diagnostic_aggregator/GenericAnalyzer
-            path: HeadCenterCamera
-            find_and_remove_prefix: 'hsrb/head_center_camera/head_center_camera_nodelet_manager: '
-          hand_camera:
-            type: diagnostic_aggregator/GenericAnalyzer
-            path: HandCamera
-            find_and_remove_prefix: 'hsrb/hand_camera/hand_camera_nodelet_manager: '
+            find_and_remove_prefix: 'hero/head_rgbd_sensor/head_rgbd_sensor_nodelet_manager: '
+          #head_stereo_camera:
+            #type: diagnostic_aggregator/GenericAnalyzer
+            #path: HeadStereoCamera
+            #find_and_remove_prefix: 'hero/stereo_camera_nodelet_manager: '
+          #head_center_camera:
+            #type: diagnostic_aggregator/GenericAnalyzer
+            #path: HeadCenterCamera
+            #find_and_remove_prefix: 'hero/head_center_camera/head_center_camera_nodelet_manager: '
+          #hand_camera:
+            #type: diagnostic_aggregator/GenericAnalyzer
+            #path: HandCamera
+            #find_and_remove_prefix: 'hero/hand_camera/hand_camera_nodelet_manager: '
   power:
     type: diagnostic_aggregator/AnalyzerGroup
     path: Power
@@ -47,7 +47,7 @@ analyzers:
       battery:
         type: diagnostic_aggregator/GenericAnalyzer
         path: Battery
-        find_and_remove_prefix: 'hsrb/sanyo_battery: '
+        find_and_remove_prefix: 'hero/sanyo_battery: '
   cpu:
     type: diagnostic_aggregator/AnalyzerGroup
     path: Computer
