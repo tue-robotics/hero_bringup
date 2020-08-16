@@ -71,7 +71,6 @@
     <!-- General controllers -->
     <remap from="$(arg ns)/controller_manager" to="$(arg namespace)/controller_manager" />
     <remap from="$(arg ns)/arm_trajectory_controller" to="$(arg namespace)/arm_trajectory_controller" />
-    <remap from="$(arg namespace)/arm_trajectory_controller/follow_joint_trajectory" to="$(arg namespace)/body/joint_trajectory_action" />
     <remap from="$(arg ns)/gripper_controller" to="$(arg namespace)/gripper_controller" />
     <remap from="$(arg ns)/head_trajectory_controller" to="$(arg namespace)/head_trajectory_controller" />
     <remap from="$(arg ns)/impedance_control" to="$(arg namespace)/impedance_control" />
