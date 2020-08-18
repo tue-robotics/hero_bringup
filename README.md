@@ -23,7 +23,7 @@ Launch, machine and parameter files required to bringup the HERO robot
 
   - Reboot the robot, press `ESC` during boot to enter the BIOS.
   - Check in `Boot` if the USB stick is set as first boot option. **Note:** No UEFI.
-  - Otherwise change in `cms parameters` the `Boot option filter` to `legacy only`.
+  - Otherwise change in `CMS parameters` the `Boot option filter` to `legacy only`.
   - Save changes and reboot again into the bios. Check again the USB stick is the first boot option. This should be the case. Reboot and let the installer do its job.
 
 - Wait till installer is finished. It will display a message to remove install medium. Do this and press main power button for a few seconds to shutdown the robot.
@@ -31,22 +31,13 @@ Launch, machine and parameter files required to bringup the HERO robot
 
 #### After clean install
 
-- Fix the wireless network directly on the robot:
-  - `wpa_gui`(as root/administrator) to add wifi network. Make sure to select the `wlp3so` interface
+Directly on the robot:
 
-The following steps can be done via SSH or directly on the robot (SSH: `ssh administrator@hsrb.local`)
-
-- (Run apt-get update): `sudo apt-get update` (as root/administrator)
-- Update hsrb_command: `hsrb_command upgrade` (as root/administrator)
-- Update dockers: `hsrb_command update_release XX.XX` (as root/administrator)
-- Restore calibration files: `hsrb_command restore` (as root/administrator)
-- Change passwords of the accounts (hsr-hmi, hsr-user, administrator): `sudo password XX`
-- Fix the owner of the following folders: `/home/administrator/.cache` and `/home/administrator/.config` by:
-`sudo chown -R administrator:administrator /home/administrator/.cache` and `sudo chown -R administrator:administrator /home/administrator/.config`
+- In `startup applications` disable Toyota head display
+- Open a terminal and change to `administrator`: `su - administrator`
 - Change hostname to `hero1`:
   - `sudo vim /etc/hostname`
   - `sudo vim /etc/hosts`
-  - reboot: `sudo reboot` (Use `ssh administrator@hero1.local` after this step)
 - Set static IP (when using internal Wi-Fi):
   - Make a back-up of the config: `sudo cp /etc/network/interfaces.wlan /etc/network/interfaces.wlan.bk`
   - Open the file: `sudo vim /etc/network/interfaces.wlan`
@@ -60,14 +51,22 @@ The following steps can be done via SSH or directly on the robot (SSH: `ssh admi
     dns-nameservers 192.168.44.1 8.8.8.8 8.8.4.4
     ```
 
-  - reboot: `sudo reboot`
-- Set ethernet (when using external router for Wi-Fi):
   - Set symbolic link to use ethernet: `sudo ln -sf /etc/network/interfaces.eth /etc/network/interfaces`
-- restore virtualbox image to `~/vbox_images`. (Path of the files should be like: `~/vbox_images/windows/windows.XX`)
+  - reboot: `sudo reboot`
+
+The following steps can be done via SSH or directly on the robot (SSH: `ssh administrator@hero1.local`)
+
+- (Run apt-get update): `sudo apt-get update` (as root/administrator)
+- Update hsrb_command: `hsrb_command upgrade` (as root/administrator)
+- Update dockers: `hsrb_command update_release XX.XX` (as root/administrator)
+- Restore calibration files: `hsrb_command restore` (as root/administrator)
+- Change passwords of the accounts (hsr-hmi, hsr-user, administrator): `sudo passwd XX`
+- Fix the owner of all files and folders in the `administrator` home folder: `sudo chown -R administrator:administrator /home/administrator/*`
+- restore virtualbox image to `~/vbox_images`: `scp -r amigo@hero2.local:~/vbox_images_backup ~/vbox_images`(Path of the files should be like: `~/vbox_images/windows/windows.XX`)
 - Install virtualbox debian from <https://www.virtualbox.org/wiki/Downloads>:
   - `sudo dpkg -i "XX.deb"`
   - (`sudo apt-get install -f` to fix missing dependencies)
-- Open virtualbox ON the robot and add the windows image.
+- Open virtualbox ON the robot as `administrator `and add the windows image.
 - Set correct network adapter for the virtualbox. Depending on the use of internal of external Wi-Fi.
 - Install tue-env (<https://github.com/tue-robotics/tue-env>) and install hero1 target: `tue-get install hero1`
 - Build the software: `tue-make`
