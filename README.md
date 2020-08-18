@@ -136,9 +136,9 @@ The following services are running on HERO1. Normally these are ran from the dem
 
 - Turn Airplane-mode on, make sure Wi-Fi and Bluetooth is disabled
 - Set `Automatic suspend` to off in Power Settings, both for `Battery Power` and `Plugged in`
-- Keep laptop on with lid closed: `sudo vim /etc/systemd/logind.conf`, add `HandleLidSwitch=ignore` 
-- Install hero2 target `tue-get install hero2`
-- set keyboard shortcut ctrl+alt+T to terminator
+- Keep laptop on with lid closed: `sudo vim /etc/systemd/logind.conf`, add `HandleLidSwitch=ignore`
+- Install `hero2` target `tue-get install hero2`
+- Set keyboard shortcut `Ctrl+Alt+T` to terminator
 - Install openpose:
   - Clone openpose: `git clone https://github.com/CMU-Perceptual-Computing-Lab/openpose.git ~/openpose`
   - Checkout correct version: `git checkout  v1.6.0`
@@ -175,3 +175,24 @@ To prevent HERO2 to shutdown on unplugging the power supply, some power settings
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type nothing
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type nothing
 ```
+
+## HERO demo laptop
+
+### (Re-)install
+
+- Install Ubuntu 18.04 Desktop:
+
+  ```
+  Name: demo
+  Hostname: demo-laptop
+  Username: demo
+  ```
+
+- Setup Wi-Fi to AtHome(-2.4)
+- Install tue-env (<https://github.com/tue-robotics/tue-env>)
+- Install `hero-demo-laptop` target: `tue-get install hero-demo-laptop`
+- Compile the software: `tue-make`
+- Set keyboard shortcut `Ctrl+Alt+T` to terminator
+- Pin shortcuts of `hero-dashboard` and `hero-rviz`
+- Disable laptop going to sleep and disable power button turning off the laptop
+- Copy ssh keys to HERO: `hero-copy-my-id`
