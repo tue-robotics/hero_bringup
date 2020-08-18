@@ -11,7 +11,7 @@ Launch, machine and parameter files required to bringup the HERO robot
 - Upload calibration files: `hsrb_command upload_robot_config` (as root/administrator)
 - Back-Up of virtualbox image which are located in `~/vbox_images`:
   - Stop systemd service: `sudo systemctl stop hero1-speech5-windows-speech.service` or `sudo systemctl stop hero1-demo-speech5-windows-speech.service`
-  - Actual back-up i.e.: `scp -r ~/vbox_images/* amigo@hero2.local:~/vbox_images_backup`
+  - Actual back-up i.e.: `scp -r ~/vbox_images amigo@hero2.local:~/vbox_images_backup`
 
 #### Clean install
 
