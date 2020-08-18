@@ -16,18 +16,18 @@ Launch, machine and parameter files required to bringup the HERO robot
 #### Clean install
 
 - Required items:
-  - USB DVD drive
-  - Install disk (18.04 works)
-  - keyboard
+  - USB Stick
 - Insert keyboard into robot
-- Connect DVD drive to a laptop to be able to open the drive.
-- Insert disk in DVD drive.
-- Make sure robot is powered-off.
-- Connect DVD drive to robot. Place the DVD drive on the head.
-- Power-on the robot.
-- Wait till disk is ejected automatically. (Screen can turn off and on during installation)
-- Disconnect DVD drive.
-- Press enter to reboot the robot.
+- Insert USB Stick directly into the robot. Don't use any USB hub, etc.
+- Boot the robot. If no install screen is shown, follow these steps:
+
+  - Reboot the robot, press `ESC` during boot to enter the BIOS.
+  - Check in `Boot` if the USB stick is set as first boot option. **Note:** No UEFI.
+  - Otherwise change in `cms parameters` the `Boot option filter` to `legacy only`.
+  - Save changes and reboot again into the bios. Check again the USB stick is the first boot option. This should be the case. Reboot and let the installer do its job.
+
+- Wait till installer is finished. It will display a message to remove install medium. Do this and press main power button for a few seconds to shutdown the robot.
+- Start the robot again via the main power button.
 
 #### After clean install
 
