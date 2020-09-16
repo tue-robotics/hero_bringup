@@ -17,13 +17,14 @@ Launch, machine and parameter files required to bringup the HERO robot
 
 - Required items:
   - USB Stick
+  - Optiona: External monitor with VGA connection. This is needed for any changes in the BIOS. As the BIOS is not shown on the internal screen.
 - Insert keyboard into robot
 - Insert USB Stick directly into the robot. Don't use any USB hub, etc.
 - Boot the robot. If no install screen is shown, follow these steps:
 
   - Reboot the robot, press `ESC` during boot to enter the BIOS.
   - Check in `Boot` if the USB stick is set as first boot option. **Note:** No UEFI.
-  - Otherwise change in `CMS parameters` the `Boot option filter` to `legacy only`.
+  - Otherwise change in `CMS parameters` or `Hard Drive parameters` the `Boot option filter` to `legacy only`.
   - Save changes and reboot again into the bios. Check again the USB stick is the first boot option. This should be the case. Reboot and let the installer do its job.
 
 - Wait till installer is finished. It will display a message to remove install medium. Do this and press main power button for a few seconds to shutdown the robot.
@@ -33,15 +34,14 @@ Launch, machine and parameter files required to bringup the HERO robot
 
 Directly on the robot:
 
-- In `startup applications` disable Toyota head display
 - Open a terminal and change to `administrator`: `su - administrator`
 - Change hostname to `hero1`:
   - `sudo vim /etc/hostname`
   - `sudo vim /etc/hosts`
-- Set static IP (when using internal Wi-Fi):
-  - Make a back-up of the config: `sudo cp /etc/network/interfaces.wlan /etc/network/interfaces.wlan.bk`
-  - Open the file: `sudo vim /etc/network/interfaces.wlan`
-  - Look for the following line: `iface wlp3so inet dhcp`. Change it to: `iface wlp3so inet static`
+- Set static IP (Using external Wi-Fi adapter):
+  - Make a back-up of the config: `sudo cp /etc/network/interfaces.eth /etc/network/interfaces.eth.bk`
+  - Open the file: `sudo vim /etc/network/interfaces.eth`
+  - Look for the following line: `iface enp4s0 inet dhcp`. Change it to: `iface enp4s0 inet static`
   - Add the following lines directly after the previous changed line:
 
     ```
@@ -51,12 +51,19 @@ Directly on the robot:
     dns-nameservers 192.168.44.1 8.8.8.8 8.8.4.4
     ```
 
-  - Set symbolic link to use ethernet: `sudo ln -sf /etc/network/interfaces.eth /etc/network/interfaces`
+  - Make a back-up of the resolve config: `sudo cp /etc/systemd/resolved.conf /etc/systemd/resolved.conf.bk`
+  - Open the file: `sudo vim /etc/systemd/resolved.conf`
+  - Change the line: `#DNS=` to `DNS=192.168.44.1 8.8.8.8 8.8.4.4`
+  - Set to use ethernet: `sudo disable_wireless`
   - reboot: `sudo reboot`
 
 The following steps can be done via SSH or directly on the robot (SSH: `ssh administrator@hero1.local`)
 
 - (Run apt-get update): `sudo apt-get update` (as root/administrator)
+- On the robot(`hsr-hmi`): Disable automatic updates in settings: *Software & Updates* > *Updates*:
+  - *Automatically check for updates*: `Never`
+  - *When there are other updates*: `Display every two weeks`
+  - *Notify me of a new Ubuntu version*: `Never`
 - Update hsrb_command: `hsrb_command upgrade` (as root/administrator)
 - Update dockers: `hsrb_command update_release XX.XX` (as root/administrator)
 - Restore calibration files: `hsrb_command restore` (as root/administrator)
@@ -66,11 +73,19 @@ The following steps can be done via SSH or directly on the robot (SSH: `ssh admi
 - Install virtualbox debian from <https://www.virtualbox.org/wiki/Downloads>:
   - `sudo dpkg -i "XX.deb"`
   - (`sudo apt-get install -f` to fix missing dependencies)
-- Open virtualbox ON the robot as `administrator `and add the windows image.
-- Set correct network adapter for the virtualbox. Depending on the use of internal of external Wi-Fi.
-- Install tue-env (<https://github.com/tue-robotics/tue-env>) and install hero1 target: `tue-get install hero1`
+- On the robot(`administrator`): Open virtualbox and add the windows image.
+- On the robot(`administrator`): Set correct network adapter for the virtualbox. Depending on the use of internal of external Wi-Fi.
+- On the robot(`hsr-hmi`): In `startup applications` disable Toyota head display
+- Remove apt sources provided by Toyota: `sudo rm /etc/apt/sources.list.d/*`
+- Install tue-env (<https://github.com/tue-robotics/tue-env>) and install `networking` target: `tue-get install networking`
+- Reboot the robot to activate ssh: `sudo reboot`
+- Use ssh with key forwarding to connect to the robot. This is needed to clone private repos. (`sshhero1` does this)
+- Configure tue-env to use ssh for git: `tue-env config ros-$TUE_ROS_DISTRO git-use-ssh`
+- Install the `hero1` target: `tue-get install hero1`
 - Build the software: `tue-make`
 - (Fix timezone: `tue-robocup-set-timezone-home`)
+- Disable the default Toyota Services: `sudo systemctl disable docker.hsrb.*`
+- Stop the default Toyota Services: `sudo systemctl stop docker.hsrb.*`
 - Install the background services: `rosrun hero_bringup install_systemd_autostart_hero1`
 - Reboot and ready to go!
 
@@ -79,8 +94,8 @@ The following steps can be done via SSH or directly on the robot (SSH: `ssh admi
 #### First install
 
 1. Download the latest `hero-display.AppImage` from <https://github.com/tue-robotics/hero-display/releases>
-2. Move the file to `/opt/tue/bin/hero-display.AppImage`
-3. Make sure all users have all rights: `(sudo) chmod a+rwx /opt/tue/bin/hero-display.AppImage`
+2. Move the file to `sudo mv ./hero-display.AppImage /opt/tue/bin/hero-display.AppImage` It might be needed to create the target directory: `sudo mkdir -p /opt/tue/bin`
+3. Make sure all users have all rights: `sudo chmod a+rwx /opt/tue/bin/hero-display.AppImage`
 4. On HERO (hsr-hmi user) go to **Startup Applications** and add a new item with `/opt/tue/bin/hero-display.AppImage` as command.
 5. Run it once manually or reboot HERO
 
@@ -136,6 +151,9 @@ The following services are running on HERO1. Normally these are ran from the dem
 - Turn Airplane-mode on, make sure Wi-Fi and Bluetooth is disabled
 - Set `Automatic suspend` to off in Power Settings, both for `Battery Power` and `Plugged in`
 - Keep laptop on with lid closed: `sudo vim /etc/systemd/logind.conf`, add `HandleLidSwitch=ignore`
+- Install tue-env (<https://github.com/tue-robotics/tue-env>) and install `networking` target: `tue-get install networking`
+- Reboot the laptop to activate ssh: `sudo reboot`
+- Use ssh with key forwarding to connect to the robot. This is needed to clone private repos. (`sshhero2` does this)
 - Install `hero2` target `tue-get install hero2`
 - Set keyboard shortcut `Ctrl+Alt+T` to terminator
 - Install openpose:
