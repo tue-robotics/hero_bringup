@@ -16,5 +16,6 @@ ExecStart=/bin/bash -c 'source /home/demo/.tue/setup.bash \
         _net_output_width:=368 \
         _net_output_height:=368 \
         _model_folder:=/home/amigo/openpose/models/ \
+        _check_master:=true \
         __ns:=hero/openpose \
         image:=openpose_input_image'
