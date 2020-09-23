@@ -10,6 +10,10 @@
   <arg name="use_blackfly" default="true" />
   <arg name="enable_usb_hub_reset" default="false" />
   <arg name="namespace" default="/hsrb"/>
+  <arg name="personal_name" default=""/>
+
+  <arg if="$(eval personal_name == '')" name="frame_prefix" value="" />
+  <arg if="$(eval personal_name != '')" name="frame_prefix" value="$(arg personal_name)/" />
 
   <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
 
@@ -84,8 +88,8 @@
     <!-- the tag will be deleted when openni becomes deprecated -->
     <include file="$(find tmc_openni_launch)/launch/openni.launch" unless="$(arg use_openni2)">
       <arg name="camera" value="$(arg head_rgbd_sensor)" />
-      <arg name="rgb_frame_id" value="head_rgbd_sensor_rgb_frame" />
-      <arg name="depth_frame_id" value="head_rgbd_sensor_depth_frame" />
+      <arg name="rgb_frame_id" value="$(arg frame_prefix)head_rgbd_sensor_rgb_frame" />
+      <arg name="depth_frame_id" value="$(arg frame_prefix)head_rgbd_sensor_depth_frame" />
       <arg name="rgb_camera_info_url" value="file://$(arg calib_dir)/rgbd_sensor_rgb_camera_params.yaml" />
       <arg name="depth_camera_info_url" value="file://$(arg calib_dir)/rgbd_sensor_depth_camera_params.yaml" />
       <arg name="depth_registration" value="true" />
@@ -93,8 +97,8 @@
     <!-- "if" attribute in the tag will be deleted when openni becomes deprecated -->
     <include file="$(find tmc_openni2_launch)/launch/openni2.launch" if="$(arg use_openni2)">
       <arg name="camera" value="$(arg head_rgbd_sensor)" />
-      <arg name="rgb_frame_id" value="head_rgbd_sensor_rgb_frame" />
-      <arg name="depth_frame_id" value="head_rgbd_sensor_depth_frame" />
+      <arg name="rgb_frame_id" value="$(arg frame_prefix)head_rgbd_sensor_rgb_frame" />
+      <arg name="depth_frame_id" value="$(arg frame_prefix)head_rgbd_sensor_depth_frame" />
       <arg name="rgb_camera_info_url" value="file://$(arg calib_dir)/rgbd_sensor_rgb_camera_params.yaml" />
       <arg name="depth_camera_info_url" value="file://$(arg calib_dir)/rgbd_sensor_depth_camera_params.yaml" />
       <arg name="depth_registration" value="true" />

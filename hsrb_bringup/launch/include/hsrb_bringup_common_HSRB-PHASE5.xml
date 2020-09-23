@@ -21,6 +21,7 @@
   <group ns="$(arg namespace)">
       <include file="$(find hero_bringup)/hsrb_bringup/launch/include/sensors/common.xml">
       <arg name="namespace" value="$(arg namespace)" />
+      <arg name="personal_name" value="$(arg personal_name)" />
       <arg name="config_dir" value="$(arg config_dir)" />
       <arg name="calib_dir" value="$(arg calib_dir)" />
       <arg name="use_hand_camera" default="$(arg use_hand_camera)"/>
