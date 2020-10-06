@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="namespace" default="hsrb" />
+    <arg name="personal_name" default="" />
+    <arg name="visualization" default="true" />
+    <arg name="implicit_damping" default="false"/>
+    <arg name="robot_model" default="hsrb4s" />
+
+    <include file="$(find hero_bringup)/hsrb_description/robots/upload_hsrb.launch">
+        <arg name="namespace" value="$(arg namespace)" />
+        <arg name="personal_name" value="$(arg personal_name)" /><!--Use leading slash to prevent gazebo from using relative frame_id-->
+        <arg name="visualization" value="$(arg visualization)" />
+        <arg name="implicit_damping" value="$(arg implicit_damping)" />
+        <arg name="robot_model" value="$(arg robot_model)" />
+    </include>
+    <!-- for trajectory controller -->
+    <!--Double robot_description removed-->
+</launch>

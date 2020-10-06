@@ -1,0 +1,28 @@
+urg_node:
+  ip_address: 10.255.255.2
+  frame_id: hero/base_range_sensor_link
+  # angle range 250[deg]
+  angle_min: -2.1
+  angle_max: 2.1
+
+laser_scan_matcher_node:
+  max_iterations: 10
+  publish_pose_stamped: true
+  publish_tf: false
+  fixed_frame: hero/odom
+  base_frame: hero/base_footprint
+  use_odom: false
+  outliers_adaptive_order: 0.8
+
+wrist_wrench:
+  dead_zone:
+    threshold: 1.0
+    interpolation_width: 2.0
+  compensation_node:
+    estimation_method: tmc_force_torque_sensor_compensation/RigidBodyEstimation
+    # there is an order to execute
+    filter_names:
+      - tmc_force_torque_sensor_compensation/BiQuadLowPassFilter
+      - tmc_force_torque_sensor_compensation/DeadZoneWithLinearInterpolation
+    biquad_lowpass_filter:
+      cutoff_rate: 0.02

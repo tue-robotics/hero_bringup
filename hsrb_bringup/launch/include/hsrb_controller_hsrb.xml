@@ -5,6 +5,8 @@
 
   <group ns="$(arg namespace)">
 
+    <rosparam command="load" file="$(find hsrb_common_config)/params/hsrb_controller_config_$(arg robot_name).yaml"/>
+
     <!-- controller -->
     <node name="controller_spawner" pkg="controller_manager" type="spawner"
           respawn="false"

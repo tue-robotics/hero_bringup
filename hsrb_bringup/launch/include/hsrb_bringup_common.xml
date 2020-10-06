@@ -3,7 +3,9 @@
   <arg name="namespace" default="/hsrb" />
   <arg name="enable_emergency_stop" default="true" />
   <arg name="use_laser_odom" default="true" />
-  <arg name="odometry_config" default="$(find hsrb_common_config)/params/hsrb_odometry_config.yaml" />
+  <arg name="odometry_config" default="$(find hero_bringup)/hsrb_common_config/params/hsrb_odometry_config.yaml" /> <!-- TU/e changed -->
+  <arg name="bumper_mode" default="stop" />
+  <arg name="target_controller_list" default="[omni_base_controller, head_trajectory_controller, arm_trajectory_controller, gripper_controller]"/>
 
   <group ns="$(arg namespace)">
     <remap from="robot_description" to="$(arg namespace)/robot_description" />
@@ -46,9 +48,6 @@
     <node name="status_led_node" pkg="hsrb_status_led" type="status_led_node" />
 
     <!-- bumper action -->
-    <arg unless="$(arg enable_emergency_stop)" name="bumper_mode" value="back"/>
-    <arg     if="$(arg enable_emergency_stop)" name="bumper_mode" value="stop"/>
-
     <node name="hsrb_bumper" pkg="hsrb_bumper" type="hsrb_bumper_node" >
       <rosparam file="$(find hsrb_bumper)/param/mode_dict.yaml" command="load" />
       <param name="enable_emergency_stop" value="$(arg enable_emergency_stop)" />
@@ -62,6 +61,7 @@
       <param name="crescent_moon_object" value="false" />
       <param name="bumper_binarization" value="false" />
       <param name="to_temp_object_distance" value="0.7" />
+      <rosparam param="target_controller_list" subst_value="True">$(arg target_controller_list)</rosparam>
     </node>
 
     <!-- odometry_switcher -->

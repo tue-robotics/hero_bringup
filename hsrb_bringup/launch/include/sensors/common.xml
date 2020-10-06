@@ -1,0 +1,196 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="config_dir" default="/etc/opt/tmc/robot/conf.d" />
+  <arg name="calib_dir" default="$(arg config_dir)/calib_results" />
+  <arg name="use_hand_camera" default="true"/>
+  <arg name="use_head_center_camera" default="true"/>
+  <arg name="use_head_stereo_camera" default="true"/>
+  <arg name="use_head_rgbd_sensor" default="true"/>
+  <arg name="use_base_range_sensor" default="true" />
+  <arg name="use_blackfly" default="true" />
+  <arg name="enable_usb_hub_reset" default="false" />
+  <arg name="namespace" default="/hsrb"/>
+  <arg name="personal_name" default=""/>
+
+  <arg if="$(eval personal_name == '')" name="frame_prefix" value="" />
+  <arg if="$(eval personal_name != '')" name="frame_prefix" value="$(arg personal_name)/" />
+
+  <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
+
+  <rosparam command="load" file="$(find hero_bringup)/hsrb_common_config/params/hsrb_sensor_config.yaml" />
+
+  <node pkg="tmc_calibration_util" type="static_transform_publisher2" name="camera_frame_tf_publisher"
+        if="$(eval arg('use_head_stereo_camera') == true or arg('use_head_rgbd_sensor') == true)">
+    <rosparam command="load" file="$(arg calib_dir)/head_l_stereo_camera_link_to_head_l_stereo_camera_frame.yaml" />
+  </node>
+
+  <node pkg="tmc_calibration_util" type="static_transform_publisher2" name="rgbd_sensor_rgb_frame_tf_publisher"
+        if="$(arg use_head_rgbd_sensor)">
+    <rosparam command="load" file="$(arg calib_dir)/head_l_stereo_camera_frame_to_head_rgbd_sensor_rgb_frame.yaml" />
+  </node>
+
+  <!-- head stereo camera -->
+  <group if="$(arg use_head_stereo_camera)">
+    <arg name="stereo_camera" value="stereo_camera" />
+    <node pkg="nodelet" type="nodelet" name="stereo_camera_nodelet_manager"
+          args="manager" output="screen"/>
+
+    <arg name="stereo_l_image_topic" value="$(arg namespace)/head_l_stereo_camera/image_raw" />
+    <arg name="stereo_r_image_topic" value="$(arg namespace)/head_r_stereo_camera/image_raw" />
+    <arg name="stereo_l_image_rect_topic" value="$(arg namespace)/head_l_stereo_camera/image_rect_color" />
+    <arg name="stereo_r_image_rect_topic" value="$(arg namespace)/head_r_stereo_camera/image_rect_color" />
+
+    <include file="$(find tmc_pgr_camera)/launch/stereo_camera_nodelet.launch">
+      <arg name="frame_id" value="head_l_stereo_camera_frame" />
+      <arg name="camera_setting_file_path" value="$(arg config_dir)/stereo_pgr_camera.yml" />
+      <arg name="image_topic_names" value="['$(arg stereo_l_image_topic)','$(arg stereo_r_image_topic)']" />
+      <arg name="use_blackfly" value="$(arg use_blackfly)" />
+    </include>
+    <include file="$(find tmc_camera_diag_updater)/launch/single_camera_diag_nodelet.launch" >
+      <arg name="camera" value="$(arg stereo_camera)" />
+      <arg name="node_name" value="head_l_stereo_camera_diag_updater" />
+      <arg name="topic_name" value="$(arg stereo_l_image_topic)" />
+      <arg name="warning_hz" value="1.0" />
+      <arg name="hardware_id" value="$(arg stereo_l_image_topic)" />
+    </include>
+    <include file="$(find tmc_camera_diag_updater)/launch/single_camera_diag_nodelet.launch" >
+      <arg name="camera" value="$(arg stereo_camera)" />
+      <arg name="node_name" value="head_r_stereo_camera_diag_updater" />
+      <arg name="topic_name" value="$(arg stereo_r_image_topic)" />
+      <arg name="warning_hz" value="1.0" />
+      <arg name="hardware_id" value="$(arg stereo_r_image_topic)" />
+    </include>
+
+    <node pkg="tmc_camera_respawner" type="respawner_node" name="stereo_camera_respawner"
+          output="screen">
+      <rosparam param="check_hardware_id_list" subst_value="true">
+        [$(arg stereo_l_image_topic), $(arg stereo_r_image_topic)]
+      </rosparam>
+      <param name="manager_name" value="$(arg namespace)/$(arg stereo_camera)_nodelet_manager" />
+      <param name="judge_respawn_duration" value="10.0" />
+    </node>
+
+    <!-- rectification -->
+    <include file="$(find tmc_rectifier)/launch/fp_rectifier_nodelet.launch">
+      <arg name="camera_parameter_file_path" value="$(arg calib_dir)/stereo_camera_params.yaml" />
+      <arg name="in_image_topic_left" value="$(arg stereo_l_image_topic)"/>
+      <arg name="in_image_topic_right" value="$(arg stereo_r_image_topic)"/>
+      <arg name="out_image_topic_left" value="$(arg stereo_l_image_rect_topic)"/>
+      <arg name="out_image_topic_right" value="$(arg stereo_r_image_rect_topic)"/>
+    </include>
+  </group>
+
+  <!-- head rgbd sensor -->
+  <group if="$(arg use_head_rgbd_sensor)">
+    <arg name="head_rgbd_sensor" value="head_rgbd_sensor" />
+    <!-- the tag will be deleted when openni becomes deprecated -->
+    <arg name="use_openni2" value="$(optenv USE_OPENNI2 true)" />
+    <!-- the tag will be deleted when openni becomes deprecated -->
+    <include file="$(find tmc_openni_launch)/launch/openni.launch" unless="$(arg use_openni2)">
+      <arg name="camera" value="$(arg head_rgbd_sensor)" />
+      <arg name="rgb_frame_id" value="$(arg frame_prefix)head_rgbd_sensor_rgb_frame" />
+      <arg name="depth_frame_id" value="$(arg frame_prefix)head_rgbd_sensor_depth_frame" />
+      <arg name="rgb_camera_info_url" value="file://$(arg calib_dir)/rgbd_sensor_rgb_camera_params.yaml" />
+      <arg name="depth_camera_info_url" value="file://$(arg calib_dir)/rgbd_sensor_depth_camera_params.yaml" />
+      <arg name="depth_registration" value="true" />
+    </include>
+    <!-- "if" attribute in the tag will be deleted when openni becomes deprecated -->
+    <include file="$(find tmc_openni2_launch)/launch/openni2.launch" if="$(arg use_openni2)">
+      <arg name="camera" value="$(arg head_rgbd_sensor)" />
+      <arg name="rgb_frame_id" value="$(arg frame_prefix)head_rgbd_sensor_rgb_frame" />
+      <arg name="depth_frame_id" value="$(arg frame_prefix)head_rgbd_sensor_depth_frame" />
+      <arg name="rgb_camera_info_url" value="file://$(arg calib_dir)/rgbd_sensor_rgb_camera_params.yaml" />
+      <arg name="depth_camera_info_url" value="file://$(arg calib_dir)/rgbd_sensor_depth_camera_params.yaml" />
+      <arg name="depth_registration" value="true" />
+    </include>
+
+    <include file="$(find tmc_depth_calibration)/launch/depth_rectifier_nodelet.launch">
+      <arg name="camera" value="$(arg head_rgbd_sensor)" />
+      <arg name="depth" value="depth_registered" />
+      <arg name="respawn" value="true" />
+    </include>
+
+    <arg name="rgb_image_topic_name" value="rgb/image_rect_color" />
+    <arg name="depth_image_topic_name" value="depth_registered/image_raw" />
+    <arg name="points_topic_name" value="depth_registered/rectified_points" />
+    <include file="$(find tmc_camera_diag_updater)/launch/xtion_diag_nodelet.launch" >
+      <arg name="camera" value="$(arg head_rgbd_sensor)" />
+      <arg name="rgb_image_topic_name" value="$(arg rgb_image_topic_name)" />
+      <arg name="depth_image_topic_name" value="$(arg depth_image_topic_name)" />
+      <arg name="points_topic_name" value="$(arg points_topic_name)" />
+    </include>
+
+    <node pkg="tmc_camera_respawner" type="respawner_node" name="$(arg head_rgbd_sensor)_respawner"
+          output="screen">
+      <rosparam param="check_hardware_id_list" subst_value="true">
+        [$(arg rgb_image_topic_name), $(arg depth_image_topic_name), $(arg points_topic_name)]
+      </rosparam>
+      <rosparam param="nodelet_list" subst_value="true">
+        [$(arg namespace)/head_rgbd_sensor/color_img_diag_updater, $(arg namespace)/head_rgbd_sensor/depth_img_diag_updater, $(arg namespace)/head_rgbd_sensor/depth_registered_rectified_points, $(arg namespace)/head_rgbd_sensor/depth_registered_rectifier_nodelet, $(arg namespace)/head_rgbd_sensor/driver, $(arg namespace)/head_rgbd_sensor/points_diag_updater, $(arg namespace)/head_rgbd_sensor/rgb_rectify_color, /perspective_transformer]
+      </rosparam>
+      <param name="manager_name" value="$(arg namespace)/$(arg head_rgbd_sensor)/$(arg head_rgbd_sensor)_nodelet_manager" />
+      <param name="judge_respawn_duration" value="10.0" />
+      <param name="enable_usb_hub_reset" value="$(arg enable_usb_hub_reset)" />
+      <rosparam if="$(arg enable_usb_hub_reset)" param="before_hub_reset_kill_node_list" subst_value="true">
+        [/hsrb/dynpick_driver_node]
+      </rosparam>
+      <rosparam if="$(arg enable_usb_hub_reset)" param="after_hub_reset_kill_node_list" subst_value="true">
+        [/text_to_speech]
+      </rosparam>
+      <remap if="$(arg enable_usb_hub_reset)" from="usb_hub_power_enable" to="$(arg namespace)/power/enable_12vu" />
+    </node>
+  </group>
+
+  <!-- base range sensor -->
+  <node pkg="urg_node" type="urg_node" name="urg_node" if="$(arg use_base_range_sensor)">
+    <remap from="scan" to="base_scan" />
+  </node>
+
+  <!-- laser-odometry -->
+  <node pkg="laser_scan_matcher" type="laser_scan_matcher_node" name="laser_scan_matcher_node">
+    <remap from="scan" to="$(arg namespace)/base_scan"/>
+    <remap from="pose_stamped" to="base_pose"/>
+    <remap from="imu/data" to= "base_imu/data" />
+  </node>
+
+  <!-- pose_to_odom -->
+  <node name="pose_stamped_to_odometry" pkg="topic_tools" type="transform"
+        args="$(arg namespace)/base_pose $(arg namespace)/laser_odom nav_msgs/Odometry
+              'nav_msgs.msg.Odometry(header=m.header, pose=geometry_msgs.msg.PoseWithCovariance(pose=m.pose))'
+              --import nav_msgs geometry_msgs --wait-for-start" />
+
+  <!-- hand camera -->
+  <include file="$(find hsrb_bringup)/launch/include/sensors/usb_cam.xml"
+           if="$(arg use_hand_camera)">
+    <arg name="camera" value="hand_camera" />
+    <arg name="device" value="$(optenv HAND_CAMERA_DEVICE /dev/hand_camera)" />
+  </include>
+
+  <!-- head wide view camera -->
+  <include file="$(find hsrb_bringup)/launch/include/sensors/usb_cam.xml"
+           if="$(arg use_head_center_camera)">
+    <arg name="camera" value="head_center_camera" />
+    <arg name="device" value="$(optenv HEAD_CENTER_CAMERA_DEVICE /dev/head_center_camera)" />
+  </include>
+
+  <!-- wrist wrench compensation -->
+  <group ns="wrist_wrench">
+    <node name="compensation_node"
+          pkg="tmc_force_torque_sensor_compensation"
+          type="force_torque_sensor_compensation_node" >
+      <remap from="/wrench_state" to="raw" />
+      <remap from="~wrench_state" to="compensated" />
+      <remap from="~offset_refresh_triger" to="readjust_offset" />
+      <remap from="~offset_refresh_time" to="readjustment_time" />
+      <rosparam param="config_files" subst_value="True">
+        ["$(env ROS_HOME)/tmc/robot/conf.d/calib_results/hand_weight_config.yaml",
+         "$(arg calib_dir)/hand_weight_config.yaml",
+         "$(find hsrb_manipulation_launch)/config/default_hand_weight_config.yaml"]
+      </rosparam>
+      <remap from="~dead_zone_with_linear_interpolation/threshold"
+             to="dead_zone/threshold" />
+      <remap from="~dead_zone_with_linear_interpolation/interpolation_width"
+             to="dead_zone/interpolation_width" />
+    </node>
+  </group>
+</launch>

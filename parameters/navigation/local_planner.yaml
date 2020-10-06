@@ -1,7 +1,7 @@
 local_planner : dwa_local_planner/DWAPlannerROS
 controller_frequency: 10.0
-robot_base_frame: /base_footprint
-global_frame: /map
+robot_base_frame: hero/base_footprint
+global_frame: map
 
 # Specific local planner parameters
 DWAPlannerROS:
@@ -9,8 +9,8 @@ DWAPlannerROS:
     #### base_local_planner::LocalPlannerLimits ###
 
     # velocities
-    max_trans_vel: 0.4
-    min_trans_vel: 0.0
+    max_vel_trans: 0.4
+    min_vel_trans: 0.0
 
     max_vel_x: 0.35
     min_vel_x: -0.1
@@ -18,12 +18,12 @@ DWAPlannerROS:
     max_vel_y: 0.2
     min_vel_y: -0.2
 
-    max_rot_vel: 1.0
-    min_rot_vel: 0.1
+    max_vel_theta: 1.0
+    min_vel_theta: 0.1
 
     # accelerations
-    acc_limit_trans: 0.35
-    deacc_limit_trans: 0.5
+    acc_lim_trans: 0.35
+    deacc_lim_trans: 0.5
 
     acc_lim_x: 0.35
     acc_lim_y: 0.35
@@ -38,7 +38,7 @@ DWAPlannerROS:
 
     # When stopped?
     trans_stopped_vel: 0.1
-    rot_stopped_vel: 0.1
+    theta_stopped_vel: 0.1
 
     # Prune the plan?
     prune_plan: true

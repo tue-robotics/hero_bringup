@@ -1,25 +1,37 @@
 <?xml version="1.0"?>
 <launch>
   <!-- Modified version of hsrb_gazebo_bringup/launch/include/hsrb_bringup.xml -->
-  <arg name="namespace" default="/hsrb" />
-  <arg name="use_laser_odom" default="true" />
+  <arg name="namespace" default="hsrb" />
+  <arg name="personal_name" default="" />
+  <arg name="use_laser_odom" default="false" />
 
   <group ns="$(arg namespace)">
     <rosparam file="$(find hsrb_common_config)/params/hsrb_sensor_config.yaml" command="load" />
   </group>
-  <rosparam file="$(find hsrb_gazebo_bringup)/params/hsrb_sensor_config.yaml" command="load" />
   <remap from="joint_states" to="$(arg namespace)/joint_states" />
   <remap from="/joint_states" to="$(arg namespace)/joint_states" />
 
-  <!-- convert joint states to TF transforms for rviz, etc -->
+  <!-- ns attribute is not accept empty string -->
 <!--
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
-        respawn="false" output="screen" />
-  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"
-        respawn="false" output="screen" >
-    <rosparam param="source_list">["/hsrb/joint_states"]</rosparam>
-  </node>
+  <group ns="/$(arg personal_name)">
+    <rosparam file="$(find hsrb_common_config)/params/hsrb_sensor_config.yaml" command="load" ns="$(arg namespace)"/>
+    <remap from="joint_states" to="$(arg namespace)/robot_state/joint_states" />
 -->
+
+    <!-- convert joint states to TF transforms for rviz, etc -->
+<!--
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
+          respawn="false" output="screen">
+      <param name="tf_prefix" value='$(arg personal_name)' />
+    </node>
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"
+          respawn="false" output="screen" >
+      <rosparam param="source_list" subst_value="true">["$(arg namespace)/joint_states"]</rosparam>
+    </node>
+  </group>
+-->
+
+  <!-- TU/e added -->
   <group ns="$(arg namespace)/robot_state">
     <node name="joint_state_pub" pkg="joint_state_publisher" type="joint_state_publisher">
       <param name="publish_default_velocities" value="true" />
@@ -35,37 +47,43 @@
     <node name="robot_state_pub" pkg="robot_state_publisher" type="robot_state_publisher">
       <param name="publish_frequency" value="50.0" />
       <param name="use_tf_static" value="true" />
+      <param name="tf_prefix" value='$(arg personal_name)' />
     </node>
   </group>
 
-  <!-- laser-odometry -->
   <group ns="$(arg namespace)" if="$(arg use_laser_odom)">
+    <!-- laser_scan_matcher -->
+    <rosparam file="$(find hsrb_gazebo_bringup)/params/hsrb_sensor_config.yaml" command="load" />
     <node pkg="laser_scan_matcher" type="laser_scan_matcher_node" name="laser_scan_matcher_node">
-      <remap from="scan" to="$(arg namespace)/base_scan"/>
-      <remap from="pose_stamped" to="$(arg namespace)/base_pose"/>
+      <remap from="scan" to="base_scan"/>
+      <remap from="pose_stamped" to="base_pose"/>
+      <param name="base_frame" value="$(arg namespace)/base_footprint" />
     </node>
 
     <!-- pose_to_odom -->
+    <!-- double slash is invalid on topic_tools transform -->
+    <arg if="$(eval personal_name == '')" name="transformer_prefix" value="$(arg namespace)" />
+    <arg if="$(eval personal_name != '')" name="transformer_prefix" value="$(arg personal_name)/$(arg namespace)" />
     <node name="pose_stamped_to_odometry" pkg="topic_tools" type="transform"
-          args="$(arg namespace)/base_pose $(arg namespace)/base/measurements_laser nav_msgs/Odometry
-    'nav_msgs.msg.Odometry(header=m.header, pose=geometry_msgs.msg.PoseWithCovariance(pose=m.pose))'
-    --import nav_msgs geometry_msgs --wait-for-start" />
+          args="/$(arg transformer_prefix)/base_pose /$(arg transformer_prefix)/base/measurements_laser nav_msgs/Odometry
+        'nav_msgs.msg.Odometry(header=m.header, pose=geometry_msgs.msg.PoseWithCovariance(pose=m.pose))'
+        --import nav_msgs geometry_msgs --wait-for-start" />
   </group>
 
-  <node name="head_l_stereo_camera_frame_pub" pkg="tf" type="static_transform_publisher"
-        args="0 0 0 0 0 0 head_l_stereo_camera_link head_l_stereo_camera_frame 100" />
+  <group ns="$(arg namespace)">
+    <node name="head_l_stereo_camera_frame_pub" pkg="tf" type="static_transform_publisher"
+          args="0 0 0 0 0 0 $(arg personal_name)/head_l_stereo_camera_link $(arg personal_name)/head_l_stereo_camera_frame 100" />
+    <node name="head_r_stereo_camera_frame_pub" pkg="tf" type="static_transform_publisher"
+          args="0 0 0 0 0 0 $(arg personal_name)/head_r_stereo_camera_link $(arg personal_name)/head_r_stereo_camera_frame 100" />
+    <node name="head_rgbd_sensor_rgb_frame_pub" pkg="tf" type="static_transform_publisher"
+          args="0 0 0 0 0 0 $(arg personal_name)/head_rgbd_sensor_link $(arg personal_name)/head_rgbd_sensor_rgb_frame 100" />
+    <node name="head_rgbd_sensor_depth_frame_pub" pkg="tf" type="static_transform_publisher"
+          args="0 0 0 0 0 0 $(arg personal_name)/head_rgbd_sensor_link $(arg personal_name)/head_rgbd_sensor_depth_frame 100" />
+  </group>
 
-  <node name="head_r_stereo_camera_frame_pub" pkg="tf" type="static_transform_publisher"
-        args="0 0 0 0 0 0 head_r_stereo_camera_link head_r_stereo_camera_frame 100" />
-
-  <node name="head_rgbd_sensor_rgb_frame_pub" pkg="tf" type="static_transform_publisher"
-        args="0 0 0 0 0 0 head_rgbd_sensor_link head_rgbd_sensor_rgb_frame 100" />
-
-  <node name="head_rgbd_sensor_depth_frame_pub" pkg="tf" type="static_transform_publisher"
-        args="0 0 0 0 0 0 head_rgbd_sensor_link head_rgbd_sensor_depth_frame 100" />
-
-  <include file="$(find hsrb_gazebo_bringup)/launch/include/hsrb_relay_topics.xml">
+  <include file="$(find hero_bringup)/hsrb_gazebo_bringup/launch/include/hsrb_relay_topics.xml">
     <arg name="namespace" value="$(arg namespace)" />
+    <arg name="personal_name" value="$(arg personal_name)" />
   </include>
 
   <!-- odometry_switcher -->
@@ -81,9 +99,10 @@
       <remap from="laser_odom" to="base/measurements_laser"/>
 
       <rosparam command="load" file="$(arg odometry_config)"/>
+      <param name="odom_frame" value="$(arg personal_name)/odom"/>
+      <param name="odom_child_frame" value="$(arg personal_name)/base_footprint"/>
       <param name="initial_odom" value="laser_odom" if="$(arg use_laser_odom)"/>
       <param name="initial_odom" value="wheel_odom" unless="$(arg use_laser_odom)"/>
     </node>
   </group>
-
 </launch>

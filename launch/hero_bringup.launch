@@ -17,6 +17,7 @@
     <arg name="align_at_startup" default="true" />
     <arg name="auto_start" default="false" />
     <arg name="robot_name" default="hsrb" />
+    <arg name="personal_name" default="hero" />
     <arg name="enable_emergency_stop" default="false" />
 
     <arg name="sim" value="true" if="$(optenv ROBOT_REAL false)" />
@@ -43,6 +44,9 @@
     <remap from="/hsrb/diagnostics" to="$(arg namespace)/diagnostics" />
     <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
     <remap from="diagnostics" to="$(arg namespace)/diagnostics" />
+
+	<remap from="arm_trajectory_controller/follow_joint_trajectory" to="body/joint_trajectory_action" />
+	<remap from="$(arg namespace)/arm_trajectory_controller/follow_joint_trajectory" to="$(arg namespace)/body/joint_trajectory_action" />
 
     <group ns="$(arg namespace)">
         <!-- TUe custom description -->
@@ -71,6 +75,7 @@
 
         <include file="$(find hero_bringup)/hsrb_bringup/launch/hsrb_bringup_common.launch">
             <arg name="namespace" value="$(arg namespace)" />
+            <arg name="personal_name" value="$(arg personal_name)" />
             <arg name="use_hand_camera" value="$(arg use_hand_camera)" />
             <arg name="use_head_center_camera" value="$(arg use_head_center_camera)" />
             <arg name="use_head_stereo_camera" value="$(arg use_head_stereo_camera)"/>
@@ -103,6 +108,7 @@
             <arg name="debug" value="$(arg debug)" />
             <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
             <arg name="robot_name" value="$(arg robot_name)" />
+            <arg name="personal_name" value="$(arg personal_name)" />
             <arg name="param_file" value="$(arg param_file)" />
         </include>
 
@@ -142,26 +148,30 @@
 
         <!-- MANIPULATION -->
         <group>
+            <remap from="arm_trajectory_controller/follow_joint_trajectory" to="$(arg namespace)/body/joint_trajectory_action" />
             <!-- Attitude transition -->
-            <include file="$(find hero_bringup)/hsrb_manipulation_launch/launch/safe_pose_changer.launch" >
-                <arg name="namespace" value="$(arg namespace)" />
+            <include file="$(find hsrb_manipulation_launch)/launch/safe_pose_changer.launch" >
+                <arg name="robot_name" value="$(arg namespace)" />
             </include>
 
             <!-- trajectory filter -->
-            <include file="$(find hsrb_trajectory_filter)/launch/trajectory_filter.launch">
+            <include file="$(find hsrb_trajectory_filter)/launch/trajectory_filter.launch" />
+<!--
                 <arg name="robot_name" value="$(arg robot_name)"/>
             </include>
+-->
 
             <!-- whole timeopt filter -->
             <include file="$(find hsrb_timeopt_ros)/launch/hsrb_timeopt_filter.launch" />
 
             <!-- Finger impedance control in whole body -->
             <remap from="/hsrb/joint_states" to="$(arg namespace)/joint_states" />
-            <remap from="/hsrb/odom" to="$(arg namespace)/base/measurements" />
+            <remap from="odom" to="$(arg namespace)/base/measurements" />
             <remap from="/hsrb/arm_trajectory_controller/command" to="$(arg namespace)/arm_trajectory_controller/command" />
             <remap from="/hsrb/omni_base_controller/command" to="$(arg namespace)/omni_base_controller/command" />
             <include file="$(find hero_bringup)/hsrb_impedance_control/launch/impedance_control_node.launch">
                 <arg name="namespace" value="$(arg namespace)" />
+                <arg name="robot_name" value="/$(arg personal_name)" />
             </include>
 
             <!-- Move the planner -->

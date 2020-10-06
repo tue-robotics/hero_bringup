@@ -9,6 +9,7 @@
     <arg name="paused" default="false" />
     <arg name="fast_physics" default="true" />
     <arg name="robot_name" default="hsrb" />
+    <arg name="personal_name" default="" />
     <arg name="param_file" default="$(env HOME)/.ros/params.yaml" />
 
     <arg name="use_sim_time" default="true"/>
@@ -22,27 +23,31 @@
     <arg name="robot_pos" default="-x $(optenv ROBOT_INIT_X 0) -y $(optenv ROBOT_INIT_Y 0) -z 0 -Y $(optenv ROBOT_INIT_PHI 0)" />
 
     <!-- Gazebo -->
-     <include file="$(find hero_bringup)/launch/simulation/gazebo.launch" >
-         <arg name="namespace" value="$(arg namespace)" />
-         <arg name="debug" value="$(arg debug)" />
-         <arg name="gui" value="$(arg gui)" />
-         <arg name="paused" value="$(arg paused)" />
-         <arg name="use_sim_time" value="$(arg use_sim_time)" />
-         <arg name="world_name" value="$(arg world_name)" />
+    <include file="$(find hero_bringup)/launch/simulation/gazebo.launch" >
+        <arg name="namespace" value="$(arg namespace)" />
+        <arg name="debug" value="$(arg debug)" />
+        <arg name="gui" value="$(arg gui)" />
+        <arg name="paused" value="$(arg paused)" />
+        <arg name="use_sim_time" value="$(arg use_sim_time)" />
+        <arg name="world_name" value="$(arg world_name)" />
+        <arg name="personal_name" value="$(arg personal_name)" />
+        <arg name="robot_name" value="$(arg robot_name)" />
     </include>
 
     <!-- Launch HSR -->
     <include file="$(find hero_bringup)/hsrb_gazebo_bringup/launch/include/hsrb.xml">
-        <arg name="namespace" value="$(arg namespace)" />
-        <arg name="robot_pos" value="$(arg robot_pos)" />
         <arg name="gazebo_visualization" value="$(arg gazebo_visualization)" />
-        <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
         <arg name="fast_physics" value="$(arg fast_physics)" />
+        <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
+        <arg name="robot_pos" value="$(arg robot_pos)" />
+        <arg name="namespace" value="$(arg namespace)" />
+        <arg name="personal_name" value="$(arg personal_name)" />
         <arg name="robot_name" value="$(arg robot_name)" />
     </include>
 
     <include file="$(find hsrb_gazebo_bringup)/launch/include/hsrb_sensor.xml" >
-        <arg name="namespace" value="$(arg namespace)" />
+        <arg name="namespace" value="" />
+        <arg name="personal_name" value="$(arg personal_name)" />
     </include>
 
     <!-- Pose setter -->

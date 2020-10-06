@@ -1,0 +1,64 @@
+analyzers:
+  joints:
+    type: diagnostic_aggregator/GenericAnalyzer
+    path: Joints
+    startswith: 'Joint'
+    num_items: 11
+  sensors:
+    type: diagnostic_aggregator/AnalyzerGroup
+    path: Sensors
+    analyzers:
+      bumper:
+        type: diagnostic_aggregator/GenericAnalyzer
+        path: Bumper
+        startswith: 'hsrb_bumper'
+      urg:
+        type: diagnostic_aggregator/GenericAnalyzer
+        path: Hokuyo
+        find_and_remove_prefix: 'hero/urg_node: '
+      io_monitor:
+        type: diagnostic_aggregator/GenericAnalyzer
+        path: IO
+        find_and_remove_prefix: 'hsrb/hsrb_io_monitor: '
+      camera:
+        type: diagnostic_aggregator/AnalyzerGroup
+        path: Camera
+        analyzers:
+          head_rgbd_sensor:
+            type: diagnostic_aggregator/GenericAnalyzer
+            path: HeadRGBDSensor
+            find_and_remove_prefix: 'hero/head_rgbd_sensor/head_rgbd_sensor_nodelet_manager: '
+          #head_stereo_camera:
+            #type: diagnostic_aggregator/GenericAnalyzer
+            #path: HeadStereoCamera
+            #find_and_remove_prefix: 'hero/stereo_camera_nodelet_manager: '
+          #head_center_camera:
+            #type: diagnostic_aggregator/GenericAnalyzer
+            #path: HeadCenterCamera
+            #find_and_remove_prefix: 'hero/head_center_camera/head_center_camera_nodelet_manager: '
+          #hand_camera:
+            #type: diagnostic_aggregator/GenericAnalyzer
+            #path: HandCamera
+            #find_and_remove_prefix: 'hero/hand_camera/hand_camera_nodelet_manager: '
+  power:
+    type: diagnostic_aggregator/AnalyzerGroup
+    path: Power
+    analyzers:
+      battery:
+        type: diagnostic_aggregator/GenericAnalyzer
+        path: Battery
+        find_and_remove_prefix: 'hero/sanyo_battery: '
+  cpu:
+    type: diagnostic_aggregator/AnalyzerGroup
+    path: Computer
+    analyzers:
+      file:
+        type: diagnostic_aggregator/GenericAnalyzer
+        path: File
+        find_and_remove_prefix: 'tmc_computer_monitor/file'
+        timeout: 0
+      computer:
+        type: diagnostic_aggregator/GenericAnalyzer
+        path: Computer
+        find_and_remove_prefix: 'tmc_computer_monitor/computer'
+        timeout: 105.0
