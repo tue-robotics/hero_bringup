@@ -17,7 +17,7 @@ Launch, machine and parameter files required to bringup the HERO robot
 
 - Required items:
   - USB Stick
-  - Optiona: External monitor with VGA connection. This is needed for any changes in the BIOS. As the BIOS is not shown on the internal screen.
+  - Optional: External monitor with VGA connection. This is needed for any changes in the BIOS. As the BIOS is not shown on the internal screen.
 - Insert keyboard into robot
 - Insert USB Stick directly into the robot. Don't use any USB hub, etc.
 - Boot the robot. If no install screen is shown, follow these steps:
