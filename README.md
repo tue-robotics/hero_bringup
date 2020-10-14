@@ -191,6 +191,8 @@ To prevent HERO2 to shutdown on unplugging the power supply, some power settings
 ```bash
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type nothing
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type nothing
+gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 0
+gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-timeout 0
 ```
 
 ## HERO demo laptop
