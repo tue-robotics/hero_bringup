@@ -56,14 +56,17 @@ Directly on the robot:
   - Change the line: `#DNS=` to `DNS=192.168.44.1 8.8.8.8 8.8.4.4`
   - Set to use ethernet: `sudo disable_wireless`
   - reboot: `sudo reboot`
+  
+The following steps need to be done on the robot(`hsr-hmi`) via the GUI:
+
+- Disable automatic updates in settings: *Software & Updates* > *Updates*:
+  - *Automatically check for updates*: `Never`
+  - *When there are other updates*: `Display every two weeks`
+  - *Notify me of a new Ubuntu version*: `Never`
 
 The following steps can be done via SSH or directly on the robot (SSH: `ssh administrator@hero1.local`)
 
 - (Run apt-get update): `sudo apt-get update` (as root/administrator)
-- On the robot(`hsr-hmi`): Disable automatic updates in settings: *Software & Updates* > *Updates*:
-  - *Automatically check for updates*: `Never`
-  - *When there are other updates*: `Display every two weeks`
-  - *Notify me of a new Ubuntu version*: `Never`
 - Update hsrb_command: `hsrb_command upgrade` (as root/administrator)
 - Update dockers: `hsrb_command update_release XX.XX` (as root/administrator)
 - Restore calibration files: `hsrb_command restore` (as root/administrator)
