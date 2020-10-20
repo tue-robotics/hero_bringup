@@ -1,0 +1,68 @@
+#! /usr/bin/env python
+
+import os
+from rospkg import common, rospack
+import rospy
+import sys
+from xml.etree.ElementTree import ElementTree
+import yaml
+
+if __name__ == "__main__":
+    rospy.init_node("toyota_version_check")
+    rp = rospack.RosPack()
+    toyota_pkgs = [pkg for pkg in rp.list() if "hsr" in pkg or "tmc" in pkg]
+
+    installed_pkgs = {}
+    not_registered_pkgs = ["bla1", "bla2", "bla3"]
+    incompatible_pkgs = []
+
+    mm = rospack.ManifestManager(common.PACKAGE_FILE)
+    for pkg in toyota_pkgs:
+        path = mm.get_path(pkg)
+        package_manifest = os.path.join(path, common.PACKAGE_FILE)
+        if os.path.exists(package_manifest):
+            try:
+                root = ElementTree(None, package_manifest)
+                version = root.findtext('version')
+            except Exception as e:
+                rospy.logfatal("Error during parsing of '{}' of package '{}'".format(common.PACKAGE_FILE, pkg))
+                sys.exit(1)
+        installed_pkgs.update({pkg: version})
+
+    hero_bringup_path = rp.get_path("hero_bringup")
+    compatible_pkgs_file = os.path.join(hero_bringup_path, "toyota_robot_versions.yaml" if os.environ.get("ROBOT_REAL", False) else "toyota_dev_versions.yaml")
+
+    if not os.path.isfile(compatible_pkgs_file):
+        rospy.logfatal("Missing toyota software version file: {}".format(compatible_pkgs_file))
+        sys.exit(1)
+
+    with open(compatible_pkgs_file) as f:
+        try:
+            compatible_pkgs = yaml.load(f, yaml.CSafeLoader)
+        except AttributeError:
+            compatible_pkgs = yaml.load(f, yaml.SafeLoader)
+        except (yaml.parser.ParserError, yaml.scanner.ScannerError) as e:
+            rospy.logfatal("Invalid yaml syntax: {0}".format(e))
+            sys.exit(1)
+
+    for pkg_name, pkg_version in installed_pkgs.iteritems():
+        if pkg_name not in compatible_pkgs.iterkeys():
+            not_registered_pkgs.append(pkg_name)
+        else:
+            if pkg_version not in compatible_pkgs[pkg_name]:
+                incompatible_pkgs.append(pkg_name)
+
+    if not_registered_pkgs:
+        pkgs_string = ""
+        for pkg in not_registered_pkgs:
+            pkgs_string += "\n\t- {}({})".format(pkg, installed_pkgs[pkg])
+        rospy.logwarn("The following packages are detected, but not registered yet:{}".format(pkgs_string))
+
+    if incompatible_pkgs:
+        pkgs_string = ""
+        for pkg in incompatible_pkgs:
+            pkgs_string += "\n\t- {}: version '{}' not in compatible versions: {}".format(pkg, installed_pkgs[pkg], compatible_pkgs[pkg] )
+        rospy.logfatal("The following packages are detected, but are not compatible:{}".format(pkgs_string))
+        sys.exit(1)
+
+    rospy.spin()
