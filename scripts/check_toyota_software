@@ -9,13 +9,16 @@ import yaml
 
 if __name__ == "__main__":
     rospy.init_node("toyota_version_check")
+
+    # Get all Toyota packages, so containing either hsr or tmc in the name
     rp = rospack.RosPack()
     toyota_pkgs = [pkg for pkg in rp.list() if "hsr" in pkg or "tmc" in pkg]
 
     installed_pkgs = {}
-    not_registered_pkgs = ["bla1", "bla2", "bla3"]
+    not_registered_pkgs = []
     incompatible_pkgs = []
 
+    # Get the installed version of all Toyota packages
     mm = rospack.ManifestManager(common.PACKAGE_FILE)
     for pkg in toyota_pkgs:
         path = mm.get_path(pkg)
@@ -29,6 +32,7 @@ if __name__ == "__main__":
                 sys.exit(1)
         installed_pkgs.update({pkg: version})
 
+    # Determine compatible software version file
     hero_bringup_path = rp.get_path("hero_bringup")
     compatible_pkgs_file = os.path.join(hero_bringup_path, "toyota_robot_versions.yaml" if os.environ.get("ROBOT_REAL", False) else "toyota_dev_versions.yaml")
 
@@ -36,6 +40,7 @@ if __name__ == "__main__":
         rospy.logfatal("Missing toyota software version file: {}".format(compatible_pkgs_file))
         sys.exit(1)
 
+    # Read file with compatible Toyota software versions
     with open(compatible_pkgs_file) as f:
         try:
             compatible_pkgs = yaml.load(f, yaml.CSafeLoader)
@@ -45,6 +50,7 @@ if __name__ == "__main__":
             rospy.logfatal("Invalid yaml syntax: {0}".format(e))
             sys.exit(1)
 
+    # Determine if the installed packages are registered and the version is  compatible
     for pkg_name, pkg_version in installed_pkgs.iteritems():
         if pkg_name not in compatible_pkgs.iterkeys():
             not_registered_pkgs.append(pkg_name)
@@ -52,12 +58,14 @@ if __name__ == "__main__":
             if pkg_version not in compatible_pkgs[pkg_name]:
                 incompatible_pkgs.append(pkg_name)
 
+    # Log all not registered packages
     if not_registered_pkgs:
         pkgs_string = ""
         for pkg in not_registered_pkgs:
             pkgs_string += "\n\t- {}({})".format(pkg, installed_pkgs[pkg])
         rospy.logwarn("The following packages are detected, but not registered yet:{}".format(pkgs_string))
 
+    # Log all incompatible packages
     if incompatible_pkgs:
         pkgs_string = ""
         for pkg in incompatible_pkgs:
@@ -65,4 +73,5 @@ if __name__ == "__main__":
         rospy.logfatal("The following packages are detected, but are not compatible:{}".format(pkgs_string))
         sys.exit(1)
 
+    # Keep the node alive, so that required=true can be used to kill roslaunch in case of an error
     rospy.spin()
