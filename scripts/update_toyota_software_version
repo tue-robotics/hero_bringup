@@ -1,68 +1,56 @@
 #! /usr/bin/env python
 
+from __future__ import print_function
+
 import argparse
+from hero_bringup.toyota_software_utils import (
+    get_compatible_toyota_software_version_file,
+    get_installed_toyota_pkgs,
+    pkgs_to_version_dict,
+    read_dict_yaml,
+)
 import os
-from rospkg import common, rospack
 import sys
-from xml.etree.ElementTree import ElementTree
 import yaml
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Set the current installed Toyota software as compatible')
+    parser = argparse.ArgumentParser(description="Set the current installed Toyota software as compatible")
     group = parser.add_mutually_exclusive_group(required=True)
-    group.add_argument('-r', '--reset',
-                       action='store_true',
-                       help='Current installed versions overwrite the stored compatible versions')
-    group.add_argument('-a', '--add',
-                       action='store_true',
-                       help='Add the current versions to the stored compatible versions')
+    group.add_argument(
+        "-r",
+        "--reset",
+        action="store_true",
+        help="Current installed versions overwrite the stored compatible versions",
+    )
+    group.add_argument(
+        "-a", "--add", action="store_true", help="Add the current versions to the stored compatible versions"
+    )
 
     args = parser.parse_args()
 
     # Get all Toyota packages, so containing either hsr or tmc in the name
-    rp = rospack.RosPack()
-    toyota_pkgs = [pkg for pkg in rp.list() if "hsr" in pkg or "tmc" in pkg]
-
-    installed_pkgs = {}
+    toyota_pkgs = get_installed_toyota_pkgs()
 
     # Get the installed version of all Toyota packages
-    mm = rospack.ManifestManager(common.PACKAGE_FILE)
-    for pkg in toyota_pkgs:
-        path = mm.get_path(pkg)
-        package_manifest = os.path.join(path, common.PACKAGE_FILE)
-        if os.path.exists(package_manifest):
-            try:
-                root = ElementTree(None, package_manifest)
-                version = root.findtext('version')
-            except Exception as e:
-                print("Error during parsing of '{}' of package '{}'".format(common.PACKAGE_FILE, pkg))
-                sys.exit(1)
-        installed_pkgs.update({pkg: version})
+    installed_pkgs = pkgs_to_version_dict(toyota_pkgs, print)
 
     # Determine compatible software version file
-    hero_bringup_path = rp.get_path("hero_bringup")
-    compatible_pkgs_file = os.path.join(hero_bringup_path, "toyota_robot_versions.yaml" if os.environ.get("ROBOT_REAL", False) else "toyota_dev_versions.yaml")
+    compatible_pkgs_file = get_compatible_toyota_software_version_file()
 
     # Read current set of compatible versions in case it doesn't need to be reset and the file exists
     if args.reset or not os.path.isfile(compatible_pkgs_file):
         compatible_pkgs = {}
+        # Set so final print statement is correct
         args.add = False
         args.reset = True
     elif args.add:
         # Read file with compatible Toyota software versions
-        with open(compatible_pkgs_file) as f:
-            try:
-                compatible_pkgs = yaml.load(f, yaml.CSafeLoader)
-            except AttributeError:
-                compatible_pkgs = yaml.load(f, yaml.SafeLoader)
-            except (yaml.parser.ParserError, yaml.scanner.ScannerError) as e:
-                print("Invalid yaml syntax: {0}".format(e))
-                sys.exit(1)
+        compatible_pkgs = read_dict_yaml(compatible_pkgs_file, print)
 
     # Add the package if not registered yet; Add current version to list of compatible versions in case package is
     # already registered
-    for pkg_name, pkg_version in installed_pkgs.iteritems():
-        if pkg_name not in compatible_pkgs.iterkeys():
+    for pkg_name, pkg_version in installed_pkgs.items():
+        if pkg_name not in compatible_pkgs.keys():
             compatible_pkgs.update({pkg_name: [pkg_version]})
         else:
             if pkg_version not in compatible_pkgs[pkg_name]:
@@ -80,9 +68,14 @@ if __name__ == "__main__":
 
     # Print to show successful completion
     if args.reset:
-        print("Compatible Toyota software versions is reset to the currently installed versions and stored at: '{}'".
-              format(compatible_pkgs_file))
+        print(
+            "Compatible Toyota software versions are reset to the currently installed versions. "
+            "These are stored at: '{}'".format(compatible_pkgs_file)
+        )
     elif args.add:
-        print("Compatible Toyota software versions file: '{}' is updated with the current installed version".
-              format(compatible_pkgs_file))
+        print(
+            "Compatible Toyota software versions file: '{}' is updated with the current installed version".format(
+                compatible_pkgs_file
+            )
+        )
     sys.exit(0)

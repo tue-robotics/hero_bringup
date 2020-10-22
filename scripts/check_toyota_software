@@ -1,58 +1,39 @@
 #! /usr/bin/env python
 
 import os
-from rospkg import common, rospack
+from hero_bringup.toyota_software_utils import (
+    get_compatible_toyota_software_version_file,
+    get_installed_toyota_pkgs,
+    pkgs_to_version_dict,
+    read_dict_yaml,
+)
 import rospy
 import sys
-from xml.etree.ElementTree import ElementTree
-import yaml
 
 if __name__ == "__main__":
     rospy.init_node("toyota_version_check")
 
     # Get all Toyota packages, so containing either hsr or tmc in the name
-    rp = rospack.RosPack()
-    toyota_pkgs = [pkg for pkg in rp.list() if "hsr" in pkg or "tmc" in pkg]
-
-    installed_pkgs = {}
+    toyota_pkgs = get_installed_toyota_pkgs()
     not_registered_pkgs = []
     incompatible_pkgs = []
 
     # Get the installed version of all Toyota packages
-    mm = rospack.ManifestManager(common.PACKAGE_FILE)
-    for pkg in toyota_pkgs:
-        path = mm.get_path(pkg)
-        package_manifest = os.path.join(path, common.PACKAGE_FILE)
-        if os.path.exists(package_manifest):
-            try:
-                root = ElementTree(None, package_manifest)
-                version = root.findtext('version')
-            except Exception as e:
-                rospy.logfatal("Error during parsing of '{}' of package '{}'".format(common.PACKAGE_FILE, pkg))
-                sys.exit(1)
-        installed_pkgs.update({pkg: version})
+    installed_pkgs = pkgs_to_version_dict(toyota_pkgs, rospy.logfatal)
 
     # Determine compatible software version file
-    hero_bringup_path = rp.get_path("hero_bringup")
-    compatible_pkgs_file = os.path.join(hero_bringup_path, "toyota_robot_versions.yaml" if os.environ.get("ROBOT_REAL", False) else "toyota_dev_versions.yaml")
+    compatible_pkgs_file = get_compatible_toyota_software_version_file()
 
     if not os.path.isfile(compatible_pkgs_file):
         rospy.logfatal("Missing toyota software version file: {}".format(compatible_pkgs_file))
         sys.exit(1)
 
     # Read file with compatible Toyota software versions
-    with open(compatible_pkgs_file) as f:
-        try:
-            compatible_pkgs = yaml.load(f, yaml.CSafeLoader)
-        except AttributeError:
-            compatible_pkgs = yaml.load(f, yaml.SafeLoader)
-        except (yaml.parser.ParserError, yaml.scanner.ScannerError) as e:
-            rospy.logfatal("Invalid yaml syntax: {0}".format(e))
-            sys.exit(1)
+    compatible_pkgs = read_dict_yaml(compatible_pkgs_file, rospy.logfatal)
 
     # Determine if the installed packages are registered and the version is compatible
-    for pkg_name, pkg_version in installed_pkgs.iteritems():
-        if pkg_name not in compatible_pkgs.iterkeys():
+    for pkg_name, pkg_version in installed_pkgs.items():
+        if pkg_name not in compatible_pkgs.keys():
             not_registered_pkgs.append(pkg_name)
         else:
             if pkg_version not in compatible_pkgs[pkg_name]:
@@ -69,7 +50,9 @@ if __name__ == "__main__":
     if incompatible_pkgs:
         pkgs_string = ""
         for pkg in incompatible_pkgs:
-            pkgs_string += "\n\t- {}: version '{}' not in compatible versions: {}".format(pkg, installed_pkgs[pkg], compatible_pkgs[pkg] )
+            pkgs_string += "\n\t- {}: version '{}' not in compatible versions: {}".format(
+                pkg, installed_pkgs[pkg], compatible_pkgs[pkg]
+            )
         rospy.logfatal("The following packages are detected, but are not compatible:{}".format(pkgs_string))
         sys.exit(1)
 
