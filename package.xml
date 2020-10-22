@@ -18,6 +18,9 @@
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>hero_bridge</exec_depend>
   <exec_depend>hsrb_description</exec_depend>
+  <exec_depend>python-rospkg</exec_depend>
+  <exec_depend>python-yaml</exec_depend>
   <exec_depend>robot_launch_files</exec_depend>
+  <exec_depend>rospy</exec_depend>
 
 </package>
