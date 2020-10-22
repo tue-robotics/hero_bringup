@@ -50,7 +50,7 @@ if __name__ == "__main__":
             rospy.logfatal("Invalid yaml syntax: {0}".format(e))
             sys.exit(1)
 
-    # Determine if the installed packages are registered and the version is  compatible
+    # Determine if the installed packages are registered and the version is compatible
     for pkg_name, pkg_version in installed_pkgs.iteritems():
         if pkg_name not in compatible_pkgs.iterkeys():
             not_registered_pkgs.append(pkg_name)

@@ -43,6 +43,7 @@ if __name__ == "__main__":
     hero_bringup_path = rp.get_path("hero_bringup")
     compatible_pkgs_file = os.path.join(hero_bringup_path, "toyota_robot_versions.yaml" if os.environ.get("ROBOT_REAL", False) else "toyota_dev_versions.yaml")
 
+    # Read current set of compatible versions in case it doesn't need to be reset and the file exists
     if args.reset or not os.path.isfile(compatible_pkgs_file):
         compatible_pkgs = {}
         args.add = False
@@ -58,7 +59,8 @@ if __name__ == "__main__":
                 print("Invalid yaml syntax: {0}".format(e))
                 sys.exit(1)
 
-    # Determine if the installed packages are registered and the version is  compatible
+    # Add the package if not registered yet; Add current version to list of compatible versions in case package is
+    # already registered
     for pkg_name, pkg_version in installed_pkgs.iteritems():
         if pkg_name not in compatible_pkgs.iterkeys():
             compatible_pkgs.update({pkg_name: [pkg_version]})
@@ -66,6 +68,7 @@ if __name__ == "__main__":
             if pkg_version not in compatible_pkgs[pkg_name]:
                 compatible_pkgs[pkg_name].append(pkg_version)
 
+    # Write new/updated set of compatible versions to file.
     with open(compatible_pkgs_file, "w+") as f:
         try:
             yaml.dump(compatible_pkgs, f, yaml.CSafeDumper)
@@ -75,8 +78,11 @@ if __name__ == "__main__":
             print("Error during dumping the yaml: {0}".format(e))
             sys.exit(1)
 
+    # Print to show successful completion
     if args.reset:
-        print("Compatible Toyota software versions is reset to the currently installed versions and stored at: '{}'".format(compatible_pkgs_file))
+        print("Compatible Toyota software versions is reset to the currently installed versions and stored at: '{}'".
+              format(compatible_pkgs_file))
     elif args.add:
-        print("Compatible Toyota software versions file: '{}' is updated with the current installed version".format(compatible_pkgs_file))
+        print("Compatible Toyota software versions file: '{}' is updated with the current installed version".
+              format(compatible_pkgs_file))
     sys.exit(0)
