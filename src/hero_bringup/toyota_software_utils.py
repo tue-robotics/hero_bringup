@@ -37,7 +37,8 @@ def read_dict_yaml(file_path, log):
 def get_rospack():
     # type: () -> rospkg.rospack.RosPack
     """
-    Get a reference to the global RosPack instance. It is initialized in case it is not yet done
+    Get a reference to the global RosPack instance. It is initialized in case it is not yet done.
+    The construction takes a long time, therefone it is preffered to only have one instance.
 
     :return: RosPack instance
     :rtype: rospkg.rospack.RosPack
