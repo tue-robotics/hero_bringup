@@ -9,6 +9,7 @@ from hero_bringup.toyota_software_utils import (
     pkgs_to_version_dict,
     read_dict_yaml,
 )
+import logging
 import os
 import sys
 import yaml
@@ -28,11 +29,15 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
+    logger = logging.getLogger()
+    logger.addHandler(logging.StreamHandler(sys.stdout))
+    logger.setLevel("INFO")
+
     # Get all Toyota packages, so containing either hsr or tmc in the name
     toyota_pkgs = get_installed_toyota_pkgs()
 
     # Get the installed version of all Toyota packages
-    installed_pkgs = pkgs_to_version_dict(toyota_pkgs, print)
+    installed_pkgs = pkgs_to_version_dict(toyota_pkgs, logger)
 
     # Determine compatible software version file
     compatible_pkgs_file = get_compatible_toyota_software_version_file()
@@ -45,7 +50,7 @@ if __name__ == "__main__":
         args.reset = True
     elif args.add:
         # Read file with compatible Toyota software versions
-        compatible_pkgs = read_dict_yaml(compatible_pkgs_file, print)
+        compatible_pkgs = read_dict_yaml(compatible_pkgs_file, logger)
 
     # Add the package if not registered yet; Add current version to list of compatible versions in case package is
     # already registered
@@ -63,17 +68,17 @@ if __name__ == "__main__":
         except AttributeError:
             yaml.dump(compatible_pkgs, f, yaml.SafeDumper)
         except Exception as e:
-            print("Error during dumping the yaml: {0}".format(e))
+            logger.error("Error during dumping the yaml: {0}".format(e))
             sys.exit(1)
 
     # Print to show successful completion
     if args.reset:
-        print(
+        logger.info(
             "Compatible Toyota software versions are reset to the currently installed versions. "
             "These are stored at: '{}'".format(compatible_pkgs_file)
         )
     elif args.add:
-        print(
+        logger.info(
             "Compatible Toyota software versions file: '{}' is updated with the current installed version".format(
                 compatible_pkgs_file
             )
