@@ -32,7 +32,7 @@
       <arg name="use_blackfly" value="$(arg use_blackfly)" />
       <arg name="enable_usb_hub_reset" value="$(arg enable_usb_hub_reset)" />
     </include>
-    <include file="$(find hsrb_bringup)/launch/include/sensors/dynpick.xml"/>
+    <include file="$(find hero_bringup)/hsrb_bringup/launch/include/sensors/dynpick.xml"/>
   </group>
 </launch>
 
