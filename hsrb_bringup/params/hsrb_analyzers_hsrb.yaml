@@ -43,7 +43,7 @@ analyzers:
       ft_sensor:
         type: diagnostic_aggregator/GenericAnalyzer
         path: FtSensor
-        find_and_remove_prefix: 'hero/ft_sensor_diag_updater_node:'
+        find_and_remove_prefix: 'hero/ft_sensor_diag_updater_node: '
   power:
     type: diagnostic_aggregator/AnalyzerGroup
     path: Power

@@ -132,7 +132,7 @@
       <param name="judge_respawn_duration" value="15.0" />
       <param name="enable_usb_hub_reset" value="$(arg enable_usb_hub_reset)" />
       <rosparam if="$(arg enable_usb_hub_reset)" param="before_hub_reset_kill_node_list" subst_value="true">
-        [/hsrb/dynpick_driver_node]
+        [$(arg namespace)/dynpick_driver_node]
       </rosparam>
       <rosparam if="$(arg enable_usb_hub_reset)" param="after_hub_reset_kill_node_list" subst_value="true">
         [/text_to_speech]
