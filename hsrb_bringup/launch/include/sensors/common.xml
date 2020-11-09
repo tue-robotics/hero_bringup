@@ -129,7 +129,7 @@
         [$(arg namespace)/head_rgbd_sensor/color_img_diag_updater, $(arg namespace)/head_rgbd_sensor/depth_img_diag_updater, $(arg namespace)/head_rgbd_sensor/depth_registered_rectified_points, $(arg namespace)/head_rgbd_sensor/depth_registered_rectifier_nodelet, $(arg namespace)/head_rgbd_sensor/driver, $(arg namespace)/head_rgbd_sensor/points_diag_updater, $(arg namespace)/head_rgbd_sensor/rgb_rectify_color, /perspective_transformer]
       </rosparam>
       <param name="manager_name" value="$(arg namespace)/$(arg head_rgbd_sensor)/$(arg head_rgbd_sensor)_nodelet_manager" />
-      <param name="judge_respawn_duration" value="10.0" />
+      <param name="judge_respawn_duration" value="15.0" />
       <param name="enable_usb_hub_reset" value="$(arg enable_usb_hub_reset)" />
       <rosparam if="$(arg enable_usb_hub_reset)" param="before_hub_reset_kill_node_list" subst_value="true">
         [/hsrb/dynpick_driver_node]
@@ -192,5 +192,13 @@
       <remap from="~dead_zone_with_linear_interpolation/interpolation_width"
              to="dead_zone/interpolation_width" />
     </node>
+  </group>
+
+  <!-- force torque sensor diag -->
+  <group ns="$(arg namespace)">
+    <include file="$(find tmc_ft_sensor_diag_updater)/launch/diag_updater.launch">
+      <arg name="input_topic_name" value="wrist_wrench/raw"/>
+      <arg name="expected_frame_id" value="$(arg frame_prefix)wrist_ft_sensor_frame"/>
+    </include>
   </group>
 </launch>
