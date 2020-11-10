@@ -29,7 +29,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    logger = logging.getLogger()
+    logger = logging.getLogger("hero_bringup.toyota_software_utils")
     logger.addHandler(logging.StreamHandler(sys.stdout))
     logger.setLevel("INFO")
 
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     toyota_pkgs = get_installed_toyota_pkgs()
 
     # Get the installed version of all Toyota packages
-    installed_pkgs = pkgs_to_version_dict(toyota_pkgs, logger)
+    installed_pkgs = pkgs_to_version_dict(toyota_pkgs)
 
     # Determine compatible software version file
     compatible_pkgs_file = get_compatible_toyota_software_version_file()
@@ -50,7 +50,7 @@ if __name__ == "__main__":
         args.reset = True
     elif args.add:
         # Read file with compatible Toyota software versions
-        compatible_pkgs = read_dict_yaml(compatible_pkgs_file, logger)
+        compatible_pkgs = read_dict_yaml(compatible_pkgs_file)
 
     # Add the package if not registered yet; Add current version to list of compatible versions in case package is
     # already registered
