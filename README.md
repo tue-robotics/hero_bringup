@@ -44,7 +44,7 @@ Directly on the robot:
   - Look for the following line: `iface enp4s0 inet dhcp`. Change it to: `iface enp4s0 inet static`
   - Add the following lines directly after the previous changed line:
 
-    ```
+    ```default
     address 192.168.44.51
     netmask 255.255.255.0
     gateway 192.168.44.1
@@ -135,7 +135,7 @@ The following services are running on HERO1. Normally these are ran from the dem
 
 - Install Ubuntu 18.04 Desktop:
 
-  ```
+  ```default
   Name: amigo
   Hostname: hero2
   Username: amigo
@@ -144,7 +144,7 @@ The following services are running on HERO1. Normally these are ran from the dem
 - After install go to TTY6(Ctrl+Alt+F6), install nvidia-driver-440(Or the one matching the cuda version used for openpose) and reboot: `sudo apt-get install nvidia-driver-440` and `sudo reboot`
 - Change ethernet configuration to static IP via GUI. Set static IP for ipv4 with the following settings:
 
-  ```
+  ```default
   Address: 192.168.44.52
   Netmask: 255.255.255.0
   Gateway: 192.168.44.1
@@ -204,7 +204,7 @@ gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-tim
 
 - Install Ubuntu 18.04 Desktop:
 
-  ```
+  ```default
   Name: demo
   Hostname: demo-laptop
   Username: demo
@@ -218,3 +218,12 @@ gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-tim
 - Pin shortcuts of `hero-dashboard` and `hero-rviz`
 - Disable laptop going to sleep and disable power button turning off the laptop
 - Copy ssh keys to HERO: `hero-copy-my-id`
+
+## Toyota software compatibility
+
+HERO uses many of the Toyota launch structure. This requires compatibility of launch file arguments, frame names, namespacing, etc.. In case of incompatibility it can look like a local issue. To exclude any uncertainty a list of compatible package versions is maintained. There is a seperate list for the [robot](./toyota_robot_versions.yaml) and [dev pc's](./toyota_dev_versions.yaml).
+
+`hero-start` contains a required node, which checks the currently installed set of Toyota software packages. In case of a package, which is not tracked, a warning is shown. In case of a tracked package with an incompatible version, an error is shown and `hero-start` will terminate.
+
+In case of an incompatible package version, you can add the new package version(s) to the list manually or run the update script with the add option: `rosrun hero_bringup update_toyota_software_version --add`. In case this seems to run without any issues (node names, topic names, service names, frame names, etc.), you can open a PR to update the tracked compatibility list.
+In case of any issues, the issues should be solved and the compatibility list should be reset. You can reset the compatible package version of the packages causing the issues manually or reset the entire list by running the update script with the 'reset' option: `rosrun hero_bringup update_toyota_software_version --reset`. You can try to fix (small) issues yourself, but it is recommended to ask [@MatthijsBurgh](https://github.com/MatthijsBurgh) to fix these issues.

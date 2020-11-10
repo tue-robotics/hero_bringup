@@ -85,4 +85,7 @@
     <!-- Include file in simulation -->
     <include file="$(find hero_bringup)/launch/hero_bringup.launch" unless="$(optenv ROBOT_REAL false)" pass_all_args="true" />
 
+    <!-- Check Toyota software versions on compatibility -->
+    <node name="toyota_compatibility_check" pkg="hero_bringup" type="check_toyota_software" required="true" />
+
  </launch>

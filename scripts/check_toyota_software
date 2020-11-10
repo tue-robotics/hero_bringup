@@ -1,0 +1,65 @@
+#! /usr/bin/env python
+
+import logging
+import os
+from hero_bringup.toyota_software_utils import (
+    get_compatible_toyota_software_version_file,
+    get_installed_toyota_pkgs,
+    pkgs_to_version_dict,
+    read_dict_yaml,
+)
+import rospy
+import sys
+
+
+if __name__ == "__main__":
+    rospy.init_node("toyota_version_check")
+
+    for handler in logging.getLogger("rosout").handlers:
+        logging.getLogger("hero_bringup.toyota_software_utils").addHandler(handler)
+
+    # Get all Toyota packages, so containing either hsr or tmc in the name
+    toyota_pkgs = get_installed_toyota_pkgs()
+    not_registered_pkgs = []
+    incompatible_pkgs = []
+
+    # Get the installed version of all Toyota packages
+    installed_pkgs = pkgs_to_version_dict(toyota_pkgs)
+
+    # Determine compatible software version file
+    compatible_pkgs_file = get_compatible_toyota_software_version_file()
+
+    if not os.path.isfile(compatible_pkgs_file):
+        rospy.logfatal("Missing toyota software version file: {}".format(compatible_pkgs_file))
+        sys.exit(1)
+    # Read file with compatible Toyota software versions
+    compatible_pkgs = read_dict_yaml(compatible_pkgs_file)
+
+    # Determine if the installed packages are registered and the version is compatible
+    for pkg_name, pkg_version in installed_pkgs.items():
+        if pkg_name not in compatible_pkgs.keys():
+            not_registered_pkgs.append(pkg_name)
+        else:
+            if pkg_version not in compatible_pkgs[pkg_name]:
+                incompatible_pkgs.append(pkg_name)
+    # Log all not registered packages
+    if not_registered_pkgs:
+        pkgs_string = ""
+        for pkg in not_registered_pkgs:
+            pkgs_string += "\n\t- {}({})".format(pkg, installed_pkgs[pkg])
+        rospy.logwarn("The following packages are detected, but not registered yet:{}".format(pkgs_string))
+    # Log all incompatible packages
+    if incompatible_pkgs:
+        pkgs_string = ""
+        for pkg in incompatible_pkgs:
+            pkgs_string += "\n\t- {}: version '{}' not in compatible versions: {}".format(
+                pkg, installed_pkgs[pkg], compatible_pkgs[pkg]
+            )
+        rospy.logfatal(
+            "The following packages are detected, but are not compatible:{}"
+            "\n\nCheck 'Toyota software compatibility' in the 'hero_bringup' README"
+            " on how to address this issue".format(pkgs_string)
+        )
+        sys.exit(1)
+    # Keep the node alive, so that required=true can be used to kill roslaunch in case of an error
+    rospy.spin()

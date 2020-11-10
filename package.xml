@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
-<package format="2">
+<?xml-model
+  href="http://download.ros.org/schema/package_format3.xsd"
+  schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
   <name>hero_bringup</name>
   <version>0.0.0</version>
   <description>The hero_bringup package</description>
@@ -15,6 +18,9 @@
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>hero_bridge</exec_depend>
   <exec_depend>hsrb_description</exec_depend>
+  <exec_depend>python-rospkg</exec_depend>
+  <exec_depend>python-yaml</exec_depend>
   <exec_depend>robot_launch_files</exec_depend>
+  <exec_depend>rospy</exec_depend>
 
 </package>
