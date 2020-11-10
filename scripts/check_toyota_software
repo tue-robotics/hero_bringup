@@ -15,7 +15,8 @@ import sys
 if __name__ == "__main__":
     rospy.init_node("toyota_version_check")
 
-    rosout = logging.getLogger("rosout")
+    for handler in logging.getLogger("rosout").handlers:
+        logging.getLogger("hero_bringup.toyota_software_utils").addHandler(handler)
 
     # Get all Toyota packages, so containing either hsr or tmc in the name
     toyota_pkgs = get_installed_toyota_pkgs()
@@ -23,7 +24,7 @@ if __name__ == "__main__":
     incompatible_pkgs = []
 
     # Get the installed version of all Toyota packages
-    installed_pkgs = pkgs_to_version_dict(toyota_pkgs, rosout)
+    installed_pkgs = pkgs_to_version_dict(toyota_pkgs)
 
     # Determine compatible software version file
     compatible_pkgs_file = get_compatible_toyota_software_version_file()
@@ -32,7 +33,7 @@ if __name__ == "__main__":
         rospy.logfatal("Missing toyota software version file: {}".format(compatible_pkgs_file))
         sys.exit(1)
     # Read file with compatible Toyota software versions
-    compatible_pkgs = read_dict_yaml(compatible_pkgs_file, rosout)
+    compatible_pkgs = read_dict_yaml(compatible_pkgs_file)
 
     # Determine if the installed packages are registered and the version is compatible
     for pkg_name, pkg_version in installed_pkgs.items():
