@@ -40,6 +40,10 @@ analyzers:
             #type: diagnostic_aggregator/GenericAnalyzer
             #path: HandCamera
             #find_and_remove_prefix: 'hero/hand_camera/hand_camera_nodelet_manager: '
+      ft_sensor:
+        type: diagnostic_aggregator/GenericAnalyzer
+        path: FtSensor
+        find_and_remove_prefix: 'hero/ft_sensor_diag_updater_node: '
   power:
     type: diagnostic_aggregator/AnalyzerGroup
     path: Power

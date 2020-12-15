@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="tmc_dynpick_driver" name="dynpick_driver_node" type="dynpick_driver_node" respawn="true" respawn_delay="3" >
+    <param name="device" value="$(optenv DYNPICK_DEVICE /dev/dynpick)" />
+    <param name="rate" value="100.0" />
+    <param name="frame_id" value="hero/wrist_ft_sensor_frame" />
+    <rosparam param="frame_to_sensor">
+      [0.0, 0.0, 0.0025, -0.707106781, 0.707106781, 0.0, 0.0]
+    </rosparam>
+    <remap from="force" to="wrist_wrench/raw"/>
+  </node>
+</launch>

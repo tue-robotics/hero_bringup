@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <launch>
-  <arg name="namespace" default="/" />
+  <arg name="personal_name" default="/" />
   <arg name="robot_name" default="hsrb" />
 
   <arg name="tf_prefix" value=""
-       if="$(eval namespace == '/' or namespace == '')" />
-  <arg name="tf_prefix" value="$(arg namespace)/"
-       if="$(eval namespace != '/' and namespace != '')" />
-  <group ns="$(arg namespace)">
+       if="$(eval personal_name == '/' or personal_name == '')" />
+  <arg name="tf_prefix" value="$(arg personal_name)/"
+       if="$(eval personal_name != '/' and personal_name != '')" />
+  <group ns="$(arg robot_name)">
     <node pkg="hsrb_impedance_control"
           name="impedance_control"
           type="hsrb_impedance_control_node">
@@ -16,7 +16,7 @@
 -->
       <remap from="~wrench_state" to="wrist_wrench/compensated"/>
       <remap from="~configuration_names" to="~config_names"/>
-      <remap from="~robot_description" to="$(arg namespace)/robot_description"/>
+      <remap from="~robot_description" to="/$(arg personal_name)/robot_description"/>
 
       <param name="base_frame_id" value="$(arg tf_prefix)odom"/>
       <param name="robot_frame_id" value="$(arg tf_prefix)base_link"/>

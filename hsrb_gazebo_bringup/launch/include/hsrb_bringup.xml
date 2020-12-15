@@ -4,6 +4,7 @@
   <arg name="namespace" default="hsrb" />
   <arg name="personal_name" default="" />
   <arg name="use_laser_odom" default="false" />
+  <arg name="odometry_config" default="$(find hsrb_common_config)/params/hsrb_odometry_config.yaml" />
 
   <group ns="$(arg namespace)">
     <rosparam file="$(find hsrb_common_config)/params/hsrb_sensor_config.yaml" command="load" />
@@ -88,7 +89,8 @@
 
   <!-- odometry_switcher -->
   <group ns="$(arg namespace)">
-    <arg name="odometry_config" default="$(find hsrb_common_config)/params/hsrb_odometry_config.yaml" />
+    <arg if="$(eval personal_name == '')" name="odom_frame_prefix" value="" />
+    <arg if="$(eval personal_name != '')" name="odom_frame_prefix" value="$(arg personal_name)/" />
     <node name="odometry_switcher" pkg="tmc_odometry_switcher" type="odometry_switcher_node">
       <!--
       <remap from="switched_odom" to="odom"/>
@@ -99,8 +101,8 @@
       <remap from="laser_odom" to="base/measurements_laser"/>
 
       <rosparam command="load" file="$(arg odometry_config)"/>
-      <param name="odom_frame" value="$(arg personal_name)/odom"/>
-      <param name="odom_child_frame" value="$(arg personal_name)/base_footprint"/>
+      <param name="odom_frame" value="$(arg odom_frame_prefix)odom"/>
+      <param name="odom_child_frame" value="$(arg odom_frame_prefix)base_footprint"/>
       <param name="initial_odom" value="laser_odom" if="$(arg use_laser_odom)"/>
       <param name="initial_odom" value="wheel_odom" unless="$(arg use_laser_odom)"/>
     </node>

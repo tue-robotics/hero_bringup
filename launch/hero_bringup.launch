@@ -166,7 +166,7 @@
             <remap from="/hsrb/arm_trajectory_controller/command" to="$(arg namespace)/arm_trajectory_controller/command" />
             <remap from="/hsrb/omni_base_controller/command" to="$(arg namespace)/omni_base_controller/command" />
             <include file="$(find hero_bringup)/hsrb_impedance_control/launch/impedance_control_node.launch">
-                <arg name="namespace" value="$(arg namespace)" />
+                <arg name="personal_name" value="$(arg personal_name)" />
                 <arg name="robot_name" value="/$(arg personal_name)" />
             </include>
 
