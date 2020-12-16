@@ -188,14 +188,17 @@ The following services are running on HERO2. Normally these are ran from the dem
 
 ### Power settings
 
-**Probably not needed anymore on Ubuntu 18.04**
-To prevent HERO2 to shutdown on unplugging the power supply, some power settings need to be changed. (<https://unix.stackexchange.com/questions/85251/my-laptop-shuts-down-every-time-i-unplug-it>)
+To prevent HERO2 to shutdown on unplugging the power supply, some power settings need to be changed. (<https://askubuntu.com/a/1132068>)
 
 ```bash
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type nothing
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-type nothing
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 0
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-timeout 0
+gsettings set org.gnome.settings-daemon.plugins.power lid-close-ac-action nothing
+gsettings set org.gnome.settings-daemon.plugins.power lid-close-battery-action nothing
+# Copy settings from amigo account to gdm account
+OLD_IFS=$IFS; IFS=$'\n'; for x in $(sudo -Hu amigo gsettings list-recursively org.gnome.settings-daemon.plugins.power); do eval "sudo -Hu gdm dbus-launch gsettings set $x"; done; IFS=$OLD_IFS; unset OLD_IFS
 ```
 
 ## HERO demo laptop
