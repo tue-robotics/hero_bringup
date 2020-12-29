@@ -12,6 +12,7 @@ Launch, machine and parameter files required to bringup the HERO robot
 - Back-Up of virtualbox image which are located in `~/vbox_images`:
   - Stop systemd service: `sudo systemctl stop hero1-speech5-windows-speech.service` or `sudo systemctl stop hero1-demo-speech5-windows-speech.service`
   - Actual back-up i.e.: `scp -r ~/vbox_images amigo@hero2.local:~/vbox_images_backup`
+- Back-Up the odometer files: `scp -r ~/odometer amigo@hero2.local:~/odometer_backup`
 
 #### Clean install
 
@@ -66,11 +67,12 @@ The following steps need to be done on the robot(`hsr-hmi`) via the GUI:
 
 The following steps can be done via SSH or directly on the robot (SSH: `ssh administrator@hero1.local`)
 
+- Change passwords of the accounts (hsr-hmi, hsr-user, administrator): `sudo passwd XX`
 - (Run apt-get update): `sudo apt-get update` (as root/administrator)
 - Update hsrb_command: `hsrb_command upgrade` (as root/administrator)
 - Update dockers: `hsrb_command update_release XX.XX` (as root/administrator)
 - Restore calibration files: `hsrb_command restore` (as root/administrator)
-- Change passwords of the accounts (hsr-hmi, hsr-user, administrator): `sudo passwd XX`
+- Restore odometer files: `scp -r amigo@hero2.local:~/odometer_backup ~/odometer`
 - Fix the owner of all files and folders in the `administrator` home folder: `sudo chown -R administrator:administrator /home/administrator/*`
 - restore virtualbox image to `~/vbox_images`: `scp -r amigo@hero2.local:~/vbox_images_backup ~/vbox_images`(Path of the files should be like: `~/vbox_images/windows/windows.XX`)
 - Install virtualbox debian from <https://www.virtualbox.org/wiki/Downloads>:
