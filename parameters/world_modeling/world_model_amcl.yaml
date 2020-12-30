@@ -1,0 +1,6 @@
+include: world_model_base.yaml
+world_name: $(env ROBOT_ENV)
+
+# ----------------------------------------------------------------------
+
+plugins: []
