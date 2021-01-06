@@ -11,3 +11,5 @@ jobs:
         uses: tue-robotics/tue-env/ci/main@gh_actions_use_ssh
         with:
           package: ${{ github.event.repository.name }}
+          ssh-key: ${{ secrets.SSH_DEPLOY_KEY }}
+          ssh-known-hosts: github.com
