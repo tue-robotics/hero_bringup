@@ -1,5 +1,7 @@
 # hero_bringup
 
+[![CI](https://github.com/tue-robotics/hero_bringup/workflows/CI/badge.svg)](https://github.com/tue-robotics/hero_bringup/actions)
+
 Launch, machine and parameter files required to bringup the HERO robot
 
 ## HERO1
