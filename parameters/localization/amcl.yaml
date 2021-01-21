@@ -16,7 +16,7 @@ laser_z_max: 0.05
 laser_z_rand: 0.05
 laser_lambda_short: 0.1
 laser_range_max: 10
-laser_model_type: beam
+laser_model_type: likelihood_field
 
 odom_model_type: omni-corrected
 global_frame_id: map
