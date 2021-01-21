@@ -482,7 +482,7 @@ Visualization Manager:
       Color: 25; 255; 0
       Enabled: true
       Name: Local Planner - Footprint
-      Topic: /hero/local_planner/local_costmap/robot_footprint/footprint_stamped
+      Topic: /hero/local_planner/local_costmap/footprint
       Unreliable: false
       Value: true
     - Alpha: 1
