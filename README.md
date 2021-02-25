@@ -159,6 +159,7 @@ The following services are running on HERO1. Normally these are ran from the dem
 - Set `Automatic suspend` to off in Power Settings, both for `Battery Power` and `Plugged in`
 - Keep laptop on with lid closed: `sudo vim /etc/systemd/logind.conf`, add `HandleLidSwitch=ignore` and `HandleLidSwitchExternalPower=ignore`
 - Install tue-env (<https://github.com/tue-robotics/tue-env>) and install `networking` target: `tue-get install networking`
+- Configure tue-env to use ssh for git: `tue-env config ros-$TUE_ROS_DISTRO git-use-ssh`
 - Reboot the laptop to activate ssh: `sudo reboot`
 - Use ssh with key forwarding to connect to the robot. This is needed to clone private repos. (`sshhero2` does this)
 - Install `hero2` target `tue-get install hero2`
