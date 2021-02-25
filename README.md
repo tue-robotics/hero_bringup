@@ -157,7 +157,7 @@ The following services are running on HERO1. Normally these are ran from the dem
 
 - Turn Airplane-mode on, make sure Wi-Fi and Bluetooth is disabled
 - Set `Automatic suspend` to off in Power Settings, both for `Battery Power` and `Plugged in`
-- Keep laptop on with lid closed: `sudo vim /etc/systemd/logind.conf`, add `HandleLidSwitch=ignore`
+- Keep laptop on with lid closed: `sudo vim /etc/systemd/logind.conf`, add `HandleLidSwitch=ignore` and `HandleLidSwitchExternalPower=ignore`
 - Install tue-env (<https://github.com/tue-robotics/tue-env>) and install `networking` target: `tue-get install networking`
 - Reboot the laptop to activate ssh: `sudo reboot`
 - Use ssh with key forwarding to connect to the robot. This is needed to clone private repos. (`sshhero2` does this)
