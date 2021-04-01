@@ -13,7 +13,10 @@
   <arg name="personal_name" default=""/>
 
   <arg if="$(eval personal_name == '')" name="frame_prefix" value="" />
+<!--
+  <arg if="$(eval personal_name == '')" name="frame_prefix" value="" />
   <arg if="$(eval personal_name != '')" name="frame_prefix" value="$(arg personal_name)/" />
+-->
 
   <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
 
