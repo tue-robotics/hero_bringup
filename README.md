@@ -137,7 +137,7 @@ The following services are running on HERO1. Normally these are ran from the dem
 
 #### Install
 
-- Install Ubuntu 18.04 Desktop:
+- Install Ubuntu 20.04 Desktop:
 
   ```default
   Name: amigo
@@ -165,18 +165,16 @@ The following services are running on HERO1. Normally these are ran from the dem
 - Install `hero2` target `tue-get install hero2`
 - Set keyboard shortcut `Ctrl+Alt+T` to terminator
 - Install openpose:
-  - Clone openpose: `git clone https://github.com/CMU-Perceptual-Computing-Lab/openpose.git ~/openpose`
-  - Checkout correct version: `git checkout  v1.6.0`
-  - Init all submodules: `git submodule update --init --recursive`
-  - Install matching cuda and cudnn. Install cuda via local debian file. Install cudnn via the tar file.
-  - Install dependencies: `sudo bash ./scripts/ubuntu/install_deps.sh`
+  - Clone openpose: `git clone https://github.com/CMU-Perceptual-Computing-Lab/openpose.git ~/src/openpose`
+  - Checkout correct version: `git checkout  v1.7.0`
+  - Install cuda 11.0 and cudnn 8.0.x. Install cuda via network debian file. Install cudnn via the debian files.
+  - Install dependencies: `. ./scripts/ubuntu/install_deps.sh`
   - (Optional) Install OpenCV: `sudo apt-get install libopencv-dev`
   - Create build folder: `mkdir build && cd build`
-  - Run CMake: `cmake .. -DBUILD_PYTHON=ON -DPYTHON_EXECUTABLE=/usr/bin/python2.7 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython2.7m.so`
-  - Check for `BUILD_PYTHON` being set to `ON` correctly: `ag -fi BUILD_PYTHON`. If not, edit those files manually.
+  - Run CMake: `cmake .. -DBUILD_PYTHON=ON -DPYTHON_EXECUTABLE=/usr/bin/python3.8 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.8.so`
   - Make openpose: `make`
   - Install openpose: `sudo make install`
-- Restore any backuped data
+- Restore any backed-up data
 - Setup MEGA sync via GUI
 - Build the software: `tue-make`
 - Install the background services: `rosrun hero_bringup install_systemd_autostart_hero2`
