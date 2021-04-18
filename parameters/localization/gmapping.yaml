@@ -1,5 +1,5 @@
-odom_frame: hero/odom
-base_frame: hero/base_footprint
+odom_frame: odom
+base_frame: base_footprint
 tf_prefix: "" # gmapping will convert map to hero/map if no prefix is set.
 delta: 0.025
 

@@ -23,7 +23,6 @@
 <!--
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"
           respawn="false" output="screen">
-      <param name="tf_prefix" value='$(arg personal_name)' />
     </node>
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"
           respawn="false" output="screen" >
@@ -48,7 +47,6 @@
     <node name="robot_state_pub" pkg="robot_state_publisher" type="robot_state_publisher">
       <param name="publish_frequency" value="50.0" />
       <param name="use_tf_static" value="true" />
-      <param name="tf_prefix" value='$(arg personal_name)' />
     </node>
   </group>
 
@@ -73,13 +71,13 @@
 
   <group ns="$(arg namespace)">
     <node name="head_l_stereo_camera_frame_pub" pkg="tf" type="static_transform_publisher"
-          args="0 0 0 0 0 0 $(arg personal_name)/head_l_stereo_camera_link $(arg personal_name)/head_l_stereo_camera_frame 100" />
+          args="0 0 0 0 0 0 head_l_stereo_camera_link head_l_stereo_camera_frame 100" />
     <node name="head_r_stereo_camera_frame_pub" pkg="tf" type="static_transform_publisher"
-          args="0 0 0 0 0 0 $(arg personal_name)/head_r_stereo_camera_link $(arg personal_name)/head_r_stereo_camera_frame 100" />
+          args="0 0 0 0 0 0 head_r_stereo_camera_link head_r_stereo_camera_frame 100" />
     <node name="head_rgbd_sensor_rgb_frame_pub" pkg="tf" type="static_transform_publisher"
-          args="0 0 0 0 0 0 $(arg personal_name)/head_rgbd_sensor_link $(arg personal_name)/head_rgbd_sensor_rgb_frame 100" />
+          args="0 0 0 0 0 0 head_rgbd_sensor_link head_rgbd_sensor_rgb_frame 100" />
     <node name="head_rgbd_sensor_depth_frame_pub" pkg="tf" type="static_transform_publisher"
-          args="0 0 0 0 0 0 $(arg personal_name)/head_rgbd_sensor_link $(arg personal_name)/head_rgbd_sensor_depth_frame 100" />
+          args="0 0 0 0 0 0 head_rgbd_sensor_link head_rgbd_sensor_depth_frame 100" />
   </group>
 
   <include file="$(find hero_bringup)/hsrb_gazebo_bringup/launch/include/hsrb_relay_topics.xml">
@@ -89,8 +87,7 @@
 
   <!-- odometry_switcher -->
   <group ns="$(arg namespace)">
-    <arg if="$(eval personal_name == '')" name="odom_frame_prefix" value="" />
-    <arg if="$(eval personal_name != '')" name="odom_frame_prefix" value="$(arg personal_name)/" />
+    <arg name="odom_frame_prefix" value="" />
     <node name="odometry_switcher" pkg="tmc_odometry_switcher" type="odometry_switcher_node">
       <!--
       <remap from="switched_odom" to="odom"/>

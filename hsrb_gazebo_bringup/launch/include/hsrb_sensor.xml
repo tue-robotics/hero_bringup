@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="namespace" default="hsrb" />
+  <arg name="personal_name" default="" />
+
+  <group ns="$(arg personal_name)/$(arg namespace)">
+    <node pkg="nodelet" type="nodelet" name="stereo_camera_nodelet_manager"
+          args="manager" output="screen"/>
+
+    <!-- wrist wrench compensation -->
+    <group ns="wrist_wrench">
+      <node name="compensation_node"
+            pkg="tmc_force_torque_sensor_compensation"
+            type="force_torque_sensor_compensation_node">
+        <remap from="/wrench_state" to="raw" />
+        <remap from="~wrench_state" to="compensated" />
+        <remap from="~offset_refresh_triger" to="readjust_offset" />
+        <remap from="~offset_refresh_time" to="readjustment_time" />
+        <rosparam param="config_files" subst_value="True">
+          ["$(find hsrb_manipulation_launch)/config/default_hand_weight_config.yaml"]
+        </rosparam>
+        <remap from="~dead_zone_with_linear_interpolation/threshold"
+               to="dead_zone/threshold" />
+        <remap from="~dead_zone_with_linear_interpolation/interpolation_width"
+               to="dead_zone/interpolation_width" />
+      </node>
+    </group>
+
+    <node pkg="nodelet" type="nodelet" name="metric_rect"
+          args="standalone depth_image_proc/convert_metric record_player_manager --no-bond">
+      <remap from="image_raw" to="head_rgbd_sensor/depth_registered/image_raw"/>
+      <remap from="image" to="head_rgbd_sensor/depth_registered/image"/>
+    </node>
+  </group>
+</launch>

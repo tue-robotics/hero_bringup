@@ -5,7 +5,7 @@ states:
 
 duration: 1.5
 priority: 10
-frame_id: hero/base_link # TODO: hard coded namespace
+frame_id: base_link
 
 pan_vel: 0.3
 tilt_vel: 0.3

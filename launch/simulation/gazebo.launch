@@ -17,6 +17,13 @@
     <arg if="$(eval personal_name == '' and robot_name != '')" name="ns" value="/$(arg robot_name)/" />
     <arg if="$(eval personal_name != '' and robot_name != '')" name="ns" value="/$(arg personal_name)/$(arg robot_name)/" />
 
+    <arg if="$(eval namespace == '' and robot_name == '')" name="ns2" value="/" />
+    <arg if="$(eval namespace != '' and robot_name == '')" name="ns2" value="$(arg namespace)/" />
+    <arg if="$(eval namespace == '' and robot_name != '')" name="ns2" value="/$(arg robot_name)/" />
+    <arg if="$(eval namespace != '' and robot_name != '')" name="ns2" value="$(arg namespace)/$(arg robot_name)/" />
+
+
+
     <!-- General -->
     <remap from="$(arg ns)/joint_states" to="$(arg namespace)/joint_states_hardware" />
     <remap from="$(arg ns)/pressure_sensor" to="$(arg namespace)/pressure_sensor" /> <!-- Gazebo publishes this topic, maybe this is related to the suction. Exact function unknown -->
@@ -27,8 +34,8 @@
     <remap from="$(arg ns)/odom_ground_truth" to="$(arg namespace)/measurements_ground_truth" /> <!-- Gazebo publishes this topic, exact function unknown -->
 
     <!-- Sensors -->
-    <remap from="$(arg ns)/base_scan" to="$(arg namespace)/base_laser/scan" />
-    <remap from="$(arg ns)/base_imu/data" to="$(arg namespace)/base_imu/data" />
+    <remap from="$(arg ns2)/base_scan" to="$(arg namespace)/base_laser/scan" />
+    <remap from="$(arg ns2)/base_imu/data" to="$(arg namespace)/base_imu/data" />
     <remap from="$(arg ns)/base_b_bumper_sensor" to="$(arg namespace)/base_b_bumper_sensor" />
     <remap from="$(arg ns)/base_f_bumper_sensor" to="$(arg namespace)/base_f_bumper_sensor" />
 
@@ -57,16 +64,16 @@
     <remap from="$(arg ns)/gazebo_ros_control/pid_gains/wrist_roll_joint" to="$(arg namespace)/gazebo_ros_control/pid_gains/wrist_roll_joint" />
 
     <!-- gazebo_ros_control -->
-    <remap from="/hsrb/gazebo_ros_control/pid_gains/base_r_drive_wheel_joint" to="/gazebo_ros_control/pid_gains/base_r_drive_wheel_joint" />
-    <remap from="/hsrb/gazebo_ros_control/pid_gains/base_l_drive_wheel_joint" to="/gazebo_ros_control/pid_gains/base_l_drive_wheel_joint" />
-    <remap from="/hsrb/gazebo_ros_control/pid_gains/base_roll_joint" to="/gazebo_ros_control/pid_gains/base_roll_joint" />
-    <remap from="/hsrb/gazebo_ros_control/pid_gains/head_pan_joint" to="/gazebo_ros_control/pid_gains/head_pan_joint" />
-    <remap from="/hsrb/gazebo_ros_control/pid_gains/head_tilt_joint" to="/gazebo_ros_control/pid_gains/head_tilt_joint" />
-    <remap from="/hsrb/gazebo_ros_control/pid_gains/arm_lift_joint" to="/gazebo_ros_control/pid_gains/arm_lift_joint" />
-    <remap from="/hsrb/gazebo_ros_control/pid_gains/arm_flex_joint" to="/gazebo_ros_control/pid_gains/arm_flex_joint" />
-    <remap from="/hsrb/gazebo_ros_control/pid_gains/arm_roll_joint" to="/gazebo_ros_control/pid_gains/arm_roll_joint" />
-    <remap from="/hsrb/gazebo_ros_control/pid_gains/wrist_flex_joint" to="/gazebo_ros_control/pid_gains/wrist_flex_joint" />
-    <remap from="/hsrb/gazebo_ros_control/pid_gains/wrist_roll_joint" to="/gazebo_ros_control/pid_gains/wrist_roll_joint" />
+    <remap from="/gazebo_ros_control/pid_gains/base_r_drive_wheel_joint" to="/gazebo_ros_control/pid_gains/base_r_drive_wheel_joint" />
+    <remap from="/gazebo_ros_control/pid_gains/base_l_drive_wheel_joint" to="/gazebo_ros_control/pid_gains/base_l_drive_wheel_joint" />
+    <remap from="/gazebo_ros_control/pid_gains/base_roll_joint" to="/gazebo_ros_control/pid_gains/base_roll_joint" />
+    <remap from="/gazebo_ros_control/pid_gains/head_pan_joint" to="/gazebo_ros_control/pid_gains/head_pan_joint" />
+    <remap from="/gazebo_ros_control/pid_gains/head_tilt_joint" to="/gazebo_ros_control/pid_gains/head_tilt_joint" />
+    <remap from="/gazebo_ros_control/pid_gains/arm_lift_joint" to="/gazebo_ros_control/pid_gains/arm_lift_joint" />
+    <remap from="/gazebo_ros_control/pid_gains/arm_flex_joint" to="/gazebo_ros_control/pid_gains/arm_flex_joint" />
+    <remap from="/gazebo_ros_control/pid_gains/arm_roll_joint" to="/gazebo_ros_control/pid_gains/arm_roll_joint" />
+    <remap from="/gazebo_ros_control/pid_gains/wrist_flex_joint" to="/gazebo_ros_control/pid_gains/wrist_flex_joint" />
+    <remap from="/gazebo_ros_control/pid_gains/wrist_roll_joint" to="/gazebo_ros_control/pid_gains/wrist_roll_joint" />
 
     <!-- General controllers -->
     <remap from="$(arg ns)/controller_manager" to="$(arg namespace)/controller_manager" />

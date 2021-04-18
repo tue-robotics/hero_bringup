@@ -1,6 +1,6 @@
 local_planner : dwa_local_planner/DWAPlannerROS
 controller_frequency: 10.0
-robot_base_frame: hero/base_footprint
+robot_base_frame: base_footprint
 global_frame: map
 
 # Specific local planner parameters

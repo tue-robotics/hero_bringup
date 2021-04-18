@@ -71,7 +71,6 @@
 
         <include file="$(find hero_bringup)/hsrb_bringup/launch/hsrb_bringup_common.launch">
             <arg name="namespace" value="$(arg namespace)" />
-            <arg name="personal_name" value="$(arg personal_name)" />
             <arg name="use_hand_camera" value="$(arg use_hand_camera)" />
             <arg name="use_head_center_camera" value="$(arg use_head_center_camera)" />
             <arg name="use_head_stereo_camera" value="$(arg use_head_stereo_camera)"/>

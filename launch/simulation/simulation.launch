@@ -30,7 +30,7 @@
         <arg name="paused" value="$(arg paused)" />
         <arg name="use_sim_time" value="$(arg use_sim_time)" />
         <arg name="world_name" value="$(arg world_name)" />
-        <arg name="personal_name" value="$(arg personal_name)" />
+        <arg name="personal_name" value="" />
         <arg name="robot_name" value="$(arg robot_name)" />
     </include>
 
@@ -45,9 +45,9 @@
         <arg name="robot_name" value="$(arg robot_name)" />
     </include>
 
-    <include file="$(find hsrb_gazebo_bringup)/launch/include/hsrb_sensor.xml" >
-        <arg name="namespace" value="" />
-        <arg name="personal_name" value="$(arg personal_name)" />
+    <include file="$(find hero_bringup)/hsrb_gazebo_bringup/launch/include/hsrb_sensor.xml" >
+        <arg name="namespace" value="$(arg personal_name)" />
+        <arg name="personal_name" value="" />
     </include>
 
     <!-- Pose setter -->
