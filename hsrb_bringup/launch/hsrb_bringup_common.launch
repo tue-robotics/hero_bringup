@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="namespace" default="/hsrb" />
-  <arg name="personal_name" default="" /> <!-- TUe Added -->
   <!-- sensor -->
   <arg name="config_dir" default="/etc/opt/tmc/robot/conf.d" />
   <arg name="calib_dir" default="$(arg config_dir)/calib_results" />
@@ -17,7 +16,6 @@
   <!-- include PHASE info -->
   <include file="$(find hero_bringup)/hsrb_bringup/launch/include/hsrb_bringup_common_$(optenv ROBOT_VERSION HSRB-PHASE5).xml">
     <arg name="namespace" value="$(arg namespace)" /> <!-- TUe Added -->
-    <arg name="personal_name" value="$(arg personal_name)" /> <!-- TUe Added -->
     <arg name="use_hand_camera" default="$(arg use_hand_camera)"/>
     <arg name="use_head_center_camera" default="$(arg use_head_center_camera)"/>
     <arg name="use_head_stereo_camera" default="$(arg use_head_stereo_camera)"/>

@@ -88,10 +88,6 @@
   <!-- odometry_switcher -->
   <group ns="$(arg namespace)">
     <arg name="odom_frame_prefix" value="" />
-<!--
-    <arg if="$(eval personal_name == '')" name="odom_frame_prefix" value="" />
-    <arg if="$(eval personal_name != '')" name="odom_frame_prefix" value="$(arg personal_name)/" />
--->
     <node name="odometry_switcher" pkg="tmc_odometry_switcher" type="odometry_switcher_node">
       <!--
       <remap from="switched_odom" to="odom"/>

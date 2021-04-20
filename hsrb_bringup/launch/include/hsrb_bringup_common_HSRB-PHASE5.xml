@@ -4,7 +4,6 @@
   <arg name="personal_name" default="" />
   <include file="$(find hero_bringup)/hsrb_description/robots/upload_hsrb.launch" >
     <arg name="namespace" value="$(arg namespace)" />
-    <arg name="personal_name" value="$(arg personal_name)" />
   </include>
 
   <!-- sensor -->
@@ -21,7 +20,6 @@
   <group ns="$(arg namespace)">
       <include file="$(find hero_bringup)/hsrb_bringup/launch/include/sensors/common.xml">
       <arg name="namespace" value="$(arg namespace)" />
-      <arg name="personal_name" value="$(arg personal_name)" />
       <arg name="config_dir" value="$(arg config_dir)" />
       <arg name="calib_dir" value="$(arg calib_dir)" />
       <arg name="use_hand_camera" default="$(arg use_hand_camera)"/>

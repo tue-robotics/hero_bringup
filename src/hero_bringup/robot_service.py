@@ -74,6 +74,8 @@ def exxx_read_hash(motor_id):
                                           MOTOR_DEVICE,
                                           str(motor_id)],
                                          stderr=subprocess.PIPE)
+        if sys.version_info.major == 3:
+            output = output.decode()
         output = {line.split('=')[0]: line.split('=')[1]
                   for line in output.replace(' ', '').split('\n')[:-1]}
         return output
@@ -96,6 +98,8 @@ def exxx_read_data_table(param, motor_id):
                                           str(motor_id),
                                           param],
                                          stderr=subprocess.PIPE)
+        if sys.version_info.major == 3:
+            output = output.decode()
         for line in output.split('\n'):
             if line.startswith(param):
                 return line.split(':')[1].strip()
@@ -111,6 +115,8 @@ def get_lsusb_diag():
     status.hardware_id = 'USB'
     try:
         result = subprocess.check_output(["lsusb"])
+        if sys.version_info.major == 3:
+            result = result.decode()
         status.level = diagnostic_msgs.msg.DiagnosticStatus.OK
         status.message = "lsusb succeeded"
     except subprocess.CalledProcessError as err:
@@ -210,7 +216,10 @@ class RobotService(object):
 
     def signal(self, sig, stack):
         u"""Signal handler"""
-        self.term_nodes(all_nodes=True)
+        if sig != self.previous_signal:
+            # Ignore if the same signal comes multiple times while the node is stopped
+            self.previous_signal = sig
+            self.term_nodes(all_nodes=True)
         # ROS I do not use signal handlers of rospy signal_shutdown call
         rospy.signal_shutdown("signal-" + str(sig))
         sys.exit(sig)
@@ -293,7 +302,7 @@ class RobotService(object):
                  self.all_nodes_pkg,
                  self.all_nodes_launch_file] +
                 ["{0}:={1}".format(key, value) for key, value
-                 in remap.iteritems()] +
+                 in remap.items()] +
                 self.remap_args,
                 stdout=stdout_file,
                 stderr=stderr_file,
@@ -414,6 +423,8 @@ class RobotService(object):
         is_all = True
         while True:
             self.term_nodes(is_all)
+            # Signal state reset
+            self.previous_signal = None
             wait_until_servo_is_ready(self.watch_motor_id)
             with self.lock:
                 self.button_off_count = 0
