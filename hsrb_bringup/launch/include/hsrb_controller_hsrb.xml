@@ -16,7 +16,6 @@
                 servo_state_controller
                 omni_base_controller
                 head_trajectory_controller
-                arm_trajectory_controller
                 drive_mode_controller
                 gripper_controller
                 servo_parameter_reader
