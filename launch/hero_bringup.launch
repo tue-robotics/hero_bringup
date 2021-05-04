@@ -144,13 +144,6 @@
         <!-- MANIPULATION -->
         <group>
             <remap from="arm_trajectory_controller/follow_joint_trajectory" to="$(arg namespace)/body/joint_trajectory_action" />
-            <!-- Attitude transition -->
-            <include file="$(find hsrb_manipulation_launch)/launch/safe_pose_changer.launch" >
-                <arg name="robot_name" value="$(arg namespace)" />
-            </include>
-
-            <!-- trajectory filter -->
-            <include file="$(find hsrb_trajectory_filter)/launch/trajectory_filter.launch" />
 <!--
                 <arg name="robot_name" value="$(arg robot_name)"/>
             </include>
