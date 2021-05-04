@@ -112,6 +112,7 @@
         </include>
 
         <!-- TEXT TO SPEECH -->
+        <remap from="/hero/text_to_speech/output" to="/talking_sentence"/>
         <include file="$(find robot_launch_files)/launch/interaction/text_to_speech.launch" ns="$(arg namespace)" />
 
     </group><!-- End of simulator group -->
