@@ -75,18 +75,6 @@ head_trajectory_controller:
     head_tilt_joint:
       goal: 0.2
 
-arm_trajectory_controller:
-  type: position_controllers/JointTrajectoryController
-  joints:
-    - arm_lift_joint
-    - arm_flex_joint
-    - arm_roll_joint
-    - wrist_flex_joint
-    - wrist_roll_joint
-  constraints:
-    stopped_velocity_tolerance: 0.5
-    goal_time: 0.05
-
 gripper_controller:
   type: hsrb_gripper_controller/HrhGripperController
 
