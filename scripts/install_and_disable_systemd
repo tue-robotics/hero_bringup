@@ -114,7 +114,7 @@ function install_and_disable_systemd
 
     for srv_file in $srv_files
     do
-         echo -e "sudo systemctl enable $srv_file"
+        echo -e "sudo systemctl enable $srv_file"
         sudo systemctl enable "$srv_file"
     done
 

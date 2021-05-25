@@ -3,4 +3,4 @@ priority: 5
 pan_vel: 0.3
 tilt_vel: 0.3
 
-frame: /hero/base_link
+frame: base_link

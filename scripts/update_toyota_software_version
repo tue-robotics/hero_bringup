@@ -1,0 +1,86 @@
+#! /usr/bin/env python
+
+from __future__ import print_function
+
+import argparse
+from hero_bringup.toyota_software_utils import (
+    get_compatible_toyota_software_version_file,
+    get_installed_toyota_pkgs,
+    pkgs_to_version_dict,
+    read_dict_yaml,
+)
+import logging
+import os
+import sys
+import yaml
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Set the current installed Toyota software as compatible")
+    group = parser.add_mutually_exclusive_group(required=True)
+    group.add_argument(
+        "-r",
+        "--reset",
+        action="store_true",
+        help="Current installed versions overwrite the stored compatible versions",
+    )
+    group.add_argument(
+        "-a", "--add", action="store_true", help="Add the current versions to the stored compatible versions"
+    )
+
+    args = parser.parse_args()
+
+    logger = logging.getLogger("hero_bringup.toyota_software_utils")
+    logger.addHandler(logging.StreamHandler(sys.stdout))
+    logger.setLevel("INFO")
+
+    # Get all Toyota packages, so containing either hsr or tmc in the name
+    toyota_pkgs = get_installed_toyota_pkgs()
+
+    # Get the installed version of all Toyota packages
+    installed_pkgs = pkgs_to_version_dict(toyota_pkgs)
+
+    # Determine compatible software version file
+    compatible_pkgs_file = get_compatible_toyota_software_version_file()
+
+    # Read current set of compatible versions in case it doesn't need to be reset and the file exists
+    if args.reset or not os.path.isfile(compatible_pkgs_file):
+        compatible_pkgs = {}
+        # Set so final print statement is correct
+        args.add = False
+        args.reset = True
+    elif args.add:
+        # Read file with compatible Toyota software versions
+        compatible_pkgs = read_dict_yaml(compatible_pkgs_file)
+
+    # Add the package if not registered yet; Add current version to list of compatible versions in case package is
+    # already registered
+    for pkg_name, pkg_version in installed_pkgs.items():
+        if pkg_name not in compatible_pkgs.keys():
+            compatible_pkgs.update({pkg_name: [pkg_version]})
+        else:
+            if pkg_version not in compatible_pkgs[pkg_name]:
+                compatible_pkgs[pkg_name].append(pkg_version)
+
+    # Write new/updated set of compatible versions to file.
+    with open(compatible_pkgs_file, "w+") as f:
+        try:
+            yaml.dump(compatible_pkgs, f, yaml.CSafeDumper)
+        except AttributeError:
+            yaml.dump(compatible_pkgs, f, yaml.SafeDumper)
+        except Exception as e:
+            logger.error("Error during dumping the yaml: {0}".format(e))
+            sys.exit(1)
+
+    # Print to show successful completion
+    if args.reset:
+        logger.info(
+            "Compatible Toyota software versions are reset to the currently installed versions. "
+            "These are stored at: '{}'".format(compatible_pkgs_file)
+        )
+    elif args.add:
+        logger.info(
+            "Compatible Toyota software versions file: '{}' is updated with the current installed version".format(
+                compatible_pkgs_file
+            )
+        )
+    sys.exit(0)

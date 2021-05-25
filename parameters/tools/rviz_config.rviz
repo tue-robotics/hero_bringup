@@ -560,16 +560,8 @@ Visualization Manager:
       Value: false
     - Class: rviz/Marker
       Enabled: true
-      Marker Topic: /hero/left_arm/grasp_target
-      Name: Grasp target left (green = corrected)
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: true
-    - Class: rviz/Marker
-      Enabled: true
-      Marker Topic: /hero/right_arm/grasp_target
-      Name: Grasp target right (green = corrected)
+      Marker Topic: /hero/arm_center/grasp_target
+      Name: Grasp target (green = corrected)
       Namespaces:
         {}
       Queue Size: 100

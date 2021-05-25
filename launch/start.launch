@@ -20,6 +20,7 @@
     <arg name="align_at_startup" default="true" />
     <arg name="auto_start" default="false" /> <!-- Don't pass on to robot_service node -->
     <arg name="robot_name" default="hsrb" />
+    <arg name="personal_name" default="hero" />
     <arg name="enable_emergency_stop" default="false" />
 
     <arg name="sim" value="true" if="$(optenv ROBOT_REAL false)" />
@@ -62,6 +63,7 @@
           align_at_startup:=$(arg align_at_startup)
 
           robot_name:=$(arg robot_name)
+          personal_name:=$(arg personal_name)
           enable_emergency_stop:=$(arg enable_emergency_stop)
 
           use_manipulation:=$(arg use_manipulation)
@@ -82,5 +84,8 @@
 
     <!-- Include file in simulation -->
     <include file="$(find hero_bringup)/launch/hero_bringup.launch" unless="$(optenv ROBOT_REAL false)" pass_all_args="true" />
+
+    <!-- Check Toyota software versions on compatibility -->
+    <node name="toyota_compatibility_check" pkg="hero_bringup" type="check_toyota_software" required="true" />
 
  </launch>

@@ -10,4 +10,4 @@ WantedBy=multi-user.target
 EnvironmentFile=-/etc/opt/tmc/robot/version
 User=demo
 Restart=on-failure
-ExecStart=/bin/bash -c 'source /home/demo/.tue/setup.bash && rosrun hsrb_bringup hsrb_roscore_service namespace:=/hero --screen'
+ExecStart=/bin/bash -c 'source /home/demo/.tue/setup.bash && rosrun hsrb_bringup hsrb_roscore_service namespace:=/hero analyzer_config:=$(rospack find hero_bringup)/hsrb_bringup/params/hsrb_analyzers_hsrb.yaml robot_name:=hsrb --screen'

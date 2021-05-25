@@ -1,21 +1,25 @@
+<?xml version="1.0"?>
 <launch>
+  <arg name="personal_name" default="/" />
+  <arg name="robot_name" default="hsrb" />
 
-  <arg name="namespace" default="/hsrb" />
+  <group ns="$(arg robot_name)">
+    <node pkg="hsrb_impedance_control"
+          name="impedance_control"
+          type="hsrb_impedance_control_node">
+<!--
+          output="screen">
+-->
+      <remap from="~wrench_state" to="wrist_wrench/compensated"/>
+      <remap from="~configuration_names" to="~config_names"/>
+      <remap from="~robot_description" to="/$(arg personal_name)/robot_description"/>
 
-  <node pkg="hsrb_impedance_control"
-        name="impedance_control"
-        type="hsrb_impedance_control_node">
-    <remap from="~wrench_state" to="$(arg namespace)/wrist_wrench/compensated"/>
-    <!-- 
-    The following remap is included from the original launch file (hsrb_impedance_control package).
-    It is, however, unclear what this should do and is therefore commented.
-    -->  
-    <!--<remap from="~configuration_names" to="~config_names"/>-->
-    <remap from="~robot_description" to="$(arg namespace)/robot_description"/>
-    <param name="control_rate" value="50.0"/>
-    <param name="command_duration" value="0.3"/>
-    <rosparam command="load"
-              file="$(find hsrb_impedance_control)/launch/configurations.yaml"/>
-  </node>
+      <param name="base_frame_id" value="odom"/>
+      <param name="robot_frame_id" value="base_link"/>
+      <param name="control_rate" value="50.0"/>
+      <param name="command_duration" value="0.3"/>
+      <rosparam command="load"
+                file="$(find hsrb_impedance_control)/launch/configurations.yaml"/>
+    </node>
+  </group>
 </launch>
-

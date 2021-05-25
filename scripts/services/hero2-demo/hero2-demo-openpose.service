@@ -7,6 +7,7 @@ WantedBy=multi-user.target
 [Service]
 User=demo
 Restart=on-failure
+RestartSec=1s
 ExecStart=/bin/bash -c 'source /home/demo/.tue/setup.bash \
         && export PATH=/usr/local/cuda/bin:$PATH \
         && export LD_LIBRARY_PATH=/usr/local/cuda/lib64$:$LD_LIBRARY_PATH \
@@ -15,6 +16,7 @@ ExecStart=/bin/bash -c 'source /home/demo/.tue/setup.bash \
         _net_input_height:=368 \
         _net_output_width:=368 \
         _net_output_height:=368 \
-        _model_folder:=/home/amigo/openpose/models/ \
+        _model_folder:=/home/amigo/src/openpose/models/ \
+        _check_master:=true \
         __ns:=hero/openpose \
         image:=openpose_input_image'
