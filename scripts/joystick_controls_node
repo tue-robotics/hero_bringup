@@ -1,0 +1,72 @@
+#! /usr/bin/env python
+
+import sys
+
+import rospy
+import rosnode
+import actionlib
+from sensor_msgs.msg import Joy
+from geometry_msgs.msg import Twist
+from control_msgs.msg import FollowJointTrajectoryAction, FollowJointTrajectoryActionGoal
+from tue_manipulation_msgs.msg import GripperCommandAction, GripperCommandActionGoal
+
+
+class JoystickControls(object):
+    def __init__(self):
+        """
+        Subscribes to the Joy messages sent via the controller and the joy node and then transforms these to the desired behavior
+        """
+        self.controller_mode = 4
+        # self.map = self.controller_mappings[self.controller_mode]
+        self.controller_sub = rospy.Subscriber("joy", Joy, self.map_joystick, queue_size=1)
+
+        # Publish to kill all state_machines, to open/close the gripper, to move the base, loaded trajectory/pose, move the end effector
+        self.base_pub = rospy.Publisher("base/references", Twist, queue_size=1)
+        # self.end_effector_client = actionlib.SimpleActionClient("body/joint_trajectory_action", FollowJointTrajectoryAction)
+        # self.gripper_client = actionlib.SimpleActionClient("gripper/action", GripperCommandAction)
+        # self.end_effector_client.wait_for_server()
+        # self.gripper_client.wait_for_server()
+
+    def _send_controls(self, mapping):
+        # First check if any state machines need killing since this likely takes longest
+        if mapping['B']:
+            rospy.loginfo("Killing existing statemachine.")
+            rosnode.kill_nodes("/state_machine")        # kill whatever statemachine (=challenge/free_mode) is currently running
+        if mapping['A']:
+            # close/open gripper
+            print("Clicked A")
+        if mapping['X']:
+            # reset?
+        if mapping['Y']:
+            # move to current fixed pose
+
+    def map_joystick(self, joy_msg):
+        
+        controller_mappings = {4: {'A': joy_msg.buttons[0],
+                                        'B': joy_msg.buttons[1],
+                                        'X': joy_msg.buttons[2],
+                                        'Y': joy_msg.buttons[3],
+                                        'left_bumper': joy_msg.buttons[4],
+                                        'right_bumper': joy_msg.buttons[5],
+                                        'select': joy_msg.buttons[6],
+                                        'start': joy_msg.buttons[7],
+                                        'home': joy_msg.buttons[8],
+                                        'left_stick_pressed': joy_msg.buttons[9],
+                                        'right_stick_pressed': joy_msg.buttons[10],
+                                        'left_stick_horizontal': joy_msg.axes[0],
+                                        'left_stick_vertical': joy_msg.axes[1],
+                                        'left_trigger': joy_msg.axes[2],
+                                        'right_stick_horizontal': joy_msg.axes[3],
+                                        'right_stick_vertical': joy_msg.axes[4],
+                                        'right_trigger': joy_msg.axes[5],
+                                        'directional_pad_horizontal': joy_msg.axes[6],
+                                        'directional_pad_vertical': joy_msg.axes[7]
+                                       }
+                                   }
+        self._send_controls(controller_mappings[self.controller_mode])
+
+
+if __name__ == "__main__":
+    rospy.init_node("joystick_controls_node")
+    ConversionNode = JoystickControls()
+    sys.exit(rospy.spin())
