@@ -59,6 +59,8 @@ class JoystickControls(object):
             self.base_command.linear.y = 0.4 * mapping['right_stick_horizontal']
         if abs(mapping['left_stick_horizontal']) > 0.1: # angular base movement
             self.base_command.angular.z = 0.6 * mapping['left_stick_horizontal']
+        if mapping['right_bumper']:
+            self.robot.speech.speak("Beep. Boop. Beep boop.")
 
         if abs(mapping['right_stick_horizontal']) < 0.1 and abs(mapping['right_stick_vertical']) < 0.1 and abs(mapping['left_stick_horizontal']) < 0.1:
             self.base_command = Twist()
