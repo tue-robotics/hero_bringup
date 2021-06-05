@@ -7,9 +7,11 @@ import rosnode
 import actionlib
 from sensor_msgs.msg import Joy
 from geometry_msgs.msg import Twist
+from sensor_msgs.msg import JointState
 from control_msgs.msg import FollowJointTrajectoryAction, FollowJointTrajectoryActionGoal
 from tue_manipulation_msgs.msg import GripperCommandAction, GripperCommandActionGoal
-
+from robot_skills.get_robot import get_robot
+from robot_skills.arm import arms
 
 class JoystickControls(object):
     def __init__(self):
@@ -19,29 +21,52 @@ class JoystickControls(object):
         self.controller_mode = 4
         # self.map = self.controller_mappings[self.controller_mode]
         self.controller_sub = rospy.Subscriber("joy", Joy, self.map_joystick, queue_size=1)
+        self.gripper_state_sub = rospy.Subscriber("joint_states", JointState, self.get_gripper_state, queue_size=1)
 
         # Publish to kill all state_machines, to open/close the gripper, to move the base, loaded trajectory/pose, move the end effector
         self.base_pub = rospy.Publisher("base/references", Twist, queue_size=1)
-        # self.end_effector_client = actionlib.SimpleActionClient("body/joint_trajectory_action", FollowJointTrajectoryAction)
-        # self.gripper_client = actionlib.SimpleActionClient("gripper/action", GripperCommandAction)
-        # self.end_effector_client.wait_for_server()
-        # self.gripper_client.wait_for_server()
+        self.robot = get_robot('hero')
+        self.robot_arm = self.robot.get_arm(required_gripper_types=[arms.GripperTypes.GRASPING], required_goals=['show_gripper'])
+        self.gripper_state = None
+
+        # set all out-msgs
+        self.base_command = Twist()
+        # self.head_command = None
+
+        # send controls at constant rate
+        r = rospy.Rate(10) # 10hz
+        while not rospy.is_shutdown():
+            self.publish_controls()
+            r.sleep()
 
     def _send_controls(self, mapping):
+        self.base_command = Twist()
         # First check if any state machines need killing since this likely takes longest
         if mapping['B']:
             rospy.loginfo("Killing existing statemachine.")
             rosnode.kill_nodes("/state_machine")        # kill whatever statemachine (=challenge/free_mode) is currently running
         if mapping['A']:
-            # close/open gripper
-            print("Clicked A")
+            if self.gripper_state == "open":
+                self.robot_arm.gripper.send_goal('close')
+            elif self.gripper_state == "closed":
+                self.robot_arm.gripper.send_goal('open')
         if mapping['X']:
-            # reset?
+            self.robot.reset()
         if mapping['Y']:
-            # move to current fixed pose
+            self.robot_arm.send_joint_goal('show_gripper')
+        if abs(mapping['right_stick_horizontal']) > 0.1 or abs(mapping['right_stick_vertical']) > 0.1: # linear base movement
+            self.base_command.linear.x = 0.4 * mapping['right_stick_vertical']
+            self.base_command.linear.y = 0.4 * mapping['right_stick_horizontal']
+        if abs(mapping['left_stick_horizontal']) > 0.1: # angular base movement
+            self.base_command.angular.z = 0.6 * mapping['left_stick_horizontal']
+
+        if abs(mapping['right_stick_horizontal']) < 0.1 and abs(mapping['right_stick_vertical']) < 0.1 and abs(mapping['left_stick_horizontal']) < 0.1:
+            self.base_command = Twist()
+
+    def publish_controls(self):
+            self.base_pub.publish(self.base_command)
 
     def map_joystick(self, joy_msg):
-        
         controller_mappings = {4: {'A': joy_msg.buttons[0],
                                         'B': joy_msg.buttons[1],
                                         'X': joy_msg.buttons[2],
@@ -64,6 +89,13 @@ class JoystickControls(object):
                                        }
                                    }
         self._send_controls(controller_mappings[self.controller_mode])
+
+    def get_gripper_state(self, state_msg):
+        if state_msg.name[20] == 'hand_motor_joint':
+            if state_msg.position[20] > 0.6:
+                self.gripper_state = 'open'
+            else:
+                self.gripper_state = 'closed'
 
 
 if __name__ == "__main__":
