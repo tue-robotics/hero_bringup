@@ -45,8 +45,8 @@
     <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
     <remap from="diagnostics" to="$(arg namespace)/diagnostics" />
 
-	<remap from="arm_trajectory_controller/follow_joint_trajectory" to="body/joint_trajectory_action" />
-	<remap from="$(arg namespace)/arm_trajectory_controller/follow_joint_trajectory" to="$(arg namespace)/body/joint_trajectory_action" />
+    <remap from="arm_trajectory_controller/follow_joint_trajectory" to="body/joint_trajectory_action" />
+    <remap from="$(arg namespace)/arm_trajectory_controller/follow_joint_trajectory" to="$(arg namespace)/body/joint_trajectory_action" />
 
     <group ns="$(arg namespace)">
         <!-- TUe custom description -->
