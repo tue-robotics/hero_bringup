@@ -151,10 +151,6 @@
 
             <!-- trajectory filter -->
             <include file="$(find hsrb_trajectory_filter)/launch/trajectory_filter.launch" />
-<!--
-                <arg name="robot_name" value="$(arg robot_name)"/>
-            </include>
--->
 
             <!-- whole timeopt filter -->
             <include file="$(find hsrb_timeopt_ros)/launch/hsrb_timeopt_filter.launch" />
