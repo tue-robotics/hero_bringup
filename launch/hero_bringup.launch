@@ -123,8 +123,15 @@
 
         <!-- ROS to RGBD -->
         <group ns="head_rgbd_sensor">
-            <node pkg="rgbd" type="ros_to_rgbd" name="ros_to_rgbd" output="log">
-                <remap from="output" to="rgbd" />
+            <!-- Nodelet  on HERO -->
+            <node pkg="nodelet" type="nodelet" name="ros_to_rgbd" args="load rgbd/ros_to_rgbd manager" output="log" if="$(optenv ROBOT_REAL false)">
+                <remap from="rgb_image" to="rgb/image_rect_color" />
+                <remap from="cam_info" to="rgb/camera_info" />
+                <remap from="depth_image" to="depth_registered/image" />
+            </node>
+
+            <!-- Normal node in simulation -->
+            <node pkg="rgbd" type="ros_to_rgbd" name="ros_to_rgbd" output="log" unless="$(optenv ROBOT_REAL false)">
                 <remap from="rgb_image" to="rgb/image_rect_color" />
                 <remap from="cam_info" to="rgb/camera_info" />
                 <remap from="depth_image" to="depth_registered/image" />
