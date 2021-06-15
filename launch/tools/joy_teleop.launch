@@ -4,8 +4,6 @@
     <arg name="namespace" default="/hero" />
 
     <group ns="$(arg namespace)">
-        <!-- <rosparam command="load" file="$(find hero_bringup)/parameters/tools/teleop.yaml" /> -->
-
         <node name="joy_teleop" pkg="joy" type="joy_node" />
 
         <node name="joy_controls" pkg="hero_bringup" type="joystick_controls_node" />

@@ -206,6 +206,9 @@
             <remap from="odom" to="base/measurements" />
         </node>
 
+        <!-- Joystick controller -->
+        <include file="$(find hero_bringup)/launch/tools/joy_teleop.launch" />
+
     </group> <!-- End of TU/e namespace group -->
 
 </launch>
