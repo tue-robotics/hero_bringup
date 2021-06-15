@@ -4,12 +4,9 @@ import sys
 
 import rospy
 import rosnode
-import actionlib
 from sensor_msgs.msg import Joy
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import JointState
-from control_msgs.msg import FollowJointTrajectoryAction, FollowJointTrajectoryActionGoal
-from tue_manipulation_msgs.msg import GripperCommandAction, GripperCommandActionGoal
 from robot_skills.get_robot import get_robot
 from robot_skills.arm import arms
 
@@ -20,11 +17,9 @@ class JoystickControls(object):
         Subscribes to the Joy messages sent via the controller and the joy node and then transforms these to the desired behavior
         """
         self.controller_mode = 4
-        # self.map = self.controller_mappings[self.controller_mode]
         self.controller_sub = rospy.Subscriber("joy", Joy, self.map_joystick, queue_size=1)
         self.gripper_state_sub = rospy.Subscriber("joint_states", JointState, self.get_gripper_state, queue_size=1)
 
-        # Publish to kill all state_machines, to open/close the gripper, to move the base, loaded trajectory/pose, move the end effector
         self.base_pub = rospy.Publisher("base/references", Twist, queue_size=1)
         self.robot = get_robot('hero')
         self.robot_arm = self.robot.get_arm(required_gripper_types=[arms.GripperTypes.GRASPING], required_goals=['show_gripper'])
@@ -67,7 +62,7 @@ class JoystickControls(object):
             self.base_command = Twist()
 
     def publish_controls(self):
-            self.base_pub.publish(self.base_command)
+        self.base_pub.publish(self.base_command)
 
     def map_joystick(self, joy_msg):
         controller_mappings = {4: {'A': joy_msg.buttons[0],
