@@ -124,7 +124,7 @@
         <!-- ROS to RGBD -->
         <group ns="head_rgbd_sensor">
             <!-- Nodelet  on HERO -->
-            <node pkg="nodelet" type="nodelet" name="ros_to_rgbd" args="load rgbd/ros_to_rgbd manager" output="log" if="$(optenv ROBOT_REAL false)">
+            <node pkg="nodelet" type="nodelet" name="ros_to_rgbd" args="load rgbd/ros_to_rgbd head_rgbd_sensor_nodelet_manager" output="log" respawn="true" if="$(optenv ROBOT_REAL false)">
                 <remap from="rgb_image" to="rgb/image_rect_color" />
                 <remap from="cam_info" to="rgb/camera_info" />
                 <remap from="depth_image" to="depth_registered/image" />
