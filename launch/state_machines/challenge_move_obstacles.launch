@@ -16,6 +16,6 @@
     </group>
 
     <!-- Start the challenge -->
-    <node pkg="challenge_move_obstacles" type="move_obstacles.py" name="state_machine" args="hero" output="screen" required="true" />
+    <node pkg="challenge_move_obstacles" type="challenge_move_obstacles" name="state_machine" args="hero" output="screen" required="true" />
 
 </launch>
