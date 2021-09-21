@@ -25,6 +25,7 @@
 
     <arg name="sim" value="true" if="$(optenv ROBOT_REAL false)" />
     <arg name="sim" value="false" unless="$(optenv ROBOT_REAL false)" />
+    <arg name="gui" default="false" />
 
     <arg name="use_manipulation" default="$(optenv USE_MANIPULATION false)" />
     <arg name="use_navigation" default="$(optenv USE_NAVIGATION false)" />
