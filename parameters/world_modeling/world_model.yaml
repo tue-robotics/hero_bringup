@@ -5,3 +5,16 @@ world_name: $(env ROBOT_ENV)
 
 plugins:
 - include: world_model_plugin_localization.yaml
+
+- name: robocup
+  lib: libed_robocup_plugin.so
+  parameters:
+    map_topic_in: /null_map_topic_in # set map topics to one that no other node publishes
+    map_topic_out: /null_map_topic_out
+    wall_height: 1.7
+    map_filter_padding: 0.3
+    rgbd_topic: /hero/head_rgbd_sensor/rgbd
+    nav_goal_topic: /hero/local_planner/action_server/goal
+    head_goal_topic: /hero/head_ref/action_server/goal
+    models:
+    include: models_testlab.yaml
