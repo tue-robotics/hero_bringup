@@ -14,5 +14,4 @@ plugins:
     rgbd_topic: /hero/head_rgbd_sensor/rgbd
     nav_goal_topic: /hero/local_planner/action_server/goal
     head_goal_topic: /hero/head_ref/action_server/goal
-    models:
     include: models_testlabs.yaml

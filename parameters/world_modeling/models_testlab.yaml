@@ -1,24 +1,25 @@
-- id: hallway_table
-  type: ddw/couch
-  image: $(rospkg challenge_demo)/images/robotics_testlabs/ddw.couch.jpg
-- id: couch_table
-  type: ddw/salon
-  image: $(rospkg challenge_demo)/images/robotics_testlabs/ddw.salon.jpg
-- id: bar
-  type: ddw/table
-  image: $(rospkg challenge_demo)/images/robotics_testlabs/ddw.table.jpg
-- id: plant
-  type: robotics_testlabs/plant
-  image: $(rospkg challenge_demo)/images/robotics_testlabs/plant.jpg
-- id: cabinet
-  type: robotics_testlab_B/corridor_cabinet
-  image: $(rospkg challenge_demo)/images/robotics_testlabs/robotics_testlab_B.corridor_cabinet.jpg
-- id: bookcase
-  type: robotics_testlabs/plastic_cabinet
-  image: $(rospkg challenge_demo)/images/robotics_testlabs/robotics_testlab_B.plastic_cabinet.jpg
-- id: dinner_table
-  type: table_120x80x76
-  image: $(rospkg challenge_demo)/images/robotics_testlabs/table_120x80x76.jpg
-- id: paperbin
-  type: paperbin
-  image: $(rospkg challenge_demo)/images/robotics_testlabs/paperbin.jpg
+models:
+  - id: hallway_table
+    type: ddw/couch
+    image: $(rospkg challenge_demo)/images/robotics_testlabs/ddw.couch.jpg
+  - id: couch_table
+    type: ddw/salon
+    image: $(rospkg challenge_demo)/images/robotics_testlabs/ddw.salon.jpg
+  - id: bar
+    type: ddw/table
+    image: $(rospkg challenge_demo)/images/robotics_testlabs/ddw.table.jpg
+  - id: plant
+    type: robotics_testlabs/plant
+    image: $(rospkg challenge_demo)/images/robotics_testlabs/plant.jpg
+  - id: cabinet
+    type: robotics_testlab_B/corridor_cabinet
+    image: $(rospkg challenge_demo)/images/robotics_testlabs/robotics_testlab_B.corridor_cabinet.jpg
+  - id: bookcase
+    type: robotics_testlabs/plastic_cabinet
+    image: $(rospkg challenge_demo)/images/robotics_testlabs/robotics_testlab_B.plastic_cabinet.jpg
+  - id: dinner_table
+    type: table_120x80x76
+    image: $(rospkg challenge_demo)/images/robotics_testlabs/table_120x80x76.jpg
+  - id: paperbin
+    type: paperbin
+    image: $(rospkg challenge_demo)/images/robotics_testlabs/paperbin.jpg
