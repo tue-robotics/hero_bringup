@@ -11,3 +11,6 @@ models:
   - id: dinner_table
     type: table_120x80x76
     image: $(rospkg challenge_demo)/images/robotics_testlabs/table_120x80x76.jpg
+    id: hallway_table
+    type: ddw/table
+    image: $(rospkg challenge_demo)/images/robotics_testlabs/ddw.table.jpg
