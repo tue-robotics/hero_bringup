@@ -29,6 +29,10 @@ Panels:
     Name: Time
     SyncMode: 0
     SyncSource: LRF - Base
+Preferences:
+  PromptSaveOnExit: false
+Toolbars:
+  toolButtonStyle: 2
 Visualization Manager:
   Class: ""
   Displays:
