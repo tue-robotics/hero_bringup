@@ -767,9 +767,9 @@ Visualization Manager:
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.277092993
-        Y: 3.92989063
-        Z: 3.21336955e-07
+        X: 3.0
+        Y: 0.5
+        Z: 0.0
       Focal Shape Fixed Size: false
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
@@ -778,7 +778,7 @@ Visualization Manager:
       Pitch: 0.580398381
       Target Frame: <Fixed Frame>
       Value: XYOrbit (rviz)
-      Yaw: 2.22039318
+      Yaw: -2.4
     Saved:
       - Angle: 0
         Class: rviz/TopDownOrtho
