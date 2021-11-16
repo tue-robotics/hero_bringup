@@ -24,7 +24,10 @@ if __name__ == "__main__":
         help="Current installed versions overwrite the stored compatible versions",
     )
     group.add_argument(
-        "-a", "--add", action="store_true", help="Add the current versions to the stored compatible versions"
+        "-a",
+        "--add",
+        action="store_true",
+        help="Add the current versions to the stored compatible versions",
     )
 
     args = parser.parse_args()
@@ -64,7 +67,8 @@ if __name__ == "__main__":
     def custom_dump(data, stream, Dumper=yaml.Dumper):
         def blockseq_rep(dumper, seq):
             """Print list horizontal with block parentheses"""
-            return dumper.represent_sequence('tag:yaml.org,2002:seq', seq, flow_style=True)
+            return dumper.represent_sequence("tag:yaml.org,2002:seq", seq, flow_style=True)
+
         yaml.add_representer(list, blockseq_rep, Dumper=Dumper)
         yaml.dump(data, stream, Dumper, default_flow_style=False)
 
