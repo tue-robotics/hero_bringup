@@ -26,7 +26,7 @@
     <arg name="sim" value="false" unless="$(optenv ROBOT_REAL false)" />
 
     <arg name="use_manipulation" default="$(optenv USE_MANIPULATION true)" />
-    <arg name="use_moveit" default="$(optenv USE_MOVEIT false)" />
+    <arg name="use_moveit" default="$(optenv USE_MOVEIT true)" />
     <arg name="use_navigation" default="$(optenv USE_NAVIGATION false)" />
     <arg name="use_perception" default="$(optenv USE_PERCEPTION false)" />
     <arg name="use_task" default="$(optenv USE_TASK false)" />
