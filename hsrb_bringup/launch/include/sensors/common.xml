@@ -123,8 +123,11 @@
 
     <node pkg="tmc_camera_respawner" type="respawner_node" name="$(arg head_rgbd_sensor)_respawner"
           output="screen">
-      <rosparam param="check_hardware_id_list" subst_value="true">
+      <rosparam param="check_hardware_id_list" subst_value="true" if="$(arg use_point_cloud)">
         [$(arg rgb_image_topic_name), $(arg depth_image_topic_name), $(arg points_topic_name)]
+      </rosparam>
+      <rosparam param="check_hardware_id_list" subst_value="true" unless="$(arg use_point_cloud)">
+        [$(arg rgb_image_topic_name), $(arg depth_image_topic_name)]
       </rosparam>
       <rosparam param="nodelet_list" subst_value="true" if="$(arg use_point_cloud)">
         [$(arg namespace)/head_rgbd_sensor/ros_to_rgbd, $(arg namespace)/head_rgbd_sensor/color_img_diag_updater, $(arg namespace)/head_rgbd_sensor/depth_img_diag_updater, $(arg namespace)/head_rgbd_sensor/depth_registered_rectified_points, $(arg namespace)/head_rgbd_sensor/depth_registered_rectifier_nodelet, $(arg namespace)/head_rgbd_sensor/driver, $(arg namespace)/head_rgbd_sensor/points_diag_updater, $(arg namespace)/head_rgbd_sensor/rgb_rectify_color, /perspective_transformer]
