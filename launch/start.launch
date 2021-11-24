@@ -8,10 +8,10 @@
 <!--
     <arg name="toyota_namespace" default="/hero"/>
 -->
-    <arg name="use_hand_camera" default="false" />
-    <arg name="use_head_center_camera" default="false" />
-    <arg name="use_head_stereo_camera" default="false"/>
-    <arg name="use_head_rgbd_sensor" default="true"/>
+    <arg name="use_hand_camera" default="false" /> <!-- When changing this, apply also to hero1(-demo)-roscore.service -->
+    <arg name="use_head_center_camera" default="false" /> <!-- When changing this, apply also to hero1(-demo)-roscore.service -->
+    <arg name="use_head_stereo_camera" default="false"/> <!-- When changing this, apply also to hero1(-demo)-roscore.service -->
+    <arg name="use_head_rgbd_sensor" default="true"/> <!-- When changing this, apply also to hero1(-demo)-roscore.service -->
     <arg name="serialnumber_as_name" default="true" /> <!-- Different to Toyota -->
     <arg name="use_base_range_sensor" default="true" />
     <arg name="use_laser_odom" default="false"/>
