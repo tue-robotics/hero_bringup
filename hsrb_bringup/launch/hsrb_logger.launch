@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="namespace" default="/hsrb" />
+  <arg name="log_dir" default="$(env HOME)/.ros/log" />
+  <arg name="log_subdir" default="$(optenv ROS_RUN_ID .)" />
+  <arg name="use_journald" default="$(optenv USE_JOURNALD false)" />
+  <arg name="use_hand_camera" default="$(optenv USE_HAND_CAMERA true)" />
+  <arg name="use_head_center_camera" default="$(optenv USE_HEAD_CENTER_CAMERA true)" />
+  <arg name="use_head_stereo_camera" default="$(optenv USE_HEAD_STEREO_CAMERA true)" />
+  <arg name="use_head_rgbd_sensor" default="$(optenv USE_HEAD_RGBD_SENSOR true)" />
+  <arg name="robot_name" default="hsrb" />
+  <group ns="$(arg namespace)" unless="$(arg use_journald)" >
+    <!-- [nodes] -> /rosout -> [/rosout] -> /rosout_agg -->
+    <!-- [nodes] -> /hsrb/diagnostics -> [/hsrb/runtime_logger] -->
+    <!-- [nodes] -> /hsrb/diagnostics -> [/hsrb/diagnostic_aggregator] -> /diagnostics_agg -->
+    <node name="runtime_logger" pkg="rosbag" type="record"
+          args="-o $(arg log_dir)/$(arg log_subdir)/hsrb_diagnostics --split --size=200 --bz2 $(arg namespace)/diagnostics"
+          respawn="true" />
+  </group>
+  <group ns="$(arg namespace)" if="$(arg use_journald)" >
+    <!-- [nodes] -> /rosout -> [rosout] -> /rosout_agg -> [/hsrb/rosout_journald] -->
+    <!-- [nodes] -> /hsrb/diagnostics -> [/hsrb/diagnostics_journald] -> /hsrb/diagnostics_agg
+         -> [/hsrb/runtime_logger][/hsrb/diagnostic_aggregator] -> /diagnostics_agg-->
+    <node name="rosout_journald" pkg="tmc_journald" type="rosout"
+          respawn="true">
+      <param name="forward" value="false" />
+      <param name="syslog_identifier" value="rosout" />
+      <remap from="/rosout" to="/rosout_agg" />
+    </node>
+    <node name="diagnostics_journald" pkg="tmc_journald" type="diagnostics"
+          respawn="true">
+      <param name="forward" value="true" />
+      <param name="syslog_identifier" value="rosdiag" />
+      <param name="throttle_period" value="30.0" />
+      <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
+      <remap from="/diagnostics_agg" to="$(arg namespace)/diagnostics_agg" />
+    </node>
+    <node name="runtime_logger" pkg="rosbag" type="record"
+          args="-o $(arg log_dir)/$(arg log_subdir)/hsrb_diagnostics --split --size=200 --bz2 $(arg namespace)/diagnostics_agg"
+          respawn="true" />
+  </group>
+  <group ns="$(arg namespace)">
+    <node name="diagnostic_aggregator" pkg="diagnostic_aggregator" type="aggregator_node"
+          args="CPP"
+          respawn="true"
+          output="screen" >
+      <remap from="/diagnostics" to="$(arg namespace)/diagnostics_agg" if="$(arg use_journald)" />
+      <remap from="/diagnostics" to="$(arg namespace)/diagnostics" unless="$(arg use_journald)" />
+      <rosparam command="load" file="$(find hsrb_bringup)/params/analyzers/common.yaml" />
+      <rosparam command="load" file="$(find hsrb_bringup)/params/analyzers/power_$(arg robot_name).yaml" />
+      <rosparam command="load" file="$(find hsrb_bringup)/params/analyzers/hand_camera.yaml"        if="$(arg use_hand_camera)" />
+      <rosparam command="load" file="$(find hsrb_bringup)/params/analyzers/head_center_camera.yaml" if="$(arg use_head_center_camera)" />
+      <rosparam command="load" file="$(find hsrb_bringup)/params/analyzers/head_stereo_camera.yaml" if="$(arg use_head_stereo_camera)" />
+      <rosparam command="load" file="$(find hsrb_bringup)/params/analyzers/head_rgbd_sensor.yaml"   if="$(arg use_head_rgbd_sensor)" />
+    </node>
+  </group>
+</launch>

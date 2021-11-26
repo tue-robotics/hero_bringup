@@ -1,0 +1,13 @@
+analyzers:
+  sensors:
+    type: diagnostic_aggregator/AnalyzerGroup
+    path: Sensors
+    analyzers:
+      camera:
+        type: diagnostic_aggregator/AnalyzerGroup
+        path: Camera
+        analyzers:
+          head_rgbd_sensor:
+            type: diagnostic_aggregator/GenericAnalyzer
+            path: HeadRGBDSensor
+            find_and_remove_prefix: 'hsrb/head_rgbd_sensor/head_rgbd_sensor_nodelet_manager: '
