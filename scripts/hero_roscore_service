@@ -55,7 +55,7 @@ if robot_name not in ('hsrb', 'hsrc'):
 
 # start
 argv = [sys.argv[0],
-        'hsrb_bringup',
+        'hero_bringup',
         'hsrb_logger.launch',
         'robot_name:={0}'.format(robot_name),
         'log_dir:={0}'.format(os.environ['ROS_LOG_DIR'])] + sys.argv[1:]
