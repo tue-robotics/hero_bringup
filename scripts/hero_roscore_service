@@ -26,14 +26,14 @@ def create_master_process(run_id, type_, ros_root, port, *args, **kwargs):
     if sys.version_info.major == 3:
         return roslaunch.nodeprocess.LocalProcess(
             run_id, "hsrb_bringup", 'master',
-            ['python3',
-             os.path.join(os.path.dirname(__file__), "tmc_rosmaster"),
+            ['rosrun',
+             "hsrb_bringup", "tmc_rosmaster",
              '--core', '-p', str(port)],
             os.environ, False, None)
     else:
         return roslaunch.nodeprocess.LocalProcess(
             run_id, "hsrb_bringup", 'master',
-            [os.path.join(os.path.dirname(__file__), "tmc_rosmaster"),
+            ['rosrun', "hsrb_bringup", "tmc_rosmaster",
              '--core', '-p', str(port)],
             os.environ, False, None)
 
