@@ -6,4 +6,4 @@ analyzers:
       battery:
         type: diagnostic_aggregator/GenericAnalyzer
         path: Battery
-        find_and_remove_prefix: 'hsrb/sanyo_battery: '
+        find_and_remove_prefix: 'hero/sanyo_battery: ' # TUe changed

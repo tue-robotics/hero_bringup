@@ -10,4 +10,4 @@ analyzers:
           head_stereo_camera:
             type: diagnostic_aggregator/GenericAnalyzer
             path: HeadStereoCamera
-            find_and_remove_prefix: 'hsrb/stereo_camera_nodelet_manager: '
+            find_and_remove_prefix: 'hero/stereo_camera_nodelet_manager: ' # TUe changed

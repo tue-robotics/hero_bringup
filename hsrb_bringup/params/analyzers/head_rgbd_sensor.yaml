@@ -10,4 +10,4 @@ analyzers:
           head_rgbd_sensor:
             type: diagnostic_aggregator/GenericAnalyzer
             path: HeadRGBDSensor
-            find_and_remove_prefix: 'hsrb/head_rgbd_sensor/head_rgbd_sensor_nodelet_manager: '
+            find_and_remove_prefix: 'hero/head_rgbd_sensor/head_rgbd_sensor_nodelet_manager: ' # TUe changed

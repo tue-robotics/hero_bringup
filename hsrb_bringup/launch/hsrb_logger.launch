@@ -46,12 +46,12 @@
           output="screen" >
       <remap from="/diagnostics" to="$(arg namespace)/diagnostics_agg" if="$(arg use_journald)" />
       <remap from="/diagnostics" to="$(arg namespace)/diagnostics" unless="$(arg use_journald)" />
-      <rosparam command="load" file="$(find hsrb_bringup)/params/analyzers/common.yaml" />
-      <rosparam command="load" file="$(find hsrb_bringup)/params/analyzers/power_$(arg robot_name).yaml" />
-      <rosparam command="load" file="$(find hsrb_bringup)/params/analyzers/hand_camera.yaml"        if="$(arg use_hand_camera)" />
-      <rosparam command="load" file="$(find hsrb_bringup)/params/analyzers/head_center_camera.yaml" if="$(arg use_head_center_camera)" />
-      <rosparam command="load" file="$(find hsrb_bringup)/params/analyzers/head_stereo_camera.yaml" if="$(arg use_head_stereo_camera)" />
-      <rosparam command="load" file="$(find hsrb_bringup)/params/analyzers/head_rgbd_sensor.yaml"   if="$(arg use_head_rgbd_sensor)" />
+      <rosparam command="load" file="$(find hero_bringup)/hsrb_bringup/params/analyzers/common.yaml" />
+      <rosparam command="load" file="$(find hero_bringup)/hsrb_bringup/params/analyzers/power_$(arg robot_name).yaml" />
+      <rosparam command="load" file="$(find hero_bringup)/hsrb_bringup/params/analyzers/hand_camera.yaml"        if="$(arg use_hand_camera)" />
+      <rosparam command="load" file="$(find hero_bringup)/hsrb_bringup/params/analyzers/head_center_camera.yaml" if="$(arg use_head_center_camera)" />
+      <rosparam command="load" file="$(find hero_bringup)/hsrb_bringup/params/analyzers/head_stereo_camera.yaml" if="$(arg use_head_stereo_camera)" />
+      <rosparam command="load" file="$(find hero_bringup)/hsrb_bringup/params/analyzers/head_rgbd_sensor.yaml"   if="$(arg use_head_rgbd_sensor)" />
     </node>
   </group>
 </launch>

@@ -10,4 +10,4 @@ analyzers:
           hand_camera:
             type: diagnostic_aggregator/GenericAnalyzer
             path: HandCamera
-            find_and_remove_prefix: 'hsrb/hand_camera/hand_camera_nodelet_manager: '
+            find_and_remove_prefix: 'hero/hand_camera/hand_camera_nodelet_manager: ' # TUe changed
