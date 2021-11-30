@@ -16,7 +16,7 @@
           respawn="false"
           output="screen" />
 
-    <rosparam command="load" file="$(find hero_bringup)/hsrb_common_config/params/hsrb_controller_config.yaml"/>
+    <rosparam command="load" file="$(find hsrb_common_config)/params/hsrb_controller_config.yaml"/>
 
     <rosparam ns="hw_config/motor_settings"
               command="load" file="/etc/opt/tmc/robot/conf.d/calib_results/joint_position_offset.yaml" />

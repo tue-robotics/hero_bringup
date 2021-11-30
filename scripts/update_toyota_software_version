@@ -24,7 +24,10 @@ if __name__ == "__main__":
         help="Current installed versions overwrite the stored compatible versions",
     )
     group.add_argument(
-        "-a", "--add", action="store_true", help="Add the current versions to the stored compatible versions"
+        "-a",
+        "--add",
+        action="store_true",
+        help="Add the current versions to the stored compatible versions",
     )
 
     args = parser.parse_args()
@@ -61,12 +64,20 @@ if __name__ == "__main__":
             if pkg_version not in compatible_pkgs[pkg_name]:
                 compatible_pkgs[pkg_name].append(pkg_version)
 
+    def custom_dump(data, stream, Dumper=yaml.Dumper):
+        def blockseq_rep(dumper, seq):
+            """Print list horizontal with block parentheses"""
+            return dumper.represent_sequence("tag:yaml.org,2002:seq", seq, flow_style=True)
+
+        yaml.add_representer(list, blockseq_rep, Dumper=Dumper)
+        yaml.dump(data, stream, Dumper, default_flow_style=False)
+
     # Write new/updated set of compatible versions to file.
     with open(compatible_pkgs_file, "w+") as f:
         try:
-            yaml.dump(compatible_pkgs, f, yaml.CSafeDumper)
+            custom_dump(compatible_pkgs, f, yaml.CSafeDumper)
         except AttributeError:
-            yaml.dump(compatible_pkgs, f, yaml.SafeDumper)
+            custom_dump(compatible_pkgs, f, yaml.SafeDumper)
         except Exception as e:
             logger.error("Error during dumping the yaml: {0}".format(e))
             sys.exit(1)

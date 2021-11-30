@@ -6,14 +6,16 @@
   <arg name="use_head_center_camera" default="true"/>
   <arg name="use_head_stereo_camera" default="true"/>
   <arg name="use_head_rgbd_sensor" default="true"/>
+  <arg name="serialnumber_as_name" default="false" />
   <arg name="use_base_range_sensor" default="true" />
+  <arg name="use_point_cloud" default="true" />
   <arg name="use_blackfly" default="true" />
   <arg name="enable_usb_hub_reset" default="false" />
   <arg name="namespace" default="/hsrb"/>
 
   <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
 
-  <rosparam command="load" file="$(find hero_bringup)/hsrb_common_config/params/hsrb_sensor_config.yaml" />
+  <rosparam command="load" file="$(find hsrb_common_config)/params/hsrb_sensor_config.yaml" />
 
   <node pkg="tmc_calibration_util" type="static_transform_publisher2" name="camera_frame_tf_publisher"
         if="$(eval arg('use_head_stereo_camera') == true or arg('use_head_rgbd_sensor') == true)">
@@ -98,12 +100,14 @@
       <arg name="rgb_camera_info_url" value="file://$(arg calib_dir)/rgbd_sensor_rgb_camera_params.yaml" />
       <arg name="depth_camera_info_url" value="file://$(arg calib_dir)/rgbd_sensor_depth_camera_params.yaml" />
       <arg name="depth_registration" value="true" />
+      <arg name="serialnumber_as_name" value="$(arg serialnumber_as_name)" />
     </include>
 
     <include file="$(find tmc_depth_calibration)/launch/depth_rectifier_nodelet.launch">
       <arg name="camera" value="$(arg head_rgbd_sensor)" />
       <arg name="depth" value="depth_registered" />
       <arg name="respawn" value="true" />
+      <arg name="points_xyz" value="$(arg use_point_cloud)" />
     </include>
 
     <arg name="rgb_image_topic_name" value="rgb/image_rect_color" />
@@ -114,15 +118,22 @@
       <arg name="rgb_image_topic_name" value="$(arg rgb_image_topic_name)" />
       <arg name="depth_image_topic_name" value="$(arg depth_image_topic_name)" />
       <arg name="points_topic_name" value="$(arg points_topic_name)" />
+      <arg name="use_point_cloud" value="$(arg use_point_cloud)" />
     </include>
 
     <node pkg="tmc_camera_respawner" type="respawner_node" name="$(arg head_rgbd_sensor)_respawner"
           output="screen">
-      <rosparam param="check_hardware_id_list" subst_value="true">
+      <rosparam param="check_hardware_id_list" subst_value="true" if="$(arg use_point_cloud)">
         [$(arg rgb_image_topic_name), $(arg depth_image_topic_name), $(arg points_topic_name)]
       </rosparam>
-      <rosparam param="nodelet_list" subst_value="true">
-        [$(arg namespace)/head_rgbd_sensor/ros_to_rgbd, $(arg namespace)/head_rgbd_sensor/color_img_diag_updater, $(arg namespace)/head_rgbd_sensor/depth_img_diag_updater, $(arg namespace)/head_rgbd_sensor/depth_registered_rectified_points, $(arg namespace)/head_rgbd_sensor/depth_registered_rectifier_nodelet, $(arg namespace)/head_rgbd_sensor/driver, $(arg namespace)/head_rgbd_sensor/points_diag_updater, $(arg namespace)/head_rgbd_sensor/rgb_rectify_color]
+      <rosparam param="check_hardware_id_list" subst_value="true" unless="$(arg use_point_cloud)">
+        [$(arg rgb_image_topic_name), $(arg depth_image_topic_name)]
+      </rosparam>
+      <rosparam param="nodelet_list" subst_value="true" if="$(arg use_point_cloud)">
+        [$(arg namespace)/head_rgbd_sensor/ros_to_rgbd, $(arg namespace)/head_rgbd_sensor/color_img_diag_updater, $(arg namespace)/head_rgbd_sensor/depth_img_diag_updater, $(arg namespace)/head_rgbd_sensor/depth_registered_rectified_points, $(arg namespace)/head_rgbd_sensor/depth_registered_rectifier_nodelet, $(arg namespace)/head_rgbd_sensor/driver, $(arg namespace)/head_rgbd_sensor/points_diag_updater, $(arg namespace)/head_rgbd_sensor/rgb_rectify_color, /perspective_transformer]
+      </rosparam>
+      <rosparam param="nodelet_list" subst_value="true" unless="$(arg use_point_cloud)">
+        [$(arg namespace)/head_rgbd_sensor/ros_to_rgbd, $(arg namespace)/head_rgbd_sensor/color_img_diag_updater, $(arg namespace)/head_rgbd_sensor/depth_img_diag_updater, $(arg namespace)/head_rgbd_sensor/depth_registered_rectifier_nodelet, $(arg namespace)/head_rgbd_sensor/driver, $(arg namespace)/head_rgbd_sensor/rgb_rectify_color, /perspective_transformer]
       </rosparam>
       <param name="manager_name" value="$(arg namespace)/$(arg head_rgbd_sensor)/$(arg head_rgbd_sensor)_nodelet_manager" />
       <param name="judge_respawn_duration" value="15.0" />
@@ -146,7 +157,7 @@
   <node pkg="laser_scan_matcher" type="laser_scan_matcher_node" name="laser_scan_matcher_node">
     <remap from="scan" to="$(arg namespace)/base_scan"/>
     <remap from="pose_stamped" to="base_pose"/>
-    <remap from="imu/data" to= "base_imu/data" />
+    <!--<remap from="imu/data" to= "base_imu/data" />--> <!-- TUe added -->
   </node>
 
   <!-- pose_to_odom -->
