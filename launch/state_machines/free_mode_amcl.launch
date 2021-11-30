@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="robot_name" value="hero"/>
+    <arg name="robot_name" default="hero"/>
+    <arg name="map"/>
 
     <group ns="$(arg robot_name)">
 
@@ -10,7 +11,7 @@
         <!-- AMCL -->
         <include file="$(find robot_launch_files)/launch/localization/amcl.launch">
             <arg name="laser" value="base_laser"/>
-            <arg name="map" value="$(find ed_object_models)/models/hallway3_5/walls/map.yaml" />
+            <arg name="map" value="$(arg map)" />
         </include>
 
         <!-- WORLD MODEL -->
@@ -33,7 +34,7 @@
 
     <!-- Action server state machine -->
     <node name="state_machine" pkg="action_server" type="main.py" output="log" required="true" >
-        <param name="robot_name" value="hero"/>
+        <param name="robot_name" value="$(arg robot_name)"/>
     </node>
 
 </launch>
