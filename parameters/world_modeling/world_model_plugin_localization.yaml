@@ -10,7 +10,7 @@ parameters:
  update_min_a: 0.05
  particle_filter:
      min_particles: 100
-     max_particles: 500
+     max_particles: 750
      kld_err: 0.02
      kld_z: 0.98
      recovery_alpha_slow: 0 #0.001
