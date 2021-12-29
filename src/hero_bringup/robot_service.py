@@ -33,7 +33,7 @@ MESSAGES = {
     'Process died': {'ja': (u"停止しました", 3.0),
                      'en': (u"HERO stopped", 1.0)},
     'Killing all nodes': {'ja': (u"全てのノードを停止します", 4.0),
-                          'en': (u"Killing all the nodes", 4.0)},
+                          'en': (u"Killing all the children", 4.0)},
     'Failed to launch. Retrying..': {'ja': (u"起動に失敗しました。再起動します", 5.0),
                                      'en': (u'Failed to launch. Retrying', 4.0)
                                      },
