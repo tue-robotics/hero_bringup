@@ -203,6 +203,7 @@ class RobotService(object):
         self.pids = {}
         self.proc_device = None
         self.proc_app = None
+        self.previous_signal = None
         self.talk_request_pub = None
         self.diag_pub = None
         self.button_off_count = 0

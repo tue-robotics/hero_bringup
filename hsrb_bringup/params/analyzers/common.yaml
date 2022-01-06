@@ -1,0 +1,40 @@
+analyzers:
+  joints:
+    type: diagnostic_aggregator/GenericAnalyzer
+    path: Joints
+    startswith: 'Joint'
+    num_items: 11
+  sensors:
+    type: diagnostic_aggregator/AnalyzerGroup
+    path: Sensors
+    analyzers:
+      bumper:
+        type: diagnostic_aggregator/GenericAnalyzer
+        path: Bumper
+        startswith: 'hsrb_bumper'
+      urg:
+        type: diagnostic_aggregator/GenericAnalyzer
+        path: Hokuyo
+        find_and_remove_prefix: 'hero/urg_node: ' # TUe changed
+      io_monitor:
+        type: diagnostic_aggregator/GenericAnalyzer
+        path: IO
+        find_and_remove_prefix: 'hsrb/hsrb_io_monitor: ' # Should stay hsrb
+      ft_sensor:
+        type: diagnostic_aggregator/GenericAnalyzer
+        path: FtSensor
+        find_and_remove_prefix: 'hero/ft_sensor_diag_updater_node: ' # TUe changed
+  cpu:
+    type: diagnostic_aggregator/AnalyzerGroup
+    path: Computer
+    analyzers:
+      file:
+        type: diagnostic_aggregator/GenericAnalyzer
+        path: File
+        find_and_remove_prefix: 'tmc_computer_monitor/file'
+        timeout: 0
+      computer:
+        type: diagnostic_aggregator/GenericAnalyzer
+        path: Computer
+        find_and_remove_prefix: 'tmc_computer_monitor/computer'
+        timeout: 105.0

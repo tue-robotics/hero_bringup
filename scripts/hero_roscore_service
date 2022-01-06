@@ -1,0 +1,63 @@
+#!/usr/bin/env python3.8
+# -*- coding: utf-8 -*-
+# Copyright (C) 2016 Toyota Motor Corporation
+# roscore wrapper to generate more understandable run_id and
+# export as ROS_RUN_ID
+
+import os
+import sys
+
+import roslaunch
+
+
+def generate_run_id():
+    import datetime
+    import uuid
+    d = datetime.datetime.now().strftime('%Y%m%d-%H%M%S_')
+    u = str(uuid.uuid1())
+    run_id = d + u
+    os.environ['ROS_RUN_ID'] = run_id
+    return run_id
+
+
+def create_master_process(run_id, type_, ros_root, port, *args, **kwargs):
+    #https://github.com/ros/ros_comm/blob/cd7efd4d44d0ec5845df7d59ccdfc204389060f2/tools/roslaunch/src/roslaunch/nodeprocess.py#L67
+    # launch hsrb_bringup/tmc_rosmaster instead of rosmaster/rosmaster
+    if sys.version_info.major == 3:
+        return roslaunch.nodeprocess.LocalProcess(
+            run_id, "hsrb_bringup", 'master',
+            ['rosrun',
+             "hsrb_bringup", "tmc_rosmaster",
+             '--core', '-p', str(port)],
+            os.environ, False, None)
+    else:
+        return roslaunch.nodeprocess.LocalProcess(
+            run_id, "hsrb_bringup", 'master',
+            ['rosrun', "hsrb_bringup", "tmc_rosmaster",
+             '--core', '-p', str(port)],
+            os.environ, False, None)
+
+
+# monkey patch
+roslaunch.core.generate_run_id = generate_run_id
+roslaunch.launch.create_master_process = create_master_process
+# set ROS_LOG_DIR if not present
+if 'ROS_LOG_DIR' not in os.environ:
+    os.environ['ROS_LOG_DIR'] = os.path.join(
+        os.environ.get('ROS_HOME', os.path.join(os.environ['HOME'], '.ros')),
+        'log')
+
+# select robot version
+robot_version = os.environ.get("ROBOT_VERSION")
+robot_name = robot_version.replace('"', '').split('-')[0].lower()
+if robot_name not in ('hsrb', 'hsrc'):
+    raise Exception("Invalid ROBOT_VERSION:{0}".format(robot_version))
+
+# start
+argv = [sys.argv[0],
+        'hero_bringup',
+        'hsrb_logger.launch',
+        'robot_name:={0}'.format(robot_name),
+        'log_dir:={0}'.format(os.environ['ROS_LOG_DIR'])] + sys.argv[1:]
+sys.argv = argv
+roslaunch.main(argv[:])

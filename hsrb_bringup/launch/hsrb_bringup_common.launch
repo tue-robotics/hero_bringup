@@ -8,8 +8,10 @@
   <arg name="use_head_center_camera" default="true"/>
   <arg name="use_head_stereo_camera" default="true"/>
   <arg name="use_head_rgbd_sensor" default="true"/>
+  <arg name="serialnumber_as_name" default="false" />
   <arg name="use_base_range_sensor" default="true" />
   <arg name="use_laser_odom" default="true" />
+  <arg name="use_point_cloud" default="true" />
   <arg name="use_blackfly" default="false" />
   <arg name="enable_emergency_stop" default="true" />
 
@@ -20,7 +22,9 @@
     <arg name="use_head_center_camera" default="$(arg use_head_center_camera)"/>
     <arg name="use_head_stereo_camera" default="$(arg use_head_stereo_camera)"/>
     <arg name="use_head_rgbd_sensor" default="$(arg use_head_rgbd_sensor)"/>
+    <arg name="serialnumber_as_name" default="$(arg serialnumber_as_name)"/>
     <arg name="use_base_range_sensor" value="$(arg use_base_range_sensor)" />
+    <arg name="use_point_cloud" value="$(arg use_point_cloud)" />
     <arg name="use_blackfly" default="$(arg use_blackfly)" />
   </include>
 
