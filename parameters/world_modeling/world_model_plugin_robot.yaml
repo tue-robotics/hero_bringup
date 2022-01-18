@@ -1,5 +1,5 @@
 name: robot_plugin
-lib: libed_robot_plugin.so
+type: RobotPlugin
 parameters:
   robot_name: hero
   urdf_rosparam: /hero/robot_description

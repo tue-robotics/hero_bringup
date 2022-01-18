@@ -1,5 +1,5 @@
 name: localization
-lib: libed_localization_plugin.so
+type: LocalizationPlugin
 frequency: 40
 enabled: 1
 parameters:
