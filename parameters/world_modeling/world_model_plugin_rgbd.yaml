@@ -1,5 +1,5 @@
 name: rgbd_integration
-type: KinectPlugin
+type: ed_sensor_integration/rgbd
 enabled: 1
 parameters:
     topic: /hero/head_rgbd_sensor/rgbd

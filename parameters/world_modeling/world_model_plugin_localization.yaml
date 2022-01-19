@@ -1,5 +1,5 @@
 name: localization
-type: LocalizationPlugin
+type: ed_localization/localization
 frequency: 40
 enabled: 1
 parameters:

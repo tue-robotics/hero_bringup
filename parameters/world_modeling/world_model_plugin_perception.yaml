@@ -1,2 +1,2 @@
 name: perception
-type: ed::perception::PerceptionPluginImageRecognition
+type: ed_perception/image_recognition

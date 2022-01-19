@@ -1,5 +1,5 @@
 name: robot_plugin
-type: RobotPlugin
+type: ed/robot
 parameters:
   robot_name: hero
   urdf_rosparam: /hero/robot_description

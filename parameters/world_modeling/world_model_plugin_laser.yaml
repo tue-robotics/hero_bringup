@@ -1,5 +1,5 @@
 name: laser_integration
-type: LaserPlugin
+type: ed_sensor_integration/laser
 frequency: 40
 parameters:
   laser_topic: /hero/base_laser/scan

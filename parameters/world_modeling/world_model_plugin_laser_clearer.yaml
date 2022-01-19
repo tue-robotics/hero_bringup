@@ -1,5 +1,5 @@
 name: entity_clearer
-type: ClearerPlugin
+type: ed_sensor_integration/clearer
 enabled: 1
 parameters:
     entity_timeout: 1.0
