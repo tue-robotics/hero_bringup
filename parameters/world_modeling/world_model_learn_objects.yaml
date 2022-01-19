@@ -4,23 +4,10 @@ world_name: learn_objects
 
 plugins:
 
-- name: gui_server
-  type: GUIServerPlugin
-  parameters:
-  robot_name: hero
-  urdf_rosparam: /hero/robot_description
+- include: world_model_plugin_gui_server.yaml
 
-- name: rgbd_integration # Kinect integration
-  type: KinectPlugin
-  enabled: 1
-  parameters:
-      topic: /hero/head_rgbd_sensor/rgbd
+- include: world_model_plugin_rgbd.yaml
 
-- name: perception
-  type: ed::perception::PerceptionPluginImageRecognition
+- include: world_model_plugin_perception.yaml
 
-- name: tf_publisher
-  type: TFPublisherPlugin
-  parameters:
-      root_frame_id: map
-      exclude: hero
+- include: world_model_plugin_tf.yaml
