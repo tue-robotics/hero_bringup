@@ -1,5 +1,5 @@
 name: navigation
-lib: libed_navigation_plugin.so
+type: ed_navigation/navigation
 parameters:
     constraint_service:
         default_offset: 0.55

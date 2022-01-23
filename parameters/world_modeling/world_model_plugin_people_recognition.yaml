@@ -1,4 +1,4 @@
 name: people_recognition
-lib: libed_people_recognition_plugin.so
+type: ed_people_recognition/people_recognition
 parameters:
     people_recognition_3d_service: /hero/people_recognition/detect_people_3d

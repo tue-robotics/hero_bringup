@@ -7,7 +7,7 @@ plugins:
 - include: world_model_plugin_localization.yaml
 
 - name: robocup
-  lib: libed_robocup_plugin.so
+  type: ed_robocup/robocup
   parameters:
     map_topic_in: /null_map_topic_in # set map topics to one that no other node publishes
     map_topic_out: /null_map_topic_out

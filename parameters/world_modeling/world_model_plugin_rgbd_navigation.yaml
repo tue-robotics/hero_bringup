@@ -1,5 +1,5 @@
 name: rgbd_navigation
-lib: libed_kinect_navigation_plugin.so
+type: ed_navigation/rgbd
 enabled: $(env ROBOT_REAL false)
 parameters:
     depth_sensor_integration:
