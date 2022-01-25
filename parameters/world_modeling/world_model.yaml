@@ -18,6 +18,5 @@ plugins:
     head_goal_topic: /hero/head_ref/action_server/goal
     include: models_impuls.yaml
 
-- name: moveit
-  lib: libed_moveit_plugin.so
+- include: world_model_plugin_moveit.yaml
 
