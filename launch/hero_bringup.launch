@@ -192,7 +192,9 @@
         </group>
 
         <!-- MoveIt -->
-        <include file="$(find hsrb_moveit_config)/launch/move_group.launch" if="$(arg use_moveit)"/>
+        <include file="$(find hsrb_moveit_config)/launch/move_group.launch" if="$(arg use_moveit)">
+            <arg name="moveit_octomap_sensor_params_file" value="$(find hsrb_moveit_config)/config/empty_sensors_xtion.yaml"/>
+        </include>
 
         <!-- bridge nodes-->
         <node pkg="hero_bridge" type="speech.py" name="text_to_speech" if="$(optenv ROBOT_REAL false)" output="log" />
