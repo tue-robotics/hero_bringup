@@ -19,4 +19,3 @@ plugins:
     include: models_impuls.yaml
 
 - include: world_model_plugin_moveit.yaml
-
