@@ -1,0 +1,16 @@
+[Unit]
+Description=HERO start.launch
+After=hero1-roscore.service
+Requires=hero1-roscore.service
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+EnvironmentFile=-/etc/opt/tmc/robot/version
+Environment=ROS_HOME=/home/administrator/.ros
+User=administrator
+LimitMEMLOCK=infinity
+LimitRTPRIO=51
+Restart=on-failure
+ExecStart=/bin/bash -c 'source /home/administrator/.tue/setup.bash && roslaunch hero_bringup start.launch --wait'
