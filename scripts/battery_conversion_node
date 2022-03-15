@@ -1,5 +1,7 @@
 #! /usr/bin/env python
 
+from typing import Optional
+
 import sys
 
 import rospy
@@ -7,9 +9,8 @@ from sensor_msgs.msg import BatteryState
 from tmc_sanyo_battery.msg import SanyoBatteryInfo
 
 
-class SanyoBatteryInfoToBatteryState(object):
-    def __init__(self, input_topic=None, output_topic=None):
-        # type: (Union[str, None], Union[str, None]) -> None
+class SanyoBatteryInfoToBatteryState:
+    def __init__(self, input_topic: Optional[str] = None, output_topic: Optional[str] = None):
         """
         If parameter isn't provided. The ROS parameter server is checked (private params). Otherwise the default value
         is used.
@@ -26,8 +27,7 @@ class SanyoBatteryInfoToBatteryState(object):
         self.input_sub = rospy.Subscriber(input_topic, SanyoBatteryInfo, self._battery_cb, queue_size=1)
         self.output_pub = rospy.Publisher(output_topic, BatteryState, queue_size=1)
 
-    def _battery_cb(self, in_msg):
-        # type: (SanyoBatteryInfo) -> BatteryState
+    def _battery_cb(self, in_msg: SanyoBatteryInfo) -> BatteryState:
         out_msg = BatteryState()
         out_msg.header = in_msg.header
         out_msg.voltage = in_msg.voltage
