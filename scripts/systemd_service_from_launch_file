@@ -2,9 +2,22 @@
 
 import sys
 import os.path
-import pwd, grp
+import pwd
 
 from argparse import ArgumentParser
+
+SERVICE_FILE = """
+[Unit]
+Description={description}
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+User={user}
+Restart=on-abort
+ExecStart=/bin/bash -c 'source {source_file} && rosnode kill /state_machine && roslaunch {launch_file} --wait'
+"""
 
 
 def is_valid_file(parser, arg):
@@ -13,11 +26,13 @@ def is_valid_file(parser, arg):
     else:
         return arg
 
+
 def is_valid_user(parser, arg):
     if arg not in pwd.getpwall():
         parser.error("The user %s does not exist!" % arg)
     else:
         return arg
+
 
 def get_package_name(launch_file):
     launch_file_folders = launch_file.split("/")[:-1]
@@ -29,30 +44,26 @@ def get_package_name(launch_file):
     return "unknown package"
 
 
-parser = ArgumentParser(description="systemd_service_from_launch_file")
-parser.add_argument("launch_file", help="Launch file to generate a service from", type=lambda x: is_valid_file(parser, x))
-parser.add_argument("user", help="The user that should execute the launch file", type=str)
-parser.add_argument("environment_bash", help="Bash environment to run before", type=lambda x: is_valid_file(parser, x))
-args = parser.parse_args()
+if __name__ == "__main__":
+    parser = ArgumentParser(description="systemd_service_from_launch_file")
+    parser.add_argument(
+        "launch_file", help="Launch file to generate a service from", type=lambda x: is_valid_file(parser, x)
+    )
+    parser.add_argument("user", help="The user that should execute the launch file", type=str)
+    parser.add_argument(
+        "environment_bash", help="Bash environment to run before", type=lambda x: is_valid_file(parser, x)
+    )
+    args = parser.parse_args()
 
-launch_file = os.path.abspath(args.launch_file)
-environment_bash = os.path.abspath(args.environment_bash)
-user = args.user
-description = "Launch file %s of package %s for user %s" % (os.path.basename(launch_file), get_package_name(launch_file), user)
+    launch_file = os.path.abspath(args.launch_file)
+    environment_bash = os.path.abspath(args.environment_bash)
+    user = args.user
+    description = (
+        f"Launch file {os.path.basename(launch_file)} of package {get_package_name(launch_file)} for user {user}"
+    )
 
-SERVICE_FILE = """
-[Unit]
-Description=%s
+    print(
+        SERVICE_FILE.format(description=description, user=user, source_file=environment_bash, launch_file=launch_file)
+    )
 
-[Install]
-WantedBy=multi-user.target
-
-[Service]
-User=%s
-Restart=on-abort
-ExecStart=/bin/bash -c 'source %s && rosnode kill /state_machine && roslaunch %s --wait'
-""" % (description, user, environment_bash, launch_file)
-
-print SERVICE_FILE
-
-sys.exit(0)
+    sys.exit(0)
