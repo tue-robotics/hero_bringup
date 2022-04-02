@@ -420,7 +420,6 @@ class RobotService(object):
     def run(self):
         u"""Main loop"""
         self.wait_ready()
-        wait_until_servo_is_not_ready(self.watch_motor_id)
         is_all = True
         while True:
             self.term_nodes(is_all)
