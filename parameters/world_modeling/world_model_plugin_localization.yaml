@@ -5,6 +5,7 @@ enabled: 1
 parameters:
   robot_name: hero
   initial_pose_topic: /hero/initialpose
+  particle_pose_topic: /hero/particlepose
   resample_interval: 2
   update_min_d: 0.05
   update_min_a: 0.05
