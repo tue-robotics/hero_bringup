@@ -666,6 +666,8 @@ Visualization Manager:
       Topic: /hero/initialpose
     - Class: rviz/SetGoal
       Topic: /move_base_simple/goal
+    - Class: rviz/SetGoal
+      Topic: /hero/particlepose
     - Class: rviz/PublishPoint
       Single click: true
       Topic: /clicked_point
