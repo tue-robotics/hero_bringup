@@ -5,7 +5,7 @@ plugins:
 
 - include: world_model_plugin_navigation.yaml
 
-- include: world_model_plugin_rgbd.yaml
+#- include: world_model_plugin_rgbd.yaml
 
 - include: world_model_plugin_perception.yaml
 
