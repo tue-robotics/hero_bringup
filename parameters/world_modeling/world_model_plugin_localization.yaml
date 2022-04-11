@@ -27,7 +27,7 @@ parameters:
   rgbd_model:
     topic: /hero/head_rgbd_sensor/rgbd
     masked_image_srv: /hero/annotate
-    num_pixels: 1000
+    num_pixels: 0
     z_hit: 0.95
     sigma_hit: 0.2
     z_short: 0.1
