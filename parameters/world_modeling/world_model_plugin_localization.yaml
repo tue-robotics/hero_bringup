@@ -1,5 +1,5 @@
 name: localization
-type: ed_localization/localization_rgbd
+type: ed_localization/localization_rgbd_test
 frequency: 5
 enabled: 1
 parameters:
