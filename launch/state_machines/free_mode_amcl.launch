@@ -3,6 +3,8 @@
     <arg name="robot_name" default="hero"/>
     <arg name="map"/>
 
+    <remap from="/diagnostics" to="/$(arg robot_name)/diagnostics" />
+
     <group ns="$(arg robot_name)">
 
         <!-- NAVIGATION -->
