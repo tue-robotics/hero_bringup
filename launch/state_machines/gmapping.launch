@@ -1,8 +1,11 @@
 <?xml version="1.0"?>
-
 <launch>
 
-    <group ns="hero">
+    <arg name="robot_name" value="hero" />
+
+    <remap from="/diagnostics" to="/$(arg robot_name)/diagnostics" />
+
+    <group ns="$(arg robot_name)">
 
         <!-- LOCALIZATION GMAPPING -->
         <include file="$(find robot_launch_files)/launch/localization/gmapping.launch">
