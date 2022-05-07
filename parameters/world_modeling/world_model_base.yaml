@@ -14,7 +14,3 @@ plugins:
 - include: world_model_plugin_tf.yaml
 
 - include: world_model_plugin_rgbd_navigation.yaml
-
-- include: world_model_plugin_laser.yaml
-
-- include: world_model_plugin_laser_clearer.yaml
