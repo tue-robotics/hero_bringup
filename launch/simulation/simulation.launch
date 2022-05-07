@@ -6,7 +6,7 @@
     <arg name="gui" default="false" />
     <arg name="gazebo_visualization" default="false" />
     <arg name="use_laser_odom" default="false" />
-    <arg name="paused" default="false" />
+    <arg name="paused" default="true" />
     <arg name="fast_physics" default="true" />
     <arg name="robot_name" default="hsrb" />
     <arg name="personal_name" default="" />

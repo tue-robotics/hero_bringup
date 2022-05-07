@@ -8,6 +8,8 @@
     <arg name="number_of_tasks" default="0" />
     <arg name="time_limit" default="999" />
 
+    <remap from="/diagnostics" to="/$(arg robot_name)/diagnostics" />
+
     <group ns="$(arg robot_name)">
 
         <!-- LOCALIZATION GMAPPING -->

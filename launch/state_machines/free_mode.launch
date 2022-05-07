@@ -3,7 +3,9 @@
 <!-- Checkout README.md to see when to use this launch file -->
 
 <launch>
-    <arg name="robot_name" value="hero"/>
+    <arg name="robot_name" value="hero" />
+
+    <remap from="/diagnostics" to="/$(arg robot_name)/diagnostics" />
 
     <group ns="$(arg robot_name)">
 

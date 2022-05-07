@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
-
 <launch>
     <arg name="robot_name" value="hero" />
+
+    <remap from="/diagnostics" to="/$(arg robot_name)/diagnostics" />
 
     <group ns="$(arg robot_name)">
 
