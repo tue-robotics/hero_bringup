@@ -19,4 +19,5 @@ ExecStart=/bin/bash -c 'source /home/amigo/.tue/setup.bash \
         _model_folder:=/home/amigo/src/openpose/models/ \
         _check_master:=true \
         __ns:=hero/openpose \
-        image:=openpose_input_image'
+        image:=openpose_input_image \
+        /diagnostics:=/hero/diagnostics'
