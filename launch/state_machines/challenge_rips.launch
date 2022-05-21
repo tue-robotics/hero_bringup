@@ -26,6 +26,6 @@
     </group>
 
     <!-- Start the challenge -->
-    <node pkg="challenge_rips" type="rips.py" name="state_machine" args="hero" output="screen" required="true"/>
+    <node pkg="challenge_rips" type="rips" name="state_machine" args="$(arg robot_name)" output="screen" required="true"/>
 
 </launch>
