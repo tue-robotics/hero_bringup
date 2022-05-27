@@ -1,3 +1,5 @@
+from typing import Dict, List
+
 import logging
 import os
 import rospkg.common
@@ -8,15 +10,12 @@ import yaml
 RP = None
 
 
-def read_dict_yaml(file_path):
-    # type: (str) -> dict
+def read_dict_yaml(file_path: str) -> dict:
     """
     Read a yaml file, which should be a dict at toplevel
 
     :param file_path: yaml file to read
-    :type file_path: str
     :return: yaml object of dictionaries and lists
-    :rtype: dict
     :raises yaml.parser.ParserError, yaml.scanner.ScannerError: In case of invalid yaml syntax
     """
 
@@ -26,20 +25,18 @@ def read_dict_yaml(file_path):
         except AttributeError:
             yaml_obj = yaml.load(f, yaml.SafeLoader)
         except (yaml.parser.ParserError, yaml.scanner.ScannerError) as e:
-            logging.getLogger(__name__).error("Invalid yaml syntax: {0}".format(e))
+            logging.getLogger(__name__).error(f"Invalid yaml syntax: {e}")
             raise
 
     return yaml_obj
 
 
-def get_rospack():
-    # type: () -> rospkg.rospack.RosPack
+def get_rospack() -> rospkg.rospack.RosPack:
     """
     Get a reference to the global RosPack instance. It is initialized in case it is not yet done.
-    The construction takes a long time, therefone it is preffered to only have one instance.
+    The construction takes a long time, therefore it is preferred to only have one instance.
 
     :return: RosPack instance
-    :rtype: rospkg.rospack.RosPack
     """
     global RP
     if RP is None:
@@ -47,14 +44,12 @@ def get_rospack():
     return RP
 
 
-def get_compatible_toyota_software_version_file():
-    # type: () -> str
+def get_compatible_toyota_software_version_file() -> str:
     """
     Provides the path at which the version of the compatible Toyota software should be stored. This is different for
     dev pc's and the robot.
 
     :return: path to yaml file
-    :rtype: str
     """
     hero_bringup_path = get_rospack().get_path("hero_bringup")
     compatible_pkgs_file = os.path.join(
@@ -64,29 +59,24 @@ def get_compatible_toyota_software_version_file():
     return compatible_pkgs_file
 
 
-def get_installed_toyota_pkgs():
-    # type: () -> list
+def get_installed_toyota_pkgs() -> List[str]:
     """
     Provides a list of currently installed packages of Toyota. It checks for 'hsr' or 'tmc' in the name.
 
     :return: list of names of all installed toyota packages
-    :rtype: list
     """
     rp = get_rospack()
     toyota_pkgs = [pkg for pkg in rp.list() if "hsr" in pkg or "tmc" in pkg]
     return toyota_pkgs
 
 
-def pkgs_to_version_dict(pkg_list):
-    # type: (list) -> dict
+def pkgs_to_version_dict(pkg_list: List[str]) -> Dict[str, str]:
     """
     Get the version of all packages in a list. The results are stored in a dict. The key is the package name and the
     version is stored as the value.
 
     :param pkg_list: List of package names
-    :type pkg_list: list
     :return: Version dictionary
-    :rtype: dict
     :raises Exception: In case a package file is missing or can't be parsed
     """
     installed_pkgs = {}
@@ -98,9 +88,10 @@ def pkgs_to_version_dict(pkg_list):
             root = ElementTree(None, package_manifest)
             version = root.findtext("version")
         except Exception as e:
-            logging.getLogger(__name__).error("Error during parsing of '{}' of package '{}': {}".format(rospkg.common.PACKAGE_FILE, pkg, e))
+            logging.getLogger(__name__).error(
+                f"Error during parsing of '{rospkg.common.PACKAGE_FILE}' of package '{pkg}': {e}"
+            )
             raise
         installed_pkgs.update({pkg: version})
 
     return installed_pkgs
-
