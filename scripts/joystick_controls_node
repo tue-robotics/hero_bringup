@@ -88,7 +88,7 @@ class JoystickControls(object):
 
     def map_joystick(self, joy_msg):
 
-        self._send_controls(controller_mappings[self.controller_mode])
+        self._translate_controls(controller_mappings[self.controller_mode])
 
     def get_gripper_state(self, state_msg):
         if state_msg.name[20] == 'hand_motor_joint':
