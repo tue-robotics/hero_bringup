@@ -50,11 +50,12 @@ class JoystickControls(object):
         # set all out-msgs
         self.base_command = Twist()
         # self.head_command = None
+        self.non_zero_vel_received = False
 
         # send controls at 10 Hz
-        rospy.Timer(rospy.Duration(0.1), self.publish_controls())
+        rospy.Timer(rospy.Duration(0.1), self.publish_controls)
 
-    def _send_controls(self, mapping):
+    def _translate_controls(self, mapping):
         self.base_command = Twist()
         # First check if any state machines need killing since this likely takes longest
         if mapping['B']:
@@ -72,13 +73,18 @@ class JoystickControls(object):
         if abs(mapping['right_stick_horizontal']) > 0.1 or abs(mapping['right_stick_vertical']) > 0.1: # linear base movement
             self.base_command.linear.x = 0.4 * mapping['right_stick_vertical']
             self.base_command.linear.y = 0.4 * mapping['right_stick_horizontal']
+            self.non_zero_vel_received = True
         if abs(mapping['left_stick_horizontal']) > 0.1: # angular base movement
             self.base_command.angular.z = 0.6 * mapping['left_stick_horizontal']
+            self.non_zero_vel_received = True
         if mapping['right_bumper']:
             self.robot.speech.speak("Beep. Boop. Beep boop.")
+        if self.base_command.linear.x == 0.0 and self.base_command.linear.y == 0.0 and self.base_command.angular.z == 0.0:
+            self.non_zero_vel_received = False
 
     def publish_controls(self, event=None):
-        self.base_pub.publish(self.base_command)
+        if self.non_zero_vel_received:
+            self.base_pub.publish(self.base_command)
 
     def map_joystick(self, joy_msg):
 
