@@ -10,12 +10,35 @@ from sensor_msgs.msg import JointState
 from robot_skills.get_robot import get_robot
 from robot_skills.arm import arms
 
+
 class JoystickControls(object):
+    controller_mode = 4  # the used game controller has 4 modes (shown with a light at the back), the default is 4
+    controller_mappings = {4: {'A': joy_msg.buttons[0],
+                               'B': joy_msg.buttons[1],
+                               'X': joy_msg.buttons[2],
+                               'Y': joy_msg.buttons[3],
+                               'left_bumper': joy_msg.buttons[4],
+                               'right_bumper': joy_msg.buttons[5],
+                               'select': joy_msg.buttons[6],
+                               'start': joy_msg.buttons[7],
+                               'home': joy_msg.buttons[8],
+                               'left_stick_pressed': joy_msg.buttons[9],
+                               'right_stick_pressed': joy_msg.buttons[10],
+                               'left_stick_horizontal': joy_msg.axes[0],
+                               'left_stick_vertical': joy_msg.axes[1],
+                               'left_trigger': joy_msg.axes[2],
+                               'right_stick_horizontal': joy_msg.axes[3],
+                               'right_stick_vertical': joy_msg.axes[4],
+                               'right_trigger': joy_msg.axes[5],
+                               'directional_pad_horizontal': joy_msg.axes[6],
+                               'directional_pad_vertical': joy_msg.axes[7]
+                                }
+                           }
     def __init__(self):
         """
         Subscribes to the Joy messages sent via the controller and the joy node and then transforms these to the desired behavior
         """
-        self.controller_mode = 4
+
         self.controller_sub = rospy.Subscriber("joy", Joy, self.map_joystick, queue_size=1)
         self.gripper_state_sub = rospy.Subscriber("joint_states", JointState, self.get_gripper_state, queue_size=1)
 
@@ -28,11 +51,8 @@ class JoystickControls(object):
         self.base_command = Twist()
         # self.head_command = None
 
-        # send controls at constant rate
-        r = rospy.Rate(10) # 10hz
-        while not rospy.is_shutdown():
-            self.publish_controls()
-            r.sleep()
+        # send controls at 10 Hz
+        rospy.Timer(rospy.Duration(0.1), self.publish_controls())
 
     def _send_controls(self, mapping):
         self.base_command = Twist()
@@ -57,34 +77,11 @@ class JoystickControls(object):
         if mapping['right_bumper']:
             self.robot.speech.speak("Beep. Boop. Beep boop.")
 
-        if abs(mapping['right_stick_horizontal']) < 0.1 and abs(mapping['right_stick_vertical']) < 0.1 and abs(mapping['left_stick_horizontal']) < 0.1:
-            self.base_command = Twist()
-
-    def publish_controls(self):
-            self.base_pub.publish(self.base_command)
+    def publish_controls(self, event=None):
+        self.base_pub.publish(self.base_command)
 
     def map_joystick(self, joy_msg):
-        controller_mappings = {4: {'A': joy_msg.buttons[0],
-                                        'B': joy_msg.buttons[1],
-                                        'X': joy_msg.buttons[2],
-                                        'Y': joy_msg.buttons[3],
-                                        'left_bumper': joy_msg.buttons[4],
-                                        'right_bumper': joy_msg.buttons[5],
-                                        'select': joy_msg.buttons[6],
-                                        'start': joy_msg.buttons[7],
-                                        'home': joy_msg.buttons[8],
-                                        'left_stick_pressed': joy_msg.buttons[9],
-                                        'right_stick_pressed': joy_msg.buttons[10],
-                                        'left_stick_horizontal': joy_msg.axes[0],
-                                        'left_stick_vertical': joy_msg.axes[1],
-                                        'left_trigger': joy_msg.axes[2],
-                                        'right_stick_horizontal': joy_msg.axes[3],
-                                        'right_stick_vertical': joy_msg.axes[4],
-                                        'right_trigger': joy_msg.axes[5],
-                                        'directional_pad_horizontal': joy_msg.axes[6],
-                                        'directional_pad_vertical': joy_msg.axes[7]
-                                       }
-                                   }
+
         self._send_controls(controller_mappings[self.controller_mode])
 
     def get_gripper_state(self, state_msg):

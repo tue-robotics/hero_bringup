@@ -9,8 +9,10 @@
     <arg name="use_head_center_camera" default="false" />
     <arg name="use_head_stereo_camera" default="false" />
     <arg name="use_head_rgbd_sensor" default="true" />
+    <arg name="serialnumber_as_name" default="false" />
     <arg name="use_base_range_sensor" default="true" />
     <arg name="use_laser_odom" default="false" />
+    <arg name="use_point_cloud" default="true" />
     <arg name="use_blackfly" default="false" />
     <arg name="monitor" default="false" />
     <arg name="param_file" default="$(env HOME)/.ros/params.yaml" />
@@ -45,8 +47,8 @@
     <remap from="/diagnostics" to="$(arg namespace)/diagnostics" />
     <remap from="diagnostics" to="$(arg namespace)/diagnostics" />
 
-	<remap from="arm_trajectory_controller/follow_joint_trajectory" to="body/joint_trajectory_action" />
-	<remap from="$(arg namespace)/arm_trajectory_controller/follow_joint_trajectory" to="$(arg namespace)/body/joint_trajectory_action" />
+    <remap from="arm_trajectory_controller/follow_joint_trajectory" to="body/joint_trajectory_action" />
+    <remap from="$(arg namespace)/arm_trajectory_controller/follow_joint_trajectory" to="$(arg namespace)/body/joint_trajectory_action" />
 
     <group ns="$(arg namespace)">
         <!-- TUe custom description -->
@@ -75,8 +77,10 @@
             <arg name="use_head_center_camera" value="$(arg use_head_center_camera)" />
             <arg name="use_head_stereo_camera" value="$(arg use_head_stereo_camera)"/>
             <arg name="use_head_rgbd_sensor" value="$(arg use_head_rgbd_sensor)"/>
+            <arg name="serialnumber_as_name" value="$(arg serialnumber_as_name)" />
             <arg name="use_base_range_sensor" value="$(arg use_base_range_sensor)" />
             <arg name="use_laser_odom" value="$(arg use_laser_odom)" />
+            <arg name="use_point_cloud" value="$(arg use_point_cloud)" />
             <arg name="use_blackfly" value="$(arg use_blackfly)" />
             <arg name="enable_emergency_stop" value="$(arg enable_emergency_stop)" />
         </include>
@@ -123,8 +127,15 @@
 
         <!-- ROS to RGBD -->
         <group ns="head_rgbd_sensor">
-            <node pkg="rgbd" type="ros_to_rgbd" name="ros_to_rgbd" output="log">
-                <remap from="output" to="rgbd" />
+            <!-- Nodelet  on HERO -->
+            <node pkg="nodelet" type="nodelet" name="ros_to_rgbd" args="load rgbd/ros_to_rgbd head_rgbd_sensor_nodelet_manager" output="log" respawn="true" if="$(optenv ROBOT_REAL false)">
+                <remap from="rgb_image" to="rgb/image_rect_color" />
+                <remap from="cam_info" to="rgb/camera_info" />
+                <remap from="depth_image" to="depth_registered/image" />
+            </node>
+
+            <!-- Normal node in simulation -->
+            <node pkg="rgbd" type="ros_to_rgbd" name="ros_to_rgbd" output="log" unless="$(optenv ROBOT_REAL false)">
                 <remap from="rgb_image" to="rgb/image_rect_color" />
                 <remap from="cam_info" to="rgb/camera_info" />
                 <remap from="depth_image" to="depth_registered/image" />
@@ -151,10 +162,6 @@
 
             <!-- trajectory filter -->
             <include file="$(find hsrb_trajectory_filter)/launch/trajectory_filter.launch" />
-<!--
-                <arg name="robot_name" value="$(arg robot_name)"/>
-            </include>
--->
 
             <!-- whole timeopt filter -->
             <include file="$(find hsrb_timeopt_ros)/launch/hsrb_timeopt_filter.launch" />

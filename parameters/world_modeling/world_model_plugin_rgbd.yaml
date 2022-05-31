@@ -1,5 +1,5 @@
 name: rgbd_integration
-lib: libed_kinect_plugin.so
+type: ed_sensor_integration/rgbd
 enabled: 1
 parameters:
     topic: /hero/head_rgbd_sensor/rgbd

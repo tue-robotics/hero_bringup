@@ -8,12 +8,14 @@
 <!--
     <arg name="toyota_namespace" default="/hero"/>
 -->
-    <arg name="use_hand_camera" default="false" />
-    <arg name="use_head_center_camera" default="false" />
-    <arg name="use_head_stereo_camera" default="false"/>
-    <arg name="use_head_rgbd_sensor" default="true"/>
+    <arg name="use_hand_camera" default="false" /> <!-- When changing this, apply also to hero1(-demo)-roscore.service -->
+    <arg name="use_head_center_camera" default="false" /> <!-- When changing this, apply also to hero1(-demo)-roscore.service -->
+    <arg name="use_head_stereo_camera" default="false"/> <!-- When changing this, apply also to hero1(-demo)-roscore.service -->
+    <arg name="use_head_rgbd_sensor" default="true"/> <!-- When changing this, apply also to hero1(-demo)-roscore.service -->
+    <arg name="serialnumber_as_name" default="true" /> <!-- Different to Toyota -->
     <arg name="use_base_range_sensor" default="true" />
     <arg name="use_laser_odom" default="false"/>
+    <arg name="use_point_cloud" default="false" /> <!-- Different to Toyota -->
     <arg name="use_blackfly" default="false" />
     <arg name="monitor" default="false" />
     <arg name="param_file" default="$(env HOME)/.ros/params.yaml" />
@@ -55,8 +57,10 @@
           use_head_center_camera:=$(arg use_head_center_camera)
           use_head_stereo_camera:=$(arg use_head_stereo_camera)
           use_head_rgbd_sensor:=$(arg use_head_rgbd_sensor)
+          serialnumber_as_name:=$(arg serialnumber_as_name)
           use_base_range_sensor:=$(arg use_base_range_sensor)
           use_laser_odom:=$(arg use_laser_odom)
+          use_point_cloud:=$(arg use_point_cloud)
           use_blackfly:=$(arg use_blackfly)
           monitor:=$(arg monitor)
           param_file:=$(arg param_file)

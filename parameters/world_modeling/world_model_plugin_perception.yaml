@@ -1,2 +1,2 @@
 name: perception
-lib: libed_perception_plugin_image_recognition.so
+type: ed_perception/image_recognition

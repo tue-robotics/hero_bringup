@@ -1,0 +1,19 @@
+[Unit]
+Description=Windows Speech VM service
+After=network.target vboxdrv.service
+Before=runlevel2.target shutdown.target
+
+[Service]
+User=administrator
+Group=vboxusers
+Type=forking
+Restart=on-failure
+IgnoreSIGPIPE=no
+KillMode=process
+GuessMainPID=no
+RemainAfterExit=no
+ExecStart=/usr/bin/vboxmanage startvm windows --type headless
+ExecStop=/usr/bin/vboxmanage controlvm windows acpipowerbutton
+
+[Install]
+WantedBy=multi-user.target

@@ -3,9 +3,10 @@
   <arg name="namespace" default="/hsrb" />
   <arg name="enable_emergency_stop" default="true" />
   <arg name="use_laser_odom" default="true" />
-  <arg name="odometry_config" default="$(find hero_bringup)/hsrb_common_config/params/hsrb_odometry_config.yaml" /> <!-- TU/e changed -->
+  <arg name="odometry_config" default="$(find hsrb_common_config)/params/hsrb_odometry_config.yaml" />
   <arg name="bumper_mode" default="stop" />
   <arg name="target_controller_list" default="[omni_base_controller, head_trajectory_controller, arm_trajectory_controller, gripper_controller]"/>
+  <arg name="stop_target_controller_list" default="$(arg target_controller_list)"/>
 
   <group ns="$(arg namespace)">
     <remap from="robot_description" to="$(arg namespace)/robot_description" />
@@ -20,6 +21,7 @@
         <param name="publish_default_velocities" value="true" />
         <param name="publish_default_efforts" value="true" />
         <param name="rate" value="50" />
+        <!-- TUe added -->
         <rosparam subst_value="true">
           source_list:
           - $(arg namespace)/joint_states_hardware
@@ -62,11 +64,12 @@
       <param name="bumper_binarization" value="false" />
       <param name="to_temp_object_distance" value="0.7" />
       <rosparam param="target_controller_list" subst_value="True">$(arg target_controller_list)</rosparam>
+      <rosparam param="stop_target_controller_list" subst_value="True">$(arg stop_target_controller_list)</rosparam>
     </node>
 
     <!-- odometry_switcher -->
     <node name="odometry_switcher" pkg="tmc_odometry_switcher" type="odometry_switcher_node">
-      <!--
+      <!-- TUe commented
       <remap from="switched_odom" to="odom"/>
       -->
       <!-- TUe added 3x -->
