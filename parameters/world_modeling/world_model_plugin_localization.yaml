@@ -1,11 +1,13 @@
 name: localization
-type: ed_localization/localization_rgbd_test
-frequency: 5
+type: ed_localization/localization_laser_test
+frequency: 20
 enabled: 1
 parameters:
+  visualize: 1
   robot_name: hero
   initial_pose_topic: /hero/initialpose
   particle_pose_topic: /hero/particlepose
+  particle_pose_srv: /hero/particle_pose_prob
   resample_interval: 2
   update_min_d: 0.05
   update_min_a: 0.05
