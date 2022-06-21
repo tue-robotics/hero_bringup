@@ -13,27 +13,27 @@ from robot_skills.arm import arms
 
 class JoystickControls(object):
     controller_mode = 4  # the used game controller has 4 modes (shown with a light at the back), the default is 4
-    controller_mappings = {4: {'A': joy_msg.buttons[0],
-                               'B': joy_msg.buttons[1],
-                               'X': joy_msg.buttons[2],
-                               'Y': joy_msg.buttons[3],
-                               'left_bumper': joy_msg.buttons[4],
-                               'right_bumper': joy_msg.buttons[5],
-                               'select': joy_msg.buttons[6],
-                               'start': joy_msg.buttons[7],
-                               'home': joy_msg.buttons[8],
-                               'left_stick_pressed': joy_msg.buttons[9],
-                               'right_stick_pressed': joy_msg.buttons[10],
-                               'left_stick_horizontal': joy_msg.axes[0],
-                               'left_stick_vertical': joy_msg.axes[1],
-                               'left_trigger': joy_msg.axes[2],
-                               'right_stick_horizontal': joy_msg.axes[3],
-                               'right_stick_vertical': joy_msg.axes[4],
-                               'right_trigger': joy_msg.axes[5],
-                               'directional_pad_horizontal': joy_msg.axes[6],
-                               'directional_pad_vertical': joy_msg.axes[7]
-                                }
-                           }
+    # controller_mappings = {4: {'A': joy_msg.buttons[0],
+    #                            'B': joy_msg.buttons[1],
+    #                            'X': joy_msg.buttons[2],
+    #                            'Y': joy_msg.buttons[3],
+    #                            'left_bumper': joy_msg.buttons[4],
+    #                            'right_bumper': joy_msg.buttons[5],
+    #                            'select': joy_msg.buttons[6],
+    #                            'start': joy_msg.buttons[7],
+    #                            'home': joy_msg.buttons[8],
+    #                            'left_stick_pressed': joy_msg.buttons[9],
+    #                            'right_stick_pressed': joy_msg.buttons[10],
+    #                            'left_stick_horizontal': joy_msg.axes[0],
+    #                            'left_stick_vertical': joy_msg.axes[1],
+    #                            'left_trigger': joy_msg.axes[2],
+    #                            'right_stick_horizontal': joy_msg.axes[3],
+    #                            'right_stick_vertical': joy_msg.axes[4],
+    #                            'right_trigger': joy_msg.axes[5],
+    #                            'directional_pad_horizontal': joy_msg.axes[6],
+    #                            'directional_pad_vertical': joy_msg.axes[7]
+    #                             }
+    #                        }
     def __init__(self):
         """
         Subscribes to the Joy messages sent via the controller and the joy node and then transforms these to the desired behavior
@@ -87,7 +87,27 @@ class JoystickControls(object):
             self.base_pub.publish(self.base_command)
 
     def map_joystick(self, joy_msg):
-
+        controller_mappings = {4: {'A': joy_msg.buttons[0],
+                                'B': joy_msg.buttons[1],
+                                'X': joy_msg.buttons[2],
+                                'Y': joy_msg.buttons[3],
+                                'left_bumper': joy_msg.buttons[4],
+                                'right_bumper': joy_msg.buttons[5],
+                                'select': joy_msg.buttons[6],
+                                'start': joy_msg.buttons[7],
+                                'home': joy_msg.buttons[8],
+                                'left_stick_pressed': joy_msg.buttons[9],
+                                'right_stick_pressed': joy_msg.buttons[10],
+                                'left_stick_horizontal': joy_msg.axes[0],
+                                'left_stick_vertical': joy_msg.axes[1],
+                                'left_trigger': joy_msg.axes[2],
+                                'right_stick_horizontal': joy_msg.axes[3],
+                                'right_stick_vertical': joy_msg.axes[4],
+                                'right_trigger': joy_msg.axes[5],
+                                'directional_pad_horizontal': joy_msg.axes[6],
+                                'directional_pad_vertical': joy_msg.axes[7]
+                                    }
+                            }
         self._translate_controls(controller_mappings[self.controller_mode])
 
     def get_gripper_state(self, state_msg):
