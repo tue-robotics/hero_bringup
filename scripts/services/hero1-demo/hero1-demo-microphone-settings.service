@@ -1,7 +1,7 @@
 [Unit]
 Description=Mircophone settings
-After=network-online.target
-Requires=network-online.target
+After=multi-user.target
+Requires=multi-user.target
 
 [Install]
 WantedBy=hero1-demo-windows-speech.service
