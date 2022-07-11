@@ -625,29 +625,38 @@ Visualization Manager:
       Value: true
     - Alpha: 1
       Axes Length: 1
-      Axes Radius: 0.100000001
+      Axes Radius: 0.10000000149011612
       Class: rviz/Pose
       Color: 75; 156; 255
       Enabled: true
-      Head Length: 0.100000001
-      Head Radius: 0.0500000007
+      Head Length: 0.10000000149011612
+      Head Radius: 0.05000000074505806
       Name: SSL
+      Queue Size: 10
       Shaft Length: 0.5
-      Shaft Radius: 0.0299999993
+      Shaft Radius: 0.029999999329447746
       Shape: Arrow
       Topic: /hero/ssl/direction_of_arrival
       Unreliable: false
       Value: true
-    - Alpha: 0.699999988
+    - Alpha: 0.699999988079071
       Class: rviz/Map
       Color Scheme: map
       Draw Behind: false
-      Enabled: false
+      Enabled: true
       Name: GMapping - Map
       Topic: /hero/gmapping/map
       Unreliable: false
       Use Timestamp: false
-      Value: false
+      Value: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /markers
+      Name: MarkerArray
+      Namespaces:
+        "": true
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 0; 0; 0
