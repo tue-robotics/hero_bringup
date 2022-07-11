@@ -2,4 +2,4 @@ scan_height: 1
 scan_time: 0.033
 range_min: 0.45
 range_max: 10.0
-output_frame_id: camera_depth_frame
+output_frame_id: head_rgbd_sensor_laser_frame
