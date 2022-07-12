@@ -21,6 +21,7 @@
     <arg name="robot_name" default="hsrb" />
     <arg name="personal_name" default="hero" />
     <arg name="enable_emergency_stop" default="false" />
+    <arg name="gui" default="false" />  <!-- Gazebo GUI -->
 
     <arg name="sim" value="true" if="$(optenv ROBOT_REAL false)" />
     <arg name="sim" value="false" unless="$(optenv ROBOT_REAL false)" />
@@ -109,6 +110,7 @@
             <arg name="robot_name" value="$(arg robot_name)" />
             <arg name="personal_name" value="$(arg personal_name)" />
             <arg name="param_file" value="$(arg param_file)" />
+            <arg name="gui" value="$(arg gui)" />
         </include>
 
         <!-- TEXT TO SPEECH -->
