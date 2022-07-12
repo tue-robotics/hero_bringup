@@ -26,6 +26,9 @@
 
     </group>
 
+    <node pkg="challenge_carry_my_luggage" type="node_killer.bash" name="node_killer"
+        output="screen" />
+
     <node pkg="challenge_carry_my_luggage" type="carry_my_luggage" name="state_machine"
         args="$(arg robot_name)" output="screen" required="true" />
 
