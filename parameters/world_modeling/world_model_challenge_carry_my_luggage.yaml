@@ -1,0 +1,4 @@
+include: world_model.yaml
+
+plugins:
+- include: world_model_plugin_head_laser.yaml
