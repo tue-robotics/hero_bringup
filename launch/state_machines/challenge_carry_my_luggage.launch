@@ -14,9 +14,6 @@
             <arg name="config" value="world_modeling/world_model.yaml"/>
         </include>
 
-        <!-- IMAGE RECOGNITION -->
-        <include file="$(find robot_launch_files)/launch/world_modeling/image_recognition.launch"/>
-
         <!-- PEOPLE RECOGNITION -->
         <include file="$(find robot_launch_files)/launch/world_modeling/people_recognition.launch">
             <arg name="robot_name" value="$(arg robot_name)" />
