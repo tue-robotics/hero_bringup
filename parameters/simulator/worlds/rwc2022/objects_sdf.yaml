@@ -21,4 +21,4 @@
 - {id: coke-16, type: coke_can, x: 3.75, y: 6.8, z: 0.74}
 
 # Human
-- {id: human-1, type: human, x: 3, y: 7.5, z: 1.05}
+- {id: human-1, type: human, x: 2, y: 7.5, z: 1.05}
