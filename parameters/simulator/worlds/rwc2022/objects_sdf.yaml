@@ -22,3 +22,6 @@
 
 # Human
 - {id: human-1, type: human, x: 2, y: 7.5, z: 1.05, yaw: 1.57}
+
+# Cupboard
+- {id: coke-17, type: coke_can, x: 7.7, y: 8.45, z: 0.47}
