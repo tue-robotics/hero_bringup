@@ -1,6 +1,6 @@
 name: head_laser_integration
 type: ed_sensor_integration/laser
-frequency: 40
+frequency: 10
 parameters:
   laser_topic: /hero/head_rgbd_sensor/scan
   min_segment_size_pixels: 10

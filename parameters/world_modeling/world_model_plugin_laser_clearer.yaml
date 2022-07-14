@@ -2,4 +2,4 @@ name: entity_clearer
 type: ed_sensor_integration/clearer
 enabled: 1
 parameters:
-    entity_timeout: 10.0
+    entity_timeout: 5
