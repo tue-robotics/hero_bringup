@@ -25,3 +25,4 @@
 
 # Cupboard
 - {id: coke-17, type: coke_can, x: 7.7, y: 8.45, z: 0.47}
+- {id: cup-1, type: rwc2022/cup, x: 8.0, y: 8.45, z: 0.47}
