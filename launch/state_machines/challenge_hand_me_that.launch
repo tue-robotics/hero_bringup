@@ -25,4 +25,5 @@
     </group>
 
     <!-- Don't start the challenge, launch in different terminal so that we can verify the deps are working before challenge -->
+    <node pkg="challenge_hand_me_that" type="challenge_hand_me_that" name="state_machine" args="$(arg robot_name)" output="screen" required="true" />
 </launch>
