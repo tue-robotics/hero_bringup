@@ -38,5 +38,5 @@ configuration_space:
     target_cell_value: 254
     dilation_cell_value: 253
     dilation_radius: 0.26 # 2cm margin
-    inflation_radius: 0.38
+    inflation_radius: 0.34
     cost_scaling_factor: 0
