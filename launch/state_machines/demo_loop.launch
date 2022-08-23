@@ -32,9 +32,6 @@
     <node pkg="action_server" type="main.py" name="action_server" output="screen" respawn="true">
         <param name="robot_name" value="$(arg robot_name)" />
     </node>
-    <!-- Start the challenge -->
-    <node pkg="demo_loop" type="demo_loop.py" name="demo_loop" output="screen" required="true">
-        <param name="robot_name" value="$(arg robot_name)" />
-    </node>
 
+    <!-- Don't start the demo just yet. First drive around and fit the table -->
 </launch>
