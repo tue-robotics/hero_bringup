@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <launch>
-    arg name="robot_name" value="hero" />
+    <arg name="robot_name" value="hero" />
     <arg name="skip" default="true" />
     <arg name="number_of_tasks" default="0" />
     <arg name="time_limit" default="999" />
