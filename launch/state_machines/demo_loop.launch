@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+
+<launch>
+    arg name="robot_name" value="hero" />
+    <arg name="skip" default="true" />
+    <arg name="number_of_tasks" default="0" />
+    <arg name="time_limit" default="999" />
+
+    <remap from="/diagnostics" to="/$(arg robot_name)/diagnostics" />
+
+    <group ns="$(arg robot_name)">
+
+        <!-- LOCALIZATION GMAPPING -->
+        <include file="$(find robot_launch_files)/launch/localization/gmapping.launch">
+            <arg name="sensor" value="base_laser"/>
+        </include>
+
+        <!-- NAVIGATION GMAPPING -->
+        <include file="$(find robot_launch_files)/launch/navigation/navigation_gmapping.launch"/>
+
+        <!-- IMAGE RECOGNITION -->
+        <include file="$(find robot_launch_files)/launch/world_modeling/image_recognition.launch"/>
+
+        <!-- PEOPLE RECOGNITION -->
+        <include file="$(find robot_launch_files)/launch/world_modeling/people_recognition.launch">
+            <arg name="robot_name" value="$(arg robot_name)" />
+        </include>
+
+    </group>
+
+    <!-- Start the action server -->
+    <node pkg="action_server" type="main.py" name="action_server" output="screen" respawn="true">
+        <param name="robot_name" value="$(arg robot_name)" />
+    </node>
+
+</launch>
