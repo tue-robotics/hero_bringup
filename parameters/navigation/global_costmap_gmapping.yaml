@@ -30,7 +30,6 @@ gmapping_occupancy_grid:
 # Ed World model layer
 ed_occupancy_grid:
     map_topic: /hero/ed/navigation/map
-    track_unknown_space: true
     use_maximum: true
 
 recent_obstacles:
