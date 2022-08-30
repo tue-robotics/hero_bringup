@@ -19,6 +19,7 @@ always_send_full_costmap: true
 plugins:
     # Obstacles
     - {name: gmapping_occupancy_grid,           type: "costmap_2d::StaticLayer"}
+    - {name: ed_occupancy_grid,                 type: "costmap_2d::StaticLayer"}
     - {name: recent_obstacles,                  type: "costmap_2d::ObstacleLayer"}
 
     # Clear the robot footprint
@@ -34,6 +35,12 @@ plugins:
 gmapping_occupancy_grid:
     map_topic: /hero/gmapping/map
     track_unknown_space: false
+
+# Ed World model layer
+ed_occupancy_grid:
+    map_topic: /hero/ed/navigation/map
+    track_unknown_space: true
+    use_maximum: true
 
 recent_obstacles:
     occupied_to_default_time: 1.0
