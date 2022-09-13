@@ -1,6 +1,6 @@
 # hero_bringup
 
-[![CI](https://github.com/tue-robotics/hero_bringup/workflows/CI/badge.svg)](https://github.com/tue-robotics/hero_bringup/actions)
+[![CI](https://github.com/tue-robotics/hero_bringup/actions/workflows/main.yml/badge.svg)](https://github.com/tue-robotics/hero_bringup/actions/workflows/main.yml)
 
 Launch, machine and parameter files required to bringup the HERO robot
 
