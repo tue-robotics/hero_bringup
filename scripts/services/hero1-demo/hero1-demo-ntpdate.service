@@ -1,7 +1,7 @@
 [Unit]
 Description=NTPDATE
-After=network-online.target
-Requires=network-online.target
+After=network-online.target systemd-resolved.service
+Requires=network-online.target systemd-resolved.service
 
 [Install]
 WantedBy=hero1-demo-roscore.service
