@@ -7,5 +7,5 @@ Requires=network-online.target systemd-resolved.service
 WantedBy=hero1-demo-roscore.service
 
 [Service]
-Restart=on-abort
+Restart=on-failure
 ExecStart=/usr/sbin/ntpdate ntp.ubuntu.com
