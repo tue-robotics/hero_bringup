@@ -24,13 +24,11 @@
 
         <!-- Telegram interface -->
         <include file="$(find robot_launch_files)/launch/interaction/telegram.launch">
-            <arg name="robot_name" value="$(arg robot_name)" />
-            <arg name="caption_as_frame_id" value="true" />
+             <arg name="robot_name" value="$(arg robot_name)" />
+             <arg name="caption_as_frame_id" value="true" />
         </include>
 
     </group>
 
     <!-- Don't start the challenge, launch in different terminal so that we can verify the deps are working before challenge -->
-    <node pkg="challenge_final" type="challenge_final" name="state_machine" args="hero" output="screen" required="true"/>
-
 </launch>
