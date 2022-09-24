@@ -25,4 +25,5 @@
 
     <!-- Start the challenge -->
     <node pkg="challenge_serve_breakfast" type="challenge_serve_breakfast" name="state_machine" args="hero" output="screen" required="true" />
+
 </launch>
