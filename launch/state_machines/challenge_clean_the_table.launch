@@ -25,5 +25,6 @@
 
     <!-- Start the challenge -->
     <node pkg="challenge_clean_the_table" type="challenge_clean_the_table" name="state_machine" args="hero" output="screen" required="true" />
+
 </launch>
 
