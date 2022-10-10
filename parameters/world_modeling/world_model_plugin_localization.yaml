@@ -21,7 +21,7 @@ parameters:
     recovery_alpha_fast: 0 #0.1
     cell_size_x: 0.5
     cell_size_y: 0.5
-    cell_size_theta: 0.1745
+    cell_size_theta: 0.1
   initial_pose:
     x: $(env ROBOT_INIT_X 0.0)
     y: $(env ROBOT_INIT_Y 0.0)
