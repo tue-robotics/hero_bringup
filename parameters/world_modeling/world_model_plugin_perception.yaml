@@ -1,2 +1,4 @@
 name: perception
 type: ed_perception/image_recognition
+parameters:
+    roi_margin: 20
