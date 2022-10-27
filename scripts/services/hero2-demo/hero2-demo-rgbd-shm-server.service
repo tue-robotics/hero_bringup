@@ -6,7 +6,7 @@ WantedBy=multi-user.target
 
 [Service]
 User=demo
-Restart=on-failure
+Restart=always
 RestartSec=1s
 ExecStart=/bin/bash -c 'source /home/demo/.tue/setup.bash && \
                         rosrun rgbd rgbd_to_shm \
