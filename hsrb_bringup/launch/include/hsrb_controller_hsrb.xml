@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <launch>
   <arg name="namespace" default="/hsrb" />
-  <arg name="robot_name" default="hsrb" />
 
   <group ns="$(arg namespace)">
 
-    <rosparam command="load" file="$(find hsrb_common_config)/params/hsrb_controller_config_$(arg robot_name).yaml"/>
+    <rosparam command="load" file="$(find hsrb_common_config)/params/hsrb_controller_config_hsrb.yaml"/>
 
     <!-- controller -->
+    <!-- TUe changed: namespace arg -->
     <node name="controller_spawner" pkg="controller_manager" type="spawner"
           respawn="false"
           output="screen"
@@ -26,6 +26,6 @@
                 tmc_diagnostic_controller
                 --shutdown-timeout 1" />
 
-    <rosparam command="load" file="$(find hsrb_bringup)/params/hsrb_hw_config_$(arg robot_name).yaml" />
+    <rosparam command="load" file="$(find hsrb_bringup)/params/hsrb_hw_config_hsrb.yaml" />
   </group>
 </launch>

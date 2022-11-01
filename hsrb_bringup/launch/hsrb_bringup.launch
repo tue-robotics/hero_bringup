@@ -21,7 +21,6 @@
 
   <include file="$(find hero_bringup)/hsrb_bringup/launch/include/hsrb_controller_$(arg robot_name).xml">
     <arg name="namespace" value="$(arg namespace)" />
-    <arg name="robot_name" value="$(arg robot_name)" />
   </include>
 
   <node if="$(arg align_at_startup)" pkg="hsrb_bringup" type="hsrb_align" name="hsrb_align" >

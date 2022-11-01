@@ -293,7 +293,7 @@ class RobotService(object):
         ## Get and set robot version
         #robot_version = os.environ.get("ROBOT_VERSION")
         #robot_name = robot_version.replace('"', '').split('-')[0].lower()
-        #if robot_name not in ('hsrb', 'hsrc'):
+        #if self.robot_name not in ('hsrb', 'hsrc', 'hsrd'):
             #raise Exception("Invalid ROBOT_VERSION:{0}".format(robot_version))
 
         # Start up nodes other than device type
@@ -333,8 +333,8 @@ class RobotService(object):
 
     def watch(self):
         u"""Monitoring nodes"""
-        rospy.loginfo("Monitoring following nodes:" +
-                      "".join(["[%s:%d]" % (node, pid)
+        rospy.loginfo("Monitoring following nodes:"
+                      + "".join(["[%s:%d]" % (node, pid)
                                for node, pid in self.pids.items()]))
 
         def is_any_dead():
