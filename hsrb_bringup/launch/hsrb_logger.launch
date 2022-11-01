@@ -8,6 +8,7 @@
   <arg name="use_head_center_camera" default="$(optenv USE_HEAD_CENTER_CAMERA true)" />
   <arg name="use_head_stereo_camera" default="$(optenv USE_HEAD_STEREO_CAMERA true)" />
   <arg name="use_head_rgbd_sensor" default="$(optenv USE_HEAD_RGBD_SENSOR true)" />
+  <arg name="use_rear_scan" default="$(optenv USE_REAR_SCAN false)" />
   <arg name="robot_name" default="hsrb" />
   <group ns="$(arg namespace)" unless="$(arg use_journald)" >
     <!-- [nodes] -> /rosout -> [/rosout] -> /rosout_agg -->
@@ -52,6 +53,7 @@
       <rosparam command="load" file="$(find hero_bringup)/hsrb_bringup/params/analyzers/head_center_camera.yaml" if="$(arg use_head_center_camera)" />
       <rosparam command="load" file="$(find hero_bringup)/hsrb_bringup/params/analyzers/head_stereo_camera.yaml" if="$(arg use_head_stereo_camera)" />
       <rosparam command="load" file="$(find hero_bringup)/hsrb_bringup/params/analyzers/head_rgbd_sensor.yaml"   if="$(arg use_head_rgbd_sensor)" />
+      <rosparam command="load" file="$(find hero_bringup)/hsrb_bringup//params/analyzers/rear_scan.yaml"         if="$(arg use_rear_scan)" />
     </node>
   </group>
 </launch>

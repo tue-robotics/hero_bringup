@@ -1,0 +1,7 @@
+analyzers:
+  sensors:
+    analyzers:
+      rear_urg:
+        type: diagnostic_aggregator/GenericAnalyzer
+        path: RearHokuyo
+        find_and_remove_prefix: 'hero/rear_urg_node: ' # TUe changed
