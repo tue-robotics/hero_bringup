@@ -12,5 +12,3 @@ plugins:
 - include: world_model_plugin_people_recognition.yaml
 
 - include: world_model_plugin_tf.yaml
-
-- include: world_model_plugin_rgbd_navigation.yaml
