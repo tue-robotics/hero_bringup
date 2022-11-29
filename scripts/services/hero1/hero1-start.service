@@ -12,5 +12,5 @@ Environment=ROS_HOME=/home/administrator/.ros
 User=administrator
 LimitMEMLOCK=infinity
 LimitRTPRIO=51
-Restart=on-failure
+Restart=always
 ExecStart=/bin/bash -c 'source /home/administrator/.tue/setup.bash && roslaunch hero_bringup start.launch --wait'
