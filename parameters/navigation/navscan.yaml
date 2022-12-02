@@ -1,5 +1,5 @@
-frame_id: "base_link"
-rgbd_topic: "/hero/head_rgbd_sensor/rgbd"
+frame_id: base_link
+rgbd_topic: /hero/head_rgbd_sensor/rgbd
 
 num_samples: 640
 slope_threshold: 1.0
