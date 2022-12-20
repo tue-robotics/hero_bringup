@@ -6,6 +6,8 @@
     <arg name="robot_name" value="hero" />
 
     <remap from="/diagnostics" to="/$(arg robot_name)/diagnostics" />
+    <remap from="/hero/handle_locator/rectified_points" to="/hero/head_rgbd_sensor/depth_registered/rectified_points" />
+       
 
     <group ns="$(arg robot_name)">
 
@@ -20,6 +22,9 @@
         <!-- IMAGE RECOGNITION -->
         <include file="$(find robot_launch_files)/launch/world_modeling/image_recognition.launch"/>
 
+        <!-- HANDLE LOCATOR -->
+         <include file="$(find robot_launch_files)/launch/world_modeling/handle_locator.launch"/>
+        
         <!-- PEOPLE RECOGNITION -->
         <include file="$(find robot_launch_files)/launch/world_modeling/people_recognition.launch">
             <arg name="robot_name" value="$(arg robot_name)" />
