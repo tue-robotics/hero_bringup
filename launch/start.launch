@@ -15,7 +15,7 @@
     <arg name="serialnumber_as_name" default="true" /> <!-- Different to Toyota -->
     <arg name="use_base_range_sensor" default="true" />
     <arg name="use_laser_odom" default="false"/>
-    <arg name="use_point_cloud" default="false" /> <!-- Different to Toyota -->
+    <arg name="use_point_cloud" default="true" /> <!-- Different to Toyota -->
     <arg name="use_blackfly" default="false" />
     <arg name="monitor" default="false" />
     <arg name="param_file" default="$(env HOME)/.ros/params.yaml" />
