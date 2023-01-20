@@ -38,8 +38,8 @@ parameters:
     map_frame: map
     odom_frame: odom
     base_link_frame: base_footprint
-    alpha1: 0.05   # rot -> trans + strafe
-    alpha2: 0.5    # trans -> rot
-    alpha3: 0.5    # trans -> trans
-    alpha4: 0.5    # rot -> rot
-    alpha5: 0      # trans -> strafe
+    alpha1: 0.05   # rot -> rot
+    alpha2: 0.01   # trans -> rot
+    alpha3: 0.01   # trans -> trans
+    alpha4: 0.01   # rot -> trans + strafe
+    alpha5: 0.05   # trans -> strafe
