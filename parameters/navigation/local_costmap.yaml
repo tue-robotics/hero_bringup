@@ -85,4 +85,4 @@ configuration_space:
     # dilation_radius: 0.35 # inscribed radius
     dilation_radius: 0.24 # inscribed radius
     inflation_radius: 1.0  # optimization
-    cost_scaling_factor: 5.0
+    cost_scaling_factor: 4

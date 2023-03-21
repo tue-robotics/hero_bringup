@@ -1,0 +1,28 @@
+# salon_table
+- {id: coke-1, type: coke_can, x: 1.45, y: 1.95, z: 0.49}
+- {id: coke-2, type: coke_can, x: 1.65, y: 1.95, z: 0.49}
+- {id: coke-3, type: coke_can, x: 1.85, y: 1.95, z: 0.49}
+- {id: coke-4, type: coke_can, x: 2.05, y: 1.95, z: 0.49}
+- {id: coke-5, type: coke_can, x: 2.20, y: 1.95, z: 0.49}
+
+# side_tables
+- {id: coke-6, type: coke_can, x: 3.00, y: 0.55, z: 0.45}
+- {id: coke-7, type: coke_can, x: 3.25, y: 0.55, z: 0.45}
+- {id: coke-8, type: coke_can, x: 3.50, y: 0.55, z: 0.45}
+- {id: coke-9, type: coke_can, x: 3.75, y: 0.55, z: 0.45}
+- {id: coke-10, type: coke_can, x: 4.00, y: 0.55, z: 0.45}
+
+# desk
+- {id: coke-11, type: coke_can, x: 3.75, y: 5.8, z: 0.74}
+- {id: coke-12, type: coke_can, x: 3.75, y: 6.0, z: 0.74}
+- {id: coke-13, type: coke_can, x: 3.75, y: 6.2, z: 0.74}
+- {id: coke-14, type: coke_can, x: 3.75, y: 6.4, z: 0.74}
+- {id: coke-15, type: coke_can, x: 3.75, y: 6.6, z: 0.74}
+- {id: coke-16, type: coke_can, x: 3.75, y: 6.8, z: 0.74}
+
+# Human
+- {id: human-1, type: human, x: 2, y: 7.5, z: 1.05, yaw: 1.57}
+
+# Cupboard
+- {id: coke-17, type: coke_can, x: 7.7, y: 8.45, z: 0.47}
+- {id: cup-1, type: rwc2022/cup, x: 8.0, y: 8.45, z: 0.47}

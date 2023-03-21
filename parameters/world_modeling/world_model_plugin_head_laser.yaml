@@ -1,0 +1,11 @@
+name: head_laser_integration
+type: ed_sensor_integration/laser
+frequency: 10
+parameters:
+  laser_topic: /hero/head_rgbd_sensor/scan
+  min_segment_size_pixels: 10
+  world_association_distance: 0.4
+  segment_depth_threshold: 0.2
+  min_cluster_size: 0.2
+  max_cluster_size: 1.0
+  max_gap_size: 10

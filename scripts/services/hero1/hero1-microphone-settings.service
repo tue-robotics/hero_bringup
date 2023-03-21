@@ -1,0 +1,12 @@
+[Unit]
+Description=Mircophone settings
+After=multi-user.target
+Requires=multi-user.target
+
+[Install]
+WantedBy=hero1-windows-speech.service
+
+[Service]
+User=administrator
+Restart=on-abort
+ExecStart=/usr/bin/bash -c "/usr/bin/pactl set-default-source alsa_input.usb-OmniVision_Technologies__Inc._USB_Camera-B4.09.24.1-01.multichannel-input && /usr/bin/pactl set-source-volume alsa_input.usb-OmniVision_Technologies__Inc._USB_Camera-B4.09.24.1-01.multichannel-input 30%"
