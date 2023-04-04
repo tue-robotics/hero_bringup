@@ -570,8 +570,9 @@ Visualization Manager:
       Entity Area label opacity: 0.400000006
       Entity Area opacity: 0.200000003
       Entity label opacity: 1
-      Exclude entities: hero
-      Exclude labels: hero
+      Exclude entities: hero.*
+      Exclude entity types: room
+      Exclude labels: hero.*
       Mesh query service name: /hero/ed/gui/query_meshes
       Name: WorldModel
       Queue Size: 10
