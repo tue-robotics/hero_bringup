@@ -95,6 +95,11 @@
                 <remap from="scan" to="base_scan" />
                 <remap from="scan_filtered" to="base_laser/scan" />
             </node>
+
+            <!-- PICOVOICE -->
+            <include file="$(find robot_launch_files)/launch/interaction/picovoice.launch" ns="$(arg namespace)" >
+                <arg name="robot_name" value="$(arg robot_name)" />
+            </include>
         </group>
 
     </group><!-- End of real hardware -->
