@@ -66,7 +66,12 @@ def get_installed_toyota_pkgs() -> List[str]:
     :return: list of names of all installed toyota packages
     """
     rp = get_rospack()
-    toyota_pkgs = [pkg for pkg in rp.list() if "hsr" in pkg or "tmc" in pkg]
+    opt_ros_path = os.path.join(os.sep, "opt", "ros")
+    toyota_pkgs = [
+        pkg
+        for pkg in rp.list()
+        if ("hsr" in pkg or "tmc" in pkg) and rp.get_path(pkg).startswith(opt_ros_path)
+    ]
     return toyota_pkgs
 
 
