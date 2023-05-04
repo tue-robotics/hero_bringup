@@ -98,7 +98,7 @@
 
             <!-- PICOVOICE -->
             <include file="$(find robot_launch_files)/launch/interaction/picovoice.launch" ns="$(arg namespace)" >
-                <arg name="robot_name" value="$(arg robot_name)" />
+                <arg name="robot_name" value="$(arg personal_name)" />
             </include>
         </group>
 
