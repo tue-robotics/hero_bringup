@@ -1,0 +1,5 @@
+name: tmc_collision
+type: ed_tmc_collision/tmc_collision
+parameters:
+  http_server:
+    address: $(env ROS_HOSTNAME $(env ROS_IP ""))

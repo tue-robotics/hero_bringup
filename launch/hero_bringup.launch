@@ -171,7 +171,9 @@
             <include file="$(find hsrb_trajectory_filter)/launch/trajectory_filter.launch" />
 
             <!-- whole timeopt filter -->
-            <include file="$(find hsrb_timeopt_ros)/launch/hsrb_timeopt_filter.launch" />
+            <include file="$(find hsrb_timeopt_ros)/launch/hsrb_timeopt_filter.launch">
+                <arg name="robot_type" value="$(arg robot_name)"/>
+            </include>
 
             <!-- Finger impedance control in whole body -->
             <remap from="/hsrb/joint_states" to="$(arg namespace)/joint_states" />

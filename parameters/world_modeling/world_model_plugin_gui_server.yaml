@@ -1,5 +1,2 @@
 name: gui_server
 type: ed_gui_server/gui_server
-parameters:
-    robot_name: hero
-    urdf_rosparam: /hero/robot_description
