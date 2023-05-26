@@ -21,6 +21,7 @@
                 gripper_controller
                 servo_parameter_reader
                 servo_parameter_writer
+                servo_error_reset_controller
                 imu_sensor_controller
                 collision_detection_controller
                 tmc_diagnostic_controller
