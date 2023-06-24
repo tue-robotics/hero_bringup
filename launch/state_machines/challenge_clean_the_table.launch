@@ -23,6 +23,12 @@
         </include>
     </group>
 
+    <!-- RECORD VIDEO -->
+    <include file="$(find robot_launch_files)/launch/tools/video_recorder.launch">
+        <arg name="image_topic" value="/hero/head_rgbd_sensor/rgb/image_raw"/>
+        <arg name="filename" value="challenge_clean_the_table"/>
+    </include>
+
     <!-- Start the challenge -->
     <node pkg="challenge_clean_the_table" type="challenge_clean_the_table" name="state_machine" args="hero" output="screen" required="true" />
 

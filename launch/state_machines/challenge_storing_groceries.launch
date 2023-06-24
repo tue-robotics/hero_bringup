@@ -24,6 +24,12 @@
 
     </group>
 
+    <!-- RECORD VIDEO -->
+    <include file="$(find robot_launch_files)/launch/tools/video_recorder.launch">
+        <arg name="image_topic" value="/hero/head_rgbd_sensor/rgb/image_raw"/>
+        <arg name="filename" value="challenge_storing_groceries"/>
+    </include>
+
     <!-- Start the challenge -->
     <node pkg="challenge_storing_groceries" type="challenge_storing_groceries" name="state_machine" args="$(arg robot_name)" output="screen" required="true" />
 

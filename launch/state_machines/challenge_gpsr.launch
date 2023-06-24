@@ -33,6 +33,12 @@
 
     </group>
 
+    <!-- RECORD VIDEO -->
+    <include file="$(find robot_launch_files)/launch/tools/video_recorder.launch">
+        <arg name="image_topic" value="/hero/head_rgbd_sensor/rgb/image_raw"/>
+        <arg name="filename" value="challenge_gpsr"/>
+    </include>
+
     <!-- Start the challenge -->
     <node pkg="challenge_gpsr" type="gpsr.py" name="state_machine" output="screen" required="true">
         <param name="robot_name" value="$(arg robot_name)" />

@@ -26,6 +26,12 @@
 
     </group>
 
+    <!-- RECORD VIDEO -->
+    <include file="$(find robot_launch_files)/launch/tools/video_recorder.launch">
+        <arg name="image_topic" value="/hero/head_rgbd_sensor/rgb/image_raw"/>
+        <arg name="filename" value="challenge_carry_my_luggage"/>
+    </include>
+
     <node pkg="challenge_carry_my_luggage" type="node_killer.bash" name="node_killer"
         output="screen" />
 
