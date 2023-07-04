@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="robot_name" value="hero" />
+
+    <remap from="/diagnostics" to="/$(arg robot_name)/diagnostics" />
+
+    <group ns="$(arg robot_name)">
+
+        <!-- Head RGBD to Laser Scan Projection -->
+        <include file="$(find robot_launch_files)/launch/hardware/sensors/depth_to_laser.launch">
+            <arg name="robot_name" value="$(arg robot_name)" />
+        </include>
+
+        <!-- NAVIGATION -->
+        <include file="$(find robot_launch_files)/launch/navigation/navigation.launch"/>
+
+        <!-- WORLD MODEL -->
+        <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch">
+            <arg name="config" value="world_modeling/world_model_challenge_carry_my_luggage.yaml"/>
+        </include>
+
+        <!-- PEOPLE RECOGNITION -->
+        <include file="$(find robot_launch_files)/launch/world_modeling/people_recognition.launch">
+            <arg name="robot_name" value="$(arg robot_name)" />
+        </include>
+
+    </group>
+
+    <node pkg="challenge_stickler_for_rules" type="stickler_for_rules" name="state_machine"
+        args="$(arg robot_name)" output="screen" required="true" />
+
+</launch>
