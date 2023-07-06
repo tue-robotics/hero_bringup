@@ -13,9 +13,9 @@
 - {id: coke-10, type: coke_can, x: 5.65, y: 4.95, z: 0.42}
 
 # pantry
-- {id: coke-11, type: coke_can, x: 6.1, y: 6.25, z: 0.51}
-- {id: coke-12, type: coke_can, x: 6.3, y: 6.25, z: 0.51}
-- {id: coke-13, type: coke_can, x: 6.5, y: 6.25, z: 0.51}
+- {id: coke-11, type: coke_can, x: 6.0, y: 6.25, z: 0.51}
+- {id: coke-12, type: coke_can, x: 6.45, y: 6.25, z: 0.51}
+- {id: coke-13, type: coke_can, x: 6.65, y: 6.25, z: 0.51}
 
 - {id: coke-14, type: coke_can, x: 6.15, y: 6.25, z: 0.77}
 - {id: coke-15, type: coke_can, x: 6.35, y: 6.25, z: 0.77}
