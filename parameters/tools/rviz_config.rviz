@@ -653,7 +653,7 @@ Visualization Manager:
       Value: false
     - Class: rviz/Image
       Enabled: true
-      Image Topic: /hero/head_rgbd_sensor/rgb/image_rect_color
+      Image Topic: /hero/hand_camera/image_raw
       Max Value: 1
       Median window: 5
       Min Value: 0
