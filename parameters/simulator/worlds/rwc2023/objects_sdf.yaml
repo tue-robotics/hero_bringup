@@ -1,0 +1,29 @@
+# kitchen_table
+- {id: coke-1, type: coke_can, x: 7.0, y: 4.6, z: 0.85}
+- {id: coke-2, type: coke_can, x: 7.0, y: 4.45, z: 0.85}
+- {id: coke-3, type: coke_can, x: 7.0, y: 4.30, z: 0.85}
+- {id: coke-4, type: coke_can, x: 7.15, y: 4.15, z: 0.85}
+- {id: coke-5, type: coke_can, x: 7.4, y: 4.2, z: 0.85}
+
+# side_tables storing_groceries
+- {id: coke-6, type: coke_can, x: 5.7, y: 5.55, z: 0.42}
+- {id: coke-7, type: coke_can, x: 5.5, y: 5.4, z: 0.42}
+- {id: coke-8, type: coke_can, x: 5.7, y: 5.3, z: 0.42}
+- {id: coke-9, type: coke_can, x: 5.7, y: 5.15, z: 0.42}
+- {id: coke-10, type: coke_can, x: 5.65, y: 4.95, z: 0.42}
+
+# pantry
+- {id: coke-11, type: coke_can, x: 6.0, y: 6.25, z: 0.51}
+- {id: coke-12, type: coke_can, x: 6.45, y: 6.25, z: 0.51}
+- {id: coke-13, type: coke_can, x: 6.65, y: 6.25, z: 0.51}
+
+- {id: coke-14, type: coke_can, x: 6.15, y: 6.25, z: 0.77}
+- {id: coke-15, type: coke_can, x: 6.35, y: 6.25, z: 0.77}
+- {id: coke-16, type: coke_can, x: 6.55, y: 6.25, z: 0.77}
+
+# Human
+- {id: human-1, type: human, x: 2, y: 7.5, z: 1.05, yaw: 1.57}
+
+# Cupboard
+- {id: coke-17, type: coke_can, x: 7.7, y: 8.45, z: 0.47}
+- {id: cup-1, type: rwc2022/cup, x: 8.0, y: 8.45, z: 0.47}
