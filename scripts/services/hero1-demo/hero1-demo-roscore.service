@@ -10,4 +10,4 @@ WantedBy=multi-user.target
 EnvironmentFile=-/etc/opt/tmc/robot/version
 User=demo
 Restart=on-failure
-ExecStart=/bin/bash -c 'source /home/demo/.tue/setup.bash && rosrun hero_bringup hero_roscore_service namespace:=/hero use_hand_camera:=false use_head_center_camera:=false use_head_stereo_camera:=false use_head_rgbd_sensor:=true robot_name:=hsrb --screen'
+ExecStart=/bin/bash -c 'source /home/demo/.tue/setup.bash && rosrun hero_bringup hero_roscore_service namespace:=/hero use_hand_camera:=true use_head_center_camera:=false use_head_stereo_camera:=false use_head_rgbd_sensor:=true robot_name:=hsrb --screen'
