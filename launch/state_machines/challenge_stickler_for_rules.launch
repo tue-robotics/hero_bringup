@@ -21,8 +21,7 @@
         </include>
     </group>
 
-    <!-- Start the challenge -->
-    <node pkg="challenge_stickler_for_rules" type="stickler_for_rules" name="state_machine"
-        args="$(arg robot_name)" output="screen" required="true" />
+	<!-- Start the challenge -->
+    <node pkg="challenge_stickler_for_rules" type="stickler_for_rules" name="state_machine" args="$(arg robot_name)" output="screen" required="true" />
 
 </launch>
