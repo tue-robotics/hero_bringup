@@ -59,7 +59,7 @@ Directly on the robot:
   - Change the line: `#DNS=` to `DNS=192.168.44.1 8.8.8.8 8.8.4.4`
   - Set to use ethernet: `sudo disable_wireless`
   - reboot: `sudo reboot`
-  
+
 The following steps need to be done on the robot(`hsr-hmi`) via the GUI:
 
 - Disable automatic updates in settings: *Software & Updates* > *Updates*:
@@ -191,7 +191,7 @@ The following services are running on HERO2. Normally these are ran from the dem
 
 ### Power settings
 
-To prevent HERO2 to shutdown on unplugging the power supply, some power settings need to be changed. (<https://askubuntu.com/a/1132068>)
+To prevent HERO2 to shut down on unplugging the power supply, some power settings need to be changed. (<https://askubuntu.com/a/1132068>)
 
 ```bash
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type nothing
