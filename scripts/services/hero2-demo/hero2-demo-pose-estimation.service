@@ -1,0 +1,21 @@
+[Unit]
+Description=image_recognition_pose_estimation node
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+User=demo
+Restart=on-failure
+RestartSec=1s
+ExecStart=/bin/bash -c 'source /home/demo/.tue/setup.bash && \
+                        export PATH=/usr/local/cuda/bin:${PATH} && \
+                        export LD_LIBRARY_PATH=/usr/local/cuda/lib64:${LD_LIBRARY_PATH} && \
+                        rosrun image_recognition_pose_estimation pose_estimation_node \
+                        _model:=yolov8n-pose.pt \
+                        _device:=cuda:0 \
+                        _conf:=0.4 \
+                        _check_master:=true \
+                        __ns:=hero/pose_estimation \
+                        image:=pose_estimation_input_image \
+                        /diagnostics:=/hero/diagnostics'
