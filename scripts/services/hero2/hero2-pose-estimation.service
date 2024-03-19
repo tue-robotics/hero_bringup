@@ -9,8 +9,8 @@ User=amigo
 Restart=on-failure
 RestartSec=1s
 ExecStart=/bin/bash -c 'source /home/amigo/.tue/setup.bash && \
-                        export PATH=/usr/local/cuda/bin:${PATH} && \
-                        export LD_LIBRARY_PATH=/usr/local/cuda/lib64:${LD_LIBRARY_PATH} && \
+                        export PATH=/usr/local/cuda/bin:$PATH && \
+                        export LD_LIBRARY_PATH=/usr/local/cuda/lib64:$LD_LIBRARY_PATH && \
                         rosrun image_recognition_pose_estimation pose_estimation_node \
                         _model:=yolov8n-pose.pt \
                         _device:=cuda:0 \
