@@ -13,6 +13,6 @@ ExecStart=/bin/bash -c 'source /home/amigo/.tue/setup.bash && \
                         __name:=hero2_battery_node \
                         __ns:=/hero \
                         _battery_topic:=battery \
-                        _upower_path:=/org/freedesktop/UPower/devices/battery_BAT1\
+                        _upower_path:=/org/freedesktop/UPower/devices/battery_BAT0\
                         _location:=hero2 \
                         _check_master:=true'
