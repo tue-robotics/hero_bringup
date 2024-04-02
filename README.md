@@ -30,7 +30,7 @@ Launch, machine and parameter files required to bringup the HERO robot
   - Otherwise change in `CMS parameters` or `Hard Drive parameters` the `Boot option filter` to `legacy only`.
   - Save changes and reboot again into the bios. Check again the USB stick is the first boot option. This should be the case. Reboot and let the installer do its job.
 
-- Wait till installer is finished. It will display a message to remove install medium. Do this and press main power button for a few seconds to shutdown the robot.
+- Wait till installer is finished. It will display a message to remove install medium. Do this and press main power button for a few seconds to shut down the robot.
 - Start the robot again via the main power button.
 
 #### After clean install
@@ -59,7 +59,7 @@ Directly on the robot:
   - Change the line: `#DNS=` to `DNS=192.168.44.1 8.8.8.8 8.8.4.4`
   - Set to use ethernet: `sudo disable_wireless`
   - reboot: `sudo reboot`
-  
+
 The following steps need to be done on the robot(`hsr-hmi`) via the GUI:
 
 - Disable automatic updates in settings: *Software & Updates* > *Updates*:
@@ -164,16 +164,6 @@ The following services are running on HERO1. Normally these are ran from the dem
 - Use ssh with key forwarding to connect to the robot. This is needed to clone private repos. (`sshhero2` does this)
 - Install `hero2` target `tue-get install hero2`
 - Set keyboard shortcut `Ctrl+Alt+T` to terminator
-- Install openpose:
-  - Clone openpose: `git clone https://github.com/CMU-Perceptual-Computing-Lab/openpose.git ~/src/openpose`
-  - Checkout correct version: `git checkout  v1.7.0`
-  - Install cuda 11.0 and cudnn 8.0.x. Install cuda via network debian file. Install cudnn via the debian files.
-  - Install dependencies: `. ./scripts/ubuntu/install_deps.sh`
-  - (Optional) Install OpenCV: `sudo apt-get install libopencv-dev`
-  - Create build folder: `mkdir build && cd build`
-  - Run CMake: `cmake .. -DBUILD_PYTHON=ON -DPYTHON_EXECUTABLE=/usr/bin/python3.8 -DPYTHON_LIBRARY=/usr/lib/x86_64-linux-gnu/libpython3.8.so`
-  - Make openpose: `make`
-  - Install openpose: `sudo make install`
 - Restore any backed-up data
 - Setup MEGA sync via GUI
 - Build the software: `tue-make`
@@ -191,7 +181,7 @@ The following services are running on HERO2. Normally these are ran from the dem
 
 ### Power settings
 
-To prevent HERO2 to shutdown on unplugging the power supply, some power settings need to be changed. (<https://askubuntu.com/a/1132068>)
+To prevent HERO2 to shut down on unplugging the power supply, some power settings need to be changed. (<https://askubuntu.com/a/1132068>)
 
 ```bash
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-type nothing
