@@ -30,7 +30,7 @@ Launch, machine and parameter files required to bringup the HERO robot
   - Otherwise change in `CMS parameters` or `Hard Drive parameters` the `Boot option filter` to `legacy only`.
   - Save changes and reboot again into the bios. Check again the USB stick is the first boot option. This should be the case. Reboot and let the installer do its job.
 
-- Wait till installer is finished. It will display a message to remove install medium. Do this and press main power button for a few seconds to shutdown the robot.
+- Wait till installer is finished. It will display a message to remove install medium. Do this and press main power button for a few seconds to shut down the robot.
 - Start the robot again via the main power button.
 
 #### After clean install
