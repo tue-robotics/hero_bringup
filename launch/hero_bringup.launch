@@ -157,6 +157,7 @@
             <arg name="machine" value="hero1"/>
             <arg name="dragonfly" value="true" />
             <arg name="kaldi" value="false" />
+            <arg name="qr_decoder_image_topic" value="/hero/head_rgbd_sensor/rgb/image_raw/compressed" />
         </include>
 
         <!-- MANIPULATION -->
