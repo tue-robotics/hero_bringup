@@ -155,6 +155,10 @@ The following services are running on HERO1. Normally these are ran from the dem
   ```
 
 - Turn Airplane-mode on, make sure Wi-Fi and Bluetooth is disabled
+- Disable automatic updates in settings: *Software & Updates* > *Updates*:
+  - *Automatically check for updates*: `Never`
+  - *When there are other updates*: `Display every two weeks`
+  - *Notify me of a new Ubuntu version*: `Never`
 - Set `Automatic suspend` to off in Power Settings, both for `Battery Power` and `Plugged in`
 - Keep laptop on with lid closed: `sudo vim /etc/systemd/logind.conf`, add `HandleLidSwitch=ignore` and `HandleLidSwitchExternalPower=ignore`
 - Install tue-env (<https://github.com/tue-robotics/tue-env>) and install `networking` target: `tue-get install networking`
