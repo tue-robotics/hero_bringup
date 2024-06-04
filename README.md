@@ -145,7 +145,6 @@ The following services are running on HERO1. Normally these are ran from the dem
   Username: amigo
   ```
 
-- After install go to TTY6(Ctrl+Alt+F6), install nvidia-driver-440(Or the one matching the cuda version used for openpose) and reboot: `sudo apt-get install nvidia-driver-440` and `sudo reboot`
 - Change ethernet configuration to static IP via GUI. Set static IP for ipv4 with the following settings:
 
   ```default
@@ -156,6 +155,10 @@ The following services are running on HERO1. Normally these are ran from the dem
   ```
 
 - Turn Airplane-mode on, make sure Wi-Fi and Bluetooth is disabled
+- Disable automatic updates in settings: *Software & Updates* > *Updates*:
+  - *Automatically check for updates*: `Never`
+  - *When there are other updates*: `Display every two weeks`
+  - *Notify me of a new Ubuntu version*: `Never`
 - Set `Automatic suspend` to off in Power Settings, both for `Battery Power` and `Plugged in`
 - Keep laptop on with lid closed: `sudo vim /etc/systemd/logind.conf`, add `HandleLidSwitch=ignore` and `HandleLidSwitchExternalPower=ignore`
 - Install tue-env (<https://github.com/tue-robotics/tue-env>) and install `networking` target: `tue-get install networking`
@@ -163,6 +166,7 @@ The following services are running on HERO1. Normally these are ran from the dem
 - Reboot the laptop to activate ssh: `sudo reboot`
 - Use ssh with key forwarding to connect to the robot. This is needed to clone private repos. (`sshhero2` does this)
 - Install `hero2` target `tue-get install hero2`
+- Install the correct `cuda-drivers`: `sudo apt-get install cuda-drivers=545.23.08-1`
 - Set keyboard shortcut `Ctrl+Alt+T` to terminator
 - Restore any backed-up data
 - Setup MEGA sync via GUI
