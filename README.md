@@ -194,8 +194,9 @@ gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-battery-timeout 0
 gsettings set org.gnome.settings-daemon.plugins.power lid-close-ac-action nothing
 gsettings set org.gnome.settings-daemon.plugins.power lid-close-battery-action nothing
+gsettings set org.gnome.settings-daemon.plugins.power critical-battery-action nothing
 # Copy settings from amigo account to gdm account
-OLD_IFS=$IFS; IFS=$'\n'; for x in $(sudo -Hu amigo gsettings list-recursively org.gnome.settings-daemon.plugins.power); do eval "sudo -Hu gdm dbus-launch gsettings set $x"; done; IFS=$OLD_IFS; unset OLD_IFS
+OLD_IFS=${IFS}; IFS=$'\n'; for x in $(sudo -Hu amigo gsettings list-recursively org.gnome.settings-daemon.plugins.power); do eval "sudo -Hu gdm dbus-launch gsettings set ${x}"; done; IFS=${OLD_IFS}; unset OLD_IFS
 ```
 
 ## HERO demo laptop
