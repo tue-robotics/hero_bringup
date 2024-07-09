@@ -24,7 +24,7 @@ parameters:
     rz: $(env ROBOT_INIT_PHI 0.0)
   laser_model:
     topic: /hero/base_laser/scan
-    num_beams: 150
+    num_beams: 250
     z_hit: 0.95
     sigma_hit: 0.15
     z_short: 0.1
@@ -38,8 +38,8 @@ parameters:
     map_frame: map
     odom_frame: odom
     base_link_frame: base_footprint
-    alpha1: 0.05   # rot -> rot
-    alpha2: 0.01   # trans -> rot
-    alpha3: 0.01   # trans -> trans
-    alpha4: 0.01   # rot -> trans + strafe
-    alpha5: 0.05   # trans -> strafe
+    alpha1: 0.10   # rot -> rot
+    alpha2: 0.05   # trans -> rot
+    alpha3: 0.05   # trans -> trans
+    alpha4: 0.05   # rot -> trans + strafe
+    alpha5: 0.10   # trans -> strafe
