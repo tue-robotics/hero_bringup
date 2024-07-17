@@ -1,0 +1,8 @@
+# dinner_table
+- {id: coke-1, type: coke_can, x: 5.65, y: 4.85, z: 0.84}
+- {id: coke-2, type: coke_can, x: 5.80, y: 4.85, z: 0.84}
+- {id: coke-3, type: coke_can, x: 5.95, y: 4.85, z: 0.84}
+- {id: coke-4, type: coke_can, x: 6.10, y: 4.85, z: 0.84}
+
+# kitchen_cabinet
+- {id: coke-5, type: coke_can, x: 3.72, y: 5.35, z: 0.80}
