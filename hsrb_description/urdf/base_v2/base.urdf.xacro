@@ -158,7 +158,8 @@
 
         <link name="${prefix}_link">
             <inertial>
-                <mass value="50.00"/>  <!-- use dummy weight to stabilize gazebo move base (real value: 11.017971)-->
+                <!-- TUe: increased from 50 to 100 -->
+                <mass value="100.00"/>  <!-- use dummy weight to stabilize gazebo move base (real value: 11.017971)-->
                 <origin xyz="-0.025978 -0.005498 0.17633"/>
                 <inertia ixx="0.3742" ixy="0.000434172172" ixz="0.03088"
                     iyy="0.3436" iyz="0.01775" izz="0.1509"/>
