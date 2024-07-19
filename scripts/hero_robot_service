@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # Copyright (C) 2018 Toyota Motor Corporation
 # 2019-02-14 Matthijs van der Burgh
