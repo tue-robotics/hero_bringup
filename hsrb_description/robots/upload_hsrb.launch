@@ -11,7 +11,7 @@
 
   <group ns="$(arg namespace)">
     <param name="robot_description"
-           command="$(find xacro)/xacro --inorder $(find hsrb_description)/robots/$(arg robot_model).urdf.xacro gazebo_visualization_enabled:=$(arg visualization) implicit_damping:=$(arg implicit_damping) ground_truth_xyz_offset:=$(arg ground_truth_xyz_offset) ground_truth_rpy_offset:=$(arg ground_truth_rpy_offset)" />
+           command="$(find xacro)/xacro --inorder $(find hero_bringup)/hsrb_description/robots/$(arg robot_model).urdf.xacro gazebo_visualization_enabled:=$(arg visualization) implicit_damping:=$(arg implicit_damping) ground_truth_xyz_offset:=$(arg ground_truth_xyz_offset) ground_truth_rpy_offset:=$(arg ground_truth_rpy_offset)" />
     <param name="robot_collision_pair" textfile="$(find hsrb_description)/robots/collision_pair_hsrb.xml" />
   </group>
 </launch>
