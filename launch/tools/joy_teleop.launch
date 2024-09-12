@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="robot_name" value="hero" />
+
+    <group ns="$(arg robot_name)">
+
+        <node name="joy_teleop" pkg="joy" type="joy_node" />
+
+        <node name="joy_controls" pkg="hero_bringup" type="joystick_controls_node" />
+
+    </group>
+
+</launch>
