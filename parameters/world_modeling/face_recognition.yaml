@@ -1,2 +1,1 @@
-align_path: ~/src/openface/models/dlib/shape_predictor_68_face_landmarks.dat
-net_path: ~/src/openface/models/openface/nn4.small2.v1.t7
+distance_threshold: 1.01
