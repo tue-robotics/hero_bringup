@@ -1,0 +1,11 @@
+[Unit]
+Description=running battery_manager_laptop
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+User=amigo
+Restart=on-failure
+ExecStart=/bin/bash -c 'source /home/amigo/.tue/setup.bash && \
+                        roslaunch hero_bringup battery_manager_hero2.launch'
