@@ -3,3 +3,10 @@ type: ed_sensor_integration/rgbd
 enabled: 1
 parameters:
     topic: /hero/head_rgbd_sensor/rgbd
+    updater:
+      segmenter:
+        #gmm:
+        alpha: 1.0 # GMM alpha parameter (weights of the clusters 1 = uniform)
+        kappa0: 0.0 # Weak prior on the mean (how much we trust the prior)
+        psi0: 0.0005 # Covariance prior (scale assumes spherical clusters)
+        nu0: 4.0 # Covariance strength
