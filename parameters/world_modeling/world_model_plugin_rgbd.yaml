@@ -7,8 +7,9 @@ parameters:
       segmenter:
         #gmm:
         alpha: 1.0 # GMM alpha parameter (weights of the clusters 1 = uniform)
-        kappa0: 0.01 # Weak prior on the mean (how much we trust the prior)
-        psi0: 0.0005 # Covariance prior (scale assumes spherical clusters)
+        kappa0: 0 # Weak prior on the mean (how much we trust the prior)
+        psi0: 0.2 # Covariance prior (scale assumes spherical clusters)
         nu0: 4.0 # Covariance strength
+
         eps: 0.02 # DBSCAN epsilon parameter in cm (maximum distance between points in acluster)
         min_samples: 60 # DBSCAN minimum number of points in a cluster
