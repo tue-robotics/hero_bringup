@@ -16,3 +16,5 @@ parameters:
 
         eps: 0.02 # DBSCAN epsilon parameter in cm (maximum distance between points in acluster)
         min_samples: 60 # DBSCAN minimum number of points in a cluster
+        #logging:
+        logging: false
