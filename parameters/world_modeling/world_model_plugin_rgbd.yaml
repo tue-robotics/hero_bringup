@@ -5,9 +5,9 @@ parameters:
     topic: /hero/head_rgbd_sensor/rgbd
     updater:
       segmenter:
-        yolo_model: $(rospkg yolo_onnx_ros)/share/resources/yolo11m/yolo11m.onnx
-        sam_encoder: $(rospkg sam_onnx_ros)/share/resources/speed_SAM/SAM_encoder.onnx
-        sam_decoder: $(rospkg sam_onnx_ros)/share/resources/speed_SAM/SAM_mask_decoder.onnx
+        yolo_model: $(env TUE_ENV_WS_DIR)/build/yolo_onnx_ros/resources/yolo11m/yolo11m.onnx
+        sam_encoder: $(env TUE_ENV_WS_DIR)/build/sam_onnx_ros/resources/speed_SAM/SAM_encoder.onnx
+        sam_decoder: $(env TUE_ENV_WS_DIR)/build/sam_onnx_ros/resources/speed_SAM/SAM_mask_decoder.onnx
 
         alpha: 1.0 # GMM alpha parameter (weights of the clusters 1 = uniform)
         kappa0: 0 # Weak prior on the mean (how much we trust the prior)
