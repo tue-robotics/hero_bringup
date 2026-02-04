@@ -8,12 +8,12 @@ parameters:
       yolo_model: $(env TUE_ENV_WS_DIR)/build/yolo_onnx_ros/resources/yolo11m/yolo11m.onnx
       sam_encoder: $(env TUE_ENV_WS_DIR)/build/sam_onnx_ros/resources/speed_SAM/SAM_encoder.onnx
       sam_decoder: $(env TUE_ENV_WS_DIR)/build/sam_onnx_ros/resources/speed_SAM/SAM_mask_decoder.onnx
-  
+
       alpha: 1.0 # GMM alpha parameter (weights of the clusters 1 = uniform)
       kappa0: 0 # Weak prior on the mean (how much we trust the prior)
       psi0: 0.05 # Covariance prior (scale assumes spherical clusters)
       nu0: 4.0 # Covariance strength
-  
+
       eps: 0.02 # DBSCAN epsilon parameter in cm (maximum distance between points in acluster)
       min_samples: 60 # DBSCAN minimum number of points in a cluster
       logging: false
