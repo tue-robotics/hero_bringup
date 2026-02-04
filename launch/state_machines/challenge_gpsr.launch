@@ -2,6 +2,7 @@
 <launch>
     <arg name="robot_name" value="hero" />
     <arg name="skip" default="false" />
+    <arg name="restart" default="false" />
     <arg name="number_of_tasks" default="3" />
     <arg name="test_mode" default="false" />
     <arg name="time_limit" default="5" />
@@ -37,6 +38,7 @@
     <node pkg="challenge_gpsr" type="gpsr.py" name="state_machine" output="screen" required="true">
         <param name="robot_name" value="$(arg robot_name)" />
         <param name="skip" value="$(arg skip)" />
+        <param name="restart" value="$(arg restart)" />
         <param name="number_of_tasks" value="$(arg number_of_tasks)" />
         <param name="test_mode" value="$(arg test_mode)" />
         <param name="time_limit" value="$(arg time_limit)" />
