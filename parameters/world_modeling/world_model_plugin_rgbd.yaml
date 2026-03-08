@@ -16,4 +16,11 @@ parameters:
 
       eps: 0.02 # DBSCAN epsilon parameter in cm (maximum distance between points in acluster)
       min_samples: 60 # DBSCAN minimum number of points in a cluster
-      logging: false
+      logging: false # Whether to log intermediate results (e.g. cluster masks, yolo detections) to rosbag for debugging purposes
+      # a mapping between yolo labels and surface labels, used to assign a surface label to clusters based on the yolo detections they overlap with
+      surface_label_map:
+        # example:
+        # - entity: office_desk
+        #   yolo_label: desk
+        - entity: dinner_table
+          yolo_label: dining table
