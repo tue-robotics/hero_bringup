@@ -5,18 +5,23 @@ parameters:
   topic: /hero/head_rgbd_sensor/rgbd
   updater:
     segmenter:
+      logging: false # Whether to log intermediate results (e.g. cluster masks, yolo detections) to rosbag for debugging purposes
+
+      # Paths to the ONNX models for YOLO and SAM, which are used for object detection and segmentation respectively. These should be set to the paths where the models are located in your workspace.
       yolo_model: $(env TUE_ENV_WS_DIR)/build/yolo_onnx_ros/resources/yolo11m/yolo11m.onnx
       sam_encoder: $(env TUE_ENV_WS_DIR)/build/sam_onnx_ros/resources/speed_SAM/SAM_encoder.onnx
       sam_decoder: $(env TUE_ENV_WS_DIR)/build/sam_onnx_ros/resources/speed_SAM/SAM_mask_decoder.onnx
 
+      # GMM parameters for clustering the point cloud into surfaces. These parameters control the behavior of the Bayesian Mixture Model used to segment the point cloud into clusters that correspond to surfaces. Adjusting these parameters can help improve the segmentation results based on the characteristics of your environment and sensor data.
       alpha: 1.0 # GMM alpha parameter (weights of the clusters 1 = uniform)
       kappa0: 0 # Weak prior on the mean (how much we trust the prior)
       psi0: 0.05 # Covariance prior (scale assumes spherical clusters)
       nu0: 4.0 # Covariance strength
 
+      # DBSCAN parameters for filtering the clusters as an alternative to BMM (can be found in the bmm_ros package as well). DBSCAN is a density-based clustering algorithm that can be used to filter out noise and small clusters from the GMM results. The `eps` parameter defines the maximum distance between points in a cluster, while `min_samples` defines the minimum number of points required to form a cluster. Adjusting these parameters can help improve the quality of the clusters by removing outliers and ensuring that only meaningful clusters are retained.
       eps: 0.02 # DBSCAN epsilon parameter in cm (maximum distance between points in acluster)
       min_samples: 60 # DBSCAN minimum number of points in a cluster
-      logging: false # Whether to log intermediate results (e.g. cluster masks, yolo detections) to rosbag for debugging purposes
+
       # a mapping between yolo labels and surface labels, used to assign a surface label to clusters based on the yolo detections they overlap with
       surface_label_map:
         # example:
