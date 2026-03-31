@@ -11,9 +11,6 @@
             <arg name="config" value="world_modeling/world_model_learn_objects.yaml"/>
         </include>
 
-        <!-- IMAGE RECOGNITION -->
-        <include file="$(find robot_launch_files)/launch/world_modeling/image_recognition.launch"/>
-
     </group>
 
     <node pkg="hero_bringup" type="stationary_broadcaster.py" name="stationary_broadcaster"/>
