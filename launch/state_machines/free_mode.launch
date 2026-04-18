@@ -18,7 +18,7 @@
         </include>
 
         <!-- IMAGE RECOGNITION -->
-        <include file="$(find robot_launch_files)/launch/world_modeling/image_recognition.launch"/>
+        <!-- <include file="$(find robot_launch_files)/launch/world_modeling/image_recognition.launch"/> -->
 
         <!-- PEOPLE RECOGNITION -->
         <include file="$(find robot_launch_files)/launch/world_modeling/people_recognition.launch">
