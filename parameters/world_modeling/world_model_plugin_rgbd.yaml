@@ -5,8 +5,8 @@ parameters:
   topic: /hero/head_rgbd_sensor/rgbd
   updater:
     segmenter:
-      verbose: true # Whether to log intermediate results (e.g. cluster masks, yolo detections) to rosbag for debugging purposes
-
+      logging: true # Whether to log intermediate results (e.g. cluster masks, yolo detections) to rosbag for debugging purposes
+      sam_backend: tensorRT # The backend to use for running the SAM model, can be either 'onnxruntime' or 'tensorRT'. TensorRT is generally faster but requires a compatible NVIDIA GPU and the TensorRT library to be installed. ONNX Runtime is more flexible and can run on a wider range of hardware but may be slower than TensorRT.
       # Paths to the ONNX models for YOLO and SAM, which are used for object detection and segmentation respectively. These should be set to the paths where the models are located in your workspace.
       yolo_model: $(env TUE_ENV_WS_DIR)/build/yolo_onnx_ros/resources/yolo11m/yolo11m.onnx
       sam_encoder: $(env TUE_ENV_WS_DIR)/build/sam_onnx_ros/resources/speed_SAM/SAM_encoder.onnx
