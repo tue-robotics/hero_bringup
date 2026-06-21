@@ -14,6 +14,9 @@
 
   <buildtool_depend>catkin</buildtool_depend>
 
+  <build_depend>roscpp</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+
   <exec_depend>gazebo_msgs</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>hero_bridge</exec_depend>
@@ -21,7 +24,9 @@
   <exec_depend>python3-rospkg</exec_depend>
   <exec_depend>python3-yaml</exec_depend>
   <exec_depend>robot_launch_files</exec_depend>
+  <exec_depend>roscpp</exec_depend>
   <exec_depend>rospy</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
 
   <doc_depend>python3-sphinx</doc_depend>
   <doc_depend>python-sphinx-autoapi-pip</doc_depend>
