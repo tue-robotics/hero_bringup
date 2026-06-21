@@ -119,6 +119,7 @@
         </include>
 
         <!-- TEXT TO SPEECH -->
+        <remap from="/hero/text_to_speech/output" to="/talking_sentence"/>
         <include file="$(find robot_launch_files)/launch/interaction/text_to_speech.launch" ns="$(arg namespace)" />
 
     </group><!-- End of simulator group -->
@@ -209,13 +210,7 @@
 -->
 
         <!-- bridge nodes-->
-        <node pkg="hero_bridge" type="speech.py" name="text_to_speech" if="$(optenv ROBOT_REAL false)" output="log" />
-        <node pkg="hero_bridge" type="gripper_controller.py" name="gripper_bridge" output="log" />
-        <node pkg="hero_bridge" type="tf_ghost.py" name="tf_ghost" output="log" />
-        <node pkg="hero_bridge" type="head_controller.py" name="head_bridge" output="log" />
-        <node pkg="hero_bridge" type="handover_detection.py" name="handoverdetector" output="log" />
-
-        <include file="$(find hero_bridge)/launch/manipulation_bridge.launch" />
+        <include file="$(find hero_bridge)/launch/hero_bridge.launch" />
 
         <!-- Odometer -->
         <node name="odometer" type="odometer.py" pkg="test_tools" if="$(optenv ROBOT_REAL false)" output="log" >
