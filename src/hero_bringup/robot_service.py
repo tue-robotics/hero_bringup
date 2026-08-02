@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#! /usr/bin/env python
 # -*- coding: utf-8 -*-
 # Copyright (C) 2016 Toyota Motor Corporation
 from __future__ import print_function

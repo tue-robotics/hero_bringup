@@ -16,5 +16,5 @@ maxUrange: 8
 lskip: 0
 
 # Process a scan each time the robot translates/rotates this far (default 1.0, 0.5)
-linearUpdate: 1.0
-angularUpdate: 0.5
+linearUpdate: 0.5
+angularUpdate: 0.25

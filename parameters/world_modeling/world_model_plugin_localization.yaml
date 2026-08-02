@@ -7,9 +7,9 @@ parameters:
   initial_pose_topic: /hero/initialpose
   resample_interval: 2
   update_min_d: 0.05
-  update_min_a: 0.05
+  update_min_a: 0.025
   particle_filter:
-    min_particles: 100
+    min_particles: 150
     max_particles: 750
     kld_err: 0.02
     kld_z: 0.98
