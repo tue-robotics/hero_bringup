@@ -60,7 +60,6 @@
         <include file="$(find robot_launch_files)/launch/interaction/mobile_ui_server.launch" unless="$(optenv ROBOT_REAL false)" />
     </group>
 
-
     <!-- Real hardware -->
     <group if="$(optenv ROBOT_REAL false)" >
 
