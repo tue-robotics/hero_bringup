@@ -1,0 +1,124 @@
+#! /usr/bin/env python
+
+import sys
+
+import rospy
+import rosnode
+from sensor_msgs.msg import Joy
+from geometry_msgs.msg import Twist
+from sensor_msgs.msg import JointState
+from robot_skills.get_robot import get_robot
+from robot_skills.arm import arms
+
+
+class JoystickControls(object):
+    controller_mode = 4  # the used game controller has 4 modes (shown with a light at the back), the default is 4
+    # controller_mappings = {4: {'A': joy_msg.buttons[0],
+    #                            'B': joy_msg.buttons[1],
+    #                            'X': joy_msg.buttons[2],
+    #                            'Y': joy_msg.buttons[3],
+    #                            'left_bumper': joy_msg.buttons[4],
+    #                            'right_bumper': joy_msg.buttons[5],
+    #                            'select': joy_msg.buttons[6],
+    #                            'start': joy_msg.buttons[7],
+    #                            'home': joy_msg.buttons[8],
+    #                            'left_stick_pressed': joy_msg.buttons[9],
+    #                            'right_stick_pressed': joy_msg.buttons[10],
+    #                            'left_stick_horizontal': joy_msg.axes[0],
+    #                            'left_stick_vertical': joy_msg.axes[1],
+    #                            'left_trigger': joy_msg.axes[2],
+    #                            'right_stick_horizontal': joy_msg.axes[3],
+    #                            'right_stick_vertical': joy_msg.axes[4],
+    #                            'right_trigger': joy_msg.axes[5],
+    #                            'directional_pad_horizontal': joy_msg.axes[6],
+    #                            'directional_pad_vertical': joy_msg.axes[7]
+    #                             }
+    #                        }
+    def __init__(self):
+        """
+        Subscribes to the Joy messages sent via the controller and the joy node and then transforms these to the desired behavior
+        """
+
+        self.controller_sub = rospy.Subscriber("joy", Joy, self.map_joystick, queue_size=1)
+        self.gripper_state_sub = rospy.Subscriber("joint_states", JointState, self.get_gripper_state, queue_size=1)
+
+        self.base_pub = rospy.Publisher("base/references", Twist, queue_size=1)
+        self.robot = get_robot('hero')
+        self.robot_arm = self.robot.get_arm(required_gripper_types=[arms.GripperTypes.GRASPING], required_goals=['show_gripper'])
+        self.gripper_state = None
+
+        # set all out-msgs
+        self.base_command = Twist()
+        # self.head_command = None
+        self.non_zero_vel_received = False
+
+        # send controls at 10 Hz
+        rospy.Timer(rospy.Duration(0.1), self.publish_controls)
+
+    def _translate_controls(self, mapping):
+        self.base_command = Twist()
+        # First check if any state machines need killing since this likely takes longest
+        if mapping['B']:
+            rospy.loginfo("Killing existing statemachine.")
+            rosnode.kill_nodes("/state_machine")        # kill whatever statemachine (=challenge/free_mode) is currently running
+        if mapping['A']:
+            if self.gripper_state == "open":
+                self.robot_arm.gripper.send_goal('close')
+            elif self.gripper_state == "closed":
+                self.robot_arm.gripper.send_goal('open')
+        if mapping['X']:
+            self.robot.reset()
+        if mapping['Y']:
+            self.robot_arm.send_joint_goal('show_gripper')
+        if abs(mapping['right_stick_horizontal']) > 0.1 or abs(mapping['right_stick_vertical']) > 0.1: # linear base movement
+            self.base_command.linear.x = 0.4 * mapping['right_stick_vertical']
+            self.base_command.linear.y = 0.4 * mapping['right_stick_horizontal']
+            self.non_zero_vel_received = True
+        if abs(mapping['left_stick_horizontal']) > 0.1: # angular base movement
+            self.base_command.angular.z = 0.6 * mapping['left_stick_horizontal']
+            self.non_zero_vel_received = True
+        if mapping['right_bumper']:
+            self.robot.speech.speak("Beep. Boop. Beep boop.")
+        if self.base_command.linear.x == 0.0 and self.base_command.linear.y == 0.0 and self.base_command.angular.z == 0.0:
+            self.non_zero_vel_received = False
+
+    def publish_controls(self, event=None):
+        if self.non_zero_vel_received:
+            self.base_pub.publish(self.base_command)
+
+    def map_joystick(self, joy_msg):
+        controller_mappings = {4: {'A': joy_msg.buttons[0],
+                                'B': joy_msg.buttons[1],
+                                'X': joy_msg.buttons[2],
+                                'Y': joy_msg.buttons[3],
+                                'left_bumper': joy_msg.buttons[4],
+                                'right_bumper': joy_msg.buttons[5],
+                                'select': joy_msg.buttons[6],
+                                'start': joy_msg.buttons[7],
+                                'home': joy_msg.buttons[8],
+                                'left_stick_pressed': joy_msg.buttons[9],
+                                'right_stick_pressed': joy_msg.buttons[10],
+                                'left_stick_horizontal': joy_msg.axes[0],
+                                'left_stick_vertical': joy_msg.axes[1],
+                                'left_trigger': joy_msg.axes[2],
+                                'right_stick_horizontal': joy_msg.axes[3],
+                                'right_stick_vertical': joy_msg.axes[4],
+                                'right_trigger': joy_msg.axes[5],
+                                'directional_pad_horizontal': joy_msg.axes[6],
+                                'directional_pad_vertical': joy_msg.axes[7]
+                                    }
+                            }
+        self._translate_controls(controller_mappings[self.controller_mode])
+
+    def get_gripper_state(self, state_msg):
+        if state_msg.name[20] == 'hand_motor_joint':
+            if state_msg.position[20] > 0.6:
+                self.gripper_state = 'open'
+            else:
+                self.gripper_state = 'closed'
+
+
+if __name__ == "__main__":
+    rospy.init_node("joystick_controls_node")
+    ConversionNode = JoystickControls()
+    sys.exit(rospy.spin())
