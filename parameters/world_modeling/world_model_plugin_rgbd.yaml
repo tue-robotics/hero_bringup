@@ -6,9 +6,11 @@ parameters:
   updater:
     segmenter:
       logging: true # Whether to log intermediate results (e.g. cluster masks, yolo detections) to rosbag for debugging purposes
-      sam_backend: tensorRT # The backend to use for running the SAM model, can be either 'onnxruntime' or 'tensorRT'. TensorRT is generally faster but requires a compatible NVIDIA GPU and the TensorRT library to be installed. ONNX Runtime is more flexible and can run on a wider range of hardware but may be slower than TensorRT.
+      sam_backend: tensorRT # Supported values: 'onnx', 'onnxruntime', 'tensorRT', 'tensorrt'. TensorRT is generally faster but requires a compatible NVIDIA GPU and the TensorRT library to be installed. ONNX Runtime is more flexible and can run on a wider range of hardware but may be slower than TensorRT.
+      yolo_backend: tensorRT # Supported values: 'onnx', 'onnxruntime', 'tensorRT', 'tensorrt'. Similar to the SAM backend, TensorRT can provide faster inference times but requires specific hardware and software dependencies, while ONNX Runtime offers broader compatibility at the cost of potentially slower performance.
       # Paths to the ONNX models for YOLO and SAM, which are used for object detection and segmentation respectively. These should be set to the paths where the models are located in your workspace.
-      yolo_model: $(env TUE_ENV_WS_DIR)/build/yolo_onnx_ros/resources/yolo11m/yolo11m.onnx
+      #yolo_model: $(env TUE_ENV_WS_DIR)/build/yolo_onnx_ros/resources/models/yolo26m.trt
+      yolo_model: /home/anarobotics/ros/noetic/system/src/yolo_onnx_ros/models/yolo26m.trt
       sam_encoder: $(env TUE_ENV_WS_DIR)/build/sam_onnx_ros/resources/speed_SAM/SAM_encoder.onnx
       sam_decoder: $(env TUE_ENV_WS_DIR)/build/sam_onnx_ros/resources/speed_SAM/SAM_mask_decoder.onnx
       sam_backend: "tensorRT" # or onnx
