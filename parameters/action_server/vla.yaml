@@ -1,0 +1,53 @@
+execution_mode: vla
+provider: local
+enabled_actions:
+  - pick-up
+  - place
+  - hand-over
+output_mode: joints
+action_dim: 11
+local_backend_class: action_server.vla.backends:SmolVLAWebSocketBackend
+device: cuda
+action_layout: hsr11
+# State fed to the checkpoint is the robot's 8-D arm(5)+gripper(1)+head(2) vector.
+# For the WebSocket backend, action_layout/action_dim/state_indices here are read
+# but NOT sent to the policy server; the server's own args decide them
+# (--action-layout hsr11 and POLICY_STATE_INDICES). Full-body output (arm+gripper
+# +head+base = 11) requires: (1) an 11-D hsr11 checkpoint served with
+# --action-layout hsr11, and (2) enable_head_motion/enable_base_motion below.
+state_indices: [0, 1, 2, 3, 4, 5, 6, 7]
+max_chunks: 20
+chunk_prefix_steps: 10
+step_timeout: 10.0
+
+# Set by action_server_vla_params.launch because this path is machine-specific.
+checkpoint_path: ""
+policy_url: ws://127.0.0.1:8000
+policy_timeout: 30.0
+
+# The VLA backend requires both the head and hand camera observations.
+image_timeout: 5
+
+# Keep head and base actuation disabled until their output conventions are calibrated.
+enable_head_motion: true
+enable_base_motion: true
+
+# Base(3) column convention (verify on hardware before trusting base motion):
+#   velocity   -> row is (vx, vy, vth) body-frame velocity [m/s, m/s, rad/s]
+#   pose_delta -> row is (dx, dy, dtheta) per-step body-frame displacement
+#   disabled   -> ignore base columns even if enable_base_motion is true
+#
+# Set to pose_delta for AIRoA MoMa / HSR teleop convention. The _apply_base
+# helper logs per-row magnitudes + implied-velocity-under-either-mode so the
+# correct choice can be confirmed in Gazebo before trusting it on hardware.
+base_action_mode: velocity
+base_step_duration: 0.1
+# Safety clamps: force_drive bypasses collision avoidance.
+max_base_velocity: 0.2
+max_base_yaw_velocity: 0.4
+# Head reference speed (rad/s) used when actuating head_pan/head_tilt targets.
+head_vel: 1.0
+
+# Optional physical completion signal for pure VLA execution.
+# Set grasp_position_threshold after calibrating the gripper on the robot.
+grasp_position_direction: above

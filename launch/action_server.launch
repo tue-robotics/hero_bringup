@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="robot_name" default="hero" />
+    <arg name="checkpoint_path" default="$(optenv ACTION_SERVER_CHECKPOINT_PATH)" />
+    <arg name="execution_mode" default="$(optenv ACTION_SERVER_EXECUTION_MODE classic)" />
+    <arg name="vla_repo_path" default="/home/amigo/ros/noetic/repos/github.com/tue-robotics/per-group-mse-vla" />
+
+    <include file="$(find hero_bringup)/launch/action_server_vla_params.launch">
+        <arg name="robot_name" value="$(arg robot_name)" />
+        <arg name="checkpoint_path" value="$(arg checkpoint_path)" />
+    </include>
+
+    <group ns="$(arg robot_name)/action_server/vla">
+        <param name="execution_mode" value="$(arg execution_mode)" />
+    </group>
+
+    <!--
+    The action server is launched from VS Code by the
+    "(debugpy) Launch Action Server" configuration. Keep the parameters above
+    loaded here, but do not spawn a second action-server process from free mode.
+    <node pkg="action_server" type="main.py" name="action_server" output="screen" respawn="true">
+        <env name="PYTHONPATH" value="$(arg vla_repo_path):$(optenv PYTHONPATH)" />
+        <param name="robot_name" value="$(arg robot_name)" />
+    </node>
+    -->
+</launch>

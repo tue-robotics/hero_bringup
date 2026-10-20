@@ -14,7 +14,7 @@
 
         <!-- WORLD MODEL -->
         <include file="$(find robot_launch_files)/launch/world_modeling/world_model.launch"/>
-
+        <include file="$(find robot_launch_files)/launch/world_modeling/image_recognition.launch"/>
         <!-- PEOPLE RECOGNITION -->
         <include file="$(find robot_launch_files)/launch/world_modeling/people_recognition.launch">
             <arg name="robot_name" value="$(arg robot_name)" />
@@ -25,9 +25,9 @@
 
     </group>
 
-    <!-- Action server state machine -->
-    <node name="state_machine" pkg="action_server" type="main.py" output="log" required="true" >
-        <param name="robot_name" value="hero"/>
-    </node>
+    <!-- Action server and VLA configuration are owned by action_server.launch. -->
+    <include file="$(find hero_bringup)/launch/action_server.launch">
+        <arg name="robot_name" value="$(arg robot_name)" />
+    </include>
 
 </launch>

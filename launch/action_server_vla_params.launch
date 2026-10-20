@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="robot_name" default="hero" />
+    <arg name="checkpoint_path" default="" />
+
+    <group ns="$(arg robot_name)/action_server/vla">
+        <rosparam file="$(find hero_bringup)/parameters/action_server/vla.yaml" command="load" />
+        <param name="checkpoint_path" value="$(arg checkpoint_path)" />
+    </group>
+</launch>
