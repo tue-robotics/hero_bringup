@@ -12,7 +12,7 @@ parameters:
       yolo_model: $(env TUE_ENV_WS_DIR)/build/yolo_onnx_ros/resources/models/yolo26m.trt
       sam_encoder: $(env TUE_ENV_WS_DIR)/build/sam_onnx_ros/resources/speed_SAM/SAM_encoder.onnx
       sam_decoder: $(env TUE_ENV_WS_DIR)/build/sam_onnx_ros/resources/speed_SAM/SAM_mask_decoder.onnx
-      sam_backend: "tensorRT" # or onnx
+      sam_backend: tensorRT # or onnx
 
       # BMM parameters for clustering the point cloud into surfaces. These parameters control the behavior of the Bayesian Mixture Model used to segment the point cloud into clusters that correspond to surfaces. Adjusting these parameters can help improve the segmentation results based on the characteristics of your environment and sensor data.
       bmm:
