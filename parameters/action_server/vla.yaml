@@ -1,24 +1,30 @@
-execution_mode: vla
+# classic | hybrid | vla. hybrid runs the classic find and approach, then the
+# VLA grasp, with the classic Grab as fallback. action_server.launch overrides
+# this from ACTION_SERVER_EXECUTION_MODE.
+execution_mode: hybrid
 provider: local
+# The place/hand-over hooks run before the classic navigation to their target
+# location, so only pick-up is handed to the VLA.
 enabled_actions:
   - pick-up
-  - place
-  - hand-over
 output_mode: joints
 action_dim: 11
 local_backend_class: action_server.vla.backends:SmolVLAWebSocketBackend
 device: cuda
 action_layout: hsr11
-# State fed to the checkpoint is the robot's 8-D arm(5)+gripper(1)+head(2) vector.
-# For the WebSocket backend, action_layout/action_dim/state_indices here are read
-# but NOT sent to the policy server; the server's own args decide them
-# (--action-layout hsr11 and POLICY_STATE_INDICES). Full-body output (arm+gripper
-# +head+base = 11) requires: (1) an 11-D hsr11 checkpoint served with
-# --action-layout hsr11, and (2) enable_head_motion/enable_base_motion below.
+# The checkpoint was trained on the 8-D state arm(5)+gripper(1)+head(2). For the
+# WebSocket backend, action_layout/action_dim/state_indices here are read but
+# NOT sent to the policy server; the server's own args decide them
+# (--action-layout hsr11 and POLICY_STATE_INDICES=0,1,2,3,4,5,6,7).
 state_indices: [0, 1, 2, 3, 4, 5, 6, 7]
-max_chunks: 20
+
+# Rate of the chunk rows, as in the reference AIRoA client (update_freq 10).
+policy_fps: 10.0
+# Rows of each 50-row chunk played before re-querying (10 rows = 1 s, like the
+# reference client's adopted_action_chunks).
 chunk_prefix_steps: 10
-step_timeout: 10.0
+# Re-query budget: 60 chunks x 10 rows = 60 s of policy motion.
+max_chunks: 60
 
 # Set by action_server_vla_params.launch because this path is machine-specific.
 checkpoint_path: ""
@@ -28,26 +34,64 @@ policy_timeout: 30.0
 # The VLA backend requires both the head and hand camera observations.
 image_timeout: 5
 
-# Keep head and base actuation disabled until their output conventions are calibrated.
-enable_head_motion: true
-enable_base_motion: true
+# Joint-space pose [m, rad] the training episodes start from: arm in the HSR
+# neutral pose (HERO's reset/carrying poses have arm_roll -1.57, far outside
+# the training data) and the head tilted down at the table (training mean -0.61).
+# The lift goes first so the arm clears the table edge. Use [] to keep a part.
+start_arm_pose: [0.2, 0.0, 0.0, -1.57, 0.0]
+start_head_pose: [0.0, -0.6]
 
-# Base(3) column convention (verify on hardware before trusting base motion):
-#   velocity   -> row is (vx, vy, vth) body-frame velocity [m/s, m/s, rad/s]
-#   pose_delta -> row is (dx, dy, dtheta) per-step body-frame displacement
-#   disabled   -> ignore base columns even if enable_base_motion is true
-#
-# Set to pose_delta for AIRoA MoMa / HSR teleop convention. The _apply_base
-# helper logs per-row magnitudes + implied-velocity-under-either-mode so the
-# correct choice can be confirmed in Gazebo before trusting it on hardware.
-base_action_mode: velocity
-base_step_duration: 0.1
-# Safety clamps: force_drive bypasses collision avoidance.
-max_base_velocity: 0.2
-max_base_yaw_velocity: 0.4
+# Arm columns are deltas w.r.t. the measured joints, streamed to the arm
+# controller; the arm speed is about delta / arm_lead_time. max_arm_delta is
+# the URDF velocity limit times arm_lead_time.
+arm_lead_time: 0.2
+max_arm_delta: [0.04, 0.24, 0.4, 0.3, 0.3]
+# Corrections for the simulated arm, [lift, flex, roll, wrist_flex, wrist_roll];
+# the code defaults (1 and 0) are the reference client. Per unit delta the sim
+# moves arm_roll 0.40x and wrist_flex 0.55x as far as the real HSR did in the
+# training data, so their deltas are scaled before max_arm_delta bounds them.
+arm_delta_gain: [1.0, 1.0, 2.5, 2.0, 1.0]
+# A joint whose delta is below this [m, rad] keeps its previous target instead of
+# measured + delta: the sim wrist_flex controller has no integral term, so
+# re-anchoring on the measured joint lets the wrist sag (~0.014 rad per chunk).
+arm_hold_threshold: [0.0, 0.0, 0.0, 0.005, 0.0]
+
+# Gripper column is the absolute hand_motor_joint position (~-0.8 closed,
+# ~1.24 open). Like the reference client's 'hybrid' mode, below the close
+# threshold the gripper grasps with effort, above it the column is followed as a
+# position: the policy pre-shapes the hand to ~0.7 while approaching and drops
+# below 0 when it grasps. A grasp on an object is released at the open
+# threshold; fingers closed below grasp_position_threshold (nothing grasped)
+# reopen at the close threshold, like the reference client.
+gripper_close_threshold: 0.5
+gripper_open_threshold: 0.9
+# 0.26 * 0.07 m moment arm = the reference client's 0.018 Nm grasp effort.
+gripper_max_torque: 0.26
+
+# The head columns are deltas and nearly zero in the training data; the head is
+# held at start_head_pose.
+enable_head_motion: false
 # Head reference speed (rad/s) used when actuating head_pan/head_tilt targets.
 head_vel: 1.0
 
-# Optional physical completion signal for pure VLA execution.
-# Set grasp_position_threshold after calibrating the gripper on the robot.
-grasp_position_direction: above
+# The classic NavigateToGrasp puts the object within reach, so by default the
+# VLA only moves the arm and gripper. Enable to let it correct with the base.
+enable_base_motion: false
+# Base(3) columns are body-frame velocities [m/s, m/s, rad/s]: the checkpoint's
+# base statistics saturate at +-0.30 like a joystick velocity limit.
+#   velocity   -> row is (vx, vy, vth)
+#   pose_delta -> row is a per-step displacement, multiplied by policy_fps
+#   disabled   -> ignore base columns even if enable_base_motion is true
+base_action_mode: velocity
+# Safety clamps: the velocity goes straight to the base controller, bypassing collision avoidance.
+max_base_velocity: 0.2
+max_base_yaw_velocity: 0.4
+
+# Completion signal: the gripper grasped with effort grasp_settle_time ago and the
+# fingers stopped above this hand_motor_joint position, i.e. on an object. In the
+# HERO simulation an empty grasp stalls at -0.07; a 9 cm apple at ~0.55. Also
+# decides whether a grasp is held in the gripper's release band (see above).
+grasp_position_threshold: 0.1
+grasp_settle_time: 1.0
+# Lift [m] after the grasp, before the robot drives back with the object.
+post_grasp_lift: 0.1

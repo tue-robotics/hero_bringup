@@ -2,7 +2,7 @@
 <launch>
     <arg name="robot_name" default="hero" />
     <arg name="checkpoint_path" default="$(optenv ACTION_SERVER_CHECKPOINT_PATH)" />
-    <arg name="execution_mode" default="$(optenv ACTION_SERVER_EXECUTION_MODE classic)" />
+    <arg name="execution_mode" default="$(optenv ACTION_SERVER_EXECUTION_MODE hybrid)" />
     <arg name="vla_repo_path" default="/home/amigo/ros/noetic/repos/github.com/tue-robotics/per-group-mse-vla" />
 
     <include file="$(find hero_bringup)/launch/action_server_vla_params.launch">
