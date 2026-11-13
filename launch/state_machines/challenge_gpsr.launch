@@ -35,6 +35,8 @@
         <param name="number_of_tasks" value="$(arg number_of_tasks)" />
         <param name="test_mode" value="$(arg test_mode)" />
         <param name="time_limit" value="$(arg time_limit)" />
+        <!-- Which parser turns a command into a task: the NER model or a language model -->
+        <rosparam command="load" file="$(env ROBOT_BRINGUP_PATH)/parameters/interaction/conversation_engine.yaml" />
     </node>
 
 </launch>

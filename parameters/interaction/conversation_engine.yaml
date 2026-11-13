@@ -1,0 +1,9 @@
+# What turns a command of the user into a task for the action server:
+#   ner: the BERT model of the ner_model package, with its entity linker
+#   llm: a language model (action_server.llm). Its instructions are in parameters/llm/task_planner.md,
+#        the service, the model and the key in action_server/.env/llm.env
+parser: llm
+
+# With llm: parse a command with the NER model when the language model cannot be used
+# (no network, no key, or no usable plan)
+llm_fallback_to_ner: true
